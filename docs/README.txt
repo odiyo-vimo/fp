@@ -1,0 +1,1 @@
+Generated deliverables (Word, draw.io, PPT, SVG, etc.) for the HMRC Boomi Integration Pattern Catalogue will be placed in this /docs folder, and bundled into ../assets/docs.zip for the 'Download all docs' button on the live site.
