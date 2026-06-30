@@ -45,7 +45,7 @@
       flex-wrap: wrap;
       gap: 12px;
       position: sticky;
-      top: 0;
+      top: 45px;
       z-index: 100;
     }
     .header-left { display: flex; align-items: center; gap: 14px; }
@@ -62,23 +62,43 @@
     .header-title { font-size: 18px; font-weight: 600; color: #e6edf3; }
     .header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
+    /* ── Download bar ── */
+    .dl-bar {
+      background: #003A2A;
+      border-bottom: 2px solid var(--green);
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .dl-bar-label {
+      font-size: 13px;
+      color: #a0d9c5;
+      font-weight: 500;
+    }
+    .dl-bar-label strong { color: #fff; }
     .dl-btn {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 9px;
       background: var(--green);
       color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 9px 22px;
       border-radius: 6px;
       text-decoration: none;
-      border: none;
-      cursor: pointer;
+      letter-spacing: .3px;
+      box-shadow: 0 2px 8px rgba(0,179,136,.35);
+      transition: background .2s, transform .1s, box-shadow .2s;
       white-space: nowrap;
-      transition: background .2s, transform .1s;
     }
-    .dl-btn:hover { background: #009972; transform: translateY(-1px); }
+    .dl-btn:hover { background: #009972; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,179,136,.45); }
     .dl-btn:active { transform: translateY(0); }
     .header-meta { font-size: 12px; color: var(--muted); text-align: right; }
 
@@ -258,6 +278,12 @@
 </head>
 <body>
 
+<div class="dl-bar">
+  <span class="dl-bar-label">📄 <strong>Documents generated for this page:</strong>&nbsp; Boomi OOTB Connectors &amp; Adapters Reference (Word)</span>
+  <a class="dl-btn" href="assets/boomi-connectors.docx" download="Boomi-OOTB-Connectors-Adapters.docx">
+    ⬇&nbsp; Download Word Doc
+  </a>
+</div>
 <header>
   <div class="header-left">
     <div class="logo-band">HMRC · Boomi</div>
@@ -270,9 +296,6 @@
     HMRC Integration Catalogue Reference<br>
     Source: Boomi Documentation (help.boomi.com) · June 2026
   </div>
-  <a class="dl-btn" href="assets/boomi-connectors.docx" download="Boomi-OOTB-Connectors-Adapters.docx">
-    ⬇ Download Word Doc
-  </a>
 </header>
 
 <div class="controls">
