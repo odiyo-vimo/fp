@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Strategic Integration Direction | Integration Catalogue</title>
+  <title>Integration Modernisation — Strategic Architecture | Integration Catalogue</title>
   <style>
-    :root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--green:#00b388;--green-dim:#1a3a30;--green-dark:#003A2A;--teal:#0ea5e9;--teal-dim:#0c2a3a;--amber:#f59e0b;--amber-dim:#2d1f00;--purple:#a78bfa;--purple-dim:#1e1533;--red:#f87171;--red-dim:#2d1010;}
+    :root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--green:#00b388;--green-dim:#1a3a30;--green-dark:#003A2A;--teal:#0ea5e9;--teal-dim:#0c2a3a;--amber:#f59e0b;--amber-dim:#2d1f00;--purple:#a78bfa;--red:#f87171;--red-dim:#2d1010;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
     .dl-bar{background:var(--green-dark);border-bottom:2px solid var(--green);padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:200;}
@@ -20,7 +20,7 @@
     .hdr-left{display:flex;align-items:center;gap:14px;}.hdr-title{font-size:18px;font-weight:700;color:#e6edf3;}.hdr-sub{font-size:12px;color:var(--muted);margin-top:2px;}.hdr-meta{font-size:12px;color:var(--muted);text-align:right;}
     .pattern-badge{background:var(--green-dim);border:1px solid var(--green);color:var(--green);font-size:12px;font-weight:700;padding:3px 10px;border-radius:4px;}
     .page{display:flex;max-width:1340px;margin:0 auto;}
-    nav{width:235px;min-width:205px;padding:20px 0 20px 20px;position:sticky;top:110px;height:calc(100vh - 110px);overflow-y:auto;flex-shrink:0;}
+    nav{width:245px;min-width:210px;padding:20px 0 20px 20px;position:sticky;top:110px;height:calc(100vh - 110px);overflow-y:auto;flex-shrink:0;}
     nav ul{list-style:none;}nav li+li{margin-top:1px;}
     nav a{display:block;padding:6px 12px;border-radius:5px;font-size:12px;color:var(--muted);text-decoration:none;transition:all .15s;border-left:2px solid transparent;}
     nav a:hover{color:var(--text);background:var(--surface2);}nav a.active{color:var(--green);background:var(--green-dim);border-left-color:var(--green);}
@@ -46,49 +46,32 @@
     table.gt tbody tr:hover{background:var(--green-dim);}
     table.gt td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;line-height:1.55;}
     table.gt td.c-id{font-weight:700;color:var(--green);white-space:nowrap;}
-    .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;}
-    .tag.target{background:var(--green-dim);color:var(--green);border:1px solid #1f4a38;}
-    .tag.bridge{background:var(--amber-dim);color:var(--amber);border:1px solid #3d2900;}
-    .tag.avoid{background:var(--red-dim);color:var(--red);border:1px solid #3d1515;}
     .blist{margin:10px 0 10px 20px;}.blist li{font-size:14px;color:var(--text);margin-bottom:7px;line-height:1.65;}.blist li::marker{color:var(--green);}
     .olist{margin:10px 0 10px 20px;}.olist li{font-size:14px;color:var(--text);margin-bottom:7px;line-height:1.65;}.olist li::marker{color:var(--green);font-weight:700;}
-    .ua-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
-    .ua-card{border-radius:8px;padding:16px 18px;}.ua-card.use{background:var(--green-dim);border:1px solid #1f4a38;}.ua-card.avoid{background:var(--red-dim);border:1px solid #3d1515;}
-    .ua-card h4{font-size:13px;font-weight:700;margin-bottom:10px;}.ua-card.use h4{color:var(--green);}.ua-card.avoid h4{color:var(--red);}
-    .ua-card ul{margin-left:16px;}.ua-card li{font-size:13px;color:var(--text);margin-bottom:6px;line-height:1.55;}
-    .arch{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin:18px 0;}
-    .arch .actor{border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;text-align:center;margin:0 auto;}
-    .actor.client{background:var(--teal-dim);border:1px solid var(--teal);color:#7fd4f5;}
-    .actor.hod{background:var(--red-dim);border:1px solid #5a2020;color:#f5a3a3;}
-    .conn{text-align:center;color:var(--muted);font-size:16px;line-height:1;margin:5px 0;}
-    .arch-body{display:flex;gap:14px;margin:8px 0;}
-    .tiers{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0;}
-    .tier{border-radius:8px;padding:10px 12px;border:1px solid var(--border);background:var(--surface2);}
-    .tier .tlab{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;}
-    .tier .row{display:flex;gap:7px;flex-wrap:wrap;}
-    .tier .box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--text);flex:1;min-width:110px;line-height:1.4;}
-    .tier.t-channel{border-color:#0e7490;}.tier.t-channel .tlab{color:#38bdf8;}
-    .tier.t-boomi{border-color:var(--green);}.tier.t-boomi .tlab{color:var(--green);}
-    .tier.t-event{border-color:#7c3aed;}.tier.t-event .tlab{color:var(--purple);}
-    .tier.t-data{border-color:#b45309;}.tier.t-data .tlab{color:var(--amber);}
-    .tier.t-legacy{border-color:#6b7280;}.tier.t-legacy .tlab{color:#9aa4b0;}
-    .box.br{border-color:var(--red);color:#f5a3a3;}
-    .rail{width:190px;flex-shrink:0;background:#00291e;border:1px solid var(--green-dark);border-radius:8px;padding:11px 10px;}
-    .rail h5{font-size:10px;font-weight:700;letter-spacing:1px;color:#7fe9cc;text-align:center;margin-bottom:8px;}
-    .rail .ri{background:#0b3a2c;border:1px solid #0e7a5c;border-radius:5px;padding:5px 8px;font-size:10.5px;color:#eaf6f1;margin-bottom:5px;text-align:center;line-height:1.35;}
-    .cap{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;}
+    /* decision flow */
+    .flow{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin:18px 0;}
+    .fstep{display:flex;gap:12px;align-items:stretch;margin-bottom:10px;}
+    .fq{flex:1;background:var(--amber-dim);border:1px solid #3d2900;border-left:3px solid var(--amber);border-radius:8px;padding:11px 14px;}
+    .fq .qn{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:4px;}
+    .fq .qt{font-size:13px;color:var(--text);}
+    .fout{width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
+    .pat{border-radius:7px;padding:8px 11px;font-size:12px;line-height:1.4;border:1px solid;}
+    .pat.k{background:var(--green-dim);border-color:#1f4a38;color:#bfe9d8;}.pat.k b{color:var(--green);}
+    .pat.br{background:var(--amber-dim);border-color:#3d2900;color:#e8cfa0;}.pat.br b{color:var(--amber);}
+    .pat.ad{background:var(--red-dim);border-color:#3d1515;color:#f3b7b7;}.pat.ad b{color:var(--red);}
+    .fspine{background:#00291e;border:1px solid var(--green-dark);border-radius:8px;color:#eaf6f1;font-size:12px;padding:10px 14px;text-align:center;margin-top:6px;}
     footer{background:var(--surface);border-top:1px solid var(--border);padding:14px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:8px;}
     footer a{color:var(--green);text-decoration:none;}
-    @media(max-width:840px){nav{display:none;}.ua-grid{grid-template-columns:1fr;}.arch-body{flex-direction:column;}.rail{width:auto;}}
+    @media(max-width:840px){nav{display:none;}.fstep{flex-direction:column;}.fout{width:auto;}}
   </style>
 </head>
 <body>
 
 <div class="dl-bar">
-  <span class="dl-bar-label">&#x1F4C4; <strong>Documents generated for this task:</strong>&nbsp; strategic paper (Word) &amp; target architecture (draw.io)</span>
+  <span class="dl-bar-label">&#x1F4C4; <strong>Documents generated for this task:</strong>&nbsp; modernisation architecture (Word) &amp; pattern-selection decision tree (draw.io)</span>
   <span class="dl-actions">
-    <a class="dl-btn" href="assets/strategic-integration-direction.docx" download="Strategic-Integration-Direction.docx">&#x2B07;&nbsp; Strategic Paper (Word)</a>
-    <a class="dl-btn alt" href="assets/target-reference-architecture.drawio" download="Target-Reference-Architecture.drawio">&#x2B07;&nbsp; Architecture (draw.io)</a>
+    <a class="dl-btn" href="assets/integration-modernisation-architecture.docx" download="Integration-Modernisation-Architecture.docx">&#x2B07;&nbsp; Strategic Paper (Word)</a>
+    <a class="dl-btn alt" href="assets/pattern-selection-decision-tree.drawio" download="Pattern-Selection-Decision-Tree.drawio">&#x2B07;&nbsp; Decision Tree (draw.io)</a>
   </span>
 </div>
 
@@ -96,8 +79,8 @@
   <div class="hdr-left">
     <div class="logo-band">Integration Catalogue</div>
     <div>
-      <div class="hdr-title">Strategic Integration Direction</div>
-      <div class="hdr-sub">Beyond a like-for-like legacy &rarr; Boomi iPaaS mapping &middot; Working paper v0.1 &middot; July 2026</div>
+      <div class="hdr-title">Integration Modernisation &mdash; Strategic Architecture</div>
+      <div class="hdr-sub">From the five Modernisation Guidelines to a pattern-selection framework &middot; Working paper v0.1 &middot; July 2026</div>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
@@ -110,13 +93,13 @@
   <nav>
     <div class="nav-head">On this page</div>
     <ul>
-      <li><a href="#thesis" class="active">1 · Core thesis</a></li>
-      <li><a href="#challenges">2 · Challenges &amp; answers</a></li>
-      <li><a href="#arch">3 · Target architecture</a></li>
-      <li><a href="#canonical">4 · Canonical patterns</a></li>
-      <li><a href="#gaps">5 · Closing the gaps</a></li>
-      <li><a href="#fit">6 · Where Boomi fits</a></li>
-      <li><a href="#next">7 · Next moves</a></li>
+      <li><a href="#how" class="active">How to read this</a></li>
+      <li><a href="#guidelines">1 · Guidelines operationalised</a></li>
+      <li><a href="#selection">2 · Selection framework</a></li>
+      <li><a href="#tree">3 · Decision tree</a></li>
+      <li><a href="#arch">4 · Architecture alignment</a></li>
+      <li><a href="#funnel">5 · Funnel &amp; adapters</a></li>
+      <li><a href="#next">6 · Next moves</a></li>
     </ul>
   </nav>
 
@@ -124,168 +107,141 @@
     <div class="instr">
       <h4>&#x1F4CC; Standing workflow for this catalogue</h4>
       <ol>
-        <li>Generate the HTML and a downloadable doc in the chat response, so the history is reviewable; the HTML carries these instructions.</li>
-        <li>All content lives on <strong>index.html</strong> so it can be viewed via GitHub Pages.</li>
-        <li>Any generated document (Word, PPT, draw.io) is downloadable via a button at the top of the page.</li>
-        <li>The GitHub Pages view carries no department name in text; the Word doc may.</li>
+        <li>Every task produces HTML and a downloadable doc in the chat response, so the history is reviewable; the HTML carries these instructions.</li>
+        <li>All content lives on <strong>index.html</strong> so it can be viewed through GitHub Pages.</li>
+        <li>Any generated document (Word, PPT, draw.io) is downloadable via a button at the top of this page.</li>
+        <li>The GitHub Pages view carries no department name in its text; the Word doc may.</li>
       </ol>
     </div>
 
-    <div class="note">
-      <strong>Purpose.</strong> This companion takes the As-Is &rarr; To-Be pattern table (WebMethods and ChRIS legacy patterns mapped to the P-1xx catalogue) and asks a different question from &ldquo;can Boomi do this?&rdquo; It asks &ldquo;is this the pattern we should carry into the target state at all?&rdquo; It sets the strategic direction, challenges assumptions in the current mapping, and answers each challenge.
-    </div>
-
-    <section class="section" id="thesis">
-      <div class="sec-title"><span class="sec-num">1</span> Core thesis</div>
-      <p class="lead">The current catalogue is a strong translation layer, but it is written through a lift-and-shift lens: every legacy behaviour gets a one-to-one Boomi equivalent, and almost every row is annotated &ldquo;Ready to use pattern.&rdquo; The strategic risk is that we faithfully re-implement WebMethods-era thinking inside a newer tool &mdash; inheriting its coupling, its batch habits and its point-to-point sprawl, just on a different licence.</p>
-      <p>Three shifts turn the mapping from a migration inventory into a strategic target:</p>
-      <ol class="olist">
-        <li><strong>Consolidate, don&rsquo;t translate.</strong> The ~25 legacy patterns collapse onto roughly 6&ndash;8 canonical patterns plus composable modifiers. The tell is already in the table: Transforming, Validated, Error-Handling, Reliable and Orchestrated Publish all map to P-112. Those are not five patterns &mdash; they are one pattern with flags.</li>
-        <li><strong>Tier the architecture; stop over-centralising on the iPaaS.</strong> Boomi should own orchestration, transformation, mediation, MFT and integration-scoped eventing. A dedicated API gateway owns synchronous client traffic; a dedicated event backbone owns enterprise pub/sub. &ldquo;Boomi can do it&rdquo; &ne; &ldquo;Boomi is the right tier for it.&rdquo;</li>
-        <li><strong>Promote cross-cutting concerns to first-class citizens.</strong> Idempotency, the transactional outbox, correlation/trace propagation and read-model projections are currently implicit (or, for Transactional Publish, TBD). In an at-least-once, async-first estate these are not footnotes &mdash; they are the design.</li>
-      </ol>
+    <section class="section" id="how">
+      <div class="note">
+        <strong>How to read this.</strong> The catalogue&rsquo;s <em>Integration Modernisation Guidelines</em> (API-First; requirements-driven patterns; preserve async where it adds value; modernise before recreating; adapters for legacy) are correct as principles. This page does the next step: it turns each principle into concrete architecture and a repeatable pattern-selection framework, and it challenges the two places the guidelines are most often misread &mdash; so they drive design decisions rather than being read and shelved. Outputs are the canonical patterns <strong>K1&ndash;K8</strong> from the strategic companion.
+      </div>
     </section>
 
-    <section class="section" id="challenges">
-      <div class="sec-title"><span class="sec-num">2</span> Challenges to the current mapping &mdash; and the answers</div>
-      <p>Each row states an assumption baked into the catalogue, challenges it, and gives the strategic answer. These are meant to be argued with in review, not accepted wholesale.</p>
+    <section class="section" id="guidelines">
+      <div class="sec-title"><span class="sec-num">1</span> The five guidelines &mdash; operationalised, and challenged</div>
       <div class="tbl-wrap">
         <table class="gt">
-          <thead><tr><th style="width:36px;">#</th><th style="width:22%;">Assumption in the catalogue</th><th style="width:34%;">Challenge</th><th>Strategic answer</th></tr></thead>
+          <thead><tr><th style="width:38px;">#</th><th style="width:22%;">Guideline (as written)</th><th style="width:30%;">Architecture that delivers it</th><th>The challenge &mdash; and the answer</th></tr></thead>
           <tbody>
-            <tr><td class="c-id">C1</td><td>Each legacy behaviour deserves its own Boomi pattern (~25 entries).</td><td>Most rows already collapse onto P-112 / P-115. Validation, transformation, error handling and reliability are capability toggles, not distinct patterns. 25 entries manufacture false choice and maintenance drag.</td><td>Consolidate to ~6&ndash;8 canonical patterns + composable modifiers. Governance reviews the modifiers applied, not 25 near-duplicate rows.</td></tr>
-            <tr><td class="c-id">C2</td><td>&ldquo;Ready to use pattern&rdquo; means it is the right choice.</td><td>&ldquo;Ready to use&rdquo; describes tool capability, not architectural fitness. Feasibility &ne; suitability &mdash; and nearly every row carries the label, quietly turning a design catalogue into a feature checklist.</td><td>Split the judgement into two axes: <em>implementable in Boomi</em> (yes/mostly/no) <strong>and</strong> <em>strategic status</em> (Target / Bridge / Avoid). Several &ldquo;ready&rdquo; patterns are bridges to sunset.</td></tr>
-            <tr><td class="c-id">C3</td><td>Sync vs async is chosen by &ldquo;how many consumers.&rdquo;</td><td>Consumer count is the wrong axis. The real axis is delivery semantics and coupling: does the producer block on the outcome, and can it tolerate temporal coupling to the consumer&rsquo;s availability?</td><td>Go async for temporal decoupling, buffering and independent scaling &mdash; even with one consumer. Reserve sync for when the caller genuinely blocks on the result and latency is tight.</td></tr>
-            <tr><td class="c-id">C4</td><td>Boomi is the platform for synchronous API proxying (P-101 / P-102).</td><td>iPaaS as a synchronous gateway at scale is a known anti-pattern: per-execution cost, hop latency, weak native throttling / quota / dev-portal, throughput ceilings under high TPS.</td><td>Put a dedicated API gateway in front (APIM / Apigee / Kong / AWS API GW). Boomi sits <em>behind</em> it for orchestration and transformation &mdash; not as the gateway itself.</td></tr>
-            <tr><td class="c-id">C5</td><td>Cross-back-end data requests are served by live synchronous aggregation (P-105).</td><td>Synchronous scatter-gather multiplies failure &mdash; availability is the <em>product</em> of every back-end&rsquo;s availability, latency is their <em>sum</em>. One slow system degrades every request; &ldquo;polling protection&rdquo; is a symptom.</td><td>Apply CQRS: pre-aggregate via events into a DB-backed read projection. The sync request reads the local projection; back-ends update it asynchronously. Polling protection stops being load-bearing.</td></tr>
-            <tr><td class="c-id">C6</td><td>Transactional Publish is TBD.</td><td>This is the single most important gap, not a footnote. Distributed 2PC across a state change and a publish does not work in an event/iPaaS world &mdash; the Event Streams produce-side retry asymmetry proves it.</td><td><strong>Transactional Outbox + relay:</strong> write the event to an outbox table in the same DB transaction as the state change; a relay publishes it at-least-once to idempotent consumers. For multi-step transactions use a <strong>Saga</strong> with explicit compensation &mdash; not rollback.</td></tr>
-            <tr><td class="c-id">C7</td><td>An async back-end call behind a sync client API is just &ldquo;P-102 Standard Sync REST.&rdquo;</td><td>Wrapping an async back-end inside a sync facade silently holds threads and creates timeout / back-pressure risk. It is labelled sync but behaves like a hidden orchestration.</td><td>Make the async explicit: 202 Accepted + status resource (Location header), a bounded fast-fail wait, then client poll or webhook callback. Don&rsquo;t disguise async as sync.</td></tr>
-            <tr><td class="c-id">C8</td><td>The enterprise event backbone is owned inside Boomi (Event Streams).</td><td>Owning the event fabric inside the iPaaS couples enterprise eventing to one vendor&rsquo;s licensing, ceiling and lifecycle &mdash; non-Boomi consumers become second-class citizens.</td><td>Decide deliberately. Event Streams is fine for integration-scoped eventing; for a backbone consumed by many non-Boomi systems, evaluate a dedicated broker (Confluent/Kafka, Solace, Event Hubs) with Boomi as a participant.</td></tr>
-            <tr><td class="c-id">C9</td><td>File transfer (MFT, P-116) is a strategic target pattern.</td><td>Many &ldquo;file&rdquo; flows are legacy batch exports wearing an integration costume. Treating MFT as a destination entrenches batch coupling and nightly-window fragility.</td><td>Classify MFT as a <em>Bridge</em> with a sunset trajectory. Where the source can emit events or expose an API, migrate off files. Keep MFT for genuine bulk / third-party exchange only.</td></tr>
-            <tr><td class="c-id">C10</td><td>Idempotency, ordering, correlation and replay are implementation details.</td><td>At-least-once delivery (Kafka / Event Streams) makes a non-idempotent consumer a data-integrity defect waiting to happen. None of these appear as first-class concerns.</td><td>Elevate them to mandatory cross-cutting standards on every pattern: idempotency keys, partition/ordering keys, correlation-ID propagation, DLQ + replay, and end-to-end tracing.</td></tr>
+            <tr><td class="c-id">G1</td><td><strong>API-First</strong> &mdash; where systems can expose/consume APIs, use synchronous REST as the default (simpler, less middleware, better governance, faster delivery).</td><td>Contract-first APIs (OpenAPI) through a dedicated gateway with dev portal, versioning, quotas. Boomi behind the gateway for orchestration/transformation; direct API-to-API where no mediation is needed.</td><td><em>Challenge:</em> &ldquo;API-First&rdquo; &ne; &ldquo;synchronous by default&rdquo; &mdash; conflating them re-introduces the temporal coupling modernisation is meant to remove. <em>Answer:</em> read API-First as <strong>contract-first</strong> (REST via OpenAPI <em>or</em> events via AsyncAPI). Keep sync REST the default only for interactive request/response with a tight latency budget; hand off to G3 for async. Add a &ldquo;does this need the iPaaS?&rdquo; gate to honour &ldquo;reduced middleware.&rdquo;</td></tr>
+            <tr><td class="c-id">G2</td><td><strong>Business requirements drive patterns</strong> &mdash; choose from availability, response time, reliability, consumer scalability, number of consumers, NFRs; not legacy constraints.</td><td>A published selection framework (&sect;2 + the decision tree) mapping those six dimensions to a canonical pattern. Requirements captured once per interface, driving the choice deterministically and reviewably.</td><td><em>Challenge:</em> &ldquo;number of consumers&rdquo; keeps appearing as a lead criterion, but a single consumer can still need async. <em>Answer:</em> make coupling &amp; delivery semantics the primary axis; consumer count is secondary. The framework encodes this so the mistake can&rsquo;t be made by default.</td></tr>
+            <tr><td class="c-id">G3</td><td><strong>Preserve async where it adds value</strong> &mdash; differing availability windows, long-running, guaranteed delivery, multiple consumers, loose coupling. Use modern messaging, not recreated WebMethods pub/sub.</td><td>A modern event backbone (log-based streaming: replay, partitioned ordering, at-least-once) with AsyncAPI contracts, idempotent consumers, DLQ + replay. Event Streams integration-scoped; dedicated broker where many non-Boomi systems consume it.</td><td><em>Challenge:</em> &ldquo;don&rsquo;t recreate WebMethods pub/sub&rdquo; is easy to violate via old queue/JMS habits. <em>Answer:</em> adopt streaming semantics deliberately &mdash; consumers own idempotency and offset, ordering only within a partition key, replay is first-class &mdash; not a like-for-like broker port.</td></tr>
+            <tr><td class="c-id">G4</td><td><strong>Modernise interfaces before recreating</strong> &mdash; assess whether a legacy interface can become an API or event before migrating; modernise the pattern, don&rsquo;t just move it.</td><td>An Interface Modernisation Funnel (&sect;5): API? &rarr; event? &rarr; otherwise adapter, inside a Strangler Fig migration that retires legacy incrementally behind stable strategic contracts.</td><td><em>Challenge:</em> assessment can stall delivery, then a lift-and-shift happens anyway under deadline. <em>Answer:</em> time-box the assessment with a default &mdash; if it can&rsquo;t be an API/event in the box, ship an adapter with a recorded sunset trigger. Migration never blocks; the debt is explicit.</td></tr>
+            <tr><td class="c-id">G5</td><td><strong>Use adapters for legacy</strong> &mdash; systems that can&rsquo;t adopt strategic standards run through OOTB/custom adapters that isolate protocols, translate to strategic APIs/events, transitional where possible.</td><td>An Anti-Corruption Layer: the adapter owns protocol mediation and model translation so legacy shapes never leak into strategic contracts. In Boomi this is the thin HTTP boundary to WebMethods/ChRIS (generic client) plus connector-based adapters.</td><td><em>Challenge:</em> &ldquo;transitional&rdquo; adapters routinely become permanent. <em>Answer:</em> every adapter carries an owner and a documented sunset trigger; adapter debt is tracked on a register and reviewed each governance cycle.</td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <section class="section" id="selection">
+      <div class="sec-title"><span class="sec-num">2</span> Pattern-selection framework (operationalising G2)</div>
+      <p class="sub">Requirement &rarr; pattern mapping (the six G2 dimensions)</p>
+      <div class="tbl-wrap">
+        <table class="gt">
+          <thead><tr><th style="width:24%;">Requirement dimension</th><th style="width:36%;">Signal</th><th>Pattern implication</th></tr></thead>
+          <tbody>
+            <tr><td class="c-id">Availability</td><td>Initiator and target have differing availability windows</td><td>Async / event for temporal decoupling (K1/K2/K3); never hard-couple a sync call to an intermittently available target</td></tr>
+            <tr><td class="c-id">Response time</td><td>Tight, interactive (caller blocks)</td><td>Sync API (K5); if aggregation threatens the latency budget, use a read model (K6)</td></tr>
+            <tr><td class="c-id">Response time</td><td>Tolerant / long-running (secs&ndash;24hrs)</td><td>Async Request&ndash;Reply (K3): 202 + status resource; webhook or poll</td></tr>
+            <tr><td class="c-id">Reliability</td><td>Guaranteed delivery / no loss on failure</td><td>Event backbone + Outbox (K4) + DLQ + replay; idempotent consumers</td></tr>
+            <tr><td class="c-id">Consumer scalability</td><td>Many or highly variable consumers</td><td>Pub/sub fan-out on the event backbone (K1/K2)</td></tr>
+            <tr><td class="c-id">Number of consumers</td><td>Several consumers need the same information</td><td>Event backbone (G3). A single consumer does <em>not</em> force sync &mdash; use semantics, not count</td></tr>
+            <tr><td class="c-id">Non-functional</td><td>Security, audit, throughput, latency SLA, traceability</td><td>Gateway (auth/throttle/quota) + cross-cutting spine (correlation, tracing, DLQ, idempotency)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn"><strong>Guardrail.</strong> If two dimensions point in different directions (e.g. tight response time but an intermittently available target), that conflict is the design decision to record &mdash; usually resolved by an async request&ndash;reply with a read model, not by forcing a fragile synchronous call.</div>
+    </section>
+
+    <section class="section" id="tree">
+      <div class="sec-title"><span class="sec-num">3</span> Decision tree (in order)</div>
+      <p>The editable version is the <a href="assets/pattern-selection-decision-tree.drawio" style="color:var(--green);">draw.io download</a> at the top. In sequence:</p>
+      <div class="flow">
+        <div class="fstep">
+          <div class="fq"><div class="qn">Step 1 &middot; G4/G5 gate</div><div class="qt">Can the system expose or consume an API or event today?</div></div>
+          <div class="fout"><div class="pat ad"><b>No &rarr; Adapter / ACL (K-Adapter)</b> &mdash; wrap it, expose a strategic API/event, record a sunset trigger, then re-enter the flow.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fq"><div class="qn">Step 2</div><div class="qt">Does the initiator need a response?</div></div>
+          <div class="fout"><div class="pat k"><b>No &rarr; K1 Async Event Publish</b> (fire-and-forget). Multiple consumers / loose coupling / guaranteed delivery (G3) &rarr; event backbone <b>K1/K2</b>.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fq"><div class="qn">Step 3</div><div class="qt">Is the response available within an interactive budget (~&le;2s) with the caller blocking?</div></div>
+          <div class="fout"><div class="pat k"><b>No &rarr; K3 Async Request&ndash;Reply</b> &mdash; 202 Accepted + status resource; webhook or poll.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fq"><div class="qn">Step 4 &middot; yes-branch of Step 3</div><div class="qt">Does it need data from multiple back-ends?</div></div>
+          <div class="fout">
+            <div class="pat k"><b>Yes &rarr; K6 Aggregated Read</b> &mdash; CQRS read model, not live fan-out.</div>
+            <div class="pat k"><b>No &rarr; K5 Sync API</b> &mdash; the API-First default, behind the gateway.</div>
+          </div>
+        </div>
+        <div class="fstep">
+          <div class="fq"><div class="qn">Cross-cutting overrides</div><div class="qt">Applied regardless of the branch above.</div></div>
+          <div class="fout">
+            <div class="pat k"><b>State change must reliably emit an event &rarr; K4 Outbox</b></div>
+            <div class="pat br"><b>Bulk / scheduled / file &rarr; K7 Batch &middot; K8 MFT</b> (bridge &rarr; sunset)</div>
+          </div>
+        </div>
+        <div class="fspine">Applies to every path: idempotency keys &middot; correlation ID + distributed tracing &middot; DLQ + replay &middot; ordering / partition keys</div>
       </div>
     </section>
 
     <section class="section" id="arch">
-      <div class="sec-title"><span class="sec-num">3</span> Strategic target reference architecture</div>
-      <p>A tiered estate where each tier is owned by the technology best suited to it. Boomi is a first-class citizen of the middle tiers &mdash; not the whole stack. An editable version is in the <a href="assets/target-reference-architecture.drawio" style="color:var(--green);">draw.io download</a> at the top.</p>
-      <div class="arch">
-        <div class="actor client" style="max-width:640px;">CLIENT CHANNELS &middot; third-party software &middot; agents &middot; digital portals &middot; ChRIS-routed submissions</div>
-        <div class="conn">&#x2193;</div>
-        <div class="arch-body">
-          <div class="tiers">
-            <div class="tier t-channel"><div class="tlab">Channel / Experience</div><div class="row"><div class="box">API Gateway (APIM &middot; Apigee &middot; Kong &middot; AWS API GW)</div><div class="box">OAuth2 / mTLS &middot; throttling &middot; quotas &middot; spike arrest &middot; dev portal</div></div></div>
-            <div class="tier t-boomi"><div class="tlab">Integration / Orchestration &mdash; Boomi iPaaS</div><div class="row"><div class="box">Orchestration &middot; Process Route</div><div class="box">Transform &middot; enrich &middot; route</div><div class="box">Protocol mediation</div><div class="box br">MFT (bridge)</div></div></div>
-            <div class="tier t-event"><div class="tlab">Event backbone</div><div class="row"><div class="box">Durable broker (Kafka/Confluent &middot; Solace &middot; Event Hubs)</div><div class="box">or Boomi Event Streams (integration-scoped only)</div></div></div>
-            <div class="tier t-data"><div class="tlab">Data / Read-model</div><div class="row"><div class="box">CQRS read projections (cross-back-end queries)</div><div class="box">DB-backed cache + TTL &middot; event-driven invalidation</div></div></div>
-            <div class="tier t-legacy"><div class="tlab">Legacy coexistence (strangler &rarr; sunset)</div><div class="row"><div class="box">WebMethods IS</div><div class="box">ChRIS routing</div><div class="box br">Thin HTTP boundary &middot; one crossing point</div></div></div>
-          </div>
-          <div class="rail">
-            <h5>Cross-cutting spine</h5>
-            <div class="ri">Idempotency keys</div>
-            <div class="ri">Transactional Outbox</div>
-            <div class="ri">Saga / compensation</div>
-            <div class="ri">Correlation ID + tracing</div>
-            <div class="ri">DLQ + replay</div>
-            <div class="ri">Ordering / partition keys</div>
-            <div class="ri">Schema &amp; contract governance</div>
-            <div class="ri">Security &amp; audit</div>
-          </div>
-        </div>
-        <div class="conn">&#x2193;</div>
-        <div class="actor hod" style="max-width:640px;">BACK-END SYSTEMS (HOD) &middot; systems of record &middot; legacy datastores</div>
-        <div class="cap">Design rule: a request should cross the fewest tiers that satisfy its semantics. Match the pattern to the tier, then pick the Boomi shape.</div>
-      </div>
-    </section>
-
-    <section class="section" id="canonical">
-      <div class="sec-title"><span class="sec-num">4</span> Canonical pattern consolidation</div>
-      <p>The ~25 legacy rows fold into eight canonical patterns; everything that currently distinguishes rows becomes a modifier applied on top.</p>
+      <div class="sec-title"><span class="sec-num">4</span> How the guidelines land on the target architecture</div>
       <div class="tbl-wrap">
         <table class="gt">
-          <thead><tr><th style="width:52px;">ID</th><th style="width:22%;">Canonical pattern</th><th>Absorbs (legacy rows)</th><th style="width:120px;">Status</th></tr></thead>
+          <thead><tr><th style="width:16%;">Guideline</th><th style="width:24%;">Tier it drives</th><th>What lives there</th></tr></thead>
           <tbody>
-            <tr><td class="c-id">K1</td><td><strong>Async Event Publish</strong></td><td>Simple / Transforming / Validated / Reliable / Orchestrated Publish; Async fire-and-forget</td><td><span class="tag target">Target</span></td></tr>
-            <tr><td class="c-id">K2</td><td><strong>Async Event Subscribe</strong></td><td>Simple / Transforming / Service-Oriented / Validated / Acknowledged / Orchestrated Subscribe; Async dependency-on-back-end-validation</td><td><span class="tag target">Target</span></td></tr>
-            <tr><td class="c-id">K3</td><td><strong>Async Request&ndash;Reply</strong></td><td>ChRIS Async Push-Response, Poll-Response, Semi-sync (202 + status resource; webhook or poll)</td><td><span class="tag target">Target</span></td></tr>
-            <tr><td class="c-id">K4</td><td><strong>Reliable Publish via Outbox</strong></td><td>Transactional Publish (the current TBD) + Reliable Publish</td><td><span class="tag target">Target</span></td></tr>
-            <tr><td class="c-id">K5</td><td><strong>Sync API (behind gateway)</strong></td><td>Service-Based Direct; Sync Submissions (P-101 / P-102) &mdash; gateway in front, Boomi behind</td><td><span class="tag target">Target</span></td></tr>
-            <tr><td class="c-id">K6</td><td><strong>Aggregated Read (read-model)</strong></td><td>Cross-back-end / Sync data request (P-105) served from a projection, not live fan-out</td><td><span class="tag target">Target</span></td></tr>
-            <tr><td class="c-id">K7</td><td><strong>Batch / Scheduled Processing</strong></td><td>Async batch processing; Consolidation; Scheduled Direct Transfer</td><td><span class="tag bridge">Bridge</span></td></tr>
-            <tr><td class="c-id">K8</td><td><strong>Bulk / File Transfer (MFT)</strong></td><td>Simple &amp; Scheduled Direct Transfer (P-116)</td><td><span class="tag bridge">Bridge &rarr; sunset</span></td></tr>
+            <tr><td class="c-id">G1</td><td>Channel / Experience</td><td>Dedicated API gateway (APIM / Apigee / Kong / AWS API GW): OAuth2/mTLS, throttling, quotas, dev portal, versioning. Contract-first OpenAPI.</td></tr>
+            <tr><td class="c-id">G1 / G2</td><td>Integration / Orchestration</td><td>Boomi iPaaS: orchestration, transformation, enrichment, routing, protocol mediation &mdash; inserted only where mediation adds value.</td></tr>
+            <tr><td class="c-id">G3</td><td>Event backbone</td><td>Modern broker (Event Streams integration-scoped, or Kafka/Solace/Event Hubs enterprise): durable pub/sub, replay, partitioned ordering.</td></tr>
+            <tr><td class="c-id">G2 / G3</td><td>Data / Read-model</td><td>CQRS read projections + DB-backed cache with TTL and event-driven invalidation &mdash; cross-back-end reads become a fast local query.</td></tr>
+            <tr><td class="c-id">G4 / G5</td><td>Legacy coexistence</td><td>WebMethods IS / ChRIS behind a thin HTTP boundary and Anti-Corruption adapters; strangler-fig sunset path.</td></tr>
+            <tr><td class="c-id">All</td><td>Cross-cutting spine</td><td>Idempotency, Outbox, Saga/compensation, correlation + tracing, DLQ + replay, schema/contract governance, security &amp; audit.</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="sub">Composable modifiers (applied to any canonical pattern)</p>
-      <p><strong>validate &middot; transform &middot; enrich &middot; route &middot; retry + DLQ &middot; idempotency key &middot; ordering/partition key &middot; compensate (saga) &middot; correlate &amp; trace.</strong> A pattern instance is then described as, e.g., &ldquo;K1 + validate + retry/DLQ + idempotency&rdquo; &mdash; which is exactly your old &ldquo;Reliable Validated Publish,&rdquo; but expressed as one pattern plus flags the governance board can reason about.</p>
     </section>
 
-    <section class="section" id="gaps">
-      <div class="sec-title"><span class="sec-num">5</span> Closing the named gaps</div>
-      <p class="sub">5.1 &nbsp;Transactional Publish (the TBD) &rarr; Outbox + Saga</p>
+    <section class="section" id="funnel">
+      <div class="sec-title"><span class="sec-num">5</span> Interface Modernisation Funnel (G4) &amp; Adapter / ACL (G5)</div>
+      <p class="sub">The funnel &mdash; applied to every legacy interface</p>
+      <ol class="olist">
+        <li><strong>Can it be a strategic API?</strong> If the system can expose/consume a contract-first REST API &rarr; modernise to K5 (or K3 if long-running). Preferred outcome under G1.</li>
+        <li><strong>If not an API, can it be an event?</strong> If it fits G3 (loose coupling, guaranteed delivery, multiple consumers, differing availability) &rarr; modernise to K1/K2 on the event backbone.</li>
+        <li><strong>If neither, adapt it.</strong> Wrap the legacy interface in an Adapter / ACL that exposes a strategic API/event outward while speaking the legacy protocol inward. Record a sunset trigger.</li>
+      </ol>
+      <div class="note"><strong>Anti-lift-and-shift rule.</strong> An interface is only re-created as-is on the new platform when the funnel has explicitly rejected both API and event modernisation and an adapter is not viable &mdash; and that rejection is documented against the pattern. The default is to modernise, not to move.</div>
+      <p class="sub">Adapter / Anti-Corruption Layer &mdash; design rules</p>
       <ul class="blist">
-        <li><strong>Outbox:</strong> in the same local DB transaction that changes state, insert the event into an outbox table. A relay/poller (or CDC) publishes it to the broker at-least-once. State change and intent-to-publish commit atomically; the publish is decoupled and retryable &mdash; directly answering the Event Streams produce-side retry asymmetry.</li>
-        <li><strong>Saga:</strong> for a business transaction spanning multiple systems, model it as a sequence of local transactions with explicit compensating actions. No global rollback &mdash; deliberate, auditable compensation, which the estate needs for traceability anyway.</li>
+        <li>Isolate legacy protocols: consumers see only strategic APIs/events, never SOAP/WebMethods/ChRIS specifics.</li>
+        <li>Translate legacy models to strategic contracts inside the adapter; legacy field shapes must not leak into canonical schemas.</li>
+        <li>Keep the crossing thin: one sanctioned boundary (generic HTTP client to WebMethods IS), not a native legacy connector.</li>
+        <li>Treat as transitional: every adapter has an owner, a sunset trigger, and a line on the adapter-debt register.</li>
       </ul>
-      <p class="sub">5.2 &nbsp;Cross-back-end aggregation &rarr; CQRS read model</p>
-      <p>Replace live synchronous fan-out (P-105) with a materialised projection kept current by events. Reads hit one local store; writes propagate asynchronously. Availability stops being the product of N back-ends, latency stops being their sum, and &ldquo;polling protection&rdquo; is no longer load-bearing.</p>
-      <p class="sub">5.3 &nbsp;Idempotency, ordering &amp; replay (make them mandatory)</p>
-      <ul class="blist">
-        <li>Every consumer is idempotent by design (natural key or dedicated idempotency key); replaying the same event is safe.</li>
-        <li>Ordering is guaranteed only within a partition key (e.g. taxpayer/reference), never globally &mdash; design correlation accordingly.</li>
-        <li>Poison messages route to a DLQ with enough context to replay; replay is a first-class, tested operation, not a fire drill.</li>
-      </ul>
-      <p class="sub">5.4 &nbsp;Observability &amp; correlation</p>
-      <p>A correlation ID is minted at the ChRIS/gateway edge and propagated through every Boomi process and every back-end call, with end-to-end distributed tracing. For this estate that is an audit and SLA capability, not a nice-to-have.</p>
-    </section>
-
-    <section class="section" id="fit">
-      <div class="sec-title"><span class="sec-num">6</span> Where Boomi is &mdash; and isn&rsquo;t &mdash; the right tool</div>
-      <div class="ua-grid">
-        <div class="ua-card use">
-          <h4>&#x2713; Boomi is an excellent fit</h4>
-          <ul>
-            <li>Orchestration, transformation, enrichment, routing</li>
-            <li>Protocol mediation &amp; the thin legacy (WM/ChRIS) boundary</li>
-            <li>MFT and B2B / third-party file exchange</li>
-            <li>Integration-scoped eventing &amp; moderate-throughput pub/sub</li>
-            <li>Connector-rich A2A integration across the back-end estate</li>
-          </ul>
-        </div>
-        <div class="ua-card avoid">
-          <h4>&#x2717; Push it elsewhere</h4>
-          <ul>
-            <li>High-TPS synchronous API gateway &rarr; dedicated API management</li>
-            <li>Enterprise event backbone at scale &rarr; dedicated broker</li>
-            <li>Ultra-low-latency (&lt;50ms) request paths &rarr; edge / serverless</li>
-            <li>Large-volume analytical ETL/ELT &rarr; data platform + CDC</li>
-            <li>Long-term state / read models &rarr; owned datastore, not process cache</li>
-          </ul>
-        </div>
-      </div>
-      <div class="note"><strong>Honest framing.</strong> This is not an argument against Boomi &mdash; it is an argument for Boomi as a first-class citizen of a portfolio rather than the single hammer for every nail. The catalogue is strongest when each pattern says both &ldquo;here&rsquo;s the Boomi shape&rdquo; and &ldquo;&hellip;and here&rsquo;s the tier that should really own this.&rdquo;</div>
     </section>
 
     <section class="section" id="next">
-      <div class="sec-title"><span class="sec-num">7</span> Recommended next moves</div>
+      <div class="sec-title"><span class="sec-num">6</span> Governance guardrails and next moves</div>
       <ol class="olist">
-        <li>Re-label every catalogue row with a strategic status &mdash; Target / Bridge / Avoid &mdash; separate from &ldquo;implementable in Boomi.&rdquo;</li>
-        <li>Refactor the catalogue to the 8 canonical patterns + modifiers; keep the legacy names only as an index into them.</li>
-        <li>Resolve the Transactional Publish TBD with an Outbox + Saga reference pattern (candidate P-126 / P-127).</li>
-        <li>Take an explicit decision on the event backbone: Boomi Event Streams (integration-scoped) vs a dedicated broker (enterprise).</li>
-        <li>Draw the API-gateway boundary: confirm P-101 / P-102 sit behind a dedicated gateway, not as the gateway.</li>
-        <li>Pilot one CQRS read model for a real cross-back-end query and measure availability/latency vs the synchronous P-105 baseline.</li>
+        <li>Publish the selection framework (&sect;2 + the decision tree) as the mandated route to choosing a pattern &mdash; so G2 is enforced, not aspirational.</li>
+        <li>Add an &ldquo;API-First, not sync-first&rdquo; note to G1: default sync for interactive request/response; explicit hand-off to G3 for async; a &ldquo;does this need the iPaaS?&rdquo; gate.</li>
+        <li>Adopt AsyncAPI alongside OpenAPI so events are first-class &ldquo;APIs&rdquo; under the API-First regime.</li>
+        <li>Stand up the adapter-debt register with sunset triggers; review it each governance cycle.</li>
+        <li>Formalise K3 (Async Request&ndash;Reply: 202 + status resource) and K4 (Outbox) as reference patterns &mdash; these are where G3 reliability is won or lost.</li>
       </ol>
-      <div class="warn"><strong>Note.</strong> These positions are deliberately assertive so they can be tested in architecture review. Where a challenge doesn&rsquo;t hold for a specific flow, that exception is itself a useful design decision to record against the pattern.</div>
+      <div class="warn"><strong>Note.</strong> The guidelines are sound; the value is in making them operational and testable. Where a specific flow contradicts a guideline, record the exception against the pattern &mdash; a documented exception is itself good governance.</div>
     </section>
   </main>
 </div>
 
 <footer>
-  <span>Boomi Integration Catalogue &middot; Strategic companion to the iPaaS pattern set</span>
-  <span>Working paper v0.1 &middot; July 2026 &middot; <a href="assets/strategic-integration-direction.docx">Download the Word paper</a></span>
+  <span>Boomi Integration Catalogue &middot; Modernisation architecture from the guidelines</span>
+  <span>Working paper v0.1 &middot; July 2026 &middot; <a href="assets/integration-modernisation-architecture.docx">Download the Word paper</a></span>
 </footer>
 
 <script>
