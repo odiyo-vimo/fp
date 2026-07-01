@@ -3,515 +3,296 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>P-116 · File-Based MFT | Integration Catalogue</title>
+  <title>Strategic Integration Direction | Integration Catalogue</title>
   <style>
     :root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--green:#00b388;--green-dim:#1a3a30;--green-dark:#003A2A;--teal:#0ea5e9;--teal-dim:#0c2a3a;--amber:#f59e0b;--amber-dim:#2d1f00;--purple:#a78bfa;--purple-dim:#1e1533;--red:#f87171;--red-dim:#2d1010;}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
     .dl-bar{background:var(--green-dark);border-bottom:2px solid var(--green);padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:200;}
     .dl-bar-label{font-size:13px;color:#a0d9c5;font-weight:500;}.dl-bar-label strong{color:#fff;}
+    .dl-actions{display:flex;gap:10px;flex-wrap:wrap;}
     .dl-btn{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;font-size:14px;font-weight:700;padding:9px 22px;border-radius:6px;text-decoration:none;box-shadow:0 2px 8px rgba(0,179,136,.35);transition:background .2s,transform .1s;white-space:nowrap;}
     .dl-btn:hover{background:#009972;transform:translateY(-1px);}
+    .dl-btn.alt{background:var(--surface2);border:1px solid var(--green);color:var(--green);box-shadow:none;}
+    .dl-btn.alt:hover{background:var(--green-dim);}
     header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:45px;z-index:100;}
     .logo-band{background:var(--green);color:#fff;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
     .hdr-left{display:flex;align-items:center;gap:14px;}.hdr-title{font-size:18px;font-weight:700;color:#e6edf3;}.hdr-sub{font-size:12px;color:var(--muted);margin-top:2px;}.hdr-meta{font-size:12px;color:var(--muted);text-align:right;}
     .pattern-badge{background:var(--green-dim);border:1px solid var(--green);color:var(--green);font-size:12px;font-weight:700;padding:3px 10px;border-radius:4px;}
     .page{display:flex;max-width:1340px;margin:0 auto;}
-    nav{width:225px;min-width:200px;padding:20px 0 20px 20px;position:sticky;top:110px;height:calc(100vh - 110px);overflow-y:auto;flex-shrink:0;}
+    nav{width:235px;min-width:205px;padding:20px 0 20px 20px;position:sticky;top:110px;height:calc(100vh - 110px);overflow-y:auto;flex-shrink:0;}
     nav ul{list-style:none;}nav li+li{margin-top:1px;}
     nav a{display:block;padding:6px 12px;border-radius:5px;font-size:12px;color:var(--muted);text-decoration:none;transition:all .15s;border-left:2px solid transparent;}
     nav a:hover{color:var(--text);background:var(--surface2);}nav a.active{color:var(--green);background:var(--green-dim);border-left-color:var(--green);}
     nav .nav-head{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:10px 12px 4px;}
     main{flex:1;padding:28px 32px;min-width:0;}
-    .section{margin-bottom:50px;scroll-margin-top:115px;}
+    .section{margin-bottom:48px;scroll-margin-top:115px;}
     .sec-title{font-size:21px;font-weight:700;color:#e6edf3;padding-bottom:10px;margin-bottom:16px;border-bottom:2px solid var(--green);display:flex;align-items:center;gap:10px;}
     .sec-num{background:var(--green);color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:4px;}
     .sub{font-size:15px;font-weight:600;color:#9dd8c0;margin:20px 0 8px;}
     p{font-size:14px;color:var(--text);margin-bottom:10px;line-height:1.75;}
+    .lead{font-size:15px;color:#d7e2dc;}
     .note{background:var(--green-dim);border:1px solid #1f4a38;border-left:3px solid var(--green);border-radius:6px;padding:13px 17px;font-size:13px;color:var(--text);margin:14px 0;}
     .note strong{color:var(--green);}
     .warn{background:var(--amber-dim);border:1px solid #3d2900;border-left:3px solid var(--amber);border-radius:6px;padding:13px 17px;font-size:13px;color:var(--text);margin:14px 0;}
     .warn strong{color:var(--amber);}
-    .spec-tbl{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;}
-    .spec-tbl tr:nth-child(odd) td{background:var(--surface2);}.spec-tbl tr:nth-child(even) td{background:var(--surface);}
-    .spec-tbl td{padding:8px 14px;border:1px solid var(--border);vertical-align:top;}
-    .spec-tbl td:first-child{font-weight:700;color:#9dd8c0;width:200px;white-space:nowrap;}
+    .instr{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:6px;padding:14px 18px;margin:14px 0;}
+    .instr h4{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#7fd4f5;margin-bottom:8px;}
+    .instr ol{margin-left:18px;}.instr li{font-size:12.5px;color:var(--muted);margin-bottom:5px;line-height:1.55;}
     .tbl-wrap{overflow-x:auto;margin:14px 0;}
     table.gt{width:100%;border-collapse:collapse;font-size:13px;}
-    table.gt thead th{background:var(--green-dark);color:#fff;padding:9px 14px;text-align:left;font-size:12px;font-weight:600;letter-spacing:.3px;}
+    table.gt thead th{background:var(--green-dark);color:#fff;padding:9px 14px;text-align:left;font-size:12px;font-weight:600;letter-spacing:.3px;vertical-align:top;}
     table.gt tbody tr:nth-child(odd){background:var(--surface);}table.gt tbody tr:nth-child(even){background:var(--surface2);}
     table.gt tbody tr:hover{background:var(--green-dim);}
-    table.gt td{padding:8px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;}
-    table.gt td:first-child{font-weight:600;color:#9dd8c0;}
+    table.gt td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;line-height:1.55;}
+    table.gt td.c-id{font-weight:700;color:var(--green);white-space:nowrap;}
+    .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;white-space:nowrap;}
+    .tag.target{background:var(--green-dim);color:var(--green);border:1px solid #1f4a38;}
+    .tag.bridge{background:var(--amber-dim);color:var(--amber);border:1px solid #3d2900;}
+    .tag.avoid{background:var(--red-dim);color:var(--red);border:1px solid #3d1515;}
+    .blist{margin:10px 0 10px 20px;}.blist li{font-size:14px;color:var(--text);margin-bottom:7px;line-height:1.65;}.blist li::marker{color:var(--green);}
+    .olist{margin:10px 0 10px 20px;}.olist li{font-size:14px;color:var(--text);margin-bottom:7px;line-height:1.65;}.olist li::marker{color:var(--green);font-weight:700;}
     .ua-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
     .ua-card{border-radius:8px;padding:16px 18px;}.ua-card.use{background:var(--green-dim);border:1px solid #1f4a38;}.ua-card.avoid{background:var(--red-dim);border:1px solid #3d1515;}
     .ua-card h4{font-size:13px;font-weight:700;margin-bottom:10px;}.ua-card.use h4{color:var(--green);}.ua-card.avoid h4{color:var(--red);}
     .ua-card ul{margin-left:16px;}.ua-card li{font-size:13px;color:var(--text);margin-bottom:6px;line-height:1.55;}
-    .blist{margin:10px 0 10px 20px;}.blist li{font-size:14px;color:var(--text);margin-bottom:6px;line-height:1.65;}.blist li::marker{color:var(--green);}
-    .olist{margin:10px 0 10px 20px;}.olist li{font-size:14px;color:var(--text);margin-bottom:6px;line-height:1.65;}.olist li::marker{color:var(--green);font-weight:700;}
-    .arch-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin:16px 0;overflow-x:auto;}
-    .arch-wrap h4{font-size:12px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;}
-    .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:14px 0;}
-    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;transition:border-color .2s;}
-    .feat-card:hover{border-color:var(--green);}.feat-card h5{font-size:13px;font-weight:700;color:var(--green);margin-bottom:5px;}
-    .feat-card p{font-size:12px;color:var(--muted);margin:0;line-height:1.55;}
-    footer{background:var(--surface);border-top:1px solid var(--border);padding:14px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-top:40px;}
+    .arch{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;margin:18px 0;}
+    .arch .actor{border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;text-align:center;margin:0 auto;}
+    .actor.client{background:var(--teal-dim);border:1px solid var(--teal);color:#7fd4f5;}
+    .actor.hod{background:var(--red-dim);border:1px solid #5a2020;color:#f5a3a3;}
+    .conn{text-align:center;color:var(--muted);font-size:16px;line-height:1;margin:5px 0;}
+    .arch-body{display:flex;gap:14px;margin:8px 0;}
+    .tiers{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0;}
+    .tier{border-radius:8px;padding:10px 12px;border:1px solid var(--border);background:var(--surface2);}
+    .tier .tlab{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;}
+    .tier .row{display:flex;gap:7px;flex-wrap:wrap;}
+    .tier .box{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:6px 9px;font-size:11px;color:var(--text);flex:1;min-width:110px;line-height:1.4;}
+    .tier.t-channel{border-color:#0e7490;}.tier.t-channel .tlab{color:#38bdf8;}
+    .tier.t-boomi{border-color:var(--green);}.tier.t-boomi .tlab{color:var(--green);}
+    .tier.t-event{border-color:#7c3aed;}.tier.t-event .tlab{color:var(--purple);}
+    .tier.t-data{border-color:#b45309;}.tier.t-data .tlab{color:var(--amber);}
+    .tier.t-legacy{border-color:#6b7280;}.tier.t-legacy .tlab{color:#9aa4b0;}
+    .box.br{border-color:var(--red);color:#f5a3a3;}
+    .rail{width:190px;flex-shrink:0;background:#00291e;border:1px solid var(--green-dark);border-radius:8px;padding:11px 10px;}
+    .rail h5{font-size:10px;font-weight:700;letter-spacing:1px;color:#7fe9cc;text-align:center;margin-bottom:8px;}
+    .rail .ri{background:#0b3a2c;border:1px solid #0e7a5c;border-radius:5px;padding:5px 8px;font-size:10.5px;color:#eaf6f1;margin-bottom:5px;text-align:center;line-height:1.35;}
+    .cap{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;}
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:14px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-top:40px;flex-wrap:wrap;gap:8px;}
     footer a{color:var(--green);text-decoration:none;}
+    @media(max-width:840px){nav{display:none;}.ua-grid{grid-template-columns:1fr;}.arch-body{flex-direction:column;}.rail{width:auto;}}
   </style>
 </head>
 <body>
 
 <div class="dl-bar">
-  <span class="dl-bar-label">&#x1F4C4; <strong>Document available for download:</strong>&nbsp; P-116 File-Based MFT &mdash; Full Pattern Entry (Word)</span>
-  <a class="dl-btn" href="assets/p116-mft-pattern.docx" download="P-116-File-Based-MFT-Pattern.docx">&#x2B07;&nbsp; Download Word Doc</a>
+  <span class="dl-bar-label">&#x1F4C4; <strong>Documents generated for this task:</strong>&nbsp; strategic paper (Word) &amp; target architecture (draw.io)</span>
+  <span class="dl-actions">
+    <a class="dl-btn" href="assets/strategic-integration-direction.docx" download="Strategic-Integration-Direction.docx">&#x2B07;&nbsp; Strategic Paper (Word)</a>
+    <a class="dl-btn alt" href="assets/target-reference-architecture.drawio" download="Target-Reference-Architecture.drawio">&#x2B07;&nbsp; Architecture (draw.io)</a>
+  </span>
 </div>
 
 <header>
   <div class="hdr-left">
     <div class="logo-band">Integration Catalogue</div>
     <div>
-      <div class="hdr-title">P-116 &middot; File-Based Managed File Transfer (MFT)</div>
-      <div class="hdr-sub">File Transfer | Scheduled | Bulk Exchange &middot; Version 1.0 &middot; June 2026</div>
+      <div class="hdr-title">Strategic Integration Direction</div>
+      <div class="hdr-sub">Beyond a like-for-like legacy &rarr; Boomi iPaaS mapping &middot; Working paper v0.1 &middot; July 2026</div>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
-    <span class="pattern-badge">P-116</span>
-    <div class="hdr-meta">Boomi Integration Catalogue<br>Integration Patterns for iPaaS</div>
+    <span class="pattern-badge">STRATEGY</span>
+    <div class="hdr-meta">Boomi Integration Catalogue<br>Companion to the iPaaS pattern set</div>
   </div>
 </header>
 
 <div class="page">
-<nav id="sidenav">
-  <div class="nav-head">P-116 Contents</div>
-  <ul>
-    <li><a href="#spec">Specification</a></li>
-    <li><a href="#intent">1. Intent</a></li>
-    <li><a href="#context">2. Context &amp; Problem</a></li>
-    <li><a href="#solution">3. Solution</a></li>
-    <li><a href="#architecture">4. Architecture</a></li>
-    <li><a href="#triggers">5. Triggers &amp; Connectors</a></li>
-    <li><a href="#validation">6. File Integrity &amp; Validation</a></li>
-    <li><a href="#encryption">7. Encryption</a></li>
-    <li><a href="#errors">8. Error Handling &amp; Retry</a></li>
-    <li><a href="#audit">9. Audit Trail</a></li>
-    <li><a href="#useavoid">10. When to Use / Avoid</a></li>
-    <li><a href="#features">11. Boomi Features</a></li>
-    <li><a href="#xref">12. Cross-References</a></li>
-  </ul>
-</nav>
+  <nav>
+    <div class="nav-head">On this page</div>
+    <ul>
+      <li><a href="#thesis" class="active">1 · Core thesis</a></li>
+      <li><a href="#challenges">2 · Challenges &amp; answers</a></li>
+      <li><a href="#arch">3 · Target architecture</a></li>
+      <li><a href="#canonical">4 · Canonical patterns</a></li>
+      <li><a href="#gaps">5 · Closing the gaps</a></li>
+      <li><a href="#fit">6 · Where Boomi fits</a></li>
+      <li><a href="#next">7 · Next moves</a></li>
+    </ul>
+  </nav>
 
-<main>
-
-<div class="section" id="spec">
-  <div class="sec-title"><span class="sec-num">Spec</span> Pattern Specification</div>
-  <table class="spec-tbl">
-    <tr><td>Pattern ID</td><td>P-116</td></tr>
-    <tr><td>Pattern Name</td><td>File-Based Managed File Transfer (MFT)</td></tr>
-    <tr><td>Category</td><td>File Transfer | Scheduled</td></tr>
-    <tr><td>Sub-category</td><td>Bulk / Batch Exchange</td></tr>
-    <tr><td>Complexity</td><td>Medium-High</td></tr>
-    <tr><td>Atom Target</td><td>Molecule (HA) or Cloud Atom with shared FS</td></tr>
-    <tr><td>Primary Connector</td><td>Boomi MFT Connector &middot; SFTP V2 &middot; FTP V2 &middot; Disk V2</td></tr>
-    <tr><td>Supporting Connectors</td><td>Database (audit), HTTP Client (notification), Mail (alerting)</td></tr>
-    <tr><td>Triggers</td><td>Scheduled (cron) &middot; File Arrival Listener &middot; Manual / API Trigger</td></tr>
-    <tr><td>Direction</td><td>Inbound (collect from source) &middot; Outbound (deliver to target) &middot; Relay (both)</td></tr>
-    <tr><td>Data Volume</td><td>High &mdash; thousands to millions of records per file</td></tr>
-    <tr><td>Latency Profile</td><td>Near-real-time on arrival trigger; scheduled batch is minutes to hours</td></tr>
-    <tr><td>Security Controls</td><td>PGP/GPG encrypt/decrypt &middot; SSH key auth &middot; FTPS/TLS &middot; Checksum validation &middot; IP whitelist</td></tr>
-    <tr><td>Error Strategy</td><td>Dead-letter folder &middot; Retry with exponential back-off &middot; Alert on threshold</td></tr>
-    <tr><td>Audit</td><td>DB row per file: filename, source, target, checksum, row count, status, timestamps</td></tr>
-    <tr><td>Related Patterns</td><td>P-117 &middot; P-118 &middot; P-120 &middot; P-101 &middot; P-121</td></tr>
-  </table>
-</div>
-
-<div class="section" id="intent">
-  <div class="sec-title"><span class="sec-num">1</span> Intent</div>
-  <p>P-116 addresses <strong>high-volume, scheduled or managed bulk file exchange</strong> where per-record API calls would be prohibitively expensive, wasteful, or simply unavailable. Typical use cases include overnight reconciliation files, statutory reporting extracts (RTI, CIS, SA), bulk uploads from third-party providers, and file transfers from taxpayers or downstream consumers.</p>
-  <p>The pattern differs from a plain SFTP connector call in that it adds operational concerns: <strong>integrity verification via checksum, row-count validation, PGP encryption/decryption, retry, archiving, and a full audit trail</strong> &mdash; the features that distinguish managed transfer from raw file copy.</p>
-  <div class="note"><strong>Key principle:</strong> The iPaaS is the broker, not the endpoint. MFT places the iPaaS between sender and receiver, enforcing validation and governance without either party needing to be available simultaneously.</div>
-</div>
-
-<div class="section" id="context">
-  <div class="sec-title"><span class="sec-num">2</span> Context &amp; Problem</div>
-  <p>Large datasets cannot be passed record-by-record through synchronous APIs without overwhelming rate limits, incurring excessive latency, or exceeding payload caps. Legacy government systems only accept bulk files over SFTP or MFT protocols. Third-party providers produce CSV/XML extracts that must be ingested on a schedule.</p>
-  <p>Without a managed pattern, ad hoc SFTP scripts typically have no:</p>
-  <ul class="blist">
-    <li>Integrity checking &mdash; truncated or corrupted files go undetected</li>
-    <li>Retry logic &mdash; transient network failure causes silent data loss</li>
-    <li>Audit trail &mdash; no record of what was transferred, when, or to whom</li>
-    <li>Encryption lifecycle &mdash; PGP keys expire, files sent in clear text</li>
-    <li>Alerting &mdash; nobody knows a file was missed until the next business day</li>
-  </ul>
-</div>
-
-<div class="section" id="solution">
-  <div class="sec-title"><span class="sec-num">3</span> Solution</div>
-  <p>The P-116 pattern structures file transfer as a governed pipeline with five logical stages:</p>
-  <ol class="olist">
-    <li><strong>Acquire</strong> &mdash; collect the file from source (SFTP, FTPS, Boomi MFT, Disk, AS2)</li>
-    <li><strong>Validate</strong> &mdash; verify checksum (MD5/SHA-256), row count, file format, and mandatory fields</li>
-    <li><strong>Transform</strong> &mdash; decrypt (PGP), parse (CSV/XML/fixed-width), map to canonical or target schema</li>
-    <li><strong>Deliver</strong> &mdash; route to one or more targets (DB, REST API, downstream SFTP, Boomi MFT outbound)</li>
-    <li><strong>Archive &amp; Audit</strong> &mdash; move source file to archive folder, write audit DB record, send confirmation</li>
-  </ol>
-</div>
-
-<div class="section" id="architecture">
-  <div class="sec-title"><span class="sec-num">4</span> Architecture Diagram</div>
-  <div class="arch-wrap">
-    <h4>P-116 &middot; Boomi Process Flow &mdash; File-Based MFT Pipeline</h4>
-    <svg viewBox="0 0 980 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:980px;display:block;margin:0 auto;">
-      <defs>
-        <marker id="ah" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#00b388"/></marker>
-        <marker id="ae" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f87171"/></marker>
-        <marker id="at" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#0ea5e9"/></marker>
-      </defs>
-      <rect x="0" y="0" width="980" height="480" fill="#0d1117" rx="8"/>
-      <!-- Title bar -->
-      <rect x="4" y="4" width="972" height="26" rx="4" fill="#003A2A"/>
-      <text x="490" y="22" fill="#00b388" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2" font-family="Arial,sans-serif">P-116 &middot; FILE-BASED MANAGED FILE TRANSFER (MFT) &middot; BOOMI PROCESS PIPELINE</text>
-      <!-- Stage lanes -->
-      <rect x="4"   y="34" width="140" height="340" rx="4" fill="#0c2a3a" opacity=".55"/>
-      <rect x="148" y="34" width="130" height="340" rx="4" fill="#1a3a30" opacity=".45"/>
-      <rect x="282" y="34" width="135" height="340" rx="4" fill="#1e1533" opacity=".45"/>
-      <rect x="421" y="34" width="145" height="340" rx="4" fill="#1a3a30" opacity=".45"/>
-      <rect x="570" y="34" width="170" height="340" rx="4" fill="#0c2a3a" opacity=".45"/>
-      <rect x="744" y="34" width="232" height="340" rx="4" fill="#2d1010" opacity=".35"/>
-      <!-- Stage labels -->
-      <text x="74"  y="52" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">ACQUIRE</text>
-      <text x="213" y="52" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">VALIDATE</text>
-      <text x="349" y="52" fill="#a78bfa" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">TRANSFORM</text>
-      <text x="493" y="52" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">DELIVER</text>
-      <text x="655" y="52" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">ARCHIVE &amp; AUDIT</text>
-      <text x="860" y="52" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">ERROR BRANCH</text>
-
-      <!-- ACQUIRE nodes -->
-      <rect x="12"  y="62" width="124" height="44" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
-      <text x="74" y="80" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">TRIGGER</text>
-      <text x="74" y="93" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Schedule / MFT Route / Listener</text>
-
-      <rect x="12"  y="120" width="124" height="44" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
-      <text x="74" y="137" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ACQUIRE FILE</text>
-      <text x="74" y="150" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">MFT Get / SFTP V2 / Disk V2</text>
-
-      <rect x="12"  y="178" width="124" height="38" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-      <text x="74" y="194" fill="#c9d1d9" font-size="8" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">SET METADATA DDPs</text>
-      <text x="74" y="207" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">filename &middot; source &middot; timestamp</text>
-
-      <!-- VALIDATE nodes -->
-      <rect x="152" y="62" width="122" height="44" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
-      <text x="213" y="79" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">CHECKSUM</text>
-      <text x="213" y="92" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">MD5/SHA-256 via Groovy</text>
-
-      <rect x="152" y="120" width="122" height="44" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
-      <text x="213" y="137" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ROW COUNT</text>
-      <text x="213" y="150" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Header/Trailer vs split count</text>
-
-      <rect x="152" y="178" width="122" height="38" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1"/>
-      <text x="213" y="194" fill="#00b388" font-size="8" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">SCHEMA VALIDATION</text>
-      <text x="213" y="207" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">XSD / CSV field types</text>
-
-      <!-- TRANSFORM nodes -->
-      <rect x="286" y="62" width="127" height="44" rx="5" fill="#1e1533" stroke="#a78bfa" stroke-width="1.5"/>
-      <text x="349" y="79" fill="#a78bfa" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DECRYPT (PGP)</text>
-      <text x="349" y="92" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Bouncy Castle / Groovy Script</text>
-
-      <rect x="286" y="120" width="127" height="44" rx="5" fill="#1e1533" stroke="#a78bfa" stroke-width="1.5"/>
-      <text x="349" y="137" fill="#a78bfa" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">PARSE &amp; SPLIT</text>
-      <text x="349" y="150" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Data Process / CSV / XML</text>
-
-      <rect x="286" y="178" width="127" height="38" rx="5" fill="#1e1533" stroke="#a78bfa" stroke-width="1"/>
-      <text x="349" y="194" fill="#a78bfa" font-size="8" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">MAP TO SCHEMA</text>
-      <text x="349" y="207" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Map shape &middot; canonical / target</text>
-
-      <!-- DELIVER nodes -->
-      <rect x="425" y="62" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
-      <text x="493" y="77" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ROUTE SHAPE</text>
-      <text x="493" y="90" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">By type / partner / content</text>
-
-      <rect x="425" y="112" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
-      <text x="493" y="126" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DELIVER &rarr; DB</text>
-      <text x="493" y="139" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Database Connector (JDBC batch)</text>
-
-      <rect x="425" y="162" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
-      <text x="493" y="176" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DELIVER &rarr; REST API</text>
-      <text x="493" y="189" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">HTTP Client (chunked batches)</text>
-
-      <rect x="425" y="212" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
-      <text x="493" y="226" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DELIVER &rarr; MFT/SFTP</text>
-      <text x="493" y="239" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Boomi MFT Send / SFTP V2</text>
-
-      <!-- ARCHIVE & AUDIT nodes -->
-      <rect x="574" y="62" width="162" height="36" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
-      <text x="655" y="76" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ARCHIVE FILE</text>
-      <text x="655" y="89" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">SFTP V2 Move &rarr; /archive/YYYY-MM-DD/</text>
-
-      <rect x="574" y="112" width="162" height="36" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
-      <text x="655" y="126" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">AUDIT INSERT</text>
-      <text x="655" y="139" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">DB &rarr; file_transfer_audit table</text>
-
-      <rect x="574" y="162" width="162" height="36" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
-      <text x="655" y="176" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">NOTIFY / CONFIRM</text>
-      <text x="655" y="189" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Mail / Webhook / Event Streams</text>
-
-      <!-- ERROR nodes -->
-      <rect x="748" y="62" width="220" height="36" rx="5" fill="#2d1010" stroke="#f87171" stroke-width="1.5"/>
-      <text x="858" y="76" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DEAD-LETTER</text>
-      <text x="858" y="89" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Write to /deadletter/ (SFTP/Disk)</text>
-
-      <rect x="748" y="112" width="220" height="36" rx="5" fill="#2d1010" stroke="#f87171" stroke-width="1.5"/>
-      <text x="858" y="126" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">RETRY (exp back-off)</text>
-      <text x="858" y="139" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Try/Catch &middot; 2min / 8min &middot; DDP counter</text>
-
-      <rect x="748" y="162" width="220" height="36" rx="5" fill="#2d1010" stroke="#f87171" stroke-width="1.5"/>
-      <text x="858" y="176" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ALERT OPS</text>
-      <text x="858" y="189" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Mail Connector + Audit row: FAILED</text>
-
-      <!-- Happy-path arrows -->
-      <line x1="74"  y1="106" x2="74"  y2="119" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
-      <line x1="74"  y1="164" x2="74"  y2="177" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
-      <line x1="136" y1="198" x2="151" y2="84"  stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="213" y1="106" x2="213" y2="119" stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="213" y1="164" x2="213" y2="177" stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="274" y1="198" x2="285" y2="84"  stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="349" y1="106" x2="349" y2="119" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="349" y1="164" x2="349" y2="177" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="413" y1="198" x2="424" y2="80"  stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="493" y1="98"  x2="493" y2="111" stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
-      <line x1="510" y1="98"  x2="540" y2="161" stroke="#00b388" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah)"/>
-      <line x1="476" y1="98"  x2="450" y2="211" stroke="#00b388" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah)"/>
-      <line x1="562" y1="148" x2="573" y2="80"  stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
-      <line x1="655" y1="98"  x2="655" y2="111" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
-      <line x1="655" y1="148" x2="655" y2="161" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
-
-      <!-- Error arrows -->
-      <line x1="274" y1="84" x2="747" y2="80"  stroke="#f87171" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ae)"/>
-      <line x1="562" y1="130" x2="747" y2="130" stroke="#f87171" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ae)"/>
-      <line x1="858" y1="148" x2="858" y2="161" stroke="#f87171" stroke-width="1.5" marker-end="url(#ae)"/>
-
-      <!-- Source/Target boxes -->
-      <rect x="4"   y="384" width="140" height="56" rx="5" fill="#0c1a3a" stroke="#0ea5e9" stroke-width="1" stroke-dasharray="4,3"/>
-      <text x="74" y="401" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">SOURCE SYSTEMS</text>
-      <text x="74" y="414" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">SFTP Server &middot; Boomi MFT</text>
-      <text x="74" y="426" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Disk / FTP / AS2 Partner</text>
-
-      <rect x="574" y="384" width="162" height="56" rx="5" fill="#1a1a00" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3"/>
-      <text x="655" y="401" fill="#f59e0b" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">TARGET SYSTEMS</text>
-      <text x="655" y="414" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Database (JDBC) &middot; REST API</text>
-      <text x="655" y="426" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Downstream SFTP / MFT Route</text>
-
-      <!-- Connecting source to trigger -->
-      <line x1="74" y1="384" x2="74" y2="280" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#at)"/>
-      <line x1="655" y1="384" x2="655" y2="199" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3"/>
-
-      <!-- Legend -->
-      <rect x="148" y="386" width="420" height="50" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
-      <text x="160" y="401" fill="#8b949e" font-size="9" font-weight="700" font-family="Arial,sans-serif">LEGEND</text>
-      <line x1="210" y1="397" x2="240" y2="397" stroke="#0ea5e9" stroke-width="2"/>
-      <text x="245" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Acquire</text>
-      <line x1="295" y1="397" x2="325" y2="397" stroke="#00b388" stroke-width="2"/>
-      <text x="330" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Happy path</text>
-      <line x1="400" y1="397" x2="430" y2="397" stroke="#a78bfa" stroke-width="2"/>
-      <text x="435" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Transform</text>
-      <line x1="487" y1="397" x2="517" y2="397" stroke="#f87171" stroke-width="2" stroke-dasharray="5,3"/>
-      <text x="522" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Error path</text>
-      <line x1="210" y1="421" x2="240" y2="421" stroke="#00b388" stroke-width="2" stroke-dasharray="4,3"/>
-      <text x="245" y="425" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Fan-out delivery</text>
-      <line x1="340" y1="421" x2="370" y2="421" stroke="#0ea5e9" stroke-width="2"/>
-      <text x="375" y="425" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Archive &amp; audit</text>
-    </svg>
-  </div>
-
-  <div class="sub">Process Stage Reference</div>
-  <div class="tbl-wrap">
-    <table class="gt">
-      <thead><tr><th>#</th><th>Stage</th><th>Shape / Connector</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Trigger</td><td>Scheduled / MFT Source Route / SFTP Listener</td><td>Cron for batch windows; MFT trigger fires on partner upload; Molecule recommended for listeners</td></tr>
-        <tr><td>2</td><td>Acquire</td><td>SFTP V2 / Boomi MFT (Get) / Disk V2 / FTP V2</td><td>Set Dynamic Document Properties: original_filename, source_path, acquired_timestamp</td></tr>
-        <tr><td>3</td><td>Decrypt</td><td>Custom Script (Groovy + Bouncy Castle PGP)</td><td>Only if file is PGP-encrypted. Passphrase as Boomi Encrypted Process Property</td></tr>
-        <tr><td>4</td><td>Validate &mdash; Checksum</td><td>Custom Script: compute MD5/SHA-256; compare to companion file or manifest</td><td>Fail &rarr; Dead-letter + alert; abort. Log both values in audit record</td></tr>
-        <tr><td>5</td><td>Validate &mdash; Row Count</td><td>Data Process Split &rarr; count; compare to header/trailer</td><td>Mismatch &rarr; quarantine + alert. Never deliver partial data</td></tr>
-        <tr><td>6</td><td>Parse &amp; Map</td><td>Data Process (Split by record) &rarr; Map shape</td><td>CSV / XML / Fixed-width; errors routed to error output per record</td></tr>
-        <tr><td>7</td><td>Route</td><td>Route shape on file type, source partner, or content</td><td>P-120 Fan-out applies if multiple targets needed simultaneously</td></tr>
-        <tr><td>8</td><td>Deliver</td><td>Database (JDBC) / HTTP Client / SFTP V2 / Boomi MFT (Send)</td><td>Batch DB INSERT for performance; chunked REST for API targets</td></tr>
-        <tr><td>9</td><td>Archive</td><td>SFTP V2 / Disk V2 Move &rarr; /archive/YYYY-MM-DD/</td><td>Retain original; do not delete until delivery is confirmed</td></tr>
-        <tr><td>10</td><td>Audit INSERT</td><td>Database Connector &rarr; file_transfer_audit table</td><td>Record filename, source, target, row count, checksum, status, process ID, timestamps</td></tr>
-        <tr><td>11</td><td>Notify</td><td>Mail / HTTP Client (webhook) / Event Streams Produce</td><td>Success to ops; failure to on-call + dead-letter management queue</td></tr>
-        <tr><td>ERR</td><td>Error Branch</td><td>Try/Catch &rarr; Dead-letter + Retry + Alert</td><td>All stages wrapped. Partial failures captured per record where possible</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="section" id="triggers">
-  <div class="sec-title"><span class="sec-num">5</span> Triggers &amp; Connectors</div>
-  <div class="sub">Trigger Options</div>
-  <div class="tbl-wrap"><table class="gt">
-    <thead><tr><th>Trigger Type</th><th>When to Use</th><th>Boomi Implementation</th></tr></thead>
-    <tbody>
-      <tr><td>Scheduled</td><td>Overnight batch, fixed window (e.g. 02:00 daily)</td><td>Scheduled shape with cron expression; process polls source for new files</td></tr>
-      <tr><td>File Arrival Listener</td><td>Near-real-time; file must be processed within minutes of arrival</td><td>Boomi MFT Source Route &ldquo;Trigger Boomi Process&rdquo;, or Disk/SFTP listener (Molecule only)</td></tr>
-      <tr><td>Manual / API Trigger</td><td>Ad hoc re-runs, ops tooling, test execution</td><td>HTTP trigger on Boomi API endpoint; file path passed as parameter</td></tr>
-      <tr><td>Event-driven</td><td>File placement is result of an upstream Boomi process</td><td>Upstream process produces Boomi Event Streams event; this process subscribes</td></tr>
-    </tbody>
-  </table></div>
-  <div class="sub">Connector Reference</div>
-  <div class="tbl-wrap"><table class="gt">
-    <thead><tr><th>Connector</th><th>Role</th><th>Notes</th></tr></thead>
-    <tbody>
-      <tr><td>Boomi MFT</td><td>Source (Get) or Destination (Send); Boomi-hosted server</td><td>Preferred for external Trading Partner exchange. Provides audit dashboard, trigger-on-arrival, retention policy</td></tr>
-      <tr><td>SFTP V2</td><td>Source from third-party SFTP servers; archive write</td><td>SSH public-key auth preferred; known_hosts enforced; JSch cipher config supported</td></tr>
-      <tr><td>FTP V2 / FTPS</td><td>Legacy or partner scenarios where SFTP is unavailable</td><td>Use FTPS (explicit TLS) only &mdash; never plain FTP in production</td></tr>
-      <tr><td>Disk V2</td><td>Local Atom filesystem; inter-process handoff</td><td>Molecule shared FS required for multi-node deployments</td></tr>
-      <tr><td>Database (JDBC)</td><td>Audit table INSERT; config lookup; target delivery</td><td>Batched INSERT for performance; connection pool at Atom level</td></tr>
-      <tr><td>HTTP Client / REST</td><td>REST API delivery; webhook notification</td><td>OAuth/API key auth via Boomi Connection component</td></tr>
-      <tr><td>Mail Connector</td><td>Ops alerting; confirmation to business users</td><td>SMTP via shared relay; use for human-readable notifications only</td></tr>
-    </tbody>
-  </table></div>
-</div>
-
-<div class="section" id="validation">
-  <div class="sec-title"><span class="sec-num">6</span> File Integrity &amp; Validation</div>
-  <div class="sub">6.1 Checksum Validation</div>
-  <p>A companion checksum file (.md5, .sha256) or manifest must be provided by the source. The Boomi process must read the companion file first, compute the hash of the received file via Groovy (MessageDigest API or Bouncy Castle), compare expected vs actual, and log both values in the audit record.</p>
-  <div class="warn"><strong>If the source does not provide a checksum:</strong> implement a minimum row-count check using a trailer record or line count. Never deliver a file to a downstream system without some integrity verification.</div>
-  <div class="sub">6.2 Row Count Validation</div>
-  <p>Many bulk file formats include a header or trailer record with a total row count. Extract the expected count, split and count data records using the Data Process shape, and compare before delivery. A partial file delivery is worse than no delivery.</p>
-  <div class="sub">6.3 Schema / Format Validation</div>
-  <p>Where an XSD or JSON Schema is available, validate before transformation. For CSV, validate mandatory column presence and data type conformance in the Groovy script stage. Reject malformed records to an error output rather than failing the whole batch where possible.</p>
-</div>
-
-<div class="section" id="encryption">
-  <div class="sec-title"><span class="sec-num">7</span> Encryption</div>
-  <div class="tbl-wrap"><table class="gt">
-    <thead><tr><th>Scenario</th><th>Mechanism</th><th>Boomi Implementation</th></tr></thead>
-    <tbody>
-      <tr><td>Inbound PGP-encrypted file</td><td>Sender encrypts with public key; Boomi decrypts with private key</td><td>Groovy Custom Script using Bouncy Castle PGP; private key &amp; passphrase in Boomi Encrypted Process Property</td></tr>
-      <tr><td>Outbound PGP-encrypted file</td><td>Boomi encrypts with recipient public key</td><td>Groovy Custom Script; recipient public key in Boomi Certificate Management</td></tr>
-      <tr><td>Transport &mdash; SFTP</td><td>SSH key encryption at transport layer</td><td>SFTP V2 Connection: SSH key pair; private key in Boomi Certificate; known_hosts enforced</td></tr>
-      <tr><td>Transport &mdash; FTPS</td><td>TLS at transport layer</td><td>FTP V2 with FTPS (explicit) mode; TLS 1.2+ enforced; server certificate validated</td></tr>
-      <tr><td>At-rest &mdash; Boomi MFT</td><td>Files encrypted at rest on the MFT server</td><td>Managed by Boomi platform (AES-256); no additional configuration required</td></tr>
-    </tbody>
-  </table></div>
-</div>
-
-<div class="section" id="errors">
-  <div class="sec-title"><span class="sec-num">8</span> Error Handling &amp; Retry</div>
-  <div class="sub">8.1 Dead-Letter Folder</div>
-  <p>Any file that fails validation or delivery must be written to <code style="color:var(--green)">/deadletter/YYYY-MM-DD/</code>, recorded in the audit table with <code style="color:var(--red)">status = FAILED</code>, and subject to an immediate ops alert.</p>
-  <div class="sub">8.2 Retry Strategy (delivery failures only)</div>
-  <ul class="blist">
-    <li><strong>Attempt 1:</strong> immediate</li>
-    <li><strong>Attempt 2:</strong> +2 minutes</li>
-    <li><strong>Attempt 3:</strong> +8 minutes</li>
-    <li><strong>Attempt 4:</strong> Dead-letter + alert</li>
-  </ul>
-  <p>Implement via Try/Catch wrapping the delivery connector with a counter in a Dynamic Process Property. Do <em>not</em> retry validation failures &mdash; a corrupted file will not become uncorrupted on retry.</p>
-  <div class="sub">8.3 Partial Failure (Record-Level Errors)</div>
-  <p>Where the file is split into individual records, process each independently. Route errored records to a parallel error output so valid records are still delivered. Raise an alert with the count of failed records.</p>
-  <div class="note"><strong>Rule:</strong> Never silently swallow errors. Every failure must produce a dead-letter write, an audit record update, and an alert &mdash; ideally all three.</div>
-</div>
-
-<div class="section" id="audit">
-  <div class="sec-title"><span class="sec-num">9</span> Audit Trail</div>
-  <p>Each file processed must produce exactly one record in the integration audit database:</p>
-  <div class="tbl-wrap"><table class="gt">
-    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
-    <tbody>
-      <tr><td>file_transfer_id</td><td>UUID (PK)</td><td>Auto-generated unique ID for this transfer event</td></tr>
-      <tr><td>filename</td><td>VARCHAR(500)</td><td>Original filename as received from source</td></tr>
-      <tr><td>source_system</td><td>VARCHAR(100)</td><td>Source identifier (e.g. DWP-SFTP, BOOMI-MFT, LOCAL-DISK)</td></tr>
-      <tr><td>target_system</td><td>VARCHAR(100)</td><td>Target identifier (e.g. DOWNSTREAM-DB, RTI-GATEWAY)</td></tr>
-      <tr><td>file_size_bytes</td><td>BIGINT</td><td>File size in bytes as received</td></tr>
-      <tr><td>expected_row_count</td><td>INTEGER</td><td>From header/trailer or manifest (null if not available)</td></tr>
-      <tr><td>actual_row_count</td><td>INTEGER</td><td>Row count as counted by Boomi process</td></tr>
-      <tr><td>checksum_algorithm</td><td>VARCHAR(20)</td><td>MD5, SHA-256, or NONE</td></tr>
-      <tr><td>expected_checksum</td><td>VARCHAR(128)</td><td>Checksum from companion file or manifest</td></tr>
-      <tr><td>actual_checksum</td><td>VARCHAR(128)</td><td>Checksum computed by Boomi process</td></tr>
-      <tr><td>checksum_valid</td><td>BOOLEAN</td><td>TRUE if match; FALSE if mismatch</td></tr>
-      <tr><td>transfer_status</td><td>VARCHAR(20)</td><td>ACQUIRED &middot; VALIDATING &middot; DELIVERING &middot; DELIVERED &middot; FAILED &middot; DEAD-LETTERED</td></tr>
-      <tr><td>acquired_timestamp</td><td>TIMESTAMP</td><td>When file was first picked up by Boomi</td></tr>
-      <tr><td>delivered_timestamp</td><td>TIMESTAMP</td><td>When delivery to target was confirmed</td></tr>
-      <tr><td>boomi_process_id</td><td>VARCHAR(200)</td><td>Boomi execution ID for cross-reference with Process Reporting</td></tr>
-      <tr><td>error_detail</td><td>TEXT</td><td>Exception message and stack trace if status = FAILED</td></tr>
-    </tbody>
-  </table></div>
-</div>
-
-<div class="section" id="useavoid">
-  <div class="sec-title"><span class="sec-num">10</span> When to Use / When to Avoid</div>
-  <div class="ua-grid">
-    <div class="ua-card use">
-      <h4>&#x2705; When to Use</h4>
-      <ul>
-        <li>High-volume bulk data (thousands to millions of records) where per-record APIs are impractical</li>
-        <li>Source or target only supports file-based protocols (SFTP, FTPS, AS2, Disk)</li>
-        <li>Overnight reconciliation, statutory reporting extracts (RTI, CIS, SA), payroll files</li>
-        <li>External Trading Partner exchange needing a managed, auditable endpoint</li>
-        <li>Files require integrity verification (checksum) before downstream delivery</li>
-        <li>PGP encryption/decryption is required as part of the exchange</li>
-        <li>Sender and receiver availability must be decoupled (async handoff)</li>
-      </ul>
+  <main>
+    <div class="instr">
+      <h4>&#x1F4CC; Standing workflow for this catalogue</h4>
+      <ol>
+        <li>Generate the HTML and a downloadable doc in the chat response, so the history is reviewable; the HTML carries these instructions.</li>
+        <li>All content lives on <strong>index.html</strong> so it can be viewed via GitHub Pages.</li>
+        <li>Any generated document (Word, PPT, draw.io) is downloadable via a button at the top of the page.</li>
+        <li>The GitHub Pages view carries no department name in text; the Word doc may.</li>
+      </ol>
     </div>
-    <div class="ua-card avoid">
-      <h4>&#x274C; When to Avoid</h4>
-      <ul>
-        <li>Real-time, sub-second requirements &mdash; use P-101 (REST Inbound) or P-121 (Event Subscribe)</li>
-        <li>Small payloads (&lt;100 records) where a direct REST API call is available and appropriate</li>
-        <li>Source and target are both Boomi-native &mdash; use Message Queue or Event Streams instead</li>
-        <li>Data must be validated record-by-record with immediate per-record feedback to the caller</li>
-        <li>File formats are unknown / unstructured and cannot be parsed by the Boomi Data Process shape</li>
-      </ul>
+
+    <div class="note">
+      <strong>Purpose.</strong> This companion takes the As-Is &rarr; To-Be pattern table (WebMethods and ChRIS legacy patterns mapped to the P-1xx catalogue) and asks a different question from &ldquo;can Boomi do this?&rdquo; It asks &ldquo;is this the pattern we should carry into the target state at all?&rdquo; It sets the strategic direction, challenges assumptions in the current mapping, and answers each challenge.
     </div>
-  </div>
-</div>
 
-<div class="section" id="features">
-  <div class="sec-title"><span class="sec-num">11</span> Boomi Platform Features Used</div>
-  <div class="feat-grid">
-    <div class="feat-card"><h5>Boomi MFT Connector</h5><p>Managed server endpoint for Trading Partner exchange. Configure server hostname, TLS cert, SSH key; create Trading Partners and Source/Destination Routes.</p></div>
-    <div class="feat-card"><h5>SFTP V2 Connector</h5><p>Connect to third-party SFTP servers as source or archive destination. SSH public-key auth; private key in Boomi Certificate Management; known_hosts enforced.</p></div>
-    <div class="feat-card"><h5>Data Process Shape (Split)</h5><p>Divide multi-record file into individual documents for record-level processing. Split by line count (CSV) or XML element. Use with Try/Catch for per-record error isolation.</p></div>
-    <div class="feat-card"><h5>Custom Scripting (Groovy)</h5><p>PGP decrypt/encrypt and checksum computation. Uses Bouncy Castle API bundled in Boomi. Passphrase via getEncryptedProperty().</p></div>
-    <div class="feat-card"><h5>Map Shape</h5><p>Transform parsed records to canonical or target schema. Embed lookup calls to database via function in the map for reference data enrichment.</p></div>
-    <div class="feat-card"><h5>Try/Catch Shape</h5><p>Wrap delivery connector; capture exceptions; route to dead-letter branch. Pass error message to Dynamic Process Property for audit INSERT.</p></div>
-    <div class="feat-card"><h5>Dynamic Document Properties</h5><p>Carry file metadata (filename, source, checksum, row count) through all process steps. Set on acquisition; read in the audit INSERT step.</p></div>
-    <div class="feat-card"><h5>Encrypted Process Properties</h5><p>Store PGP passphrase, SFTP passwords, API keys. Never use plain-text process properties for secrets.</p></div>
-    <div class="feat-card"><h5>Database Connector (JDBC)</h5><p>Audit INSERT; configuration lookup; target delivery via batch INSERT. Use UPSERT for idempotent re-runs.</p></div>
-    <div class="feat-card"><h5>Schedule Shape</h5><p>Cron-based process trigger. Schedule multiple windows. Disable during maintenance via environment extension.</p></div>
-    <div class="feat-card"><h5>Route Shape</h5><p>Branch delivery to multiple targets based on file type, source partner, content fields, or Dynamic Document Property values.</p></div>
-    <div class="feat-card"><h5>Process Reporting</h5><p>Execution history and error investigation. Cross-reference with audit table using boomi_process_id for end-to-end traceability.</p></div>
-  </div>
-</div>
+    <section class="section" id="thesis">
+      <div class="sec-title"><span class="sec-num">1</span> Core thesis</div>
+      <p class="lead">The current catalogue is a strong translation layer, but it is written through a lift-and-shift lens: every legacy behaviour gets a one-to-one Boomi equivalent, and almost every row is annotated &ldquo;Ready to use pattern.&rdquo; The strategic risk is that we faithfully re-implement WebMethods-era thinking inside a newer tool &mdash; inheriting its coupling, its batch habits and its point-to-point sprawl, just on a different licence.</p>
+      <p>Three shifts turn the mapping from a migration inventory into a strategic target:</p>
+      <ol class="olist">
+        <li><strong>Consolidate, don&rsquo;t translate.</strong> The ~25 legacy patterns collapse onto roughly 6&ndash;8 canonical patterns plus composable modifiers. The tell is already in the table: Transforming, Validated, Error-Handling, Reliable and Orchestrated Publish all map to P-112. Those are not five patterns &mdash; they are one pattern with flags.</li>
+        <li><strong>Tier the architecture; stop over-centralising on the iPaaS.</strong> Boomi should own orchestration, transformation, mediation, MFT and integration-scoped eventing. A dedicated API gateway owns synchronous client traffic; a dedicated event backbone owns enterprise pub/sub. &ldquo;Boomi can do it&rdquo; &ne; &ldquo;Boomi is the right tier for it.&rdquo;</li>
+        <li><strong>Promote cross-cutting concerns to first-class citizens.</strong> Idempotency, the transactional outbox, correlation/trace propagation and read-model projections are currently implicit (or, for Transactional Publish, TBD). In an at-least-once, async-first estate these are not footnotes &mdash; they are the design.</li>
+      </ol>
+    </section>
 
-<div class="section" id="xref">
-  <div class="sec-title"><span class="sec-num">12</span> Cross-References</div>
-  <table class="spec-tbl">
-    <tr><td>P-117</td><td>Batch Processing &ndash; Scheduled: complements P-116 when the file is processed as micro-batches with Boomi-managed chunking</td></tr>
-    <tr><td>P-118</td><td>DB as REST: target delivery pattern when the downstream consumer is a Database endpoint exposed as a REST API</td></tr>
-    <tr><td>P-120</td><td>Fan-out Event: use when the same file must be delivered to multiple downstream targets in parallel</td></tr>
-    <tr><td>P-101</td><td>REST Inbound: alternative when source system supports per-record REST APIs and volume is low</td></tr>
-    <tr><td>P-121</td><td>Event Subscribe: use when file arrival should be communicated to other processes via Boomi Event Streams</td></tr>
-    <tr><td>MFT Guide</td><td>Boomi-Managed-File-Transfer-Guide.docx &mdash; full MFT server setup, Trading Partner creation, and Route configuration</td></tr>
-  </table>
-</div>
+    <section class="section" id="challenges">
+      <div class="sec-title"><span class="sec-num">2</span> Challenges to the current mapping &mdash; and the answers</div>
+      <p>Each row states an assumption baked into the catalogue, challenges it, and gives the strategic answer. These are meant to be argued with in review, not accepted wholesale.</p>
+      <div class="tbl-wrap">
+        <table class="gt">
+          <thead><tr><th style="width:36px;">#</th><th style="width:22%;">Assumption in the catalogue</th><th style="width:34%;">Challenge</th><th>Strategic answer</th></tr></thead>
+          <tbody>
+            <tr><td class="c-id">C1</td><td>Each legacy behaviour deserves its own Boomi pattern (~25 entries).</td><td>Most rows already collapse onto P-112 / P-115. Validation, transformation, error handling and reliability are capability toggles, not distinct patterns. 25 entries manufacture false choice and maintenance drag.</td><td>Consolidate to ~6&ndash;8 canonical patterns + composable modifiers. Governance reviews the modifiers applied, not 25 near-duplicate rows.</td></tr>
+            <tr><td class="c-id">C2</td><td>&ldquo;Ready to use pattern&rdquo; means it is the right choice.</td><td>&ldquo;Ready to use&rdquo; describes tool capability, not architectural fitness. Feasibility &ne; suitability &mdash; and nearly every row carries the label, quietly turning a design catalogue into a feature checklist.</td><td>Split the judgement into two axes: <em>implementable in Boomi</em> (yes/mostly/no) <strong>and</strong> <em>strategic status</em> (Target / Bridge / Avoid). Several &ldquo;ready&rdquo; patterns are bridges to sunset.</td></tr>
+            <tr><td class="c-id">C3</td><td>Sync vs async is chosen by &ldquo;how many consumers.&rdquo;</td><td>Consumer count is the wrong axis. The real axis is delivery semantics and coupling: does the producer block on the outcome, and can it tolerate temporal coupling to the consumer&rsquo;s availability?</td><td>Go async for temporal decoupling, buffering and independent scaling &mdash; even with one consumer. Reserve sync for when the caller genuinely blocks on the result and latency is tight.</td></tr>
+            <tr><td class="c-id">C4</td><td>Boomi is the platform for synchronous API proxying (P-101 / P-102).</td><td>iPaaS as a synchronous gateway at scale is a known anti-pattern: per-execution cost, hop latency, weak native throttling / quota / dev-portal, throughput ceilings under high TPS.</td><td>Put a dedicated API gateway in front (APIM / Apigee / Kong / AWS API GW). Boomi sits <em>behind</em> it for orchestration and transformation &mdash; not as the gateway itself.</td></tr>
+            <tr><td class="c-id">C5</td><td>Cross-back-end data requests are served by live synchronous aggregation (P-105).</td><td>Synchronous scatter-gather multiplies failure &mdash; availability is the <em>product</em> of every back-end&rsquo;s availability, latency is their <em>sum</em>. One slow system degrades every request; &ldquo;polling protection&rdquo; is a symptom.</td><td>Apply CQRS: pre-aggregate via events into a DB-backed read projection. The sync request reads the local projection; back-ends update it asynchronously. Polling protection stops being load-bearing.</td></tr>
+            <tr><td class="c-id">C6</td><td>Transactional Publish is TBD.</td><td>This is the single most important gap, not a footnote. Distributed 2PC across a state change and a publish does not work in an event/iPaaS world &mdash; the Event Streams produce-side retry asymmetry proves it.</td><td><strong>Transactional Outbox + relay:</strong> write the event to an outbox table in the same DB transaction as the state change; a relay publishes it at-least-once to idempotent consumers. For multi-step transactions use a <strong>Saga</strong> with explicit compensation &mdash; not rollback.</td></tr>
+            <tr><td class="c-id">C7</td><td>An async back-end call behind a sync client API is just &ldquo;P-102 Standard Sync REST.&rdquo;</td><td>Wrapping an async back-end inside a sync facade silently holds threads and creates timeout / back-pressure risk. It is labelled sync but behaves like a hidden orchestration.</td><td>Make the async explicit: 202 Accepted + status resource (Location header), a bounded fast-fail wait, then client poll or webhook callback. Don&rsquo;t disguise async as sync.</td></tr>
+            <tr><td class="c-id">C8</td><td>The enterprise event backbone is owned inside Boomi (Event Streams).</td><td>Owning the event fabric inside the iPaaS couples enterprise eventing to one vendor&rsquo;s licensing, ceiling and lifecycle &mdash; non-Boomi consumers become second-class citizens.</td><td>Decide deliberately. Event Streams is fine for integration-scoped eventing; for a backbone consumed by many non-Boomi systems, evaluate a dedicated broker (Confluent/Kafka, Solace, Event Hubs) with Boomi as a participant.</td></tr>
+            <tr><td class="c-id">C9</td><td>File transfer (MFT, P-116) is a strategic target pattern.</td><td>Many &ldquo;file&rdquo; flows are legacy batch exports wearing an integration costume. Treating MFT as a destination entrenches batch coupling and nightly-window fragility.</td><td>Classify MFT as a <em>Bridge</em> with a sunset trajectory. Where the source can emit events or expose an API, migrate off files. Keep MFT for genuine bulk / third-party exchange only.</td></tr>
+            <tr><td class="c-id">C10</td><td>Idempotency, ordering, correlation and replay are implementation details.</td><td>At-least-once delivery (Kafka / Event Streams) makes a non-idempotent consumer a data-integrity defect waiting to happen. None of these appear as first-class concerns.</td><td>Elevate them to mandatory cross-cutting standards on every pattern: idempotency keys, partition/ordering keys, correlation-ID propagation, DLQ + replay, and end-to-end tracing.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-</main>
+    <section class="section" id="arch">
+      <div class="sec-title"><span class="sec-num">3</span> Strategic target reference architecture</div>
+      <p>A tiered estate where each tier is owned by the technology best suited to it. Boomi is a first-class citizen of the middle tiers &mdash; not the whole stack. An editable version is in the <a href="assets/target-reference-architecture.drawio" style="color:var(--green);">draw.io download</a> at the top.</p>
+      <div class="arch">
+        <div class="actor client" style="max-width:640px;">CLIENT CHANNELS &middot; third-party software &middot; agents &middot; digital portals &middot; ChRIS-routed submissions</div>
+        <div class="conn">&#x2193;</div>
+        <div class="arch-body">
+          <div class="tiers">
+            <div class="tier t-channel"><div class="tlab">Channel / Experience</div><div class="row"><div class="box">API Gateway (APIM &middot; Apigee &middot; Kong &middot; AWS API GW)</div><div class="box">OAuth2 / mTLS &middot; throttling &middot; quotas &middot; spike arrest &middot; dev portal</div></div></div>
+            <div class="tier t-boomi"><div class="tlab">Integration / Orchestration &mdash; Boomi iPaaS</div><div class="row"><div class="box">Orchestration &middot; Process Route</div><div class="box">Transform &middot; enrich &middot; route</div><div class="box">Protocol mediation</div><div class="box br">MFT (bridge)</div></div></div>
+            <div class="tier t-event"><div class="tlab">Event backbone</div><div class="row"><div class="box">Durable broker (Kafka/Confluent &middot; Solace &middot; Event Hubs)</div><div class="box">or Boomi Event Streams (integration-scoped only)</div></div></div>
+            <div class="tier t-data"><div class="tlab">Data / Read-model</div><div class="row"><div class="box">CQRS read projections (cross-back-end queries)</div><div class="box">DB-backed cache + TTL &middot; event-driven invalidation</div></div></div>
+            <div class="tier t-legacy"><div class="tlab">Legacy coexistence (strangler &rarr; sunset)</div><div class="row"><div class="box">WebMethods IS</div><div class="box">ChRIS routing</div><div class="box br">Thin HTTP boundary &middot; one crossing point</div></div></div>
+          </div>
+          <div class="rail">
+            <h5>Cross-cutting spine</h5>
+            <div class="ri">Idempotency keys</div>
+            <div class="ri">Transactional Outbox</div>
+            <div class="ri">Saga / compensation</div>
+            <div class="ri">Correlation ID + tracing</div>
+            <div class="ri">DLQ + replay</div>
+            <div class="ri">Ordering / partition keys</div>
+            <div class="ri">Schema &amp; contract governance</div>
+            <div class="ri">Security &amp; audit</div>
+          </div>
+        </div>
+        <div class="conn">&#x2193;</div>
+        <div class="actor hod" style="max-width:640px;">BACK-END SYSTEMS (HOD) &middot; systems of record &middot; legacy datastores</div>
+        <div class="cap">Design rule: a request should cross the fewest tiers that satisfy its semantics. Match the pattern to the tier, then pick the Boomi shape.</div>
+      </div>
+    </section>
+
+    <section class="section" id="canonical">
+      <div class="sec-title"><span class="sec-num">4</span> Canonical pattern consolidation</div>
+      <p>The ~25 legacy rows fold into eight canonical patterns; everything that currently distinguishes rows becomes a modifier applied on top.</p>
+      <div class="tbl-wrap">
+        <table class="gt">
+          <thead><tr><th style="width:52px;">ID</th><th style="width:22%;">Canonical pattern</th><th>Absorbs (legacy rows)</th><th style="width:120px;">Status</th></tr></thead>
+          <tbody>
+            <tr><td class="c-id">K1</td><td><strong>Async Event Publish</strong></td><td>Simple / Transforming / Validated / Reliable / Orchestrated Publish; Async fire-and-forget</td><td><span class="tag target">Target</span></td></tr>
+            <tr><td class="c-id">K2</td><td><strong>Async Event Subscribe</strong></td><td>Simple / Transforming / Service-Oriented / Validated / Acknowledged / Orchestrated Subscribe; Async dependency-on-back-end-validation</td><td><span class="tag target">Target</span></td></tr>
+            <tr><td class="c-id">K3</td><td><strong>Async Request&ndash;Reply</strong></td><td>ChRIS Async Push-Response, Poll-Response, Semi-sync (202 + status resource; webhook or poll)</td><td><span class="tag target">Target</span></td></tr>
+            <tr><td class="c-id">K4</td><td><strong>Reliable Publish via Outbox</strong></td><td>Transactional Publish (the current TBD) + Reliable Publish</td><td><span class="tag target">Target</span></td></tr>
+            <tr><td class="c-id">K5</td><td><strong>Sync API (behind gateway)</strong></td><td>Service-Based Direct; Sync Submissions (P-101 / P-102) &mdash; gateway in front, Boomi behind</td><td><span class="tag target">Target</span></td></tr>
+            <tr><td class="c-id">K6</td><td><strong>Aggregated Read (read-model)</strong></td><td>Cross-back-end / Sync data request (P-105) served from a projection, not live fan-out</td><td><span class="tag target">Target</span></td></tr>
+            <tr><td class="c-id">K7</td><td><strong>Batch / Scheduled Processing</strong></td><td>Async batch processing; Consolidation; Scheduled Direct Transfer</td><td><span class="tag bridge">Bridge</span></td></tr>
+            <tr><td class="c-id">K8</td><td><strong>Bulk / File Transfer (MFT)</strong></td><td>Simple &amp; Scheduled Direct Transfer (P-116)</td><td><span class="tag bridge">Bridge &rarr; sunset</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub">Composable modifiers (applied to any canonical pattern)</p>
+      <p><strong>validate &middot; transform &middot; enrich &middot; route &middot; retry + DLQ &middot; idempotency key &middot; ordering/partition key &middot; compensate (saga) &middot; correlate &amp; trace.</strong> A pattern instance is then described as, e.g., &ldquo;K1 + validate + retry/DLQ + idempotency&rdquo; &mdash; which is exactly your old &ldquo;Reliable Validated Publish,&rdquo; but expressed as one pattern plus flags the governance board can reason about.</p>
+    </section>
+
+    <section class="section" id="gaps">
+      <div class="sec-title"><span class="sec-num">5</span> Closing the named gaps</div>
+      <p class="sub">5.1 &nbsp;Transactional Publish (the TBD) &rarr; Outbox + Saga</p>
+      <ul class="blist">
+        <li><strong>Outbox:</strong> in the same local DB transaction that changes state, insert the event into an outbox table. A relay/poller (or CDC) publishes it to the broker at-least-once. State change and intent-to-publish commit atomically; the publish is decoupled and retryable &mdash; directly answering the Event Streams produce-side retry asymmetry.</li>
+        <li><strong>Saga:</strong> for a business transaction spanning multiple systems, model it as a sequence of local transactions with explicit compensating actions. No global rollback &mdash; deliberate, auditable compensation, which the estate needs for traceability anyway.</li>
+      </ul>
+      <p class="sub">5.2 &nbsp;Cross-back-end aggregation &rarr; CQRS read model</p>
+      <p>Replace live synchronous fan-out (P-105) with a materialised projection kept current by events. Reads hit one local store; writes propagate asynchronously. Availability stops being the product of N back-ends, latency stops being their sum, and &ldquo;polling protection&rdquo; is no longer load-bearing.</p>
+      <p class="sub">5.3 &nbsp;Idempotency, ordering &amp; replay (make them mandatory)</p>
+      <ul class="blist">
+        <li>Every consumer is idempotent by design (natural key or dedicated idempotency key); replaying the same event is safe.</li>
+        <li>Ordering is guaranteed only within a partition key (e.g. taxpayer/reference), never globally &mdash; design correlation accordingly.</li>
+        <li>Poison messages route to a DLQ with enough context to replay; replay is a first-class, tested operation, not a fire drill.</li>
+      </ul>
+      <p class="sub">5.4 &nbsp;Observability &amp; correlation</p>
+      <p>A correlation ID is minted at the ChRIS/gateway edge and propagated through every Boomi process and every back-end call, with end-to-end distributed tracing. For this estate that is an audit and SLA capability, not a nice-to-have.</p>
+    </section>
+
+    <section class="section" id="fit">
+      <div class="sec-title"><span class="sec-num">6</span> Where Boomi is &mdash; and isn&rsquo;t &mdash; the right tool</div>
+      <div class="ua-grid">
+        <div class="ua-card use">
+          <h4>&#x2713; Boomi is an excellent fit</h4>
+          <ul>
+            <li>Orchestration, transformation, enrichment, routing</li>
+            <li>Protocol mediation &amp; the thin legacy (WM/ChRIS) boundary</li>
+            <li>MFT and B2B / third-party file exchange</li>
+            <li>Integration-scoped eventing &amp; moderate-throughput pub/sub</li>
+            <li>Connector-rich A2A integration across the back-end estate</li>
+          </ul>
+        </div>
+        <div class="ua-card avoid">
+          <h4>&#x2717; Push it elsewhere</h4>
+          <ul>
+            <li>High-TPS synchronous API gateway &rarr; dedicated API management</li>
+            <li>Enterprise event backbone at scale &rarr; dedicated broker</li>
+            <li>Ultra-low-latency (&lt;50ms) request paths &rarr; edge / serverless</li>
+            <li>Large-volume analytical ETL/ELT &rarr; data platform + CDC</li>
+            <li>Long-term state / read models &rarr; owned datastore, not process cache</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note"><strong>Honest framing.</strong> This is not an argument against Boomi &mdash; it is an argument for Boomi as a first-class citizen of a portfolio rather than the single hammer for every nail. The catalogue is strongest when each pattern says both &ldquo;here&rsquo;s the Boomi shape&rdquo; and &ldquo;&hellip;and here&rsquo;s the tier that should really own this.&rdquo;</div>
+    </section>
+
+    <section class="section" id="next">
+      <div class="sec-title"><span class="sec-num">7</span> Recommended next moves</div>
+      <ol class="olist">
+        <li>Re-label every catalogue row with a strategic status &mdash; Target / Bridge / Avoid &mdash; separate from &ldquo;implementable in Boomi.&rdquo;</li>
+        <li>Refactor the catalogue to the 8 canonical patterns + modifiers; keep the legacy names only as an index into them.</li>
+        <li>Resolve the Transactional Publish TBD with an Outbox + Saga reference pattern (candidate P-126 / P-127).</li>
+        <li>Take an explicit decision on the event backbone: Boomi Event Streams (integration-scoped) vs a dedicated broker (enterprise).</li>
+        <li>Draw the API-gateway boundary: confirm P-101 / P-102 sit behind a dedicated gateway, not as the gateway.</li>
+        <li>Pilot one CQRS read model for a real cross-back-end query and measure availability/latency vs the synchronous P-105 baseline.</li>
+      </ol>
+      <div class="warn"><strong>Note.</strong> These positions are deliberately assertive so they can be tested in architecture review. Where a challenge doesn&rsquo;t hold for a specific flow, that exception is itself a useful design decision to record against the pattern.</div>
+    </section>
+  </main>
 </div>
 
 <footer>
-  <span>Boomi Integration Catalogue &middot; P-116 File-Based MFT Pattern &middot; v1.0 &middot; June 2026</span>
-  <span><a href="https://help.boomi.com" target="_blank">help.boomi.com</a></span>
+  <span>Boomi Integration Catalogue &middot; Strategic companion to the iPaaS pattern set</span>
+  <span>Working paper v0.1 &middot; July 2026 &middot; <a href="assets/strategic-integration-direction.docx">Download the Word paper</a></span>
 </footer>
 
 <script>
-  const sections = document.querySelectorAll('.section');
-  const links = document.querySelectorAll('nav a');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ links.forEach(l=>l.classList.remove('active')); const lnk=document.querySelector('nav a[href="#'+e.target.id+'"]'); if(lnk)lnk.classList.add('active'); }});
-  }, { rootMargin:'-25% 0px -65% 0px' });
-  sections.forEach(s => obs.observe(s));
+  const links=[...document.querySelectorAll('nav a')];
+  const secs=links.map(a=>document.getElementById(a.getAttribute('href').slice(1)));
+  const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(s=>s&&obs.observe(s));
 </script>
 </body>
 </html>
