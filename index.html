@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boomi OOTB Connectors & Adapters | HMRC Integration</title>
+  <title>Boomi Managed File Transfer | Integration Catalogue</title>
   <style>
     :root {
       --bg: #0d1117;
@@ -14,6 +14,7 @@
       --muted: #8b949e;
       --green: #00b388;
       --green-dim: #1a3a30;
+      --green-dark: #003A2A;
       --teal: #0ea5e9;
       --teal-dim: #0c2a3a;
       --amber: #f59e0b;
@@ -22,1220 +23,475 @@
       --purple-dim: #1e1533;
       --red: #f87171;
       --red-dim: #2d1010;
-      --pink: #ec4899;
-      --pink-dim: #2d0f1e;
-      --accent: #00b388;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* ── Download Bar ── */
+    .dl-bar {
+      background: var(--green-dark);
+      border-bottom: 2px solid var(--green);
+      padding: 10px 32px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 200;
     }
+    .dl-bar-label { font-size: 13px; color: #a0d9c5; font-weight: 500; }
+    .dl-bar-label strong { color: #fff; }
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--green); color: #fff; font-size: 14px; font-weight: 700;
+      padding: 9px 22px; border-radius: 6px; text-decoration: none; letter-spacing: .3px;
+      box-shadow: 0 2px 8px rgba(0,179,136,.35);
+      transition: background .2s, transform .1s, box-shadow .2s; white-space: nowrap;
+    }
+    .dl-btn:hover { background: #009972; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,179,136,.45); }
 
     /* ── Header ── */
     header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      position: sticky;
-      top: 45px;
-      z-index: 100;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 20px 32px; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; position: sticky; top: 45px; z-index: 100;
     }
+    .logo-band { background: var(--green); color: #fff; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
     .header-left { display: flex; align-items: center; gap: 14px; }
-    .logo-band {
-      background: var(--green);
-      color: #fff;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 4px;
-    }
     .header-title { font-size: 18px; font-weight: 600; color: #e6edf3; }
     .header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-    /* ── Download bar ── */
-    .dl-bar {
-      background: #003A2A;
-      border-bottom: 2px solid var(--green);
-      padding: 10px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-      position: sticky;
-      top: 0;
-      z-index: 200;
-    }
-    .dl-bar-label {
-      font-size: 13px;
-      color: #a0d9c5;
-      font-weight: 500;
-    }
-    .dl-bar-label strong { color: #fff; }
-    .dl-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--green);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 9px 22px;
-      border-radius: 6px;
-      text-decoration: none;
-      letter-spacing: .3px;
-      box-shadow: 0 2px 8px rgba(0,179,136,.35);
-      transition: background .2s, transform .1s, box-shadow .2s;
-      white-space: nowrap;
-    }
-    .dl-btn:hover { background: #009972; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,179,136,.45); }
-    .dl-btn:active { transform: translateY(0); }
     .header-meta { font-size: 12px; color: var(--muted); text-align: right; }
 
-    /* ── Controls bar ── */
-    .controls {
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+    /* ── Layout ── */
+    .page { display: flex; max-width: 1300px; margin: 0 auto; }
+    nav {
+      width: 240px; min-width: 220px; padding: 24px 0 24px 24px;
+      position: sticky; top: 110px; height: calc(100vh - 110px); overflow-y: auto; flex-shrink: 0;
     }
-    .search-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-size: 14px;
-      width: 300px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    .search-box:focus { border-color: var(--green); }
-    .filter-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      border-radius: 20px;
-      padding: 5px 14px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      border-color: var(--green);
-      color: var(--green);
-      background: var(--green-dim);
-    }
-    .stats { margin-left: auto; font-size: 12px; color: var(--muted); }
+    nav ul { list-style: none; }
+    nav li + li { margin-top: 2px; }
+    nav a { display: block; padding: 6px 14px; border-radius: 6px; font-size: 13px; color: var(--muted); text-decoration: none; transition: all .15s; border-left: 2px solid transparent; }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+    nav a.active { color: var(--green); background: var(--green-dim); border-left-color: var(--green); }
+    nav .nav-section { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 12px 14px 4px; }
+    main { flex: 1; padding: 32px; min-width: 0; }
 
-    /* ── Main ── */
-    main { padding: 28px 32px; max-width: 1400px; margin: 0 auto; }
+    /* ── Sections ── */
+    .section { margin-bottom: 56px; scroll-margin-top: 120px; }
+    .section-title {
+      font-size: 22px; font-weight: 700; color: #e6edf3;
+      padding-bottom: 10px; margin-bottom: 18px;
+      border-bottom: 2px solid var(--green);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-num { background: var(--green); color: #fff; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 4px; }
+    .sub-title { font-size: 15px; font-weight: 600; color: #b0c4bc; margin: 24px 0 10px; }
+    p { font-size: 14px; color: var(--text); margin-bottom: 12px; line-height: 1.75; }
 
-    /* ── Section ── */
-    .section { margin-bottom: 40px; }
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .section-title { font-size: 16px; font-weight: 600; color: #e6edf3; }
-    .section-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .section-count {
-      margin-left: auto;
-      font-size: 11px;
-      color: var(--muted);
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 2px 8px;
-    }
-
-    /* ── Grid ── */
-    .connector-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 10px;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      transition: border-color .2s, background .2s;
-    }
-    .card:hover { border-color: var(--green); background: #0f1a14; }
-    .card-icon {
-      width: 32px; height: 32px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
-    .card-body { flex: 1; min-width: 0; }
-    .card-name {
-      font-size: 13px;
-      font-weight: 600;
-      color: #e6edf3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .card-desc { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.5; }
-    .card-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
-    .badge {
-      font-size: 10px;
-      padding: 1px 7px;
-      border-radius: 10px;
-      font-weight: 500;
-      letter-spacing: .3px;
-    }
-    .badge-green  { background: var(--green-dim);  color: var(--green); border: 1px solid #1f4a38; }
-    .badge-teal   { background: var(--teal-dim);   color: var(--teal);  border: 1px solid #0e3a52; }
-    .badge-amber  { background: var(--amber-dim);  color: var(--amber); border: 1px solid #3d2900; }
-    .badge-purple { background: var(--purple-dim); color: var(--purple);border: 1px solid #2a1d4a; }
-    .badge-red    { background: var(--red-dim);    color: var(--red);   border: 1px solid #3d1515; }
-    .badge-pink   { background: var(--pink-dim);   color: var(--pink);  border: 1px solid #3d1530; }
-    .badge-muted  { background: var(--surface2);   color: var(--muted); border: 1px solid var(--border); }
-
-    /* partner tag */
-    .partner-tag {
-      font-size: 9px;
-      background: var(--amber-dim);
-      color: var(--amber);
-      border: 1px solid #3d2900;
-      border-radius: 3px;
-      padding: 0 5px;
-      margin-left: 5px;
-      vertical-align: middle;
-      font-weight: 600;
-      letter-spacing: .5px;
-      text-transform: uppercase;
-    }
-    .deprecated-tag {
-      font-size: 9px;
-      background: var(--red-dim);
-      color: var(--red);
-      border: 1px solid #3d1515;
-      border-radius: 3px;
-      padding: 0 5px;
-      margin-left: 5px;
-      vertical-align: middle;
-      font-weight: 600;
-    }
-
-    /* ── HMRC Relevance callout ── */
+    /* ── Callout ── */
     .callout {
-      background: var(--green-dim);
-      border: 1px solid #1f4a38;
-      border-left: 3px solid var(--green);
-      border-radius: 6px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: var(--text);
-      margin-bottom: 28px;
+      background: var(--green-dim); border: 1px solid #1f4a38;
+      border-left: 3px solid var(--green); border-radius: 6px;
+      padding: 14px 18px; font-size: 13px; color: var(--text); margin: 16px 0;
     }
     .callout strong { color: var(--green); }
 
-    .hidden { display: none !important; }
-
-    footer {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 16px 32px;
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
+    .warn {
+      background: var(--amber-dim); border: 1px solid #3d2900;
+      border-left: 3px solid var(--amber); border-radius: 6px;
+      padding: 14px 18px; font-size: 13px; color: var(--text); margin: 16px 0;
     }
+    .warn strong { color: var(--amber); }
+
+    /* ── Tables ── */
+    .tbl-wrap { overflow-x: auto; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th { background: var(--green-dark); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: .3px; }
+    tbody tr:nth-child(odd) { background: var(--surface); }
+    tbody tr:nth-child(even) { background: var(--surface2); }
+    tbody tr:hover { background: var(--green-dim); }
+    td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); }
+    td:first-child { font-weight: 600; color: #9dd8c0; white-space: nowrap; }
+
+    /* ── Steps ── */
+    .steps { margin: 16px 0; display: flex; flex-direction: column; gap: 6px; }
+    .step { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+    .step-num { background: var(--green-dark); color: #fff; font-weight: 700; font-size: 14px; min-width: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-body { padding: 10px 16px; font-size: 13px; color: var(--text); background: var(--surface); flex: 1; }
+    .step-body strong { color: var(--green); }
+
+    /* ── Bullet list ── */
+    .blist { margin: 12px 0 12px 20px; }
+    .blist li { font-size: 14px; color: var(--text); margin-bottom: 6px; line-height: 1.65; }
+    .blist li::marker { color: var(--green); }
+
+    /* ── Tag badges ── */
+    .badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin: 2px; }
+    .badge-g { background: var(--green-dim); color: var(--green); border: 1px solid #1f4a38; }
+    .badge-t { background: var(--teal-dim); color: var(--teal); border: 1px solid #0e3a52; }
+    .badge-a { background: var(--amber-dim); color: var(--amber); border: 1px solid #3d2900; }
+
+    /* ── vs card ── */
+    .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .vs-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .vs-card h4 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+    .vs-card ul { margin-left: 16px; }
+    .vs-card li { font-size: 13px; color: var(--text); margin-bottom: 5px; line-height: 1.55; }
+
+    /* ── Arch diagram ── */
+    .arch { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 16px 0; text-align: center; }
+    .arch-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; margin: 12px 0; }
+    .arch-node { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #e6edf3; }
+    .arch-node.partner { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
+    .arch-node.mft { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+    .arch-node.process { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
+    .arch-node.target { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); }
+    .arch-arrow { font-size: 18px; color: var(--muted); padding: 0 6px; }
+    .arch-label { font-size: 10px; color: var(--muted); margin-top: 4px; }
+    .arch-row { display: flex; flex-direction: column; align-items: center; }
+
+    /* ── footer ── */
+    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 14px 32px; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; margin-top: 40px; }
+    footer a { color: var(--green); text-decoration: none; }
   </style>
 </head>
 <body>
 
+<!-- ═══════════════ DOWNLOAD BAR ═══════════════ -->
 <div class="dl-bar">
-  <span class="dl-bar-label">📄 <strong>Documents generated for this page:</strong>&nbsp; Boomi OOTB Connectors &amp; Adapters Reference (Word)</span>
-  <a class="dl-btn" href="assets/boomi-connectors.docx" download="Boomi-OOTB-Connectors-Adapters.docx">
-    ⬇&nbsp; Download Word Doc
-  </a>
+  <span class="dl-bar-label">📄 <strong>Document available for download:</strong>&nbsp; Boomi Managed File Transfer — How-to Guide (Word)</span>
+  <a class="dl-btn" href="assets/boomi-mft.docx" download="Boomi-Managed-File-Transfer-Guide.docx">⬇&nbsp; Download Word Doc</a>
 </div>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
 <header>
   <div class="header-left">
-    <div class="logo-band">HMRC · Boomi</div>
+    <div class="logo-band">Integration Catalogue</div>
     <div>
-      <div class="header-title">Boomi OOTB Connectors &amp; Adapters</div>
-      <div class="header-sub">Technology · Application · Platform · Partner Connectors</div>
+      <div class="header-title">Boomi Managed File Transfer</div>
+      <div class="header-sub">How to Use MFT · Configuration · Patterns · Troubleshooting</div>
     </div>
   </div>
-  <div class="header-meta">
-    HMRC Integration Catalogue Reference<br>
-    Source: Boomi Documentation (help.boomi.com) · June 2026
-  </div>
+  <div class="header-meta">Boomi Integration Reference<br>June 2026</div>
 </header>
 
-<div class="controls">
-  <input class="search-box" id="searchInput" type="text" placeholder="🔍  Search connectors..." oninput="filterAll()" />
-  <button class="filter-btn active" onclick="setCategory('all', this)">All</button>
-  <button class="filter-btn" onclick="setCategory('technology', this)">Technology</button>
-  <button class="filter-btn" onclick="setCategory('application', this)">Application</button>
-  <button class="filter-btn" onclick="setCategory('platform', this)">Boomi Platform</button>
-  <button class="filter-btn" onclick="setCategory('partner', this)">Partner</button>
-  <span class="stats" id="statsLabel"></span>
+<!-- ═══════════════ BODY ═══════════════ -->
+<div class="page">
+
+  <!-- Side nav -->
+  <nav id="sidenav">
+    <div class="nav-section">Contents</div>
+    <ul>
+      <li><a href="#what-is" class="active">1. What Is Boomi MFT?</a></li>
+      <li><a href="#concepts">2. Key Concepts</a></li>
+      <li><a href="#architecture">3. Architecture</a></li>
+      <li><a href="#setup">4. Setup Step by Step</a></li>
+      <li><a href="#connector">5. MFT Connector in a Process</a></li>
+      <li><a href="#monitoring">6. Monitoring & Auditing</a></li>
+      <li><a href="#security">7. Security Considerations</a></li>
+      <li><a href="#patterns">8. Integration Patterns</a></li>
+      <li><a href="#troubleshooting">9. Troubleshooting</a></li>
+      <li><a href="#vs">10. MFT vs SFTP Connector</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ── 1. What Is ── -->
+    <div class="section" id="what-is">
+      <div class="section-title"><span class="section-num">1</span> What Is Boomi Managed File Transfer?</div>
+      <p>Boomi MFT is a <strong>cloud-native, governed file exchange platform</strong> built into the AtomSphere ecosystem. It provides a centralised hub through which files can be securely received from and delivered to external Trading Partners — businesses, government systems, or internal departments — without requiring each exchange to be hand-crafted in a Boomi Integration process.</p>
+      <p>MFT is <em>not</em> the same as using the SFTP V2 or FTP connectors inside a process. The fundamental difference is who owns the server:</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Capability</th><th>SFTP/FTP Connector (in a process)</th><th>Boomi MFT</th></tr></thead>
+          <tbody>
+            <tr><td>Managed server endpoint</td><td>✗ You must host your own</td><td>✓ Boomi hosts the server for you</td></tr>
+            <tr><td>Audit & reporting dashboard</td><td>✗ Build it yourself</td><td>✓ Built-in MFT activity reports</td></tr>
+            <tr><td>Trading partner portal</td><td>✗</td><td>✓ Self-service partner onboarding</td></tr>
+            <tr><td>Governance & SLA tracking</td><td>✗</td><td>✓ Built-in</td></tr>
+            <tr><td>Trigger process on file arrival</td><td>Via Disk/SFTP listener (polling)</td><td>Via Route trigger (event-driven)</td></tr>
+            <tr><td>Supported protocols</td><td>SFTP, FTP, FTPS</td><td>SFTP, FTP, FTPS, HTTPS, AS2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 2. Key Concepts ── -->
+    <div class="section" id="concepts">
+      <div class="section-title"><span class="section-num">2</span> Key Concepts</div>
+
+      <div class="sub-title">MFT Server</div>
+      <p>Boomi provisions a cloud-hosted file server on your behalf. No infrastructure to deploy or maintain. The server exposes endpoints for each enabled protocol (SFTP :22, FTPS :21, HTTPS :443) and handles TLS, key management, and authentication.</p>
+
+      <div class="sub-title">Trading Partners</div>
+      <p>A Trading Partner is a configured external entity that will send or receive files. Each has:</p>
+      <ul class="blist">
+        <li>A unique username and credential (SSH key or password)</li>
+        <li>One or more assigned Source or Destination Routes</li>
+        <li>Optional IP whitelisting and access restrictions</li>
+      </ul>
+
+      <div class="sub-title">Routes</div>
+      <p>A Route defines the path a file takes from arrival to destination. It maps an inbound drop folder to an action — either storing the file in an MFT-managed location or triggering a downstream Boomi Integration process.</p>
+
+      <div class="sub-title">MFT Connector (inside a Boomi Integration process)</div>
+      <p>An OOTB connector available inside Boomi Integration. Allows a running process to interact with the MFT platform — send a file to a Trading Partner's outbound folder, retrieve a file, list files waiting, or delete after processing.</p>
+
+      <div class="sub-title">Source vs Destination Routes</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Route Type</th><th>Direction</th><th>Typical Use</th></tr></thead>
+          <tbody>
+            <tr><td>Source Route</td><td>Inbound: partner → MFT server</td><td>Partner uploads file; MFT makes it available to a Boomi process</td></tr>
+            <tr><td>Destination Route</td><td>Outbound: MFT server → partner</td><td>Boomi process sends file; partner downloads from MFT server</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 3. Architecture ── -->
+    <div class="section" id="architecture">
+      <div class="section-title"><span class="section-num">3</span> Architecture Overview</div>
+      <p>Two primary MFT patterns in a Boomi estate:</p>
+
+      <div class="arch">
+        <div class="arch-label" style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:12px;">INBOUND — Partner uploads file, process triggered on arrival</div>
+        <div class="arch-flow">
+          <div class="arch-row"><div class="arch-node partner">Trading Partner</div><div class="arch-label">SFTP / FTPS / AS2</div></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-row"><div class="arch-node mft">Boomi MFT Server</div><div class="arch-label">Source Route</div></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-row"><div class="arch-node process">Boomi Integration Process</div><div class="arch-label">Triggered on arrival</div></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-row"><div class="arch-node target">Target System</div><div class="arch-label">DB / API / Queue</div></div>
+        </div>
+
+        <div style="margin:28px 0 12px;border-top:1px solid var(--border);padding-top:18px;font-size:12px;font-weight:700;color:var(--amber);">OUTBOUND — Process generates file, partner collects at their schedule</div>
+        <div class="arch-flow">
+          <div class="arch-row"><div class="arch-node target">Source System</div><div class="arch-label">DB / API / Event</div></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-row"><div class="arch-node process">Boomi Integration Process</div><div class="arch-label">Generates file</div></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-row"><div class="arch-node mft">Boomi MFT Server</div><div class="arch-label">Destination Route</div></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-row"><div class="arch-node partner">Trading Partner</div><div class="arch-label">Polls & collects</div></div>
+        </div>
+      </div>
+      <div class="callout">The MFT Server acts as a <strong>secure intermediary</strong>, decoupling the timing of file production from consumption. Neither the sending nor receiving system needs to be available simultaneously.</div>
+    </div>
+
+    <!-- ── 4. Setup ── -->
+    <div class="section" id="setup">
+      <div class="section-title"><span class="section-num">4</span> Setting Up Boomi MFT — Step by Step</div>
+
+      <div class="sub-title">4.1 Enable MFT in Your AtomSphere Account</div>
+      <div class="warn"><strong>Licence required:</strong> Boomi MFT is a licensed add-on. If the MFT option is absent from the Services menu, contact your Boomi account representative to provision it.</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Log in to Boomi AtomSphere at <strong>platform.boomi.com</strong>.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Navigate to <strong>Services → Managed File Transfer</strong>. The MFT dashboard appears here once enabled.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Contact your Boomi rep to enable MFT if not already provisioned. Once active, the full MFT menu is available.</div></div>
+      </div>
+
+      <div class="sub-title">4.2 Configure the MFT Server</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Settings → Server Configuration</strong>.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Note your assigned <strong>MFT server hostname</strong> (e.g. <code style="color:var(--green)">mft-abc.boomi.com</code>). Share this with Trading Partners as their connection endpoint.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Enable the required protocols: <strong>SFTP, FTPS, HTTPS, AS2</strong>. Enable only those your Trading Partners require.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Upload your organisation's <strong>TLS certificate</strong> for HTTPS/FTPS (or use the Boomi-provided certificate).</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">Export the <strong>SSH host key fingerprint</strong> to share with SFTP partners for their <code>known_hosts</code> file.</div></div>
+      </div>
+
+      <div class="sub-title">4.3 Create a Trading Partner</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Trading Partners → New</strong>.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Enter a unique <strong>Partner Name</strong> (e.g. <code style="color:var(--green)">DWP-Supplier-A</code>).</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Choose authentication: <strong>Password</strong> (set a password) or <strong>SSH Public Key</strong> (paste the partner's public key). SSH key is strongly preferred.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Optionally whitelist the partner's IP addresses under <strong>Access Restrictions</strong>.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">Save. The Trading Partner is now provisioned with login credentials.</div></div>
+      </div>
+
+      <div class="sub-title">4.4 Create a Source Route (Inbound)</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Routes → New Source Route</strong>.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Select the Trading Partner created above.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Set the <strong>Source Folder</strong> — the virtual directory the partner uploads files into (e.g. <code style="color:var(--green)">/upload/dwp-a/</code>).</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Set the <strong>Action</strong>: either <em>Store in MFT</em> (file held for later retrieval) or <em>Trigger a Boomi Process</em> (immediate execution on arrival).</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">If triggering a process: select the deployed Boomi Integration process and map any Route Properties (filename, partner ID) to process properties.</div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-body">Optionally set a <strong>File Filter</strong> (e.g. <code>*.xml</code>, <code>*_PAYE_*.csv</code>) so only matching files trigger the route.</div></div>
+        <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Save and Deploy</strong> the route. The partner can now upload files to the configured folder.</div></div>
+      </div>
+
+      <div class="sub-title">4.5 Create a Destination Route (Outbound)</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Routes → New Destination Route</strong>.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Select the Trading Partner.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Set the <strong>Destination Folder</strong> — the virtual directory the partner polls to collect files (e.g. <code style="color:var(--green)">/download/dwp-a/</code>).</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Set a <strong>File Retention Policy</strong> — how long files persist before automatic deletion (recommended: 3–7 days).</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Save and Deploy</strong>. Boomi processes can now write files here using the MFT Connector Send action.</div></div>
+      </div>
+    </div>
+
+    <!-- ── 5. Connector ── -->
+    <div class="section" id="connector">
+      <div class="section-title"><span class="section-num">5</span> Using the MFT Connector in a Boomi Integration Process</div>
+
+      <div class="sub-title">5.1 Sending a File to a Trading Partner (Outbound)</div>
+      <div class="callout">Use this when your integration process has produced a file that a Trading Partner needs to collect.</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Add a <strong>Connector</strong> step after your transform/mapping steps.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Connector Type: <strong>Boomi Managed File Transfer</strong>.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Create a <strong>Connection</strong>: set the MFT server URL and authenticate via API token or internal credentials.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">Set the Action to: <strong>Send</strong>.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">In the Operation: specify the <strong>Destination Route name</strong> and <strong>Trading Partner</strong>.</div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-body">Set the <strong>File Name</strong> — static or dynamic via a Dynamic Document Property.</div></div>
+        <div class="step"><div class="step-num">7</div><div class="step-body">The current document in the process is written to the partner's outbound folder. The partner collects it via their configured protocol.</div></div>
+      </div>
+
+      <div class="sub-title">5.2 Retrieving a File from MFT (Get)</div>
+      <div class="callout">Use this when a process needs to pull a file uploaded by a partner and stored in MFT (route Action was "Store in MFT").</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body">Start with a <strong>Schedule trigger</strong> or <strong>No Data</strong> start to run the retrieval process.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body">Add a Boomi MFT Connector step — Action: <strong>List</strong> — to check what files are available in the Source Route folder.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body">Use a <strong>Data Process</strong> or <strong>Decision</strong> shape to iterate over the list of file names.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body">For each file, use Action: <strong>Get</strong> to retrieve it. The file becomes the current document in the process.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body">Continue with mapping, routing, and delivery to the target system.</div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-body">After successful processing, use Action: <strong>Delete</strong> to remove the file from the MFT server.</div></div>
+      </div>
+
+      <div class="sub-title">5.3 MFT Connector — Action Reference</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Action</th><th>Description</th><th>When to Use</th></tr></thead>
+          <tbody>
+            <tr><td>Send</td><td>Writes the current document to a named Destination Route folder</td><td>Outbound — making a file available for a partner to collect</td></tr>
+            <tr><td>Get</td><td>Retrieves a specific file from a Source Route folder into the process</td><td>Inbound — pulling a stored file into a process</td></tr>
+            <tr><td>List</td><td>Returns a list of file names available in an MFT folder</td><td>Before Get — check what files are waiting</td></tr>
+            <tr><td>Delete</td><td>Removes a file from an MFT folder</td><td>Post-processing cleanup</td></tr>
+            <tr><td>Move</td><td>Moves a file within the MFT server (e.g. to an archive folder)</td><td>Post-processing archival without deletion</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 6. Monitoring ── -->
+    <div class="section" id="monitoring">
+      <div class="section-title"><span class="section-num">6</span> Monitoring and Auditing</div>
+      <p>Boomi MFT provides a built-in activity dashboard under <strong>Managed File Transfer → Activity</strong>.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Feature</th><th>Description</th><th>Location in AtomSphere</th></tr></thead>
+          <tbody>
+            <tr><td>Transfer Log</td><td>Every upload, download, and delete logged with timestamp, partner, filename, size, and outcome</td><td>MFT → Activity → Transfer Log</td></tr>
+            <tr><td>Partner Activity</td><td>Per-partner view of all recent transfers</td><td>MFT → Activity → By Partner</td></tr>
+            <tr><td>Route Activity</td><td>Per-route view — useful for SLA monitoring</td><td>MFT → Activity → By Route</td></tr>
+            <tr><td>Failed Transfers</td><td>Filtered view of errors with failure reason</td><td>MFT → Activity → Errors</td></tr>
+            <tr><td>Process Triggers</td><td>Log of which routes triggered which Boomi processes</td><td>MFT → Activity → Process Triggers</td></tr>
+            <tr><td>Notifications</td><td>Email/webhook alerts on transfer success, failure, or threshold breach</td><td>MFT → Settings → Notifications</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 7. Security ── -->
+    <div class="section" id="security">
+      <div class="section-title"><span class="section-num">7</span> Security Considerations</div>
+      <ul class="blist">
+        <li>Use <strong>SSH public-key authentication</strong> for all SFTP Trading Partners in preference to passwords.</li>
+        <li>Enable <strong>IP whitelisting</strong> for partners whose source IPs are known and static.</li>
+        <li>Use <strong>FTPS (explicit TLS)</strong> or HTTPS for partners where SFTP is not supported — never plain FTP in production.</li>
+        <li>Rotate MFT server TLS certificates on your standard certificate renewal cycle.</li>
+        <li>Set short <strong>File Retention Policies</strong> (3–7 days) on Destination Routes to avoid sensitive data lingering on the MFT server.</li>
+        <li>Review Transfer Logs weekly and configure <strong>Notifications for failed transfers</strong> to catch connectivity issues early.</li>
+        <li>For <strong>AS2</strong>, ensure MDN (Message Disposition Notification) acknowledgements are configured for all routes to provide non-repudiation.</li>
+        <li>Restrict MFT admin access using <strong>Boomi AtomSphere role-based access control</strong> — not all Integration developers need MFT admin rights.</li>
+      </ul>
+    </div>
+
+    <!-- ── 8. Patterns ── -->
+    <div class="section" id="patterns">
+      <div class="section-title"><span class="section-num">8</span> Recommended Integration Patterns</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Pattern</th><th>Scenario</th><th>Implementation</th></tr></thead>
+          <tbody>
+            <tr><td>Trigger-on-Arrival</td><td>Partner uploads file; process must start immediately</td><td>Source Route Action = <em>Trigger Boomi Process</em>. Process receives the file as its start document.</td></tr>
+            <tr><td>Scheduled Poll</td><td>Partner uploads files throughout the day; process runs at fixed intervals</td><td>Source Route Action = <em>Store in MFT</em>. Scheduled process: MFT Connector List → Get → process → Delete.</td></tr>
+            <tr><td>Outbound Batch</td><td>Process generates a report/extract; partner collects at their own schedule</td><td>Process uses MFT Connector Send to write to Destination Route. Partner polls via SFTP/HTTPS on their own schedule.</td></tr>
+            <tr><td>Error & Retry</td><td>File processing fails; file must not be lost</td><td>Source Route stores file. On process failure, file remains in MFT until explicitly deleted. Retry by re-triggering the Get step.</td></tr>
+            <tr><td>Multi-Partner Fan-out</td><td>Same file must be sent to multiple partners simultaneously</td><td>Process branches to multiple MFT Connector Send steps, each targeting a different Destination Route / Trading Partner.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 9. Troubleshooting ── -->
+    <div class="section" id="troubleshooting">
+      <div class="section-title"><span class="section-num">9</span> Troubleshooting Common Issues</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Symptom</th><th>Likely Cause</th><th>Resolution</th></tr></thead>
+          <tbody>
+            <tr><td>Partner cannot connect via SFTP</td><td>Wrong port, firewall rule, or host key not trusted</td><td>Confirm port 22 is open. Share MFT server host key fingerprint for partner's known_hosts.</td></tr>
+            <tr><td>Route not triggering process</td><td>Route not deployed, or process deployed to wrong environment</td><td>Check Route status is Active. Verify process is deployed to same Atom/environment as the MFT Connector connection.</td></tr>
+            <tr><td>File in Transfer Log but process did not run</td><td>Process trigger misconfigured or startup error</td><td>Check MFT → Activity → Process Triggers and Boomi Process Reporting for errors.</td></tr>
+            <tr><td>Send writes file but partner cannot see it</td><td>Partner using wrong folder path or route not deployed</td><td>Confirm Destination Route folder path matches what partner is polling. Check route is Active.</td></tr>
+            <tr><td>FTPS connection rejected</td><td>Client using implicit FTPS on wrong port or TLS version mismatch</td><td>Use explicit FTPS on port 21. Ensure partner client supports TLS 1.2+.</td></tr>
+            <tr><td>File picked up twice by process</td><td>Two route triggers or process re-triggered on retry</td><td>Use idempotency key (filename + hash) to detect duplicates. Delete file after first successful processing.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── 10. MFT vs SFTP ── -->
+    <div class="section" id="vs">
+      <div class="section-title"><span class="section-num">10</span> MFT vs SFTP Connector — Quick Reference</div>
+      <div class="callout"><strong>Rule of thumb:</strong> Use Boomi MFT when you need a managed, auditable file exchange server for external Trading Partners. Use the SFTP V2 Connector when you need to connect to a third-party SFTP server that <em>you do not control</em>.</div>
+
+      <div class="vs-grid">
+        <div class="vs-card">
+          <h4>✅ Use Boomi MFT when…</h4>
+          <ul>
+            <li>You need to provide an SFTP/FTPS/HTTPS endpoint to an external partner</li>
+            <li>You require a built-in audit trail and transfer dashboard</li>
+            <li>You want event-driven trigger-on-arrival without polling</li>
+            <li>You need partner-level authentication and access control without building it yourself</li>
+            <li>You need AS2 with MDN acknowledgements</li>
+            <li>You need a file retention / archival policy on the exchange point</li>
+          </ul>
+        </div>
+        <div class="vs-card">
+          <h4>✅ Use SFTP V2 Connector (in a process) when…</h4>
+          <ul>
+            <li>You are connecting to a <em>third-party</em> SFTP server you do not own</li>
+            <li>You need fine-grained control over the SFTP session (key types, ciphers, known_hosts)</li>
+            <li>You are integrating with a legacy government SFTP endpoint</li>
+            <li>MFT is not part of your Boomi licence</li>
+            <li>The exchange is internal (same estate) and governance overhead is not needed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </main>
 </div>
 
-<main>
-
-  <div class="callout">
-    <strong>HMRC Integration Note:</strong> For the HMRC Boomi estate, the primary OOTB connectors in active use are
-    <strong>Web Services Server</strong> (listener), <strong>HTTP Client / REST Client</strong> (outbound),
-    <strong>Web Services SOAP Client</strong> (legacy SOAP bridging), <strong>Boomi Event Streams (Produce/Subscribe)</strong>,
-    <strong>Database</strong>, and <strong>SFTP v2</strong>. Partner and deprecated connectors are listed for completeness.
-  </div>
-
-  <!-- ══════════════════════════════════════════════════
-       1. TECHNOLOGY CONNECTORS
-  ════════════════════════════════════════════════════ -->
-  <div class="section" data-section="technology">
-    <div class="section-header">
-      <div class="section-dot" style="background:#00b388"></div>
-      <div>
-        <div class="section-title">Technology Connectors</div>
-        <div class="section-desc">Protocol-level connectors — data format is independent of the connector. Use these for HTTP, FTP, SFTP, JMS, database, messaging, and similar transport patterns.</div>
-      </div>
-      <div class="section-count" id="cnt-technology"></div>
-    </div>
-    <div class="connector-grid" id="grid-technology">
-
-      <div class="card" data-cat="technology" data-name="http client">
-        <div class="card-icon" style="background:#1a3a30">🌐</div>
-        <div class="card-body">
-          <div class="card-name">HTTP Client</div>
-          <div class="card-desc">Send and receive data over HTTP/HTTPS. Stateless — each document is an independent request. Generic; use REST Client or WSS for structured APIs.</div>
-          <div class="card-badges"><span class="badge badge-green">Outbound</span><span class="badge badge-teal">HTTP/HTTPS</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="rest client">
-        <div class="card-icon" style="background:#1a3a30">🔌</div>
-        <div class="card-body">
-          <div class="card-name">REST Client</div>
-          <div class="card-desc">Connect to any RESTful API. Handles OAuth, timeout management, response headers. Preferred over HTTP Client for structured REST integrations.</div>
-          <div class="card-badges"><span class="badge badge-green">Outbound</span><span class="badge badge-teal">REST</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="web services server">
-        <div class="card-icon" style="background:#0c2a3a">📡</div>
-        <div class="card-body">
-          <div class="card-name">Web Services Server (WSS)</div>
-          <div class="card-desc">Listen for REST, SOAP, and HTTP requests in real-time. Primary inbound listener for HMRC-facing API endpoints. Used in P-101/P-105 patterns.</div>
-          <div class="card-badges"><span class="badge badge-teal">Inbound Listener</span><span class="badge badge-teal">REST · SOAP</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="web services soap client">
-        <div class="card-icon" style="background:#2d1f00">🔗</div>
-        <div class="card-body">
-          <div class="card-name">Web Services SOAP Client</div>
-          <div class="card-desc">Invoke SOAP 1.1/1.2 web services via WSDL. Used to bridge ChRIS/WebMethods legacy SOAP services. Key connector in HMRC legacy modernisation.</div>
-          <div class="card-badges"><span class="badge badge-amber">Outbound</span><span class="badge badge-amber">SOAP 1.1/1.2</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="database">
-        <div class="card-icon" style="background:#1e1533">🗄️</div>
-        <div class="card-body">
-          <div class="card-name">Database</div>
-          <div class="card-desc">Generic JDBC-based connector. Supports INSERT, GET, UPDATE, UPSERT, DELETE, stored procedures. Powers P-118 (DB as REST) and P-119 (governed DB access).</div>
-          <div class="card-badges"><span class="badge badge-purple">JDBC</span><span class="badge badge-purple">SQL</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="sftp v2 sftp">
-        <div class="card-icon" style="background:#1a3a30">📁</div>
-        <div class="card-body">
-          <div class="card-name">SFTP V2</div>
-          <div class="card-desc">Secure file transfer over SSH. Supports create, download, delete, list with advanced JSch security configuration. Recommended over SFTP (Legacy).</div>
-          <div class="card-badges"><span class="badge badge-green">File Transfer</span><span class="badge badge-green">SSH/SFTP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="sftp legacy">
-        <div class="card-icon" style="background:#2d1010">📁</div>
-        <div class="card-body">
-          <div class="card-name">SFTP (Legacy) <span class="deprecated-tag">Legacy</span></div>
-          <div class="card-desc">Original SFTP connector. Migrate to SFTP V2 for new integrations. Retained for backward compatibility with existing deployed processes.</div>
-          <div class="card-badges"><span class="badge badge-red">Legacy</span><span class="badge badge-muted">SSH/SFTP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="ftp v2">
-        <div class="card-icon" style="background:#1a3a30">📂</div>
-        <div class="card-body">
-          <div class="card-name">FTP V2</div>
-          <div class="card-desc">FTP file exchange with passive/active modes. Supports resume on interrupted transfers, symbolic link control, and metadata filtering.</div>
-          <div class="card-badges"><span class="badge badge-green">File Transfer</span><span class="badge badge-green">FTP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="ftp legacy">
-        <div class="card-icon" style="background:#2d1010">📂</div>
-        <div class="card-body">
-          <div class="card-name">FTP (Legacy) <span class="deprecated-tag">Legacy</span></div>
-          <div class="card-desc">Original FTP connector. Superseded by FTP V2. Retained for deployed processes only.</div>
-          <div class="card-badges"><span class="badge badge-red">Legacy</span><span class="badge badge-muted">FTP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="disk v2">
-        <div class="card-icon" style="background:#1e1533">💾</div>
-        <div class="card-body">
-          <div class="card-name">Disk V2</div>
-          <div class="card-desc">Read/write files on the Atom host filesystem. Useful for local staging, archive, and batch file processing scenarios.</div>
-          <div class="card-badges"><span class="badge badge-purple">Local FS</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="disk legacy">
-        <div class="card-icon" style="background:#2d1010">💾</div>
-        <div class="card-body">
-          <div class="card-name">Disk (Legacy) <span class="deprecated-tag">Legacy</span></div>
-          <div class="card-desc">Original Disk connector. Use Disk V2 for new implementations.</div>
-          <div class="card-badges"><span class="badge badge-red">Legacy</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="jms">
-        <div class="card-icon" style="background:#2d1f00">📨</div>
-        <div class="card-body">
-          <div class="card-name">JMS (Java Message Service)</div>
-          <div class="card-desc">Send/receive messages via JMS-compliant brokers (ActiveMQ, IBM MQ, TIBCO, etc.). Supports queues and topics. Key for async messaging patterns.</div>
-          <div class="card-badges"><span class="badge badge-amber">Messaging</span><span class="badge badge-amber">JMS</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="boomi event streams produce listen">
-        <div class="card-icon" style="background:#1a3a30">⚡</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Event Streams (Produce + Listen)</div>
-          <div class="card-desc">Native Kafka-backed broker within Boomi. Produce connector has no broker-side retry — build explicit Try/Catch. Powers P-120/P-121 patterns. Clustered Atom aware.</div>
-          <div class="card-badges"><span class="badge badge-green">Kafka-backed</span><span class="badge badge-green">Pub/Sub</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="as2">
-        <div class="card-icon" style="background:#0c2a3a">📬</div>
-        <div class="card-body">
-          <div class="card-name">AS2</div>
-          <div class="card-desc">EDI-over-HTTP file exchange using AS2 protocol with MDN acknowledgement. Used in B2B/Trading Partner scenarios.</div>
-          <div class="card-badges"><span class="badge badge-teal">B2B/EDI</span><span class="badge badge-teal">AS2</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="as4">
-        <div class="card-icon" style="background:#0c2a3a">📬</div>
-        <div class="card-body">
-          <div class="card-name">AS4</div>
-          <div class="card-desc">Web-services-based secure messaging standard. ebMS 3.0 compliant. Successor to AS2 for government/regulated B2B messaging.</div>
-          <div class="card-badges"><span class="badge badge-teal">B2B/EDI</span><span class="badge badge-teal">ebMS 3.0</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="mllp client server">
-        <div class="card-icon" style="background:#1e1533">🏥</div>
-        <div class="card-body">
-          <div class="card-name">MLLP Client / MLLP Server</div>
-          <div class="card-desc">Minimal Lower Layer Protocol for HL7 healthcare message transmission. Client sends; Server listens and initiates processes.</div>
-          <div class="card-badges"><span class="badge badge-purple">Healthcare</span><span class="badge badge-purple">HL7</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="mail imap pop3 smtp">
-        <div class="card-icon" style="background:#2d1f00">✉️</div>
-        <div class="card-body">
-          <div class="card-name">Mail (IMAP / POP3 / SMTP)</div>
-          <div class="card-desc">Send and receive email. IMAP/POP3 for reading inbound mail; SMTP for sending. Supports attachments and triggered processing from inbox.</div>
-          <div class="card-badges"><span class="badge badge-amber">Email</span><span class="badge badge-amber">SMTP/IMAP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="microsoft azure service bus">
-        <div class="card-icon" style="background:#0c2a3a">☁️</div>
-        <div class="card-body">
-          <div class="card-name">Microsoft Azure Service Bus</div>
-          <div class="card-desc">Send/receive messages via Azure Service Bus queues and topics. Supports dead-letter handling and session-aware messaging.</div>
-          <div class="card-badges"><span class="badge badge-teal">Azure</span><span class="badge badge-teal">Messaging</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="amazon sqs">
-        <div class="card-icon" style="background:#2d1f00">☁️</div>
-        <div class="card-body">
-          <div class="card-name">Amazon SQS</div>
-          <div class="card-desc">Interact with AWS Simple Queue Service — send, receive, and delete messages from SQS queues. Standard and FIFO queues supported.</div>
-          <div class="card-badges"><span class="badge badge-amber">AWS</span><span class="badge badge-amber">Messaging</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="amazon sns">
-        <div class="card-icon" style="background:#2d1f00">📢</div>
-        <div class="card-body">
-          <div class="card-name">Amazon SNS</div>
-          <div class="card-desc">Publish messages to AWS Simple Notification Service topics for fan-out delivery to SQS, Lambda, HTTP, and email endpoints.</div>
-          <div class="card-badges"><span class="badge badge-amber">AWS</span><span class="badge badge-amber">Pub/Sub</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="message queue boomi">
-        <div class="card-icon" style="background:#1a3a30">🗂️</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Message Queue Connector</div>
-          <div class="card-desc">Internal Boomi queue connector backed by the Atom's internal JMS broker. Used for intra-platform async handoffs within a single Atom/Molecule.</div>
-          <div class="card-badges"><span class="badge badge-green">Internal Queue</span><span class="badge badge-green">⭐ HMRC Core</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="ldap">
-        <div class="card-icon" style="background:#1e1533">🔑</div>
-        <div class="card-body">
-          <div class="card-name">LDAP</div>
-          <div class="card-desc">Query and update LDAP/Active Directory. Supports bind, search, add, modify, delete operations. Useful for identity/authorisation lookups.</div>
-          <div class="card-badges"><span class="badge badge-purple">Identity</span><span class="badge badge-purple">LDAP/AD</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="technology" data-name="program command">
-        <div class="card-icon" style="background:#2d1f00">⚙️</div>
-        <div class="card-body">
-          <div class="card-name">Program Command</div>
-          <div class="card-desc">Execute OS-level commands or shell scripts on the Atom host. Used for local scripting, batch invocation, or native CLI integrations.</div>
-          <div class="card-badges"><span class="badge badge-amber">Shell/OS</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════
-       2. BOOMI PLATFORM CONNECTORS
-  ════════════════════════════════════════════════════ -->
-  <div class="section" data-section="platform">
-    <div class="section-header">
-      <div class="section-dot" style="background:#0ea5e9"></div>
-      <div>
-        <div class="section-title">Boomi Platform Connectors</div>
-        <div class="section-desc">Native Boomi platform services — Data Hub, Event Streams, MFT, Flow, and platform API access.</div>
-      </div>
-      <div class="section-count" id="cnt-platform"></div>
-    </div>
-    <div class="connector-grid" id="grid-platform">
-
-      <div class="card" data-cat="platform" data-name="boomi data hub">
-        <div class="card-icon" style="background:#0c2a3a">🏛️</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Data Hub</div>
-          <div class="card-desc">Connect to Boomi Data Hub repositories for master data management — create, update, query, and quarantine golden records.</div>
-          <div class="card-badges"><span class="badge badge-teal">MDM</span><span class="badge badge-teal">Data Hub</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="platform" data-name="boomi data hub listener">
-        <div class="card-icon" style="background:#0c2a3a">👂</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Data Hub Listener</div>
-          <div class="card-desc">Listen-only connector. Triggers an integration process when a Data Hub golden record changes. Used in event-driven MDM sync patterns.</div>
-          <div class="card-badges"><span class="badge badge-teal">Inbound Listener</span><span class="badge badge-teal">MDM</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="platform" data-name="boomi managed file transfer mft">
-        <div class="card-icon" style="background:#1a3a30">📦</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Managed File Transfer (MFT)</div>
-          <div class="card-desc">Cloud-native file exchange with monitoring, audit trail, and governance across business lines. Connects processes to the MFT platform.</div>
-          <div class="card-badges"><span class="badge badge-green">MFT</span><span class="badge badge-green">File Exchange</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="platform" data-name="boomi platform api atomsphere">
-        <div class="card-icon" style="background:#0c2a3a">🔧</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Platform API</div>
-          <div class="card-desc">Programmatic access to Boomi AtomSphere platform — manage processes, environments, deployments, and atoms from within a Boomi process.</div>
-          <div class="card-badges"><span class="badge badge-teal">Platform API</span><span class="badge badge-teal">Admin</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="platform" data-name="boomi atomsphere partner api">
-        <div class="card-icon" style="background:#0c2a3a">🤝</div>
-        <div class="card-body">
-          <div class="card-name">Boomi AtomSphere Partner API</div>
-          <div class="card-desc">Extended platform API for Boomi partners. Manage multi-account environments, subaccounts, and partner-level administrative functions.</div>
-          <div class="card-badges"><span class="badge badge-teal">Partner API</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="platform" data-name="boomi flow client">
-        <div class="card-icon" style="background:#1a3a30">🌊</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Flow Client</div>
-          <div class="card-desc">Trigger and interact with Boomi Flow (workflow automation) from within an Integration process. Bridges orchestration and human-task flows.</div>
-          <div class="card-badges"><span class="badge badge-green">Workflow</span><span class="badge badge-green">Flow</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="platform" data-name="boomi master data hub legacy">
-        <div class="card-icon" style="background:#2d1010">🏛️</div>
-        <div class="card-body">
-          <div class="card-name">Boomi Master Data Hub (Legacy) <span class="deprecated-tag">Legacy</span></div>
-          <div class="card-desc">Previous generation MDM connector. Superseded by Boomi Data Hub connector. Retained for in-flight deployments only.</div>
-          <div class="card-badges"><span class="badge badge-red">Legacy</span><span class="badge badge-muted">MDM</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════
-       3. APPLICATION CONNECTORS (Boomi-built)
-  ════════════════════════════════════════════════════ -->
-  <div class="section" data-section="application">
-    <div class="section-header">
-      <div class="section-dot" style="background:#a78bfa"></div>
-      <div>
-        <div class="section-title">Application Connectors (Boomi-built)</div>
-        <div class="section-desc">Pre-built connectors for specific commercial and cloud applications, maintained by Boomi. Include auto-discovery of API objects and auth handling.</div>
-      </div>
-      <div class="section-count" id="cnt-application"></div>
-    </div>
-    <div class="connector-grid" id="grid-application">
-
-      <!-- CRM / Sales -->
-      <div class="card" data-cat="application" data-name="salesforce">
-        <div class="card-icon" style="background:#0c2a3a">☁️</div>
-        <div class="card-body">
-          <div class="card-name">Salesforce</div>
-          <div class="card-desc">Full CRUD + bulk API + platform events against Salesforce CRM. Auto-discovers objects. Relevant to HMRC's Salesforce integrations.</div>
-          <div class="card-badges"><span class="badge badge-teal">CRM</span><span class="badge badge-green">⭐ HMRC Relevant</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="hubspot crm">
-        <div class="card-icon" style="background:#2d1f00">💼</div>
-        <div class="card-body">
-          <div class="card-name">HubSpot CRM</div>
-          <div class="card-desc">Connect to HubSpot CRM for contacts, deals, companies, tickets, and custom objects. REST-based with OAuth2 auth.</div>
-          <div class="card-badges"><span class="badge badge-amber">CRM</span></div>
-        </div>
-      </div>
-
-      <!-- ERP / Finance -->
-      <div class="card" data-cat="application" data-name="sap boomi for sap">
-        <div class="card-icon" style="background:#1e1533">🏭</div>
-        <div class="card-body">
-          <div class="card-name">Boomi for SAP</div>
-          <div class="card-desc">Native SAP connector supporting RFC/BAPI, IDocs, BAPIs, and SAP APIs. Key for HMRC SAP S4HANA integration patterns.</div>
-          <div class="card-badges"><span class="badge badge-purple">ERP</span><span class="badge badge-green">⭐ HMRC Relevant</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="netsuite">
-        <div class="card-icon" style="background:#0c2a3a">💰</div>
-        <div class="card-body">
-          <div class="card-name">NetSuite</div>
-          <div class="card-desc">Full ERP/financials integration with NetSuite using SOAP-based web services and REST. Supports standard and custom record types.</div>
-          <div class="card-badges"><span class="badge badge-teal">ERP/Finance</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="intacct sage">
-        <div class="card-icon" style="background:#1a3a30">💳</div>
-        <div class="card-body">
-          <div class="card-name">Intacct</div>
-          <div class="card-desc">Cloud financial management connector for Sage Intacct. Supports general ledger, AP, AR, and project accounting operations.</div>
-          <div class="card-badges"><span class="badge badge-green">Finance</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="coupa procurement">
-        <div class="card-icon" style="background:#2d1f00">🛒</div>
-        <div class="card-body">
-          <div class="card-name">Coupa</div>
-          <div class="card-desc">Business spend management — purchase orders, invoices, expenses, and supplier management via Coupa REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-amber">Procurement</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="great plains microsoft dynamics gp">
-        <div class="card-icon" style="background:#0c2a3a">🏢</div>
-        <div class="card-body">
-          <div class="card-name">Great Plains (MS Dynamics GP)</div>
-          <div class="card-desc">Integration with Microsoft Dynamics Great Plains ERP — GL, AP, AR, inventory, and payroll modules.</div>
-          <div class="card-badges"><span class="badge badge-teal">ERP</span></div>
-        </div>
-      </div>
-
-      <!-- HR / Workforce -->
-      <div class="card" data-cat="application" data-name="workday">
-        <div class="card-icon" style="background:#1e1533">👥</div>
-        <div class="card-body">
-          <div class="card-name">Workday</div>
-          <div class="card-desc">HCM, Finance, and Payroll via Workday SOAP/REST APIs. Supports workers, compensation, reporting, and custom objects.</div>
-          <div class="card-badges"><span class="badge badge-purple">HCM</span></div>
-        </div>
-      </div>
-
-      <!-- Cloud Storage -->
-      <div class="card" data-cat="application" data-name="amazon s3 rest">
-        <div class="card-icon" style="background:#2d1f00">🪣</div>
-        <div class="card-body">
-          <div class="card-name">Amazon S3 REST</div>
-          <div class="card-desc">Object storage operations on AWS S3 — create, get, delete, query buckets and objects via REST. Preferred over retired S3 connector.</div>
-          <div class="card-badges"><span class="badge badge-amber">AWS</span><span class="badge badge-amber">Object Storage</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="amazon s3 retired">
-        <div class="card-icon" style="background:#2d1010">🪣</div>
-        <div class="card-body">
-          <div class="card-name">Amazon S3 (Retired) <span class="deprecated-tag">Retired</span></div>
-          <div class="card-desc">Original S3 connector — now retired. Migrate all processes to Amazon S3 REST connector.</div>
-          <div class="card-badges"><span class="badge badge-red">Retired</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="amazon redshift">
-        <div class="card-icon" style="background:#2d1f00">🏗️</div>
-        <div class="card-body">
-          <div class="card-name">Amazon Redshift</div>
-          <div class="card-desc">Data warehouse connector for Amazon Redshift. SQL-based operations including COPY for bulk data loading from S3.</div>
-          <div class="card-badges"><span class="badge badge-amber">AWS</span><span class="badge badge-amber">Data Warehouse</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="amazon bedrock ai">
-        <div class="card-icon" style="background:#2d1f00">🤖</div>
-        <div class="card-body">
-          <div class="card-name">Amazon Bedrock</div>
-          <div class="card-desc">Invoke generative AI foundation models (Claude, Titan, Llama, etc.) via Amazon Bedrock APIs within Boomi processes.</div>
-          <div class="card-badges"><span class="badge badge-amber">AWS</span><span class="badge badge-amber">AI/GenAI</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="amazon lambda">
-        <div class="card-icon" style="background:#2d1f00">λ</div>
-        <div class="card-body">
-          <div class="card-name">Amazon Lambda (Tech Preview)</div>
-          <div class="card-desc">Invoke AWS Lambda serverless functions from Boomi processes. Currently Tech Preview — validate before production use.</div>
-          <div class="card-badges"><span class="badge badge-amber">AWS</span><span class="badge badge-red">Tech Preview</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="amazon selling partner">
-        <div class="card-icon" style="background:#2d1f00">🛍️</div>
-        <div class="card-body">
-          <div class="card-name">Amazon Selling Partner</div>
-          <div class="card-desc">Integrate with Amazon marketplace via the Selling Partner API — orders, inventory, reports, and fulfillment.</div>
-          <div class="card-badges"><span class="badge badge-amber">E-Commerce</span></div>
-        </div>
-      </div>
-
-      <!-- Microsoft -->
-      <div class="card" data-cat="application" data-name="microsoft azure blob storage">
-        <div class="card-icon" style="background:#0c2a3a">📦</div>
-        <div class="card-body">
-          <div class="card-name">Microsoft Azure Blob Storage</div>
-          <div class="card-desc">Create, read, update, delete blobs and containers in Azure Blob Storage. Supports block blobs, page blobs, and SAS tokens.</div>
-          <div class="card-badges"><span class="badge badge-teal">Azure</span><span class="badge badge-teal">Storage</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="microsoft azure cosmos db">
-        <div class="card-icon" style="background:#0c2a3a">🌐</div>
-        <div class="card-body">
-          <div class="card-name">Microsoft Azure Cosmos DB</div>
-          <div class="card-desc">NoSQL document store operations on Azure Cosmos DB — Get, Create, Update, Delete, Upsert, and Query via REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-teal">Azure</span><span class="badge badge-teal">NoSQL</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="microsoft azure data lake storage adls gen2">
-        <div class="card-icon" style="background:#0c2a3a">🏞️</div>
-        <div class="card-body">
-          <div class="card-name">Microsoft Azure Data Lake Storage (ADLS Gen2)</div>
-          <div class="card-desc">File system operations on ADLS Gen2. Supports hierarchical namespace, filesystem create/delete/list, and path-level operations.</div>
-          <div class="card-badges"><span class="badge badge-teal">Azure</span><span class="badge badge-teal">Data Lake</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="microsoft azure sql database">
-        <div class="card-icon" style="background:#0c2a3a">🗄️</div>
-        <div class="card-body">
-          <div class="card-name">Microsoft Azure SQL Database</div>
-          <div class="card-desc">Managed SQL Server in Azure. Full CRUD and stored procedure support via JDBC. Alternative to generic Database connector for Azure SQL.</div>
-          <div class="card-badges"><span class="badge badge-teal">Azure</span><span class="badge badge-teal">SQL</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="microsoft azure sql data warehouse synapse">
-        <div class="card-icon" style="background:#0c2a3a">🏗️</div>
-        <div class="card-body">
-          <div class="card-name">Microsoft Azure SQL Data Warehouse</div>
-          <div class="card-desc">Integration with Azure Synapse Analytics (formerly SQL DW). Bulk load, query, and manage analytical workloads.</div>
-          <div class="card-badges"><span class="badge badge-teal">Azure</span><span class="badge badge-teal">Analytics</span></div>
-        </div>
-      </div>
-
-      <!-- Google -->
-      <div class="card" data-cat="application" data-name="google bigquery">
-        <div class="card-icon" style="background:#1a3a30">📊</div>
-        <div class="card-body">
-          <div class="card-name">Google BigQuery</div>
-          <div class="card-desc">Run queries, insert data, and manage datasets/tables in Google BigQuery. Supports streaming inserts and batch load jobs.</div>
-          <div class="card-badges"><span class="badge badge-green">GCP</span><span class="badge badge-green">Analytics</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="google workspace apps">
-        <div class="card-icon" style="background:#1a3a30">📧</div>
-        <div class="card-body">
-          <div class="card-name">Google Workspace</div>
-          <div class="card-desc">Integrate with Google Workspace (formerly G Suite) — Gmail, Calendar, Drive, Contacts, and Admin SDK.</div>
-          <div class="card-badges"><span class="badge badge-green">GCP</span><span class="badge badge-green">Productivity</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="google sheets">
-        <div class="card-icon" style="background:#1a3a30">📋</div>
-        <div class="card-body">
-          <div class="card-name">Google Sheets</div>
-          <div class="card-desc">Read, write, and manipulate Google Sheets spreadsheets. Useful for low-volume data exchange with business stakeholders.</div>
-          <div class="card-badges"><span class="badge badge-green">GCP</span><span class="badge badge-green">Spreadsheet</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="google storage cloud gcs">
-        <div class="card-icon" style="background:#1a3a30">🪣</div>
-        <div class="card-body">
-          <div class="card-name">Google Cloud Storage</div>
-          <div class="card-desc">Object storage on GCS — upload, download, delete, and list objects and buckets via Google Storage APIs.</div>
-          <div class="card-badges"><span class="badge badge-green">GCP</span><span class="badge badge-green">Storage</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="google ad manager dfp">
-        <div class="card-icon" style="background:#1a3a30">📢</div>
-        <div class="card-body">
-          <div class="card-name">Google Ad Manager</div>
-          <div class="card-desc">Integrate with Google Ad Manager (formerly DoubleClick for Publishers) for ad inventory, targeting, and reporting.</div>
-          <div class="card-badges"><span class="badge badge-green">GCP</span><span class="badge badge-green">Advertising</span></div>
-        </div>
-      </div>
-
-      <!-- Dev/Ops -->
-      <div class="card" data-cat="application" data-name="jira rest">
-        <div class="card-icon" style="background:#0c2a3a">🎯</div>
-        <div class="card-body">
-          <div class="card-name">JIRA REST</div>
-          <div class="card-desc">Create, update, query, and transition Jira issues via the Jira REST API. Supports Jira Cloud and Server instances.</div>
-          <div class="card-badges"><span class="badge badge-teal">Dev/Ops</span><span class="badge badge-teal">Issue Tracking</span></div>
-        </div>
-      </div>
-
-      <!-- Analytics -->
-      <div class="card" data-cat="application" data-name="anaplan">
-        <div class="card-icon" style="background:#1e1533">📈</div>
-        <div class="card-body">
-          <div class="card-name">Anaplan</div>
-          <div class="card-desc">Connected planning platform connector. Import, export, and action on Anaplan models for FP&amp;A and supply chain planning.</div>
-          <div class="card-badges"><span class="badge badge-purple">Planning</span><span class="badge badge-purple">FP&A</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="anaplan legacy">
-        <div class="card-icon" style="background:#2d1010">📈</div>
-        <div class="card-body">
-          <div class="card-name">Anaplan (Legacy) <span class="deprecated-tag">Legacy</span></div>
-          <div class="card-desc">Original Anaplan connector. Superseded by the current Anaplan connector. Retained for backward compatibility.</div>
-          <div class="card-badges"><span class="badge badge-red">Legacy</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="hadoop hdfs">
-        <div class="card-icon" style="background:#2d1f00">🐘</div>
-        <div class="card-body">
-          <div class="card-name">Hadoop</div>
-          <div class="card-desc">Read/write files on HDFS (Hadoop Distributed File System). Supports WebHDFS REST interface for big data ingestion and extraction.</div>
-          <div class="card-badges"><span class="badge badge-amber">Big Data</span><span class="badge badge-amber">HDFS</span></div>
-        </div>
-      </div>
-
-      <!-- Marketing -->
-      <div class="card" data-cat="application" data-name="marketo rest">
-        <div class="card-icon" style="background:#2d0f1e">📣</div>
-        <div class="card-body">
-          <div class="card-name">Marketo REST</div>
-          <div class="card-desc">Marketing automation connector — manage leads, programs, campaigns, and custom objects via Marketo REST API.</div>
-          <div class="card-badges"><span class="badge badge-pink">Marketing</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="marketo deprecated">
-        <div class="card-icon" style="background:#2d1010">📣</div>
-        <div class="card-body">
-          <div class="card-name">Marketo (Deprecated) <span class="deprecated-tag">Deprecated</span></div>
-          <div class="card-desc">Legacy Marketo connector. Migrate to Marketo REST connector.</div>
-          <div class="card-badges"><span class="badge badge-red">Deprecated</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="aprimo marketing">
-        <div class="card-icon" style="background:#2d0f1e">🎨</div>
-        <div class="card-body">
-          <div class="card-name">Aprimo</div>
-          <div class="card-desc">Digital asset management and marketing operations via Aprimo REST APIs — assets, projects, campaigns, and workflows.</div>
-          <div class="card-badges"><span class="badge badge-pink">Marketing</span><span class="badge badge-pink">DAM</span></div>
-        </div>
-      </div>
-
-      <!-- Helpdesk / ITSM -->
-      <div class="card" data-cat="application" data-name="autotask itsm">
-        <div class="card-icon" style="background:#0c2a3a">🎟️</div>
-        <div class="card-body">
-          <div class="card-name">Autotask</div>
-          <div class="card-desc">IT service management and PSA connector for Autotask — tickets, CRM, projects, and billing for MSPs.</div>
-          <div class="card-badges"><span class="badge badge-teal">ITSM</span><span class="badge badge-teal">PSA</span></div>
-        </div>
-      </div>
-
-      <!-- File / Content Management -->
-      <div class="card" data-cat="application" data-name="box content">
-        <div class="card-icon" style="background:#0c2a3a">📁</div>
-        <div class="card-body">
-          <div class="card-name">Box</div>
-          <div class="card-desc">Cloud content management — upload, download, share, and collaborate on files and folders in Box. Supports OAuth2 auth and webhooks.</div>
-          <div class="card-badges"><span class="badge badge-teal">Content</span><span class="badge badge-teal">File Storage</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="magento e-commerce">
-        <div class="card-icon" style="background:#2d0f1e">🛒</div>
-        <div class="card-body">
-          <div class="card-name">Magento</div>
-          <div class="card-desc">E-commerce integration with Magento/Adobe Commerce — products, orders, customers, inventory, and promotions.</div>
-          <div class="card-badges"><span class="badge badge-pink">E-Commerce</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="kintone low-code">
-        <div class="card-icon" style="background:#1e1533">🧩</div>
-        <div class="card-body">
-          <div class="card-name">Kintone</div>
-          <div class="card-desc">Low-code workplace app platform — manage apps, records, and spaces via the Kintone REST API.</div>
-          <div class="card-badges"><span class="badge badge-purple">Low-Code</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="live optics dell">
-        <div class="card-icon" style="background:#0c2a3a">📡</div>
-        <div class="card-body">
-          <div class="card-name">Live Optics</div>
-          <div class="card-desc">Dell Live Optics infrastructure assessment data collection connector for storage and compute analytics.</div>
-          <div class="card-badges"><span class="badge badge-teal">Infrastructure</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="application" data-name="aible ai machine learning">
-        <div class="card-icon" style="background:#1e1533">🧠</div>
-        <div class="card-body">
-          <div class="card-name">Aible AI</div>
-          <div class="card-desc">AI/ML model invocation via Aible platform — deploy predictions and recommendations within Boomi integration flows.</div>
-          <div class="card-badges"><span class="badge badge-purple">AI/ML</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════════════
-       4. PARTNER CONNECTORS
-  ════════════════════════════════════════════════════ -->
-  <div class="section" data-section="partner">
-    <div class="section-header">
-      <div class="section-dot" style="background:#f59e0b"></div>
-      <div>
-        <div class="section-title">Partner &amp; Third-Party Connectors</div>
-        <div class="section-desc">Connectors built and maintained by Boomi Technology Partners. Available in the Boomi connector library but maintained externally.</div>
-      </div>
-      <div class="section-count" id="cnt-partner"></div>
-    </div>
-    <div class="connector-grid" id="grid-partner">
-
-      <div class="card" data-cat="partner" data-name="agiloft clm contract">
-        <div class="card-icon" style="background:#2d1f00">📄</div>
-        <div class="card-body">
-          <div class="card-name">Agiloft CLM <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Contract lifecycle management integration — agreements, clauses, and approvals via Agiloft REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-amber">Legal/CLM</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="alleantia iot industrial">
-        <div class="card-icon" style="background:#1a3a30">🏭</div>
-        <div class="card-body">
-          <div class="card-name">Alleantia IoT <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Industrial IoT gateway — connect PLCs, SCADA, and industrial machines to Boomi via the Alleantia ISC platform.</div>
-          <div class="card-badges"><span class="badge badge-green">IoT</span><span class="badge badge-green">Industrial</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="aria billing subscription">
-        <div class="card-icon" style="background:#0c2a3a">💳</div>
-        <div class="card-body">
-          <div class="card-name">Aria <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Subscription billing and revenue management integration via Aria Systems REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-teal">Billing</span><span class="badge badge-teal">Subscriptions</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="bright data web scraping">
-        <div class="card-icon" style="background:#1a3a30">🕸️</div>
-        <div class="card-body">
-          <div class="card-name">Bright Data <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Web data collection and proxy network integration. Access structured public web data at scale.</div>
-          <div class="card-badges"><span class="badge badge-green">Data Collection</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="ceres technology supply chain ai">
-        <div class="card-icon" style="background:#1a3a30">🚢</div>
-        <div class="card-body">
-          <div class="card-name">Ceres Technology <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">AI-powered supply chain delay prediction. Identifies risks months in advance via Ceres analytics APIs.</div>
-          <div class="card-badges"><span class="badge badge-green">AI/ML</span><span class="badge badge-green">Supply Chain</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="cloudblue connect marketplace">
-        <div class="card-icon" style="background:#0c2a3a">🔷</div>
-        <div class="card-body">
-          <div class="card-name">CloudBlue Connect <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">SaaS subscription commerce and channel ecosystem management via CloudBlue Connect APIs.</div>
-          <div class="card-badges"><span class="badge badge-teal">Commerce</span><span class="badge badge-teal">Marketplace</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="eyer ai visual inspection">
-        <div class="card-icon" style="background:#1e1533">👁️</div>
-        <div class="card-body">
-          <div class="card-name">Eyer <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">AI-powered visual inspection for manufacturing quality control. Feed inspection results into Boomi processes.</div>
-          <div class="card-badges"><span class="badge badge-purple">AI/ML</span><span class="badge badge-purple">Manufacturing</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="fiix maintenance cmms">
-        <div class="card-icon" style="background:#2d1f00">🔧</div>
-        <div class="card-body">
-          <div class="card-name">Fiix <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">CMMS (computerised maintenance management) integration — work orders, assets, and preventive maintenance via Fiix REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-amber">CMMS</span><span class="badge badge-amber">Maintenance</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="files.com file transfer">
-        <div class="card-icon" style="background:#1a3a30">📁</div>
-        <div class="card-body">
-          <div class="card-name">Files.com <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Cloud file management platform — SFTP, FTP, S3, and REST access with advanced permission controls.</div>
-          <div class="card-badges"><span class="badge badge-green">File Transfer</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="hypatos ai document processing invoice">
-        <div class="card-icon" style="background:#1e1533">🧾</div>
-        <div class="card-body">
-          <div class="card-name">Hypatos.ai <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">AI-driven document processing — extract structured data from invoices, receipts, and forms at scale.</div>
-          <div class="card-badges"><span class="badge badge-purple">AI/ML</span><span class="badge badge-purple">Document IDP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="ifs rest erp">
-        <div class="card-icon" style="background:#0c2a3a">🏗️</div>
-        <div class="card-body">
-          <div class="card-name">IFS REST <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">IFS Applications ERP connector via REST. Covers financials, manufacturing, supply chain, and project management.</div>
-          <div class="card-badges"><span class="badge badge-teal">ERP</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="ifs fsm rest field service">
-        <div class="card-icon" style="background:#0c2a3a">🔩</div>
-        <div class="card-body">
-          <div class="card-name">IFS FSM REST <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">IFS Field Service Management — work orders, scheduling, technicians, and parts via REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-teal">Field Service</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="ineight construction project">
-        <div class="card-icon" style="background:#2d1f00">🏗️</div>
-        <div class="card-body">
-          <div class="card-name">InEight <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Construction project management — estimates, contracts, schedules, and field execution via InEight APIs.</div>
-          <div class="card-badges"><span class="badge badge-amber">Construction</span><span class="badge badge-amber">Project Mgmt</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="innotas project portfolio management">
-        <div class="card-icon" style="background:#1e1533">📊</div>
-        <div class="card-body">
-          <div class="card-name">Innotas <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Project portfolio management (PPM) connector for Planview Innotas — projects, resources, and financials.</div>
-          <div class="card-badges"><span class="badge badge-purple">PPM</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="integratd logging audit">
-        <div class="card-icon" style="background:#1a3a30">📝</div>
-        <div class="card-body">
-          <div class="card-name">IntegratD Logging <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Centralised integration logging and audit trail. Ship process events, errors, and metrics to IntegratD for observability.</div>
-          <div class="card-badges"><span class="badge badge-green">Logging</span><span class="badge badge-green">Observability</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="inverbis analytics process mining">
-        <div class="card-icon" style="background:#1e1533">⛏️</div>
-        <div class="card-body">
-          <div class="card-name">Inverbis Analytics <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Process mining and analytics — feed event logs from Boomi into Inverbis for conformance checking and bottleneck detection.</div>
-          <div class="card-badges"><span class="badge badge-purple">Process Mining</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="kanverse idp document ai ocr">
-        <div class="card-icon" style="background:#2d1f00">📄</div>
-        <div class="card-body">
-          <div class="card-name">Kanverse IDP <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Intelligent document processing — AI-powered OCR and data extraction from unstructured documents via Kanverse APIs.</div>
-          <div class="card-badges"><span class="badge badge-amber">IDP</span><span class="badge badge-amber">AI/OCR</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="knowbe4 security awareness training">
-        <div class="card-icon" style="background:#2d1010">🛡️</div>
-        <div class="card-body">
-          <div class="card-name">KnowBe4 <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Security awareness training platform — manage users, training enrolments, and phishing campaign results via KnowBe4 APIs.</div>
-          <div class="card-badges"><span class="badge badge-red">Security</span><span class="badge badge-red">Training</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="laminarhub data mesh catalog">
-        <div class="card-icon" style="background:#0c2a3a">🕸️</div>
-        <div class="card-body">
-          <div class="card-name">LaminarHub <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Data mesh connectivity — publish and consume data products through LaminarHub's data marketplace and cataloguing layer.</div>
-          <div class="card-badges"><span class="badge badge-teal">Data Mesh</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="laserfiche content ecm">
-        <div class="card-icon" style="background:#2d1f00">🗂️</div>
-        <div class="card-body">
-          <div class="card-name">Laserfiche <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Enterprise content management — capture, manage, and automate business documents and records in Laserfiche repositories.</div>
-          <div class="card-badges"><span class="badge badge-amber">ECM</span><span class="badge badge-amber">Records</span></div>
-        </div>
-      </div>
-
-      <div class="card" data-cat="partner" data-name="lumesse talentlink hr recruitment">
-        <div class="card-icon" style="background:#2d0f1e">👤</div>
-        <div class="card-body">
-          <div class="card-name">Lumesse TalentLink <span class="partner-tag">Partner</span></div>
-          <div class="card-desc">Recruitment and talent management — job requisitions, candidates, and onboarding via TalentLink REST APIs.</div>
-          <div class="card-badges"><span class="badge badge-pink">HR/Recruitment</span></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</main>
-
 <footer>
-  <span>HMRC Boomi Integration Catalogue · Connectors &amp; Adapters Reference · June 2026</span>
-  <span>Source: <a href="https://help.boomi.com" style="color:var(--green);text-decoration:none" target="_blank">help.boomi.com</a> · Boomi Documentation</span>
+  <span>Boomi Integration Reference · Managed File Transfer · June 2026</span>
+  <span><a href="https://help.boomi.com" target="_blank">help.boomi.com</a></span>
 </footer>
 
 <script>
-  let currentCategory = 'all';
-
-  function setCategory(cat, btn) {
-    currentCategory = cat;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    filterAll();
-  }
-
-  function filterAll() {
-    const q = document.getElementById('searchInput').value.toLowerCase().trim();
-    let total = 0;
-
-    document.querySelectorAll('.section').forEach(sec => {
-      const secCat = sec.dataset.section;
-      const visible = (currentCategory === 'all' || currentCategory === secCat);
-      const cards = sec.querySelectorAll('.card');
-      let secCount = 0;
-
-      cards.forEach(card => {
-        const catMatch = (currentCategory === 'all' || card.dataset.cat === currentCategory);
-        const nameMatch = !q || card.dataset.name.includes(q) ||
-          card.querySelector('.card-name').textContent.toLowerCase().includes(q) ||
-          (card.querySelector('.card-desc') || {}).textContent?.toLowerCase().includes(q);
-        const show = catMatch && nameMatch;
-        card.classList.toggle('hidden', !show);
-        if (show) { secCount++; total++; }
-      });
-
-      const cnt = sec.querySelector('[id^="cnt-"]');
-      if (cnt) cnt.textContent = secCount + ' connector' + (secCount !== 1 ? 's' : '');
-      sec.classList.toggle('hidden', !visible || secCount === 0);
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.section');
+  const links = document.querySelectorAll('nav a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const lnk = document.querySelector(`nav a[href="#${e.target.id}"]`);
+        if (lnk) lnk.classList.add('active');
+      }
     });
-
-    document.getElementById('statsLabel').textContent =
-      total + ' connector' + (total !== 1 ? 's' : '') + ' shown';
-  }
-
-  // Init counts
-  filterAll();
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => obs.observe(s));
 </script>
 </body>
 </html>
