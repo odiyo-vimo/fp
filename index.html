@@ -1,496 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boomi Managed File Transfer | Integration Catalogue</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>P-116 · File-Based MFT | Integration Catalogue</title>
   <style>
-    :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --surface2: #21262d;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --muted: #8b949e;
-      --green: #00b388;
-      --green-dim: #1a3a30;
-      --green-dark: #003A2A;
-      --teal: #0ea5e9;
-      --teal-dim: #0c2a3a;
-      --amber: #f59e0b;
-      --amber-dim: #2d1f00;
-      --purple: #a78bfa;
-      --purple-dim: #1e1533;
-      --red: #f87171;
-      --red-dim: #2d1010;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-
-    /* ── Download Bar ── */
-    .dl-bar {
-      background: var(--green-dark);
-      border-bottom: 2px solid var(--green);
-      padding: 10px 32px;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-      position: sticky; top: 0; z-index: 200;
-    }
-    .dl-bar-label { font-size: 13px; color: #a0d9c5; font-weight: 500; }
-    .dl-bar-label strong { color: #fff; }
-    .dl-btn {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: var(--green); color: #fff; font-size: 14px; font-weight: 700;
-      padding: 9px 22px; border-radius: 6px; text-decoration: none; letter-spacing: .3px;
-      box-shadow: 0 2px 8px rgba(0,179,136,.35);
-      transition: background .2s, transform .1s, box-shadow .2s; white-space: nowrap;
-    }
-    .dl-btn:hover { background: #009972; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,179,136,.45); }
-
-    /* ── Header ── */
-    header {
-      background: var(--surface); border-bottom: 1px solid var(--border);
-      padding: 20px 32px; display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px; position: sticky; top: 45px; z-index: 100;
-    }
-    .logo-band { background: var(--green); color: #fff; font-weight: 700; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
-    .header-left { display: flex; align-items: center; gap: 14px; }
-    .header-title { font-size: 18px; font-weight: 600; color: #e6edf3; }
-    .header-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .header-meta { font-size: 12px; color: var(--muted); text-align: right; }
-
-    /* ── Layout ── */
-    .page { display: flex; max-width: 1300px; margin: 0 auto; }
-    nav {
-      width: 240px; min-width: 220px; padding: 24px 0 24px 24px;
-      position: sticky; top: 110px; height: calc(100vh - 110px); overflow-y: auto; flex-shrink: 0;
-    }
-    nav ul { list-style: none; }
-    nav li + li { margin-top: 2px; }
-    nav a { display: block; padding: 6px 14px; border-radius: 6px; font-size: 13px; color: var(--muted); text-decoration: none; transition: all .15s; border-left: 2px solid transparent; }
-    nav a:hover { color: var(--text); background: var(--surface2); }
-    nav a.active { color: var(--green); background: var(--green-dim); border-left-color: var(--green); }
-    nav .nav-section { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); padding: 12px 14px 4px; }
-    main { flex: 1; padding: 32px; min-width: 0; }
-
-    /* ── Sections ── */
-    .section { margin-bottom: 56px; scroll-margin-top: 120px; }
-    .section-title {
-      font-size: 22px; font-weight: 700; color: #e6edf3;
-      padding-bottom: 10px; margin-bottom: 18px;
-      border-bottom: 2px solid var(--green);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-num { background: var(--green); color: #fff; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 4px; }
-    .sub-title { font-size: 15px; font-weight: 600; color: #b0c4bc; margin: 24px 0 10px; }
-    p { font-size: 14px; color: var(--text); margin-bottom: 12px; line-height: 1.75; }
-
-    /* ── Callout ── */
-    .callout {
-      background: var(--green-dim); border: 1px solid #1f4a38;
-      border-left: 3px solid var(--green); border-radius: 6px;
-      padding: 14px 18px; font-size: 13px; color: var(--text); margin: 16px 0;
-    }
-    .callout strong { color: var(--green); }
-
-    .warn {
-      background: var(--amber-dim); border: 1px solid #3d2900;
-      border-left: 3px solid var(--amber); border-radius: 6px;
-      padding: 14px 18px; font-size: 13px; color: var(--text); margin: 16px 0;
-    }
-    .warn strong { color: var(--amber); }
-
-    /* ── Tables ── */
-    .tbl-wrap { overflow-x: auto; margin: 16px 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    thead th { background: var(--green-dark); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: .3px; }
-    tbody tr:nth-child(odd) { background: var(--surface); }
-    tbody tr:nth-child(even) { background: var(--surface2); }
-    tbody tr:hover { background: var(--green-dim); }
-    td { padding: 9px 14px; vertical-align: top; border-bottom: 1px solid var(--border); }
-    td:first-child { font-weight: 600; color: #9dd8c0; white-space: nowrap; }
-
-    /* ── Steps ── */
-    .steps { margin: 16px 0; display: flex; flex-direction: column; gap: 6px; }
-    .step { display: flex; gap: 0; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
-    .step-num { background: var(--green-dark); color: #fff; font-weight: 700; font-size: 14px; min-width: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .step-body { padding: 10px 16px; font-size: 13px; color: var(--text); background: var(--surface); flex: 1; }
-    .step-body strong { color: var(--green); }
-
-    /* ── Bullet list ── */
-    .blist { margin: 12px 0 12px 20px; }
-    .blist li { font-size: 14px; color: var(--text); margin-bottom: 6px; line-height: 1.65; }
-    .blist li::marker { color: var(--green); }
-
-    /* ── Tag badges ── */
-    .badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin: 2px; }
-    .badge-g { background: var(--green-dim); color: var(--green); border: 1px solid #1f4a38; }
-    .badge-t { background: var(--teal-dim); color: var(--teal); border: 1px solid #0e3a52; }
-    .badge-a { background: var(--amber-dim); color: var(--amber); border: 1px solid #3d2900; }
-
-    /* ── vs card ── */
-    .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-    .vs-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
-    .vs-card h4 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
-    .vs-card ul { margin-left: 16px; }
-    .vs-card li { font-size: 13px; color: var(--text); margin-bottom: 5px; line-height: 1.55; }
-
-    /* ── Arch diagram ── */
-    .arch { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 16px 0; text-align: center; }
-    .arch-flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; margin: 12px 0; }
-    .arch-node { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #e6edf3; }
-    .arch-node.partner { background: var(--teal-dim); border-color: var(--teal); color: var(--teal); }
-    .arch-node.mft { background: var(--green-dim); border-color: var(--green); color: var(--green); }
-    .arch-node.process { background: var(--purple-dim); border-color: var(--purple); color: var(--purple); }
-    .arch-node.target { background: var(--amber-dim); border-color: var(--amber); color: var(--amber); }
-    .arch-arrow { font-size: 18px; color: var(--muted); padding: 0 6px; }
-    .arch-label { font-size: 10px; color: var(--muted); margin-top: 4px; }
-    .arch-row { display: flex; flex-direction: column; align-items: center; }
-
-    /* ── footer ── */
-    footer { background: var(--surface); border-top: 1px solid var(--border); padding: 14px 32px; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; margin-top: 40px; }
-    footer a { color: var(--green); text-decoration: none; }
+    :root{--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;--text:#c9d1d9;--muted:#8b949e;--green:#00b388;--green-dim:#1a3a30;--green-dark:#003A2A;--teal:#0ea5e9;--teal-dim:#0c2a3a;--amber:#f59e0b;--amber-dim:#2d1f00;--purple:#a78bfa;--purple-dim:#1e1533;--red:#f87171;--red-dim:#2d1010;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+    .dl-bar{background:var(--green-dark);border-bottom:2px solid var(--green);padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:200;}
+    .dl-bar-label{font-size:13px;color:#a0d9c5;font-weight:500;}.dl-bar-label strong{color:#fff;}
+    .dl-btn{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;font-size:14px;font-weight:700;padding:9px 22px;border-radius:6px;text-decoration:none;box-shadow:0 2px 8px rgba(0,179,136,.35);transition:background .2s,transform .1s;white-space:nowrap;}
+    .dl-btn:hover{background:#009972;transform:translateY(-1px);}
+    header{background:var(--surface);border-bottom:1px solid var(--border);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:45px;z-index:100;}
+    .logo-band{background:var(--green);color:#fff;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+    .hdr-left{display:flex;align-items:center;gap:14px;}.hdr-title{font-size:18px;font-weight:700;color:#e6edf3;}.hdr-sub{font-size:12px;color:var(--muted);margin-top:2px;}.hdr-meta{font-size:12px;color:var(--muted);text-align:right;}
+    .pattern-badge{background:var(--green-dim);border:1px solid var(--green);color:var(--green);font-size:12px;font-weight:700;padding:3px 10px;border-radius:4px;}
+    .page{display:flex;max-width:1340px;margin:0 auto;}
+    nav{width:225px;min-width:200px;padding:20px 0 20px 20px;position:sticky;top:110px;height:calc(100vh - 110px);overflow-y:auto;flex-shrink:0;}
+    nav ul{list-style:none;}nav li+li{margin-top:1px;}
+    nav a{display:block;padding:6px 12px;border-radius:5px;font-size:12px;color:var(--muted);text-decoration:none;transition:all .15s;border-left:2px solid transparent;}
+    nav a:hover{color:var(--text);background:var(--surface2);}nav a.active{color:var(--green);background:var(--green-dim);border-left-color:var(--green);}
+    nav .nav-head{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:10px 12px 4px;}
+    main{flex:1;padding:28px 32px;min-width:0;}
+    .section{margin-bottom:50px;scroll-margin-top:115px;}
+    .sec-title{font-size:21px;font-weight:700;color:#e6edf3;padding-bottom:10px;margin-bottom:16px;border-bottom:2px solid var(--green);display:flex;align-items:center;gap:10px;}
+    .sec-num{background:var(--green);color:#fff;font-size:12px;font-weight:700;padding:2px 9px;border-radius:4px;}
+    .sub{font-size:15px;font-weight:600;color:#9dd8c0;margin:20px 0 8px;}
+    p{font-size:14px;color:var(--text);margin-bottom:10px;line-height:1.75;}
+    .note{background:var(--green-dim);border:1px solid #1f4a38;border-left:3px solid var(--green);border-radius:6px;padding:13px 17px;font-size:13px;color:var(--text);margin:14px 0;}
+    .note strong{color:var(--green);}
+    .warn{background:var(--amber-dim);border:1px solid #3d2900;border-left:3px solid var(--amber);border-radius:6px;padding:13px 17px;font-size:13px;color:var(--text);margin:14px 0;}
+    .warn strong{color:var(--amber);}
+    .spec-tbl{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;}
+    .spec-tbl tr:nth-child(odd) td{background:var(--surface2);}.spec-tbl tr:nth-child(even) td{background:var(--surface);}
+    .spec-tbl td{padding:8px 14px;border:1px solid var(--border);vertical-align:top;}
+    .spec-tbl td:first-child{font-weight:700;color:#9dd8c0;width:200px;white-space:nowrap;}
+    .tbl-wrap{overflow-x:auto;margin:14px 0;}
+    table.gt{width:100%;border-collapse:collapse;font-size:13px;}
+    table.gt thead th{background:var(--green-dark);color:#fff;padding:9px 14px;text-align:left;font-size:12px;font-weight:600;letter-spacing:.3px;}
+    table.gt tbody tr:nth-child(odd){background:var(--surface);}table.gt tbody tr:nth-child(even){background:var(--surface2);}
+    table.gt tbody tr:hover{background:var(--green-dim);}
+    table.gt td{padding:8px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;}
+    table.gt td:first-child{font-weight:600;color:#9dd8c0;}
+    .ua-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+    .ua-card{border-radius:8px;padding:16px 18px;}.ua-card.use{background:var(--green-dim);border:1px solid #1f4a38;}.ua-card.avoid{background:var(--red-dim);border:1px solid #3d1515;}
+    .ua-card h4{font-size:13px;font-weight:700;margin-bottom:10px;}.ua-card.use h4{color:var(--green);}.ua-card.avoid h4{color:var(--red);}
+    .ua-card ul{margin-left:16px;}.ua-card li{font-size:13px;color:var(--text);margin-bottom:6px;line-height:1.55;}
+    .blist{margin:10px 0 10px 20px;}.blist li{font-size:14px;color:var(--text);margin-bottom:6px;line-height:1.65;}.blist li::marker{color:var(--green);}
+    .olist{margin:10px 0 10px 20px;}.olist li{font-size:14px;color:var(--text);margin-bottom:6px;line-height:1.65;}.olist li::marker{color:var(--green);font-weight:700;}
+    .arch-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin:16px 0;overflow-x:auto;}
+    .arch-wrap h4{font-size:12px;font-weight:700;color:var(--muted);text-align:center;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px;}
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:14px 0;}
+    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;transition:border-color .2s;}
+    .feat-card:hover{border-color:var(--green);}.feat-card h5{font-size:13px;font-weight:700;color:var(--green);margin-bottom:5px;}
+    .feat-card p{font-size:12px;color:var(--muted);margin:0;line-height:1.55;}
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:14px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;margin-top:40px;}
+    footer a{color:var(--green);text-decoration:none;}
   </style>
 </head>
 <body>
 
-<!-- ═══════════════ DOWNLOAD BAR ═══════════════ -->
 <div class="dl-bar">
-  <span class="dl-bar-label">📄 <strong>Document available for download:</strong>&nbsp; Boomi Managed File Transfer — How-to Guide (Word)</span>
-  <a class="dl-btn" href="assets/boomi-mft.docx" download="Boomi-Managed-File-Transfer-Guide.docx">⬇&nbsp; Download Word Doc</a>
+  <span class="dl-bar-label">&#x1F4C4; <strong>Document available for download:</strong>&nbsp; P-116 File-Based MFT &mdash; Full Pattern Entry (Word)</span>
+  <a class="dl-btn" href="assets/p116-mft-pattern.docx" download="P-116-File-Based-MFT-Pattern.docx">&#x2B07;&nbsp; Download Word Doc</a>
 </div>
 
-<!-- ═══════════════ HEADER ═══════════════ -->
 <header>
-  <div class="header-left">
+  <div class="hdr-left">
     <div class="logo-band">Integration Catalogue</div>
     <div>
-      <div class="header-title">Boomi Managed File Transfer</div>
-      <div class="header-sub">How to Use MFT · Configuration · Patterns · Troubleshooting</div>
+      <div class="hdr-title">P-116 &middot; File-Based Managed File Transfer (MFT)</div>
+      <div class="hdr-sub">File Transfer | Scheduled | Bulk Exchange &middot; Version 1.0 &middot; June 2026</div>
     </div>
   </div>
-  <div class="header-meta">Boomi Integration Reference<br>June 2026</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="pattern-badge">P-116</span>
+    <div class="hdr-meta">Boomi Integration Catalogue<br>Integration Patterns for iPaaS</div>
+  </div>
 </header>
 
-<!-- ═══════════════ BODY ═══════════════ -->
 <div class="page">
+<nav id="sidenav">
+  <div class="nav-head">P-116 Contents</div>
+  <ul>
+    <li><a href="#spec">Specification</a></li>
+    <li><a href="#intent">1. Intent</a></li>
+    <li><a href="#context">2. Context &amp; Problem</a></li>
+    <li><a href="#solution">3. Solution</a></li>
+    <li><a href="#architecture">4. Architecture</a></li>
+    <li><a href="#triggers">5. Triggers &amp; Connectors</a></li>
+    <li><a href="#validation">6. File Integrity &amp; Validation</a></li>
+    <li><a href="#encryption">7. Encryption</a></li>
+    <li><a href="#errors">8. Error Handling &amp; Retry</a></li>
+    <li><a href="#audit">9. Audit Trail</a></li>
+    <li><a href="#useavoid">10. When to Use / Avoid</a></li>
+    <li><a href="#features">11. Boomi Features</a></li>
+    <li><a href="#xref">12. Cross-References</a></li>
+  </ul>
+</nav>
 
-  <!-- Side nav -->
-  <nav id="sidenav">
-    <div class="nav-section">Contents</div>
-    <ul>
-      <li><a href="#what-is" class="active">1. What Is Boomi MFT?</a></li>
-      <li><a href="#concepts">2. Key Concepts</a></li>
-      <li><a href="#architecture">3. Architecture</a></li>
-      <li><a href="#setup">4. Setup Step by Step</a></li>
-      <li><a href="#connector">5. MFT Connector in a Process</a></li>
-      <li><a href="#monitoring">6. Monitoring & Auditing</a></li>
-      <li><a href="#security">7. Security Considerations</a></li>
-      <li><a href="#patterns">8. Integration Patterns</a></li>
-      <li><a href="#troubleshooting">9. Troubleshooting</a></li>
-      <li><a href="#vs">10. MFT vs SFTP Connector</a></li>
-    </ul>
-  </nav>
+<main>
 
-  <main>
+<div class="section" id="spec">
+  <div class="sec-title"><span class="sec-num">Spec</span> Pattern Specification</div>
+  <table class="spec-tbl">
+    <tr><td>Pattern ID</td><td>P-116</td></tr>
+    <tr><td>Pattern Name</td><td>File-Based Managed File Transfer (MFT)</td></tr>
+    <tr><td>Category</td><td>File Transfer | Scheduled</td></tr>
+    <tr><td>Sub-category</td><td>Bulk / Batch Exchange</td></tr>
+    <tr><td>Complexity</td><td>Medium-High</td></tr>
+    <tr><td>Atom Target</td><td>Molecule (HA) or Cloud Atom with shared FS</td></tr>
+    <tr><td>Primary Connector</td><td>Boomi MFT Connector &middot; SFTP V2 &middot; FTP V2 &middot; Disk V2</td></tr>
+    <tr><td>Supporting Connectors</td><td>Database (audit), HTTP Client (notification), Mail (alerting)</td></tr>
+    <tr><td>Triggers</td><td>Scheduled (cron) &middot; File Arrival Listener &middot; Manual / API Trigger</td></tr>
+    <tr><td>Direction</td><td>Inbound (collect from source) &middot; Outbound (deliver to target) &middot; Relay (both)</td></tr>
+    <tr><td>Data Volume</td><td>High &mdash; thousands to millions of records per file</td></tr>
+    <tr><td>Latency Profile</td><td>Near-real-time on arrival trigger; scheduled batch is minutes to hours</td></tr>
+    <tr><td>Security Controls</td><td>PGP/GPG encrypt/decrypt &middot; SSH key auth &middot; FTPS/TLS &middot; Checksum validation &middot; IP whitelist</td></tr>
+    <tr><td>Error Strategy</td><td>Dead-letter folder &middot; Retry with exponential back-off &middot; Alert on threshold</td></tr>
+    <tr><td>Audit</td><td>DB row per file: filename, source, target, checksum, row count, status, timestamps</td></tr>
+    <tr><td>Related Patterns</td><td>P-117 &middot; P-118 &middot; P-120 &middot; P-101 &middot; P-121</td></tr>
+  </table>
+</div>
 
-    <!-- ── 1. What Is ── -->
-    <div class="section" id="what-is">
-      <div class="section-title"><span class="section-num">1</span> What Is Boomi Managed File Transfer?</div>
-      <p>Boomi MFT is a <strong>cloud-native, governed file exchange platform</strong> built into the AtomSphere ecosystem. It provides a centralised hub through which files can be securely received from and delivered to external Trading Partners — businesses, government systems, or internal departments — without requiring each exchange to be hand-crafted in a Boomi Integration process.</p>
-      <p>MFT is <em>not</em> the same as using the SFTP V2 or FTP connectors inside a process. The fundamental difference is who owns the server:</p>
+<div class="section" id="intent">
+  <div class="sec-title"><span class="sec-num">1</span> Intent</div>
+  <p>P-116 addresses <strong>high-volume, scheduled or managed bulk file exchange</strong> where per-record API calls would be prohibitively expensive, wasteful, or simply unavailable. Typical use cases include overnight reconciliation files, statutory reporting extracts (RTI, CIS, SA), bulk uploads from third-party providers, and file transfers from taxpayers or downstream consumers.</p>
+  <p>The pattern differs from a plain SFTP connector call in that it adds operational concerns: <strong>integrity verification via checksum, row-count validation, PGP encryption/decryption, retry, archiving, and a full audit trail</strong> &mdash; the features that distinguish managed transfer from raw file copy.</p>
+  <div class="note"><strong>Key principle:</strong> The iPaaS is the broker, not the endpoint. MFT places the iPaaS between sender and receiver, enforcing validation and governance without either party needing to be available simultaneously.</div>
+</div>
 
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Capability</th><th>SFTP/FTP Connector (in a process)</th><th>Boomi MFT</th></tr></thead>
-          <tbody>
-            <tr><td>Managed server endpoint</td><td>✗ You must host your own</td><td>✓ Boomi hosts the server for you</td></tr>
-            <tr><td>Audit & reporting dashboard</td><td>✗ Build it yourself</td><td>✓ Built-in MFT activity reports</td></tr>
-            <tr><td>Trading partner portal</td><td>✗</td><td>✓ Self-service partner onboarding</td></tr>
-            <tr><td>Governance & SLA tracking</td><td>✗</td><td>✓ Built-in</td></tr>
-            <tr><td>Trigger process on file arrival</td><td>Via Disk/SFTP listener (polling)</td><td>Via Route trigger (event-driven)</td></tr>
-            <tr><td>Supported protocols</td><td>SFTP, FTP, FTPS</td><td>SFTP, FTP, FTPS, HTTPS, AS2</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="section" id="context">
+  <div class="sec-title"><span class="sec-num">2</span> Context &amp; Problem</div>
+  <p>Large datasets cannot be passed record-by-record through synchronous APIs without overwhelming rate limits, incurring excessive latency, or exceeding payload caps. Legacy government systems only accept bulk files over SFTP or MFT protocols. Third-party providers produce CSV/XML extracts that must be ingested on a schedule.</p>
+  <p>Without a managed pattern, ad hoc SFTP scripts typically have no:</p>
+  <ul class="blist">
+    <li>Integrity checking &mdash; truncated or corrupted files go undetected</li>
+    <li>Retry logic &mdash; transient network failure causes silent data loss</li>
+    <li>Audit trail &mdash; no record of what was transferred, when, or to whom</li>
+    <li>Encryption lifecycle &mdash; PGP keys expire, files sent in clear text</li>
+    <li>Alerting &mdash; nobody knows a file was missed until the next business day</li>
+  </ul>
+</div>
 
-    <!-- ── 2. Key Concepts ── -->
-    <div class="section" id="concepts">
-      <div class="section-title"><span class="section-num">2</span> Key Concepts</div>
+<div class="section" id="solution">
+  <div class="sec-title"><span class="sec-num">3</span> Solution</div>
+  <p>The P-116 pattern structures file transfer as a governed pipeline with five logical stages:</p>
+  <ol class="olist">
+    <li><strong>Acquire</strong> &mdash; collect the file from source (SFTP, FTPS, Boomi MFT, Disk, AS2)</li>
+    <li><strong>Validate</strong> &mdash; verify checksum (MD5/SHA-256), row count, file format, and mandatory fields</li>
+    <li><strong>Transform</strong> &mdash; decrypt (PGP), parse (CSV/XML/fixed-width), map to canonical or target schema</li>
+    <li><strong>Deliver</strong> &mdash; route to one or more targets (DB, REST API, downstream SFTP, Boomi MFT outbound)</li>
+    <li><strong>Archive &amp; Audit</strong> &mdash; move source file to archive folder, write audit DB record, send confirmation</li>
+  </ol>
+</div>
 
-      <div class="sub-title">MFT Server</div>
-      <p>Boomi provisions a cloud-hosted file server on your behalf. No infrastructure to deploy or maintain. The server exposes endpoints for each enabled protocol (SFTP :22, FTPS :21, HTTPS :443) and handles TLS, key management, and authentication.</p>
+<div class="section" id="architecture">
+  <div class="sec-title"><span class="sec-num">4</span> Architecture Diagram</div>
+  <div class="arch-wrap">
+    <h4>P-116 &middot; Boomi Process Flow &mdash; File-Based MFT Pipeline</h4>
+    <svg viewBox="0 0 980 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:980px;display:block;margin:0 auto;">
+      <defs>
+        <marker id="ah" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#00b388"/></marker>
+        <marker id="ae" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f87171"/></marker>
+        <marker id="at" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#0ea5e9"/></marker>
+      </defs>
+      <rect x="0" y="0" width="980" height="480" fill="#0d1117" rx="8"/>
+      <!-- Title bar -->
+      <rect x="4" y="4" width="972" height="26" rx="4" fill="#003A2A"/>
+      <text x="490" y="22" fill="#00b388" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="2" font-family="Arial,sans-serif">P-116 &middot; FILE-BASED MANAGED FILE TRANSFER (MFT) &middot; BOOMI PROCESS PIPELINE</text>
+      <!-- Stage lanes -->
+      <rect x="4"   y="34" width="140" height="340" rx="4" fill="#0c2a3a" opacity=".55"/>
+      <rect x="148" y="34" width="130" height="340" rx="4" fill="#1a3a30" opacity=".45"/>
+      <rect x="282" y="34" width="135" height="340" rx="4" fill="#1e1533" opacity=".45"/>
+      <rect x="421" y="34" width="145" height="340" rx="4" fill="#1a3a30" opacity=".45"/>
+      <rect x="570" y="34" width="170" height="340" rx="4" fill="#0c2a3a" opacity=".45"/>
+      <rect x="744" y="34" width="232" height="340" rx="4" fill="#2d1010" opacity=".35"/>
+      <!-- Stage labels -->
+      <text x="74"  y="52" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">ACQUIRE</text>
+      <text x="213" y="52" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">VALIDATE</text>
+      <text x="349" y="52" fill="#a78bfa" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">TRANSFORM</text>
+      <text x="493" y="52" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">DELIVER</text>
+      <text x="655" y="52" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">ARCHIVE &amp; AUDIT</text>
+      <text x="860" y="52" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="1" font-family="Arial,sans-serif">ERROR BRANCH</text>
 
-      <div class="sub-title">Trading Partners</div>
-      <p>A Trading Partner is a configured external entity that will send or receive files. Each has:</p>
-      <ul class="blist">
-        <li>A unique username and credential (SSH key or password)</li>
-        <li>One or more assigned Source or Destination Routes</li>
-        <li>Optional IP whitelisting and access restrictions</li>
+      <!-- ACQUIRE nodes -->
+      <rect x="12"  y="62" width="124" height="44" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
+      <text x="74" y="80" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">TRIGGER</text>
+      <text x="74" y="93" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Schedule / MFT Route / Listener</text>
+
+      <rect x="12"  y="120" width="124" height="44" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
+      <text x="74" y="137" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ACQUIRE FILE</text>
+      <text x="74" y="150" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">MFT Get / SFTP V2 / Disk V2</text>
+
+      <rect x="12"  y="178" width="124" height="38" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+      <text x="74" y="194" fill="#c9d1d9" font-size="8" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">SET METADATA DDPs</text>
+      <text x="74" y="207" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">filename &middot; source &middot; timestamp</text>
+
+      <!-- VALIDATE nodes -->
+      <rect x="152" y="62" width="122" height="44" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
+      <text x="213" y="79" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">CHECKSUM</text>
+      <text x="213" y="92" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">MD5/SHA-256 via Groovy</text>
+
+      <rect x="152" y="120" width="122" height="44" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
+      <text x="213" y="137" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ROW COUNT</text>
+      <text x="213" y="150" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Header/Trailer vs split count</text>
+
+      <rect x="152" y="178" width="122" height="38" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1"/>
+      <text x="213" y="194" fill="#00b388" font-size="8" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">SCHEMA VALIDATION</text>
+      <text x="213" y="207" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">XSD / CSV field types</text>
+
+      <!-- TRANSFORM nodes -->
+      <rect x="286" y="62" width="127" height="44" rx="5" fill="#1e1533" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="349" y="79" fill="#a78bfa" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DECRYPT (PGP)</text>
+      <text x="349" y="92" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Bouncy Castle / Groovy Script</text>
+
+      <rect x="286" y="120" width="127" height="44" rx="5" fill="#1e1533" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="349" y="137" fill="#a78bfa" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">PARSE &amp; SPLIT</text>
+      <text x="349" y="150" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Data Process / CSV / XML</text>
+
+      <rect x="286" y="178" width="127" height="38" rx="5" fill="#1e1533" stroke="#a78bfa" stroke-width="1"/>
+      <text x="349" y="194" fill="#a78bfa" font-size="8" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">MAP TO SCHEMA</text>
+      <text x="349" y="207" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Map shape &middot; canonical / target</text>
+
+      <!-- DELIVER nodes -->
+      <rect x="425" y="62" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
+      <text x="493" y="77" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ROUTE SHAPE</text>
+      <text x="493" y="90" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">By type / partner / content</text>
+
+      <rect x="425" y="112" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
+      <text x="493" y="126" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DELIVER &rarr; DB</text>
+      <text x="493" y="139" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Database Connector (JDBC batch)</text>
+
+      <rect x="425" y="162" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
+      <text x="493" y="176" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DELIVER &rarr; REST API</text>
+      <text x="493" y="189" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">HTTP Client (chunked batches)</text>
+
+      <rect x="425" y="212" width="137" height="36" rx="5" fill="#1a3a30" stroke="#00b388" stroke-width="1.5"/>
+      <text x="493" y="226" fill="#00b388" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DELIVER &rarr; MFT/SFTP</text>
+      <text x="493" y="239" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Boomi MFT Send / SFTP V2</text>
+
+      <!-- ARCHIVE & AUDIT nodes -->
+      <rect x="574" y="62" width="162" height="36" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
+      <text x="655" y="76" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ARCHIVE FILE</text>
+      <text x="655" y="89" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">SFTP V2 Move &rarr; /archive/YYYY-MM-DD/</text>
+
+      <rect x="574" y="112" width="162" height="36" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
+      <text x="655" y="126" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">AUDIT INSERT</text>
+      <text x="655" y="139" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">DB &rarr; file_transfer_audit table</text>
+
+      <rect x="574" y="162" width="162" height="36" rx="5" fill="#0c2a3a" stroke="#0ea5e9" stroke-width="1.5"/>
+      <text x="655" y="176" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">NOTIFY / CONFIRM</text>
+      <text x="655" y="189" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Mail / Webhook / Event Streams</text>
+
+      <!-- ERROR nodes -->
+      <rect x="748" y="62" width="220" height="36" rx="5" fill="#2d1010" stroke="#f87171" stroke-width="1.5"/>
+      <text x="858" y="76" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">DEAD-LETTER</text>
+      <text x="858" y="89" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Write to /deadletter/ (SFTP/Disk)</text>
+
+      <rect x="748" y="112" width="220" height="36" rx="5" fill="#2d1010" stroke="#f87171" stroke-width="1.5"/>
+      <text x="858" y="126" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">RETRY (exp back-off)</text>
+      <text x="858" y="139" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Try/Catch &middot; 2min / 8min &middot; DDP counter</text>
+
+      <rect x="748" y="162" width="220" height="36" rx="5" fill="#2d1010" stroke="#f87171" stroke-width="1.5"/>
+      <text x="858" y="176" fill="#f87171" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">ALERT OPS</text>
+      <text x="858" y="189" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Mail Connector + Audit row: FAILED</text>
+
+      <!-- Happy-path arrows -->
+      <line x1="74"  y1="106" x2="74"  y2="119" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
+      <line x1="74"  y1="164" x2="74"  y2="177" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
+      <line x1="136" y1="198" x2="151" y2="84"  stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="213" y1="106" x2="213" y2="119" stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="213" y1="164" x2="213" y2="177" stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="274" y1="198" x2="285" y2="84"  stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="349" y1="106" x2="349" y2="119" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="349" y1="164" x2="349" y2="177" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="413" y1="198" x2="424" y2="80"  stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="493" y1="98"  x2="493" y2="111" stroke="#00b388" stroke-width="1.5" marker-end="url(#ah)"/>
+      <line x1="510" y1="98"  x2="540" y2="161" stroke="#00b388" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah)"/>
+      <line x1="476" y1="98"  x2="450" y2="211" stroke="#00b388" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ah)"/>
+      <line x1="562" y1="148" x2="573" y2="80"  stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
+      <line x1="655" y1="98"  x2="655" y2="111" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
+      <line x1="655" y1="148" x2="655" y2="161" stroke="#0ea5e9" stroke-width="1.5" marker-end="url(#at)"/>
+
+      <!-- Error arrows -->
+      <line x1="274" y1="84" x2="747" y2="80"  stroke="#f87171" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ae)"/>
+      <line x1="562" y1="130" x2="747" y2="130" stroke="#f87171" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ae)"/>
+      <line x1="858" y1="148" x2="858" y2="161" stroke="#f87171" stroke-width="1.5" marker-end="url(#ae)"/>
+
+      <!-- Source/Target boxes -->
+      <rect x="4"   y="384" width="140" height="56" rx="5" fill="#0c1a3a" stroke="#0ea5e9" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="74" y="401" fill="#0ea5e9" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">SOURCE SYSTEMS</text>
+      <text x="74" y="414" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">SFTP Server &middot; Boomi MFT</text>
+      <text x="74" y="426" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Disk / FTP / AS2 Partner</text>
+
+      <rect x="574" y="384" width="162" height="56" rx="5" fill="#1a1a00" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="655" y="401" fill="#f59e0b" font-size="9" font-weight="700" text-anchor="middle" font-family="Arial,sans-serif">TARGET SYSTEMS</text>
+      <text x="655" y="414" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Database (JDBC) &middot; REST API</text>
+      <text x="655" y="426" fill="#8b949e" font-size="8" text-anchor="middle" font-family="Arial,sans-serif">Downstream SFTP / MFT Route</text>
+
+      <!-- Connecting source to trigger -->
+      <line x1="74" y1="384" x2="74" y2="280" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#at)"/>
+      <line x1="655" y1="384" x2="655" y2="199" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+      <!-- Legend -->
+      <rect x="148" y="386" width="420" height="50" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+      <text x="160" y="401" fill="#8b949e" font-size="9" font-weight="700" font-family="Arial,sans-serif">LEGEND</text>
+      <line x1="210" y1="397" x2="240" y2="397" stroke="#0ea5e9" stroke-width="2"/>
+      <text x="245" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Acquire</text>
+      <line x1="295" y1="397" x2="325" y2="397" stroke="#00b388" stroke-width="2"/>
+      <text x="330" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Happy path</text>
+      <line x1="400" y1="397" x2="430" y2="397" stroke="#a78bfa" stroke-width="2"/>
+      <text x="435" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Transform</text>
+      <line x1="487" y1="397" x2="517" y2="397" stroke="#f87171" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="522" y="401" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Error path</text>
+      <line x1="210" y1="421" x2="240" y2="421" stroke="#00b388" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="245" y="425" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Fan-out delivery</text>
+      <line x1="340" y1="421" x2="370" y2="421" stroke="#0ea5e9" stroke-width="2"/>
+      <text x="375" y="425" fill="#c9d1d9" font-size="9" font-family="Arial,sans-serif">Archive &amp; audit</text>
+    </svg>
+  </div>
+
+  <div class="sub">Process Stage Reference</div>
+  <div class="tbl-wrap">
+    <table class="gt">
+      <thead><tr><th>#</th><th>Stage</th><th>Shape / Connector</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Trigger</td><td>Scheduled / MFT Source Route / SFTP Listener</td><td>Cron for batch windows; MFT trigger fires on partner upload; Molecule recommended for listeners</td></tr>
+        <tr><td>2</td><td>Acquire</td><td>SFTP V2 / Boomi MFT (Get) / Disk V2 / FTP V2</td><td>Set Dynamic Document Properties: original_filename, source_path, acquired_timestamp</td></tr>
+        <tr><td>3</td><td>Decrypt</td><td>Custom Script (Groovy + Bouncy Castle PGP)</td><td>Only if file is PGP-encrypted. Passphrase as Boomi Encrypted Process Property</td></tr>
+        <tr><td>4</td><td>Validate &mdash; Checksum</td><td>Custom Script: compute MD5/SHA-256; compare to companion file or manifest</td><td>Fail &rarr; Dead-letter + alert; abort. Log both values in audit record</td></tr>
+        <tr><td>5</td><td>Validate &mdash; Row Count</td><td>Data Process Split &rarr; count; compare to header/trailer</td><td>Mismatch &rarr; quarantine + alert. Never deliver partial data</td></tr>
+        <tr><td>6</td><td>Parse &amp; Map</td><td>Data Process (Split by record) &rarr; Map shape</td><td>CSV / XML / Fixed-width; errors routed to error output per record</td></tr>
+        <tr><td>7</td><td>Route</td><td>Route shape on file type, source partner, or content</td><td>P-120 Fan-out applies if multiple targets needed simultaneously</td></tr>
+        <tr><td>8</td><td>Deliver</td><td>Database (JDBC) / HTTP Client / SFTP V2 / Boomi MFT (Send)</td><td>Batch DB INSERT for performance; chunked REST for API targets</td></tr>
+        <tr><td>9</td><td>Archive</td><td>SFTP V2 / Disk V2 Move &rarr; /archive/YYYY-MM-DD/</td><td>Retain original; do not delete until delivery is confirmed</td></tr>
+        <tr><td>10</td><td>Audit INSERT</td><td>Database Connector &rarr; file_transfer_audit table</td><td>Record filename, source, target, row count, checksum, status, process ID, timestamps</td></tr>
+        <tr><td>11</td><td>Notify</td><td>Mail / HTTP Client (webhook) / Event Streams Produce</td><td>Success to ops; failure to on-call + dead-letter management queue</td></tr>
+        <tr><td>ERR</td><td>Error Branch</td><td>Try/Catch &rarr; Dead-letter + Retry + Alert</td><td>All stages wrapped. Partial failures captured per record where possible</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section" id="triggers">
+  <div class="sec-title"><span class="sec-num">5</span> Triggers &amp; Connectors</div>
+  <div class="sub">Trigger Options</div>
+  <div class="tbl-wrap"><table class="gt">
+    <thead><tr><th>Trigger Type</th><th>When to Use</th><th>Boomi Implementation</th></tr></thead>
+    <tbody>
+      <tr><td>Scheduled</td><td>Overnight batch, fixed window (e.g. 02:00 daily)</td><td>Scheduled shape with cron expression; process polls source for new files</td></tr>
+      <tr><td>File Arrival Listener</td><td>Near-real-time; file must be processed within minutes of arrival</td><td>Boomi MFT Source Route &ldquo;Trigger Boomi Process&rdquo;, or Disk/SFTP listener (Molecule only)</td></tr>
+      <tr><td>Manual / API Trigger</td><td>Ad hoc re-runs, ops tooling, test execution</td><td>HTTP trigger on Boomi API endpoint; file path passed as parameter</td></tr>
+      <tr><td>Event-driven</td><td>File placement is result of an upstream Boomi process</td><td>Upstream process produces Boomi Event Streams event; this process subscribes</td></tr>
+    </tbody>
+  </table></div>
+  <div class="sub">Connector Reference</div>
+  <div class="tbl-wrap"><table class="gt">
+    <thead><tr><th>Connector</th><th>Role</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Boomi MFT</td><td>Source (Get) or Destination (Send); Boomi-hosted server</td><td>Preferred for external Trading Partner exchange. Provides audit dashboard, trigger-on-arrival, retention policy</td></tr>
+      <tr><td>SFTP V2</td><td>Source from third-party SFTP servers; archive write</td><td>SSH public-key auth preferred; known_hosts enforced; JSch cipher config supported</td></tr>
+      <tr><td>FTP V2 / FTPS</td><td>Legacy or partner scenarios where SFTP is unavailable</td><td>Use FTPS (explicit TLS) only &mdash; never plain FTP in production</td></tr>
+      <tr><td>Disk V2</td><td>Local Atom filesystem; inter-process handoff</td><td>Molecule shared FS required for multi-node deployments</td></tr>
+      <tr><td>Database (JDBC)</td><td>Audit table INSERT; config lookup; target delivery</td><td>Batched INSERT for performance; connection pool at Atom level</td></tr>
+      <tr><td>HTTP Client / REST</td><td>REST API delivery; webhook notification</td><td>OAuth/API key auth via Boomi Connection component</td></tr>
+      <tr><td>Mail Connector</td><td>Ops alerting; confirmation to business users</td><td>SMTP via shared relay; use for human-readable notifications only</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="section" id="validation">
+  <div class="sec-title"><span class="sec-num">6</span> File Integrity &amp; Validation</div>
+  <div class="sub">6.1 Checksum Validation</div>
+  <p>A companion checksum file (.md5, .sha256) or manifest must be provided by the source. The Boomi process must read the companion file first, compute the hash of the received file via Groovy (MessageDigest API or Bouncy Castle), compare expected vs actual, and log both values in the audit record.</p>
+  <div class="warn"><strong>If the source does not provide a checksum:</strong> implement a minimum row-count check using a trailer record or line count. Never deliver a file to a downstream system without some integrity verification.</div>
+  <div class="sub">6.2 Row Count Validation</div>
+  <p>Many bulk file formats include a header or trailer record with a total row count. Extract the expected count, split and count data records using the Data Process shape, and compare before delivery. A partial file delivery is worse than no delivery.</p>
+  <div class="sub">6.3 Schema / Format Validation</div>
+  <p>Where an XSD or JSON Schema is available, validate before transformation. For CSV, validate mandatory column presence and data type conformance in the Groovy script stage. Reject malformed records to an error output rather than failing the whole batch where possible.</p>
+</div>
+
+<div class="section" id="encryption">
+  <div class="sec-title"><span class="sec-num">7</span> Encryption</div>
+  <div class="tbl-wrap"><table class="gt">
+    <thead><tr><th>Scenario</th><th>Mechanism</th><th>Boomi Implementation</th></tr></thead>
+    <tbody>
+      <tr><td>Inbound PGP-encrypted file</td><td>Sender encrypts with public key; Boomi decrypts with private key</td><td>Groovy Custom Script using Bouncy Castle PGP; private key &amp; passphrase in Boomi Encrypted Process Property</td></tr>
+      <tr><td>Outbound PGP-encrypted file</td><td>Boomi encrypts with recipient public key</td><td>Groovy Custom Script; recipient public key in Boomi Certificate Management</td></tr>
+      <tr><td>Transport &mdash; SFTP</td><td>SSH key encryption at transport layer</td><td>SFTP V2 Connection: SSH key pair; private key in Boomi Certificate; known_hosts enforced</td></tr>
+      <tr><td>Transport &mdash; FTPS</td><td>TLS at transport layer</td><td>FTP V2 with FTPS (explicit) mode; TLS 1.2+ enforced; server certificate validated</td></tr>
+      <tr><td>At-rest &mdash; Boomi MFT</td><td>Files encrypted at rest on the MFT server</td><td>Managed by Boomi platform (AES-256); no additional configuration required</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="section" id="errors">
+  <div class="sec-title"><span class="sec-num">8</span> Error Handling &amp; Retry</div>
+  <div class="sub">8.1 Dead-Letter Folder</div>
+  <p>Any file that fails validation or delivery must be written to <code style="color:var(--green)">/deadletter/YYYY-MM-DD/</code>, recorded in the audit table with <code style="color:var(--red)">status = FAILED</code>, and subject to an immediate ops alert.</p>
+  <div class="sub">8.2 Retry Strategy (delivery failures only)</div>
+  <ul class="blist">
+    <li><strong>Attempt 1:</strong> immediate</li>
+    <li><strong>Attempt 2:</strong> +2 minutes</li>
+    <li><strong>Attempt 3:</strong> +8 minutes</li>
+    <li><strong>Attempt 4:</strong> Dead-letter + alert</li>
+  </ul>
+  <p>Implement via Try/Catch wrapping the delivery connector with a counter in a Dynamic Process Property. Do <em>not</em> retry validation failures &mdash; a corrupted file will not become uncorrupted on retry.</p>
+  <div class="sub">8.3 Partial Failure (Record-Level Errors)</div>
+  <p>Where the file is split into individual records, process each independently. Route errored records to a parallel error output so valid records are still delivered. Raise an alert with the count of failed records.</p>
+  <div class="note"><strong>Rule:</strong> Never silently swallow errors. Every failure must produce a dead-letter write, an audit record update, and an alert &mdash; ideally all three.</div>
+</div>
+
+<div class="section" id="audit">
+  <div class="sec-title"><span class="sec-num">9</span> Audit Trail</div>
+  <p>Each file processed must produce exactly one record in the integration audit database:</p>
+  <div class="tbl-wrap"><table class="gt">
+    <thead><tr><th>Column</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>file_transfer_id</td><td>UUID (PK)</td><td>Auto-generated unique ID for this transfer event</td></tr>
+      <tr><td>filename</td><td>VARCHAR(500)</td><td>Original filename as received from source</td></tr>
+      <tr><td>source_system</td><td>VARCHAR(100)</td><td>Source identifier (e.g. DWP-SFTP, BOOMI-MFT, LOCAL-DISK)</td></tr>
+      <tr><td>target_system</td><td>VARCHAR(100)</td><td>Target identifier (e.g. DOWNSTREAM-DB, RTI-GATEWAY)</td></tr>
+      <tr><td>file_size_bytes</td><td>BIGINT</td><td>File size in bytes as received</td></tr>
+      <tr><td>expected_row_count</td><td>INTEGER</td><td>From header/trailer or manifest (null if not available)</td></tr>
+      <tr><td>actual_row_count</td><td>INTEGER</td><td>Row count as counted by Boomi process</td></tr>
+      <tr><td>checksum_algorithm</td><td>VARCHAR(20)</td><td>MD5, SHA-256, or NONE</td></tr>
+      <tr><td>expected_checksum</td><td>VARCHAR(128)</td><td>Checksum from companion file or manifest</td></tr>
+      <tr><td>actual_checksum</td><td>VARCHAR(128)</td><td>Checksum computed by Boomi process</td></tr>
+      <tr><td>checksum_valid</td><td>BOOLEAN</td><td>TRUE if match; FALSE if mismatch</td></tr>
+      <tr><td>transfer_status</td><td>VARCHAR(20)</td><td>ACQUIRED &middot; VALIDATING &middot; DELIVERING &middot; DELIVERED &middot; FAILED &middot; DEAD-LETTERED</td></tr>
+      <tr><td>acquired_timestamp</td><td>TIMESTAMP</td><td>When file was first picked up by Boomi</td></tr>
+      <tr><td>delivered_timestamp</td><td>TIMESTAMP</td><td>When delivery to target was confirmed</td></tr>
+      <tr><td>boomi_process_id</td><td>VARCHAR(200)</td><td>Boomi execution ID for cross-reference with Process Reporting</td></tr>
+      <tr><td>error_detail</td><td>TEXT</td><td>Exception message and stack trace if status = FAILED</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="section" id="useavoid">
+  <div class="sec-title"><span class="sec-num">10</span> When to Use / When to Avoid</div>
+  <div class="ua-grid">
+    <div class="ua-card use">
+      <h4>&#x2705; When to Use</h4>
+      <ul>
+        <li>High-volume bulk data (thousands to millions of records) where per-record APIs are impractical</li>
+        <li>Source or target only supports file-based protocols (SFTP, FTPS, AS2, Disk)</li>
+        <li>Overnight reconciliation, statutory reporting extracts (RTI, CIS, SA), payroll files</li>
+        <li>External Trading Partner exchange needing a managed, auditable endpoint</li>
+        <li>Files require integrity verification (checksum) before downstream delivery</li>
+        <li>PGP encryption/decryption is required as part of the exchange</li>
+        <li>Sender and receiver availability must be decoupled (async handoff)</li>
       </ul>
-
-      <div class="sub-title">Routes</div>
-      <p>A Route defines the path a file takes from arrival to destination. It maps an inbound drop folder to an action — either storing the file in an MFT-managed location or triggering a downstream Boomi Integration process.</p>
-
-      <div class="sub-title">MFT Connector (inside a Boomi Integration process)</div>
-      <p>An OOTB connector available inside Boomi Integration. Allows a running process to interact with the MFT platform — send a file to a Trading Partner's outbound folder, retrieve a file, list files waiting, or delete after processing.</p>
-
-      <div class="sub-title">Source vs Destination Routes</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Route Type</th><th>Direction</th><th>Typical Use</th></tr></thead>
-          <tbody>
-            <tr><td>Source Route</td><td>Inbound: partner → MFT server</td><td>Partner uploads file; MFT makes it available to a Boomi process</td></tr>
-            <tr><td>Destination Route</td><td>Outbound: MFT server → partner</td><td>Boomi process sends file; partner downloads from MFT server</td></tr>
-          </tbody>
-        </table>
-      </div>
     </div>
-
-    <!-- ── 3. Architecture ── -->
-    <div class="section" id="architecture">
-      <div class="section-title"><span class="section-num">3</span> Architecture Overview</div>
-      <p>Two primary MFT patterns in a Boomi estate:</p>
-
-      <div class="arch">
-        <div class="arch-label" style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:12px;">INBOUND — Partner uploads file, process triggered on arrival</div>
-        <div class="arch-flow">
-          <div class="arch-row"><div class="arch-node partner">Trading Partner</div><div class="arch-label">SFTP / FTPS / AS2</div></div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-row"><div class="arch-node mft">Boomi MFT Server</div><div class="arch-label">Source Route</div></div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-row"><div class="arch-node process">Boomi Integration Process</div><div class="arch-label">Triggered on arrival</div></div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-row"><div class="arch-node target">Target System</div><div class="arch-label">DB / API / Queue</div></div>
-        </div>
-
-        <div style="margin:28px 0 12px;border-top:1px solid var(--border);padding-top:18px;font-size:12px;font-weight:700;color:var(--amber);">OUTBOUND — Process generates file, partner collects at their schedule</div>
-        <div class="arch-flow">
-          <div class="arch-row"><div class="arch-node target">Source System</div><div class="arch-label">DB / API / Event</div></div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-row"><div class="arch-node process">Boomi Integration Process</div><div class="arch-label">Generates file</div></div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-row"><div class="arch-node mft">Boomi MFT Server</div><div class="arch-label">Destination Route</div></div>
-          <div class="arch-arrow">→</div>
-          <div class="arch-row"><div class="arch-node partner">Trading Partner</div><div class="arch-label">Polls & collects</div></div>
-        </div>
-      </div>
-      <div class="callout">The MFT Server acts as a <strong>secure intermediary</strong>, decoupling the timing of file production from consumption. Neither the sending nor receiving system needs to be available simultaneously.</div>
-    </div>
-
-    <!-- ── 4. Setup ── -->
-    <div class="section" id="setup">
-      <div class="section-title"><span class="section-num">4</span> Setting Up Boomi MFT — Step by Step</div>
-
-      <div class="sub-title">4.1 Enable MFT in Your AtomSphere Account</div>
-      <div class="warn"><strong>Licence required:</strong> Boomi MFT is a licensed add-on. If the MFT option is absent from the Services menu, contact your Boomi account representative to provision it.</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Log in to Boomi AtomSphere at <strong>platform.boomi.com</strong>.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Navigate to <strong>Services → Managed File Transfer</strong>. The MFT dashboard appears here once enabled.</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Contact your Boomi rep to enable MFT if not already provisioned. Once active, the full MFT menu is available.</div></div>
-      </div>
-
-      <div class="sub-title">4.2 Configure the MFT Server</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Settings → Server Configuration</strong>.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Note your assigned <strong>MFT server hostname</strong> (e.g. <code style="color:var(--green)">mft-abc.boomi.com</code>). Share this with Trading Partners as their connection endpoint.</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Enable the required protocols: <strong>SFTP, FTPS, HTTPS, AS2</strong>. Enable only those your Trading Partners require.</div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body">Upload your organisation's <strong>TLS certificate</strong> for HTTPS/FTPS (or use the Boomi-provided certificate).</div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body">Export the <strong>SSH host key fingerprint</strong> to share with SFTP partners for their <code>known_hosts</code> file.</div></div>
-      </div>
-
-      <div class="sub-title">4.3 Create a Trading Partner</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Trading Partners → New</strong>.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Enter a unique <strong>Partner Name</strong> (e.g. <code style="color:var(--green)">DWP-Supplier-A</code>).</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Choose authentication: <strong>Password</strong> (set a password) or <strong>SSH Public Key</strong> (paste the partner's public key). SSH key is strongly preferred.</div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body">Optionally whitelist the partner's IP addresses under <strong>Access Restrictions</strong>.</div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body">Save. The Trading Partner is now provisioned with login credentials.</div></div>
-      </div>
-
-      <div class="sub-title">4.4 Create a Source Route (Inbound)</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Routes → New Source Route</strong>.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Select the Trading Partner created above.</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Set the <strong>Source Folder</strong> — the virtual directory the partner uploads files into (e.g. <code style="color:var(--green)">/upload/dwp-a/</code>).</div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body">Set the <strong>Action</strong>: either <em>Store in MFT</em> (file held for later retrieval) or <em>Trigger a Boomi Process</em> (immediate execution on arrival).</div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body">If triggering a process: select the deployed Boomi Integration process and map any Route Properties (filename, partner ID) to process properties.</div></div>
-        <div class="step"><div class="step-num">6</div><div class="step-body">Optionally set a <strong>File Filter</strong> (e.g. <code>*.xml</code>, <code>*_PAYE_*.csv</code>) so only matching files trigger the route.</div></div>
-        <div class="step"><div class="step-num">7</div><div class="step-body"><strong>Save and Deploy</strong> the route. The partner can now upload files to the configured folder.</div></div>
-      </div>
-
-      <div class="sub-title">4.5 Create a Destination Route (Outbound)</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Go to <strong>Managed File Transfer → Routes → New Destination Route</strong>.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Select the Trading Partner.</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Set the <strong>Destination Folder</strong> — the virtual directory the partner polls to collect files (e.g. <code style="color:var(--green)">/download/dwp-a/</code>).</div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body">Set a <strong>File Retention Policy</strong> — how long files persist before automatic deletion (recommended: 3–7 days).</div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Save and Deploy</strong>. Boomi processes can now write files here using the MFT Connector Send action.</div></div>
-      </div>
-    </div>
-
-    <!-- ── 5. Connector ── -->
-    <div class="section" id="connector">
-      <div class="section-title"><span class="section-num">5</span> Using the MFT Connector in a Boomi Integration Process</div>
-
-      <div class="sub-title">5.1 Sending a File to a Trading Partner (Outbound)</div>
-      <div class="callout">Use this when your integration process has produced a file that a Trading Partner needs to collect.</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Add a <strong>Connector</strong> step after your transform/mapping steps.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Connector Type: <strong>Boomi Managed File Transfer</strong>.</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Create a <strong>Connection</strong>: set the MFT server URL and authenticate via API token or internal credentials.</div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body">Set the Action to: <strong>Send</strong>.</div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body">In the Operation: specify the <strong>Destination Route name</strong> and <strong>Trading Partner</strong>.</div></div>
-        <div class="step"><div class="step-num">6</div><div class="step-body">Set the <strong>File Name</strong> — static or dynamic via a Dynamic Document Property.</div></div>
-        <div class="step"><div class="step-num">7</div><div class="step-body">The current document in the process is written to the partner's outbound folder. The partner collects it via their configured protocol.</div></div>
-      </div>
-
-      <div class="sub-title">5.2 Retrieving a File from MFT (Get)</div>
-      <div class="callout">Use this when a process needs to pull a file uploaded by a partner and stored in MFT (route Action was "Store in MFT").</div>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div class="step-body">Start with a <strong>Schedule trigger</strong> or <strong>No Data</strong> start to run the retrieval process.</div></div>
-        <div class="step"><div class="step-num">2</div><div class="step-body">Add a Boomi MFT Connector step — Action: <strong>List</strong> — to check what files are available in the Source Route folder.</div></div>
-        <div class="step"><div class="step-num">3</div><div class="step-body">Use a <strong>Data Process</strong> or <strong>Decision</strong> shape to iterate over the list of file names.</div></div>
-        <div class="step"><div class="step-num">4</div><div class="step-body">For each file, use Action: <strong>Get</strong> to retrieve it. The file becomes the current document in the process.</div></div>
-        <div class="step"><div class="step-num">5</div><div class="step-body">Continue with mapping, routing, and delivery to the target system.</div></div>
-        <div class="step"><div class="step-num">6</div><div class="step-body">After successful processing, use Action: <strong>Delete</strong> to remove the file from the MFT server.</div></div>
-      </div>
-
-      <div class="sub-title">5.3 MFT Connector — Action Reference</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Action</th><th>Description</th><th>When to Use</th></tr></thead>
-          <tbody>
-            <tr><td>Send</td><td>Writes the current document to a named Destination Route folder</td><td>Outbound — making a file available for a partner to collect</td></tr>
-            <tr><td>Get</td><td>Retrieves a specific file from a Source Route folder into the process</td><td>Inbound — pulling a stored file into a process</td></tr>
-            <tr><td>List</td><td>Returns a list of file names available in an MFT folder</td><td>Before Get — check what files are waiting</td></tr>
-            <tr><td>Delete</td><td>Removes a file from an MFT folder</td><td>Post-processing cleanup</td></tr>
-            <tr><td>Move</td><td>Moves a file within the MFT server (e.g. to an archive folder)</td><td>Post-processing archival without deletion</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ── 6. Monitoring ── -->
-    <div class="section" id="monitoring">
-      <div class="section-title"><span class="section-num">6</span> Monitoring and Auditing</div>
-      <p>Boomi MFT provides a built-in activity dashboard under <strong>Managed File Transfer → Activity</strong>.</p>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Feature</th><th>Description</th><th>Location in AtomSphere</th></tr></thead>
-          <tbody>
-            <tr><td>Transfer Log</td><td>Every upload, download, and delete logged with timestamp, partner, filename, size, and outcome</td><td>MFT → Activity → Transfer Log</td></tr>
-            <tr><td>Partner Activity</td><td>Per-partner view of all recent transfers</td><td>MFT → Activity → By Partner</td></tr>
-            <tr><td>Route Activity</td><td>Per-route view — useful for SLA monitoring</td><td>MFT → Activity → By Route</td></tr>
-            <tr><td>Failed Transfers</td><td>Filtered view of errors with failure reason</td><td>MFT → Activity → Errors</td></tr>
-            <tr><td>Process Triggers</td><td>Log of which routes triggered which Boomi processes</td><td>MFT → Activity → Process Triggers</td></tr>
-            <tr><td>Notifications</td><td>Email/webhook alerts on transfer success, failure, or threshold breach</td><td>MFT → Settings → Notifications</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- ── 7. Security ── -->
-    <div class="section" id="security">
-      <div class="section-title"><span class="section-num">7</span> Security Considerations</div>
-      <ul class="blist">
-        <li>Use <strong>SSH public-key authentication</strong> for all SFTP Trading Partners in preference to passwords.</li>
-        <li>Enable <strong>IP whitelisting</strong> for partners whose source IPs are known and static.</li>
-        <li>Use <strong>FTPS (explicit TLS)</strong> or HTTPS for partners where SFTP is not supported — never plain FTP in production.</li>
-        <li>Rotate MFT server TLS certificates on your standard certificate renewal cycle.</li>
-        <li>Set short <strong>File Retention Policies</strong> (3–7 days) on Destination Routes to avoid sensitive data lingering on the MFT server.</li>
-        <li>Review Transfer Logs weekly and configure <strong>Notifications for failed transfers</strong> to catch connectivity issues early.</li>
-        <li>For <strong>AS2</strong>, ensure MDN (Message Disposition Notification) acknowledgements are configured for all routes to provide non-repudiation.</li>
-        <li>Restrict MFT admin access using <strong>Boomi AtomSphere role-based access control</strong> — not all Integration developers need MFT admin rights.</li>
+    <div class="ua-card avoid">
+      <h4>&#x274C; When to Avoid</h4>
+      <ul>
+        <li>Real-time, sub-second requirements &mdash; use P-101 (REST Inbound) or P-121 (Event Subscribe)</li>
+        <li>Small payloads (&lt;100 records) where a direct REST API call is available and appropriate</li>
+        <li>Source and target are both Boomi-native &mdash; use Message Queue or Event Streams instead</li>
+        <li>Data must be validated record-by-record with immediate per-record feedback to the caller</li>
+        <li>File formats are unknown / unstructured and cannot be parsed by the Boomi Data Process shape</li>
       </ul>
     </div>
+  </div>
+</div>
 
-    <!-- ── 8. Patterns ── -->
-    <div class="section" id="patterns">
-      <div class="section-title"><span class="section-num">8</span> Recommended Integration Patterns</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Pattern</th><th>Scenario</th><th>Implementation</th></tr></thead>
-          <tbody>
-            <tr><td>Trigger-on-Arrival</td><td>Partner uploads file; process must start immediately</td><td>Source Route Action = <em>Trigger Boomi Process</em>. Process receives the file as its start document.</td></tr>
-            <tr><td>Scheduled Poll</td><td>Partner uploads files throughout the day; process runs at fixed intervals</td><td>Source Route Action = <em>Store in MFT</em>. Scheduled process: MFT Connector List → Get → process → Delete.</td></tr>
-            <tr><td>Outbound Batch</td><td>Process generates a report/extract; partner collects at their own schedule</td><td>Process uses MFT Connector Send to write to Destination Route. Partner polls via SFTP/HTTPS on their own schedule.</td></tr>
-            <tr><td>Error & Retry</td><td>File processing fails; file must not be lost</td><td>Source Route stores file. On process failure, file remains in MFT until explicitly deleted. Retry by re-triggering the Get step.</td></tr>
-            <tr><td>Multi-Partner Fan-out</td><td>Same file must be sent to multiple partners simultaneously</td><td>Process branches to multiple MFT Connector Send steps, each targeting a different Destination Route / Trading Partner.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="section" id="features">
+  <div class="sec-title"><span class="sec-num">11</span> Boomi Platform Features Used</div>
+  <div class="feat-grid">
+    <div class="feat-card"><h5>Boomi MFT Connector</h5><p>Managed server endpoint for Trading Partner exchange. Configure server hostname, TLS cert, SSH key; create Trading Partners and Source/Destination Routes.</p></div>
+    <div class="feat-card"><h5>SFTP V2 Connector</h5><p>Connect to third-party SFTP servers as source or archive destination. SSH public-key auth; private key in Boomi Certificate Management; known_hosts enforced.</p></div>
+    <div class="feat-card"><h5>Data Process Shape (Split)</h5><p>Divide multi-record file into individual documents for record-level processing. Split by line count (CSV) or XML element. Use with Try/Catch for per-record error isolation.</p></div>
+    <div class="feat-card"><h5>Custom Scripting (Groovy)</h5><p>PGP decrypt/encrypt and checksum computation. Uses Bouncy Castle API bundled in Boomi. Passphrase via getEncryptedProperty().</p></div>
+    <div class="feat-card"><h5>Map Shape</h5><p>Transform parsed records to canonical or target schema. Embed lookup calls to database via function in the map for reference data enrichment.</p></div>
+    <div class="feat-card"><h5>Try/Catch Shape</h5><p>Wrap delivery connector; capture exceptions; route to dead-letter branch. Pass error message to Dynamic Process Property for audit INSERT.</p></div>
+    <div class="feat-card"><h5>Dynamic Document Properties</h5><p>Carry file metadata (filename, source, checksum, row count) through all process steps. Set on acquisition; read in the audit INSERT step.</p></div>
+    <div class="feat-card"><h5>Encrypted Process Properties</h5><p>Store PGP passphrase, SFTP passwords, API keys. Never use plain-text process properties for secrets.</p></div>
+    <div class="feat-card"><h5>Database Connector (JDBC)</h5><p>Audit INSERT; configuration lookup; target delivery via batch INSERT. Use UPSERT for idempotent re-runs.</p></div>
+    <div class="feat-card"><h5>Schedule Shape</h5><p>Cron-based process trigger. Schedule multiple windows. Disable during maintenance via environment extension.</p></div>
+    <div class="feat-card"><h5>Route Shape</h5><p>Branch delivery to multiple targets based on file type, source partner, content fields, or Dynamic Document Property values.</p></div>
+    <div class="feat-card"><h5>Process Reporting</h5><p>Execution history and error investigation. Cross-reference with audit table using boomi_process_id for end-to-end traceability.</p></div>
+  </div>
+</div>
 
-    <!-- ── 9. Troubleshooting ── -->
-    <div class="section" id="troubleshooting">
-      <div class="section-title"><span class="section-num">9</span> Troubleshooting Common Issues</div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Symptom</th><th>Likely Cause</th><th>Resolution</th></tr></thead>
-          <tbody>
-            <tr><td>Partner cannot connect via SFTP</td><td>Wrong port, firewall rule, or host key not trusted</td><td>Confirm port 22 is open. Share MFT server host key fingerprint for partner's known_hosts.</td></tr>
-            <tr><td>Route not triggering process</td><td>Route not deployed, or process deployed to wrong environment</td><td>Check Route status is Active. Verify process is deployed to same Atom/environment as the MFT Connector connection.</td></tr>
-            <tr><td>File in Transfer Log but process did not run</td><td>Process trigger misconfigured or startup error</td><td>Check MFT → Activity → Process Triggers and Boomi Process Reporting for errors.</td></tr>
-            <tr><td>Send writes file but partner cannot see it</td><td>Partner using wrong folder path or route not deployed</td><td>Confirm Destination Route folder path matches what partner is polling. Check route is Active.</td></tr>
-            <tr><td>FTPS connection rejected</td><td>Client using implicit FTPS on wrong port or TLS version mismatch</td><td>Use explicit FTPS on port 21. Ensure partner client supports TLS 1.2+.</td></tr>
-            <tr><td>File picked up twice by process</td><td>Two route triggers or process re-triggered on retry</td><td>Use idempotency key (filename + hash) to detect duplicates. Delete file after first successful processing.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="section" id="xref">
+  <div class="sec-title"><span class="sec-num">12</span> Cross-References</div>
+  <table class="spec-tbl">
+    <tr><td>P-117</td><td>Batch Processing &ndash; Scheduled: complements P-116 when the file is processed as micro-batches with Boomi-managed chunking</td></tr>
+    <tr><td>P-118</td><td>DB as REST: target delivery pattern when the downstream consumer is a Database endpoint exposed as a REST API</td></tr>
+    <tr><td>P-120</td><td>Fan-out Event: use when the same file must be delivered to multiple downstream targets in parallel</td></tr>
+    <tr><td>P-101</td><td>REST Inbound: alternative when source system supports per-record REST APIs and volume is low</td></tr>
+    <tr><td>P-121</td><td>Event Subscribe: use when file arrival should be communicated to other processes via Boomi Event Streams</td></tr>
+    <tr><td>MFT Guide</td><td>Boomi-Managed-File-Transfer-Guide.docx &mdash; full MFT server setup, Trading Partner creation, and Route configuration</td></tr>
+  </table>
+</div>
 
-    <!-- ── 10. MFT vs SFTP ── -->
-    <div class="section" id="vs">
-      <div class="section-title"><span class="section-num">10</span> MFT vs SFTP Connector — Quick Reference</div>
-      <div class="callout"><strong>Rule of thumb:</strong> Use Boomi MFT when you need a managed, auditable file exchange server for external Trading Partners. Use the SFTP V2 Connector when you need to connect to a third-party SFTP server that <em>you do not control</em>.</div>
-
-      <div class="vs-grid">
-        <div class="vs-card">
-          <h4>✅ Use Boomi MFT when…</h4>
-          <ul>
-            <li>You need to provide an SFTP/FTPS/HTTPS endpoint to an external partner</li>
-            <li>You require a built-in audit trail and transfer dashboard</li>
-            <li>You want event-driven trigger-on-arrival without polling</li>
-            <li>You need partner-level authentication and access control without building it yourself</li>
-            <li>You need AS2 with MDN acknowledgements</li>
-            <li>You need a file retention / archival policy on the exchange point</li>
-          </ul>
-        </div>
-        <div class="vs-card">
-          <h4>✅ Use SFTP V2 Connector (in a process) when…</h4>
-          <ul>
-            <li>You are connecting to a <em>third-party</em> SFTP server you do not own</li>
-            <li>You need fine-grained control over the SFTP session (key types, ciphers, known_hosts)</li>
-            <li>You are integrating with a legacy government SFTP endpoint</li>
-            <li>MFT is not part of your Boomi licence</li>
-            <li>The exchange is internal (same estate) and governance overhead is not needed</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  </main>
+</main>
 </div>
 
 <footer>
-  <span>Boomi Integration Reference · Managed File Transfer · June 2026</span>
+  <span>Boomi Integration Catalogue &middot; P-116 File-Based MFT Pattern &middot; v1.0 &middot; June 2026</span>
   <span><a href="https://help.boomi.com" target="_blank">help.boomi.com</a></span>
 </footer>
 
 <script>
-  // Active nav on scroll
   const sections = document.querySelectorAll('.section');
   const links = document.querySelectorAll('nav a');
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        links.forEach(l => l.classList.remove('active'));
-        const lnk = document.querySelector(`nav a[href="#${e.target.id}"]`);
-        if (lnk) lnk.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-30% 0px -60% 0px' });
+    entries.forEach(e => { if(e.isIntersecting){ links.forEach(l=>l.classList.remove('active')); const lnk=document.querySelector('nav a[href="#'+e.target.id+'"]'); if(lnk)lnk.classList.add('active'); }});
+  }, { rootMargin:'-25% 0px -65% 0px' });
   sections.forEach(s => obs.observe(s));
 </script>
 </body>
