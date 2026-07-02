@@ -72,6 +72,7 @@
   <span class="dl-actions">
     <a class="dl-btn" href="assets/integration-modernisation-architecture.docx" download="Integration-Modernisation-Architecture.docx">&#x2B07;&nbsp; Strategic Paper (Word)</a>
     <a class="dl-btn alt" href="assets/pattern-selection-decision-tree.drawio" download="Pattern-Selection-Decision-Tree.drawio">&#x2B07;&nbsp; Decision Tree (draw.io)</a>
+    <a class="dl-btn alt" href="assets/async-api-integration-patterns.docx" download="Async-API-Integration-Patterns.docx">&#x2B07;&nbsp; Async API Patterns (Word)</a>
   </span>
 </div>
 
@@ -100,6 +101,7 @@
       <li><a href="#arch">4 · Architecture alignment</a></li>
       <li><a href="#funnel">5 · Funnel &amp; adapters</a></li>
       <li><a href="#next">6 · Next moves</a></li>
+      <li><a href="#asyncapi">7 · Async API patterns</a></li>
     </ul>
   </nav>
 
@@ -235,6 +237,26 @@
         <li>Formalise K3 (Async Request&ndash;Reply: 202 + status resource) and K4 (Outbox) as reference patterns &mdash; these are where G3 reliability is won or lost.</li>
       </ol>
       <div class="warn"><strong>Note.</strong> The guidelines are sound; the value is in making them operational and testable. Where a specific flow contradicts a guideline, record the exception against the pattern &mdash; a documented exception is itself good governance.</div>
+    </section>
+
+    <section class="section" id="asyncapi">
+      <div class="sec-title"><span class="sec-num">7</span> Async API integration patterns</div>
+      <p>AsyncAPI is the event-driven counterpart to OpenAPI &mdash; a contract format for describing topics, channels, message schemas and protocol bindings (Kafka, AMQP, MQTT, and similar). The integration patterns it is used to describe map onto a small set of classic asynchronous messaging patterns, four of which are already canonical in this catalogue as <strong>K1&ndash;K4</strong>, alongside <strong>K6</strong> for the related read-model case.</p>
+      <div class="tbl-wrap">
+        <table class="gt">
+          <thead><tr><th style="width:22%;">Pattern</th><th style="width:52%;">What it is</th><th>Catalogue ref</th></tr></thead>
+          <tbody>
+            <tr><td class="c-id">Publish/Subscribe</td><td>Producer emits an event to a topic; any number of consumers subscribe independently, and the producer does not know who is listening.</td><td>K1 (publish) / K2 (subscribe) &mdash; fire-and-forget, fan-out on the event backbone</td></tr>
+            <tr><td class="c-id">Point-to-point / competing consumers</td><td>A message goes to a queue; one of several consumer instances picks it up (load-balanced, not fan-out).</td><td>Implicit in K1/K2, depending on topology</td></tr>
+            <tr><td class="c-id">Async request&ndash;reply</td><td>Caller gets an immediate acknowledgement (202 Accepted + status resource), then polls or is called back (webhook) when the real result is ready.</td><td>K3</td></tr>
+            <tr><td class="c-id">Event-carried state transfer / Outbox</td><td>A state change is reliably emitted as an event as part of the same transaction, so downstream consumers never miss an update.</td><td>K4 (Outbox)</td></tr>
+            <tr><td class="c-id">Event notification vs. state transfer</td><td>Notification-only event (&ldquo;thing changed, go fetch it&rdquo;) versus the event carrying the full changed payload.</td><td>Not separately numbered &mdash; candidate variant under K1</td></tr>
+            <tr><td class="c-id">CQRS / aggregated read model</td><td>Not messaging per se, but often paired with the above: consumers materialise their own read view from the event stream instead of calling back synchronously.</td><td>K6</td></tr>
+            <tr><td class="c-id">Dead-letter queue + replay</td><td>Failure/retry handling for any of the above &mdash; poison messages routed to a DLQ, with replay supported from the log.</td><td>Required under G3, not its own K-number</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><strong>Note.</strong> If formalised, &ldquo;event notification vs. event-carried state transfer&rdquo; is the natural next addition to the K-series &mdash; sitting alongside K1 as a variant rather than as a new pattern number.</div>
     </section>
   </main>
 </div>
