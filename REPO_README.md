@@ -18,3 +18,5 @@ Each time new patterns or deliverables are produced:
 4. Commit and push to `main`. GitHub Pages serves the update automatically from root.
 
 No page tabs in draw.io files — single canvas only. No standalone documents for content explicitly deferred (e.g. caching strategy) unless requested.
+
+<!-- test edit: end-to-end commit/push verification, 2026-07-02 -->
