@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" modified="2026-07-06T12:00:00.000Z" agent="Intelligrator" version="24.0.0">
+  <diagram id="intelligrator-arch" name="Intelligrator Architecture">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Intelligrator — Self-Service MFT Provisioning on Boomi (Request → Approve → Auto-Build → Deploy to Dev)" style="text;html=1;fontSize=18;fontStyle=1;fontColor=#1F4E79;align=center;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="1000" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Actors -->
+        <mxCell id="actReq" value="Requester" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#0F6674;strokeColor=#0A4A54;fontColor=#0F6674;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="120" width="40" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="actAdm" value="MFT Admin (Approver)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#0F6674;strokeColor=#0A4A54;fontColor=#0F6674;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="40" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Portal container -->
+        <mxCell id="portal" value="Intelligrator Portal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F9FF;strokeColor=#1F4E79;verticalAlign=top;fontStyle=1;fontSize=13;fontColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="160" y="90" width="300" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="ui" value="Web UI&#10;(wizard · approval queue · dashboards · SSO)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="180" y="125" width="260" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="Portal API&#10;(REST · OpenAPI · OAuth2 · RFC 7807)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="180" y="195" width="260" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="reg" value="Interface Registry&#10;(fingerprints · names · ownership)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="180" y="265" width="260" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="Request DB&#10;(requests · states · audit)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#C62828;strokeColor=#8E1B1B;fontColor=#FFFFFF" vertex="1" parent="1">
+          <mxGeometry x="185" y="330" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vault" value="Secrets Vault&#10;(credentialRef only)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#C62828;strokeColor=#8E1B1B;fontColor=#FFFFFF" vertex="1" parent="1">
+          <mxGeometry x="320" y="330" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl-portal" value="Wizard tests connections at request time; duplicate check + name suggestion via registry" style="text;html=1;fontSize=10;fontColor=#595959;align=left" vertex="1" parent="1">
+          <mxGeometry x="180" y="415" width="260" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Event Streams queue -->
+        <mxCell id="queue" value="Boomi Event Streams&#10;topic: mft.request.lifecycle&#10;(commands + lifecycle events · DLQ)" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;fontColor=#2E7D32;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="520" y="180" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Provisioning engine -->
+        <mxCell id="prov" value="Provisioning Engine (Saga)&#10;1 register config → 2 inject secrets →&#10;3 attach schedule → 4 smoke test&#10;(idempotent by request ID · compensation on failure)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#B26A00;fontColor=#7A4A00" vertex="1" parent="1">
+          <mxGeometry x="520" y="300" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Boomi Dev container (boomi style) -->
+        <mxCell id="boomi" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;verticalAlign=top" vertex="1" parent="1">
+          <mxGeometry x="830" y="90" width="520" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="boomiHdr" value="boomi — Dev Runtime (Atom)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0AAB52;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=13;arcSize=6" vertex="1" parent="1">
+          <mxGeometry x="830" y="90" width="520" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="connBand" value="Connectors: SFTP · FTPS · Database · Platform API listener" style="whiteSpace=wrap;html=1;fillColor=#DFF5E9;strokeColor=#0AAB52;fontColor=#0A6B36;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="850" y="138" width="480" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="procBand" value="Processes" style="whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#BFBFBF;fontColor=#595959;fontSize=11;verticalAlign=top;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="850" y="182" width="480" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="pTest" value="Connection Test API process&#10;(auth + folder-exists + write probe, ≤15 s)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#AD1457;fontColor=#6D0F36" vertex="1" parent="1">
+          <mxGeometry x="870" y="212" width="440" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pEngine" value="Generic MFT Engine process (single template, config-driven)&#10;read config → connect source → match files → transfer →&#10;post-action → run records → notify on error (opt-in)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#AD1457;fontColor=#6D0F36;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="870" y="275" width="440" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sched" value="Per-interface schedules&#10;(cron from wizard)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#AD1457;fontColor=#6D0F36" vertex="1" parent="1">
+          <mxGeometry x="870" y="368" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ext" value="Environment Extensions&#10;(injected credentials/params)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#AD1457;fontColor=#6D0F36" vertex="1" parent="1">
+          <mxGeometry x="1100" y="368" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="cfg" value="Interface Config Table&#10;(DB-backed — one row per interface;&#10;NOT node-local cache)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#C62828;strokeColor=#8E1B1B;fontColor=#FFFFFF" vertex="1" parent="1">
+          <mxGeometry x="880" y="500" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="runs" value="Run Records&#10;(status + files transferred)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#C62828;strokeColor=#8E1B1B;fontColor=#FFFFFF" vertex="1" parent="1">
+          <mxGeometry x="1120" y="500" width="190" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Endpoints -->
+        <mxCell id="src" value="Source System&#10;(SFTP/FTPS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F6674;strokeColor=#0A4A54;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="520" y="500" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dst" value="Destination System&#10;(SFTP/FTPS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7A1F1F;strokeColor=#4D1010;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="670" y="500" width="130" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;" edge="1" parent="1" source="actReq" target="ui"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;" edge="1" parent="1" source="actAdm" target="ui"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="submit / decisions" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#2E7D32;fontSize=10" edge="1" parent="1" source="api" target="queue"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="ProvisionInterface command" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#2E7D32;fontSize=10" edge="1" parent="1" source="queue" target="prov"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="Platform API: extensions · schedules · deploy" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B26A00;fontSize=10" edge="1" parent="1" source="prov" target="boomiHdr"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="insert config row" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#B26A00;fontSize=10" edge="1" parent="1" source="prov" target="cfg"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="test source/destination (request time)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#AD1457;dashed=1;fontSize=10" edge="1" parent="1" source="api" target="pTest"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="640" y="140" /></Array></mxGeometry></mxCell>
+        <mxCell id="e8" value="read config" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#8E1B1B;fontSize=10" edge="1" parent="1" source="pEngine" target="cfg"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="get" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;fontSize=10" edge="1" parent="1" source="pEngine" target="src"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="put" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#8E1B1B;fontSize=10" edge="1" parent="1" source="pEngine" target="dst"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="write run records" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#8E1B1B;fontSize=10" edge="1" parent="1" source="pEngine" target="runs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="dashboards read" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;dashed=1;fontSize=10" edge="1" parent="1" source="runs" target="ui"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1215" y="680" /><mxPoint x="310" y="680" /></Array></mxGeometry></mxCell>
+        <mxCell id="e13" value="secrets → extensions (never app DB)" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;dashed=1;fontSize=10" edge="1" parent="1" source="vault" target="ext"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="380" y="460" /><mxPoint x="1205" y="460" /></Array></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
