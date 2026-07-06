@@ -95,6 +95,7 @@
   <a href="#overview">1. Product overview</a>
   <a href="#personas">2. Personas &amp; roles</a>
   <a href="#workflow">3. End-to-end workflow</a>
+  <a href="#personaflow">3b. Persona-based flow (dev build spec)</a>
   <a href="#features">4. Feature catalogue</a>
   <a href="#stories">5. User stories</a>
   <a href="#architecture">6. Solution architecture</a>
@@ -117,6 +118,7 @@
     <li><strong>Download bar (top):</strong> grab the Word product specification (for circulation and review), the draw.io architecture diagram (editable in <a href="https://app.diagrams.net" style="color:var(--accent)">app.diagrams.net</a> via File → Open From → Device), or the full zip bundle.</li>
     <li><strong>Left navigation:</strong> jumps to each section; the active section is highlighted as you scroll.</li>
     <li><strong>User stories (§5):</strong> written in standard <em>As-a / I-want / So-that</em> format with Given-When-Then acceptance criteria — ready to paste into Jira/ADO. Priorities use MoSCoW badges.</li>
+    <li><strong>Persona-based flow (§3b):</strong> screen-by-screen build spec per persona — UI elements, user actions, and the exact integration call each triggers — for the team building the screens, flow, and MFT integration.</li>
     <li><strong>Design authority sections (§6–§8):</strong> the recommended build approach (template + configuration-driven) and the patterns that justify it. This aligns with the P-116 MFT pattern in the wider integration catalogue.</li>
     <li><strong>Live diagram viewer (§6b):</strong> every <code>.drawio</code> file in the repo renders inline, panable and zoomable, with no download required.</li>
   </ul>
@@ -183,6 +185,80 @@
     <li><strong>Deploy &amp; verify:</strong> deployment to the Dev runtime, followed by an automated smoke test (connect to both endpoints, list folders). Status moves to <code>DEPLOYED_DEV</code>.</li>
     <li><strong>Notify:</strong> requester and point of contact receive confirmation with the interface name, schedule, and a link to the run-status dashboard. Failures at any stage move the request to <code>PROVISION_FAILED</code> with diagnostics for the platform team.</li>
   </ol>
+</section>
+
+<section id="personaflow">
+  <h2>3b. Persona-based flow — build spec for the development team</h2>
+  <p class="lead">This section hands the development team a screen-by-screen, action-by-action build spec: for each persona, every screen, the UI elements on it, the user action taken, the exact integration call it triggers (cross-referenced to the API in §10 and the Boomi Platform API objects in §7), and the resulting state transition (§9). Build the four persona flows below as separate route groups sharing the same design system.</p>
+
+  <h3>Persona 1 — Requester</h3>
+  <div class="flow">
+    <span class="step">SSO Login</span><span class="arr">→</span>
+    <span class="step">My Requests dashboard</span><span class="arr">→</span>
+    <span class="step">Wizard Steps 1–6</span><span class="arr">→</span>
+    <span class="step">Tracker</span><span class="arr">→</span>
+    <span class="step">Run dashboard</span>
+  </div>
+  <table>
+    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
+    <tr><td>1</td><td>SSO Login</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML (F1.1)</td><td>Session established → dashboard</td></tr>
+    <tr><td>2</td><td>My Requests dashboard</td><td>Status-badged table; filters; "New Request" button</td><td>Click New Request, or open a draft</td><td><code>GET /requests?mine=true</code></td><td>Opens Wizard at step 1, or at last saved step for a draft</td></tr>
+    <tr><td>3</td><td>Wizard 1 — Requirement details</td><td>Purpose (textarea), Business Domain (governed dropdown), Business Value (textarea), Point of Contact (directory typeahead)</td><td>Next</td><td><code>POST /requests</code> then <code>PUT /requests/{id}</code> per field save</td><td>State <code>DRAFT</code>; advance to step 2</td></tr>
+    <tr><td>4</td><td>Wizard 2 — Source details</td><td>Protocol radio (SFTP/FTPS), host/port, credential entry or vault-reference picker, folder path/browser</td><td>Click <em>Test Source Connection</em></td><td><code>POST /requests/{id}/test-source</code> → Boomi Connection Test API process (auth + folder-exists)</td><td>Inline pass/fail badge + timestamp stored; fail requires documented override to proceed</td></tr>
+    <tr><td>5</td><td>Wizard 3 — Destination details</td><td>Same as step 4 for target</td><td>Click <em>Test Destination Connection</em></td><td><code>POST /requests/{id}/test-destination</code> (adds write-probe)</td><td>As above</td></tr>
+    <tr><td>6</td><td>Wizard 4 — Uniqueness &amp; naming</td><td>Read-only suggested-name field; duplicate banner (green/amber/red)</td><td>Auto-runs on step entry</td><td><code>GET /requests/{id}/duplicate-check</code></td><td>Exact match blocks Next; similar match warns and requires confirmation</td></tr>
+    <tr><td>7</td><td>Wizard 5 — File &amp; trigger</td><td>Filename pattern, format dropdown, expected volume, post-action dropdown, visual cron builder + plain-English preview, timezone, blackout date-range, notification opt-in toggle + recipient chips</td><td>Next</td><td>Client-side cron validation; <code>PUT /requests/{id}</code></td><td>Advance to summary</td></tr>
+    <tr><td>8</td><td>Wizard 6 — Summary &amp; submit</td><td>Read-only recap grouped by step with Edit links; declaration checkbox</td><td>Submit</td><td><code>POST /requests/{id}/submit</code></td><td>State → <code>SUBMITTED</code>; <code>RequestSubmitted</code> event published; redirect to Tracker</td></tr>
+    <tr><td>9</td><td>Tracker</td><td>Vertical stepper across the full state machine with timestamps/actors</td><td>Passive / refresh</td><td><code>GET /requests/{id}</code> (poll or SSE)</td><td>Updates live as admin and engine progress the request</td></tr>
+    <tr><td>10</td><td>Run dashboard</td><td>Per-interface run table: date, overall status, file count</td><td>Drill into a run</td><td><code>GET /interfaces/{name}/runs</code></td><td>Per-file name/size/outcome/error detail</td></tr>
+  </table>
+
+  <h3>Persona 2 — MFT Admin / Approver</h3>
+  <div class="flow">
+    <span class="step">SSO Login</span><span class="arr">→</span>
+    <span class="step">Approval queue</span><span class="arr">→</span>
+    <span class="step">Review detail</span><span class="arr">→</span>
+    <span class="step">Decision modal</span><span class="arr">→</span>
+    <span class="step">Provisioning status</span>
+  </div>
+  <table>
+    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
+    <tr><td>1</td><td>SSO Login (Approver role)</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML + role check (F1.2)</td><td>Non-approvers denied and audited</td></tr>
+    <tr><td>2</td><td>Approval queue</td><td>Oldest-first table: Request ID, suggested name, domain, requester, age, SLA flag; filters</td><td>Open a row</td><td><code>GET /approvals?state=SUBMITTED</code></td><td>Opens Review detail</td></tr>
+    <tr><td>3</td><td>Review detail</td><td>Full six-step wizard recap + Connection Test Evidence panel (timestamped) + Duplicate Check outcome panel</td><td>Choose Approve / Reject / Return</td><td>—</td><td>Opens Decision modal (comment mandatory for Reject/Return)</td></tr>
+    <tr><td>4</td><td>Decision modal</td><td>Comment box, confirm button</td><td>Confirm decision</td><td><code>POST /approvals/{id}/decision</code></td><td>State → <code>APPROVED</code> / <code>REJECTED</code> / <code>RETURNED</code>; requester notified</td></tr>
+    <tr><td>5</td><td>Provisioning status (approve path)</td><td>Read-only progress: Config → Secrets → Schedule → Smoke test</td><td>Passive / refresh</td><td>Subscribes to <code>ProvisioningStepCompleted</code> events</td><td><code>DEPLOYED_DEV</code> or <code>PROVISION_FAILED</code></td></tr>
+  </table>
+
+  <h3>Persona 3 — Platform Engineer</h3>
+  <div class="flow">
+    <span class="step">SSO Login</span><span class="arr">→</span>
+    <span class="step">Provisioning failures dashboard</span><span class="arr">→</span>
+    <span class="step">Failure detail</span><span class="arr">→</span>
+    <span class="step">Retry / engine management</span>
+  </div>
+  <table>
+    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
+    <tr><td>1</td><td>SSO Login (Platform Admin role)</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML + role check</td><td>Access to platform-only screens</td></tr>
+    <tr><td>2</td><td>Provisioning failures dashboard</td><td>List: failing step, error summary, correlation ID, age</td><td>Open a failure</td><td><code>GET /requests?state=PROVISION_FAILED</code></td><td>Opens Failure detail</td></tr>
+    <tr><td>3</td><td>Failure detail</td><td>Full diagnostics: error payload, step log, compensation actions taken</td><td>Click Retry from failed step</td><td><code>POST /requests/{id}/retry-provisioning</code></td><td>Re-enters <code>PROVISIONING</code> at the failed step, no re-approval needed</td></tr>
+    <tr><td>4</td><td>Engine version / config management</td><td>Deployed engine versions list; canary config toggle</td><td>Promote / roll back a version</td><td>Boomi Platform API: <code>Component</code> / <code>PackagedComponent</code> / <code>DeployedPackage</code></td><td>Controlled engine upgrades outside the self-service flow</td></tr>
+  </table>
+
+  <h3>Persona 4 — Auditor</h3>
+  <div class="flow">
+    <span class="step">SSO Login</span><span class="arr">→</span>
+    <span class="step">Audit trail search</span><span class="arr">→</span>
+    <span class="step">Results + export</span>
+  </div>
+  <table>
+    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
+    <tr><td>1</td><td>SSO Login (Auditor role)</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML + role check</td><td>Access to audit screens</td></tr>
+    <tr><td>2</td><td>Audit trail search</td><td>Filters: entity/request ID, date range, actor, event type</td><td>Search</td><td><code>GET /audit?entity=...</code></td><td>Results table</td></tr>
+    <tr><td>3</td><td>Results + export</td><td>Paginated event list: actor, timestamp, transition, before/after state; Export CSV button</td><td>Export</td><td>Same endpoint with CSV format</td><td>Browser-native file download</td></tr>
+  </table>
+
+  <div class="callout">Every "Integration call" column above is the contract the frontend and backend teams build to — the frontend needs nothing beyond these calls, and the backend needs nothing beyond implementing exactly these calls plus the provisioning saga in §7.</div>
 </section>
 
 <section id="features">
@@ -522,6 +598,84 @@ GET    /audit?entity=REQ-1234             audit trail (Auditor role)</code></pre
     <tr><td><strong>Phase 3</strong></td><td>Event-triggered (file-arrival) transfers · governed promotion workflow to Test · credential rotation self-service · PGP encryption/decryption options · bulk request import for migration waves.</td></tr>
   </table>
   <div class="callout good"><strong>Build order rationale:</strong> the config-driven engine (§7 Option A) is the riskiest and most valuable piece — build and prove it first with hand-inserted config rows, then wrap the wizard and approval workflow around it. The portal without the engine is a form; the engine without the portal is already useful.</div>
+</section>
+
+<section id="personaflows">
+  <h2>14. Persona-Based Screen &amp; Integration Flows (dev handoff)</h2>
+  <p class="lead">This section is written for the build team: for each persona, every screen is listed with its purpose, key UI elements and validation, the exact integration call(s) it triggers, and the transition to the next screen or state. Use §10 (API design) and §7 (Boomi Platform API objects) alongside this section for endpoint contracts.</p>
+
+  <h3>Screen inventory (all personas)</h3>
+  <table>
+    <tr><th>ID</th><th>Screen</th><th>Persona</th><th>Route (suggested)</th></tr>
+    <tr><td>R-01</td><td>SSO Landing</td><td>Requester</td><td><code>/</code></td></tr>
+    <tr><td>R-02</td><td>My Requests Dashboard</td><td>Requester</td><td><code>/requests</code></td></tr>
+    <tr><td>R-03</td><td>Wizard Step 1 — Requirement Details</td><td>Requester</td><td><code>/requests/new/details</code></td></tr>
+    <tr><td>R-04</td><td>Wizard Step 2 — Source Details</td><td>Requester</td><td><code>/requests/new/source</code></td></tr>
+    <tr><td>R-05</td><td>Wizard Step 3 — Destination Details</td><td>Requester</td><td><code>/requests/new/destination</code></td></tr>
+    <tr><td>R-06</td><td>Wizard Step 4 — Uniqueness &amp; Naming</td><td>Requester</td><td><code>/requests/new/naming</code></td></tr>
+    <tr><td>R-07</td><td>Wizard Step 5 — File &amp; Trigger Details</td><td>Requester</td><td><code>/requests/new/trigger</code></td></tr>
+    <tr><td>R-08</td><td>Wizard Step 6 — Summary &amp; Submit</td><td>Requester</td><td><code>/requests/new/summary</code></td></tr>
+    <tr><td>R-09</td><td>Request Tracker / Detail</td><td>Requester</td><td><code>/requests/{id}</code></td></tr>
+    <tr><td>R-10</td><td>Run Dashboard (per interface)</td><td>Requester / Owner</td><td><code>/interfaces/{name}/runs</code></td></tr>
+    <tr><td>A-01</td><td>Approval Queue</td><td>MFT Admin</td><td><code>/approvals</code></td></tr>
+    <tr><td>A-02</td><td>Request Review Detail</td><td>MFT Admin</td><td><code>/approvals/{id}</code></td></tr>
+    <tr><td>A-03</td><td>Decision Confirmation</td><td>MFT Admin</td><td>modal on A-02</td></tr>
+    <tr><td>P-01</td><td>Provisioning Monitor</td><td>Platform Engineer</td><td><code>/admin/provisioning</code></td></tr>
+    <tr><td>P-02</td><td>Failure Diagnostics Detail</td><td>Platform Engineer</td><td><code>/admin/provisioning/{jobId}</code></td></tr>
+    <tr><td>P-03</td><td>Engine &amp; Schedule Admin</td><td>Platform Engineer</td><td><code>/admin/interfaces/{name}</code></td></tr>
+    <tr><td>U-01</td><td>Audit Search</td><td>Auditor</td><td><code>/audit</code></td></tr>
+    <tr><td>U-02</td><td>Audit Trail Timeline</td><td>Auditor</td><td><code>/audit/{entityId}</code></td></tr>
+  </table>
+
+  <h3>Persona 1 — Requester</h3>
+  <table>
+    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
+    <tr><td><strong>R-01</strong> SSO Landing</td><td>Silent redirect to corporate IdP; no user input.</td><td>OIDC/SAML auth handshake; identity claims cached client-side.</td><td>On success → R-02.</td></tr>
+    <tr><td><strong>R-02</strong> My Requests Dashboard</td><td>Table of the requester's requests with status chip (Draft/Submitted/In Review/Approved/Provisioning/Deployed/Rejected/Returned), age, and row actions (Resume, View). Primary CTA "+ New Request".</td><td><code>GET /requests?mine=true</code></td><td>"+ New Request" → R-03. Row click on Draft → resumes at last completed wizard step. Row click on any other status → R-09.</td></tr>
+    <tr><td><strong>R-03</strong> Requirement Details</td><td>Fields: Purpose (textarea), Business Domain (governed dropdown), Business Value (textarea), Point of Contact (directory typeahead). All mandatory; contact must resolve to a directory match before Next is enabled.</td><td><code>POST /requests</code> on first field blur (creates draft); <code>PUT /requests/{id}</code> on subsequent edits (autosave).</td><td>Next → R-04. Back → R-02 (saved as Draft).</td></tr>
+    <tr><td><strong>R-04</strong> Source Details</td><td>Protocol select (SFTP/FTPS), host, port, auth method (password / key / vault reference), folder path field with "Browse" (opens folder-picker modal if listing is permitted), "Test Source Connection" button showing spinner then a pass/fail banner with timestamp and detail.</td><td><code>POST /requests/{id}/test-source</code> — authenticates and verifies folder exists; result and timestamp persisted to the request.</td><td>Next disabled until a pass, or an override-justification field is completed on fail. Next → R-05.</td></tr>
+    <tr><td><strong>R-05</strong> Destination Details</td><td>Mirrors R-04 plus a write-permission probe (marker file create/delete where policy allows).</td><td><code>POST /requests/{id}/test-destination</code></td><td>Next → R-06 on pass/override.</td></tr>
+    <tr><td><strong>R-06</strong> Uniqueness &amp; Naming</td><td>Mostly system-driven: green "No duplicate found" + read-only suggested name; red "Duplicate found" with link to the existing interface and owner (blocks Next); amber "Similar interface" with a confirm-to-proceed checkbox.</td><td><code>GET /requests/{id}/duplicate-check</code> — fingerprint lookup against the interface registry; name-suggestion service invoked on a clean result.</td><td>Next → R-07 (blocked on exact duplicate).</td></tr>
+    <tr><td><strong>R-07</strong> File &amp; Trigger Details</td><td>Filename pattern (glob/regex) with live example preview, format select, expected volume, post-transfer action (archive/delete/rename), schedule builder (frequency picker rendering cron + plain-English sentence live), timezone, blackout-window date range, notification opt-in toggle with recipient multi-select (required when on).</td><td>Client-side cron generation; <code>PUT /requests/{id}</code> to persist.</td><td>Next → R-08.</td></tr>
+    <tr><td><strong>R-08</strong> Summary &amp; Submit</td><td>Read-only recap grouped by wizard step with per-group "Edit" links back to R-03–R-07; declaration checkbox; Submit button.</td><td><code>POST /requests/{id}/submit</code> — validates completeness, assigns request ID, emits <code>RequestSubmitted</code> to <code>mft.request.lifecycle</code>.</td><td>Submit → R-09, state becomes <code>SUBMITTED</code>.</td></tr>
+    <tr><td><strong>R-09</strong> Request Tracker / Detail</td><td>State-machine timeline (§9) with timestamp/actor per transition; shows connection-test evidence and any approver comment; once Deployed, shows a link to R-10.</td><td><code>GET /requests/{id}</code>, refreshed on poll or lifecycle-event push.</td><td>Returned → reopens editable at R-03 (Draft). Deployed → link to R-10.</td></tr>
+    <tr><td><strong>R-10</strong> Run Dashboard</td><td>Run history table: start/end, overall status, file count; row expands to per-file name/size/outcome/error.</td><td><code>GET /interfaces/{name}/runs</code></td><td>Terminal screen; back → R-09 or R-02.</td></tr>
+  </table>
+
+  <h3>Persona 2 — MFT Admin / Approver</h3>
+  <table>
+    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
+    <tr><td><strong>A-01</strong> Approval Queue</td><td>Table: Request ID, Name, Domain, Requester, Age with SLA colour, status filter chips, search box. Oldest-first by default.</td><td><code>GET /approvals?state=SUBMITTED</code></td><td>Row click → A-02.</td></tr>
+    <tr><td><strong>A-02</strong> Request Review Detail</td><td>Full wizard data (read-only), connection-test evidence panel (source/destination pass-fail + timestamps), duplicate-check outcome panel, comment box, three actions: Approve / Reject / Return for changes. Approver ≠ requester enforced — button disabled with explanation if same user.</td><td><code>GET /approvals/{id}</code> (aggregated view assembling request + test evidence + fingerprint result); <code>POST /approvals/{id}/decision</code> on action.</td><td>Any decision → A-03.</td></tr>
+    <tr><td><strong>A-03</strong> Decision Confirmation</td><td>Modal confirming the action taken; auto-dismisses back to A-01.</td><td>Emits <code>RequestApproved</code> / <code>RequestRejected</code> event; on approval this triggers the Provisioning Engine (§7) asynchronously — no screen for this, it runs server-side.</td><td>Requester notified; on Approve, request state → <code>APPROVED</code> then <code>PROVISIONING</code> without further admin action.</td></tr>
+  </table>
+
+  <h3>Persona 3 — Platform Engineer</h3>
+  <table>
+    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
+    <tr><td><strong>P-01</strong> Provisioning Monitor</td><td>List of in-flight and failed provisioning jobs with per-step status (register config → inject secrets → attach schedule → smoke test) and correlation ID.</td><td>Subscribes to provisioning saga status events on <code>mft.request.lifecycle</code>.</td><td>Row click → P-02.</td></tr>
+    <tr><td><strong>P-02</strong> Failure Diagnostics Detail</td><td>Highlights the failing step, shows the raw error payload and correlation ID, links to the Boomi Atom process execution log. Buttons: "Retry from failed step" and "Escalate".</td><td>Retry invokes the saga resume handler via the Boomi Platform API from the failed step only (idempotent by request ID — no duplicate config/schedule created).</td><td>Success → job leaves the list, request state advances to <code>DEPLOYED_DEV</code>. Repeat failure stays on P-02 with updated diagnostics.</td></tr>
+    <tr><td><strong>P-03</strong> Engine &amp; Schedule Admin</td><td>View current MFT engine process version, interface config table row count, and per-interface schedule pause/resume control.</td><td>Boomi Platform API schedule pause/resume calls; read-only query against the interface config table.</td><td>Standalone ops screen, no forward flow.</td></tr>
+  </table>
+
+  <h3>Persona 4 — Auditor</h3>
+  <table>
+    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
+    <tr><td><strong>U-01</strong> Audit Search</td><td>Filters: entity/request ID, date range, actor.</td><td><code>GET /audit?entity=...</code></td><td>Row click → U-02.</td></tr>
+    <tr><td><strong>U-02</strong> Audit Trail Timeline</td><td>Append-only event list: transition, actor, timestamp, before/after state. "Export CSV" button.</td><td>Export triggers CSV generation directly from the append-only event store.</td><td>Terminal screen.</td></tr>
+  </table>
+
+  <h3>Cross-persona sequence (how one request moves through every screen)</h3>
+  <table>
+    <tr><th>#</th><th>Persona / screen</th><th>Action</th><th>Resulting state</th></tr>
+    <tr><td>1</td><td>Requester · R-03→R-08</td><td>Completes wizard, submits</td><td><code>SUBMITTED</code></td></tr>
+    <tr><td>2</td><td>MFT Admin · A-01→A-02</td><td>Reviews and approves</td><td><code>APPROVED</code></td></tr>
+    <tr><td>3</td><td>System · Provisioning Engine (§7)</td><td>Config, secrets, schedule, smoke test — no screen, server-side saga</td><td><code>PROVISIONING</code> → <code>DEPLOYED_DEV</code> (or <code>PROVISION_FAILED</code>)</td></tr>
+    <tr><td>4</td><td>Platform Engineer · P-01→P-02</td><td>(Only on failure) diagnoses and retries from failed step</td><td><code>PROVISIONING</code> (retry) → <code>DEPLOYED_DEV</code></td></tr>
+    <tr><td>5</td><td>Requester · R-09→R-10</td><td>Tracks status, then views run history once live</td><td>read-only, no state change</td></tr>
+    <tr><td>6</td><td>Auditor · U-01→U-02</td><td>Reviews the full trail at any point</td><td>read-only, no state change</td></tr>
+  </table>
+  <div class="callout">This section, combined with §9 (state machine), §10 (API design) and §7 (Boomi Platform API objects), is intended to be handed to the development team as the complete brief for screen design, navigation flow, and the integration work needed to build Intelligrator end-to-end.</div>
 </section>
 
 <footer>Intelligrator — Self-Service MFT Provisioning on Boomi · Integration Catalogue companion deliverable · Generated July 2026</footer>
