@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 760" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#4a5568"/></marker>
+    <marker id="arRed" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#c62828"/></marker>
+  </defs>
+  <rect width="1180" height="760" fill="#ffffff"/>
+  <text x="590" y="30" text-anchor="middle" font-size="19" font-weight="700" fill="#1F4E79">How Boomi Achieves Managed File Transfer</text>
+  <text x="590" y="50" text-anchor="middle" font-size="12" fill="#595959">Option A (primary): Boomi Integration process-based transfer, with Try/Catch error handling and Notify/Mail alerting</text>
+
+  <!-- Trigger -->
+  <rect x="20" y="120" width="120" height="60" rx="8" fill="#0F6674" stroke="#0A4A54"/>
+  <text x="80" y="145" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">Schedule</text>
+  <text x="80" y="162" text-anchor="middle" font-size="10" fill="#dff5f4">Start shape (cron)</text>
+
+  <!-- Atom Process container -->
+  <rect x="175" y="80" width="560" height="300" rx="10" fill="#F5F9FF" stroke="#1F4E79" stroke-width="1.5"/>
+  <text x="455" y="100" text-anchor="middle" font-size="13" font-weight="700" fill="#1F4E79">Boomi Atom — Deployed Process</text>
+
+  <!-- Try boundary -->
+  <rect x="195" y="115" width="330" height="150" rx="8" fill="none" stroke="#B26A00" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="360" y="132" text-anchor="middle" font-size="11" font-weight="700" fill="#B26A00">Try / Catch (retry count 0–5)</text>
+
+  <rect x="210" y="145" width="140" height="55" rx="6" fill="#DCE6F1" stroke="#1F4E79"/>
+  <text x="280" y="167" text-anchor="middle" font-size="11" fill="#1F4E79" font-weight="600">Source Connector</text>
+  <text x="280" y="182" text-anchor="middle" font-size="9" fill="#40556e">Disk / SFTP / FTPS / AS2 — Get</text>
+
+  <rect x="370" y="145" width="140" height="55" rx="6" fill="#DCE6F1" stroke="#1F4E79"/>
+  <text x="440" y="163" text-anchor="middle" font-size="11" fill="#1F4E79" font-weight="600">Validate / Transform</text>
+  <text x="440" y="177" text-anchor="middle" font-size="9" fill="#40556e">profile, checksum (optional)</text>
+  <text x="440" y="190" text-anchor="middle" font-size="9" fill="#40556e">tracked properties set</text>
+
+  <line x1="350" y1="172" x2="368" y2="172" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <rect x="210" y="212" width="140" height="45" rx="6" fill="#DCE6F1" stroke="#1F4E79"/>
+  <text x="280" y="230" text-anchor="middle" font-size="11" fill="#1F4E79" font-weight="600">Destination Connector</text>
+  <text x="280" y="244" text-anchor="middle" font-size="9" fill="#40556e">Disk / SFTP / FTPS — Send</text>
+
+  <rect x="370" y="212" width="140" height="45" rx="6" fill="#DCE6F1" stroke="#1F4E79"/>
+  <text x="440" y="230" text-anchor="middle" font-size="11" fill="#1F4E79" font-weight="600">Post-action</text>
+  <text x="440" y="244" text-anchor="middle" font-size="9" fill="#40556e">archive / delete / rename</text>
+
+  <line x1="440" y1="200" x2="440" y2="210" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="350" y1="234" x2="368" y2="234" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#ar)"/>
+  <path d="M280,200 L280,212" stroke="#1F4E79" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- Catch path -->
+  <rect x="195" y="285" width="510" height="80" rx="8" fill="#FDECEC" stroke="#c62828" stroke-width="1.3"/>
+  <text x="450" y="300" text-anchor="middle" font-size="11" font-weight="700" fill="#8E1B1B">Catch path — on exception</text>
+  <rect x="210" y="310" width="130" height="45" rx="6" fill="#fff" stroke="#c62828"/>
+  <text x="275" y="328" text-anchor="middle" font-size="10" fill="#8E1B1B" font-weight="600">Message / Notify</text>
+  <text x="275" y="342" text-anchor="middle" font-size="8.5" fill="#8E1B1B">error + execution ID</text>
+
+  <rect x="355" y="310" width="130" height="45" rx="6" fill="#fff" stroke="#c62828"/>
+  <text x="420" y="328" text-anchor="middle" font-size="10" fill="#8E1B1B" font-weight="600">Mail Connector</text>
+  <text x="420" y="342" text-anchor="middle" font-size="8.5" fill="#8E1B1B">sends alert email</text>
+
+  <rect x="500" y="310" width="190" height="45" rx="6" fill="#fff" stroke="#c62828"/>
+  <text x="595" y="328" text-anchor="middle" font-size="10" fill="#8E1B1B" font-weight="600">Recipients</text>
+  <text x="595" y="342" text-anchor="middle" font-size="8.5" fill="#8E1B1B">Point of contact + opt-in list</text>
+
+  <line x1="340" y1="332" x2="353" y2="332" stroke="#c62828" stroke-width="1.5" marker-end="url(#arRed)"/>
+  <line x1="485" y1="332" x2="498" y2="332" stroke="#c62828" stroke-width="1.5" marker-end="url(#arRed)"/>
+  <path d="M280,257 L280,285" stroke="#c62828" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arRed)"/>
+  <path d="M440,257 L440,285" stroke="#c62828" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arRed)"/>
+
+  <!-- entry arrow -->
+  <line x1="140" y1="150" x2="205" y2="172" stroke="#4a5568" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- Run records -->
+  <path d="M770,150 h95 a10,10 0 0 1 10,10 v70 a10,10 0 0 1 -10,10 h-95 a10,10 0 0 1 -10,-10 v-70 a10,10 0 0 1 10,-10 z" fill="#c62828"/>
+  <ellipse cx="817" cy="150" rx="53" ry="10" fill="#8E1B1B"/>
+  <text x="817" y="188" text-anchor="middle" font-size="10.5" fill="#fff" font-weight="700">Process Reporting /</text>
+  <text x="817" y="202" text-anchor="middle" font-size="10.5" fill="#fff" font-weight="700">Run Records</text>
+  <text x="817" y="216" text-anchor="middle" font-size="8.5" fill="#fde8e8">(success + failure, exec ID)</text>
+
+  <line x1="510" y1="170" x2="768" y2="165" stroke="#4a5568" stroke-width="1.3" marker-end="url(#ar)"/>
+  <line x1="485" y1="330" x2="768" y2="200" stroke="#c62828" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#arRed)"/>
+
+  <rect x="765" y="240" width="115" height="55" rx="8" fill="#DCE6F1" stroke="#1F4E79"/>
+  <text x="822" y="262" text-anchor="middle" font-size="10.5" fill="#1F4E79" font-weight="600">Run Dashboard</text>
+  <text x="822" y="276" text-anchor="middle" font-size="8.5" fill="#40556e">files transferred + status</text>
+  <line x1="817" y1="221" x2="822" y2="238" stroke="#4a5568" stroke-width="1.3" marker-end="url(#ar)"/>
+
+  <!-- platform-level alerting note -->
+  <rect x="930" y="115" width="230" height="150" rx="8" fill="#FFF8E1" stroke="#B26A00"/>
+  <text x="1045" y="133" text-anchor="middle" font-size="11" font-weight="700" fill="#7A4A00">Platform-level alerting</text>
+  <text x="945" y="153" font-size="9.5" fill="#7A4A00">• PROCESS.EXECUTION alerts</text>
+  <text x="945" y="168" font-size="9.5" fill="#7A4A00">  (Log Level = ERROR)</text>
+  <text x="945" y="186" font-size="9.5" fill="#7A4A00">• USER.NOTIFICATION alerts</text>
+  <text x="945" y="201" font-size="9.5" fill="#7A4A00">  for non-terminating warnings</text>
+  <text x="945" y="219" font-size="9.5" fill="#7A4A00">• Alert email links directly to</text>
+  <text x="945" y="234" font-size="9.5" fill="#7A4A00">  the execution ID for fast triage</text>
+  <text x="945" y="252" font-size="9.5" fill="#7A4A00">• Fires only if interface opted in</text>
+
+  <!-- Alternate: native MFT -->
+  <rect x="175" y="410" width="985" height="200" rx="10" fill="#F2FBF6" stroke="#0AAB52" stroke-width="1.5"/>
+  <rect x="175" y="410" width="985" height="30" rx="10" fill="#0AAB52"/>
+  <text x="667" y="431" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">Option B (alternate) — Boomi native Managed File Transfer, powered by Thru</text>
+
+  <rect x="200" y="455" width="230" height="130" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="315" y="475" text-anchor="middle" font-size="11" font-weight="700" fill="#0A6B36">Management Channel</text>
+  <text x="212" y="495" font-size="9.5" fill="#12291d">• Flow definitions</text>
+  <text x="212" y="511" font-size="9.5" fill="#12291d">• Partner/endpoint credentials</text>
+  <text x="212" y="527" font-size="9.5" fill="#12291d">• Tracking, audit, proof of delivery</text>
+  <text x="212" y="543" font-size="9.5" fill="#12291d">• Native alerts on failed transfers</text>
+  <text x="212" y="565" font-size="9" fill="#0A6B36" font-weight="600">Partner self-service portal ↴</text>
+
+  <rect x="460" y="455" width="230" height="130" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="575" y="475" text-anchor="middle" font-size="11" font-weight="700" fill="#0A6B36">Data Channel</text>
+  <text x="472" y="495" font-size="9.5" fill="#12291d">• Actual file payload transfer</text>
+  <text x="472" y="511" font-size="9.5" fill="#12291d">• Persistent storage until delivered</text>
+  <text x="472" y="527" font-size="9.5" fill="#12291d">• Auto-resume, guaranteed delivery</text>
+  <text x="472" y="543" font-size="9.5" fill="#12291d">• Encrypted at rest, in transit,</text>
+  <text x="472" y="559" font-size="9.5" fill="#12291d">  and at the file level</text>
+
+  <rect x="720" y="455" width="240" height="130" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="840" y="475" text-anchor="middle" font-size="11" font-weight="700" fill="#0A6B36">Boomi ↔ MFT Connector</text>
+  <text x="732" y="495" font-size="9.5" fill="#12291d">Get — pickup a file from a Flow</text>
+  <text x="732" y="511" font-size="9.5" fill="#12291d">Create — drop off a file to a Flow</text>
+  <text x="732" y="527" font-size="9.5" fill="#12291d">Create (type=Exception) — push</text>
+  <text x="732" y="543" font-size="9.5" fill="#12291d">error/exception info back into MFT's</text>
+  <text x="732" y="559" font-size="9.5" fill="#12291d">own tracking &amp; audit trail</text>
+
+  <line x1="430" y1="520" x2="458" y2="520" stroke="#0A6B36" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="690" y1="520" x2="718" y2="520" stroke="#0A6B36" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="455" y1="395" x2="710" y2="410" stroke="#0A6B36" stroke-width="1.3" stroke-dasharray="4,3"/>
+  <text x="580" y="405" text-anchor="middle" font-size="8.5" fill="#0A6B36">Boomi process calls MFT connector instead of a direct SFTP hop</text>
+
+  <text x="590" y="740" text-anchor="middle" font-size="10" fill="#8a94a0">This catalogue's P-116 pattern and the Intelligrator Generic MFT Engine use Option A. Option B is a separate licensed product, evaluated where partners need self-service endpoint management.</text>
+</svg>

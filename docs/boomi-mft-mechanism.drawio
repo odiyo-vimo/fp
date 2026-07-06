@@ -1,0 +1,96 @@
+<mxfile host="app.diagrams.net" modified="2026-07-07T10:00:00.000Z" agent="Intelligrator" version="24.0.0">
+  <diagram id="boomi-mft-mechanism" name="How Boomi Achieves MFT">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1250" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="How Boomi Achieves Managed File Transfer — mechanism &amp; error notification" style="text;html=1;fontSize=17;fontStyle=1;fontColor=#1F4E79;align=center;" vertex="1" parent="1">
+          <mxGeometry x="120" y="15" width="1000" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="trigger" value="Schedule&#10;(Start shape, cron)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F6674;strokeColor=#0A4A54;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="30" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="atom" value="Boomi Atom — Deployed Process (Option A)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F9FF;strokeColor=#1F4E79;verticalAlign=top;fontStyle=1;fontColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="190" y="90" width="560" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="tryBox" value="Try / Catch (retry count 0–5)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#B26A00;dashed=1;verticalAlign=top;fontColor=#B26A00;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="210" y="125" width="330" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="src" value="Source Connector&#10;Disk/SFTP/FTPS/AS2 — Get" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="225" y="155" width="140" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="xform" value="Validate / Transform&#10;profile, checksum (optional)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="385" y="155" width="140" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="dst" value="Destination Connector&#10;Disk/SFTP/FTPS — Send" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="225" y="222" width="140" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="post" value="Post-action&#10;archive / delete / rename" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="385" y="222" width="140" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="catchBox" value="Catch path — on exception" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDECEC;strokeColor=#C62828;verticalAlign=top;fontColor=#8E1B1B;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="210" y="295" width="510" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="notify" value="Message / Notify&#10;error + execution ID" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#8E1B1B" vertex="1" parent="1">
+          <mxGeometry x="225" y="322" width="130" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="mail" value="Mail Connector&#10;sends alert email" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#8E1B1B" vertex="1" parent="1">
+          <mxGeometry x="370" y="322" width="130" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="recip" value="Recipients&#10;Point of contact + opt-in list" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C62828;fontColor=#8E1B1B" vertex="1" parent="1">
+          <mxGeometry x="515" y="322" width="190" height="45" as="geometry" />
+        </mxCell>
+
+        <mxCell id="runs" value="Process Reporting /&#10;Run Records&#10;(success + failure, exec ID)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=12;fillColor=#C62828;strokeColor=#8E1B1B;fontColor=#FFFFFF;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="785" y="140" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="dash" value="Run Dashboard&#10;files transferred + status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCE6F1;strokeColor=#1F4E79" vertex="1" parent="1">
+          <mxGeometry x="800" y="250" width="120" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="plat" value="Platform-level alerting&#10;• PROCESS.EXECUTION alerts (Log Level = ERROR)&#10;• USER.NOTIFICATION alerts for non-terminating warnings&#10;• Alert email links to the execution ID for fast triage&#10;• Fires only if the interface opted in" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#B26A00;fontColor=#7A4A00;align=left;spacingLeft=8;verticalAlign=top;fontSize=10" vertex="1" parent="1">
+          <mxGeometry x="960" y="115" width="250" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="optB" value="Option B (alternate) — Boomi native Managed File Transfer, powered by Thru" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0AAB52;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=13;arcSize=6;verticalAlign=middle" vertex="1" parent="1">
+          <mxGeometry x="190" y="420" width="1020" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="optBBody" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2FBF6;strokeColor=#0AAB52" vertex="1" parent="1">
+          <mxGeometry x="190" y="454" width="1020" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="mgmt" value="Management Channel&#10;• Flow definitions&#10;• Partner/endpoint credentials&#10;• Tracking, audit, proof of delivery&#10;• Native alerts on failed transfers&#10;• Partner self-service portal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="215" y="475" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="dataChan" value="Data Channel&#10;• Actual file payload transfer&#10;• Persistent storage until delivered&#10;• Auto-resume, guaranteed delivery&#10;• Encrypted at rest, in transit,&#10;  and at the file level" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="495" y="475" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="mftConn" value="Boomi ↔ MFT Connector&#10;Get — pickup a file from a Flow&#10;Create — drop off a file to a Flow&#10;Create (type=Exception) — push&#10;error/exception info back into&#10;MFT's own tracking &amp; audit trail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="775" y="475" width="260" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="footnote" value="This catalogue's P-116 pattern and the Intelligrator Generic MFT Engine use Option A. Option B is a separate licensed product, evaluated where partners need self-service endpoint management." style="text;html=1;fontSize=10;fontColor=#8a94a0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="190" y="650" width="1020" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4a5568;" edge="1" parent="1" source="trigger" target="src"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;" edge="1" parent="1" source="src" target="xform"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;" edge="1" parent="1" source="xform" target="dst"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;" edge="1" parent="1" source="dst" target="post"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;dashed=1;" edge="1" parent="1" source="src" target="notify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;dashed=1;" edge="1" parent="1" source="dst" target="notify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;" edge="1" parent="1" source="notify" target="mail"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;" edge="1" parent="1" source="mail" target="recip"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="writes run record" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4a5568;fontSize=9" edge="1" parent="1" source="post" target="runs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="failure also logged" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#C62828;dashed=1;fontSize=9" edge="1" parent="1" source="mail" target="runs"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#4a5568;" edge="1" parent="1" source="runs" target="dash"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="calls MFT connector instead of a direct SFTP hop" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;dashed=1;fontSize=9" edge="1" parent="1" source="atom" target="optBBody"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;" edge="1" parent="1" source="mgmt" target="dataChan"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;" edge="1" parent="1" source="dataChan" target="mftConn"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

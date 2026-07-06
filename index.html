@@ -81,6 +81,7 @@
   <span class="lbl">Downloads</span>
   <a class="dl-btn dl-word" href="assets/intelligrator-mft-product-specification.docx" download>⬇ Word — Product Specification</a>
   <a class="dl-btn dl-drawio" href="assets/intelligrator-architecture.drawio" download>⬇ draw.io — Architecture Diagram</a>
+  <a class="dl-btn dl-drawio" href="assets/boomi-mft-mechanism.drawio" download>⬇ draw.io — How Boomi Achieves MFT</a>
   <a class="dl-btn dl-zip" href="assets/docs.zip" download>⬇ All documents (zip)</a>
 </div>
 
@@ -93,6 +94,7 @@
 <nav id="toc">
   <a href="#howto">How to use this page</a>
   <a href="#overview">1. Product overview</a>
+  <a href="#howmft">1b. How Boomi achieves MFT</a>
   <a href="#personas">2. Personas &amp; roles</a>
   <a href="#workflow">3. End-to-end workflow</a>
   <a href="#personaflow">3b. Persona-based flow (dev build spec)</a>
@@ -119,6 +121,7 @@
     <li><strong>Left navigation:</strong> jumps to each section; the active section is highlighted as you scroll.</li>
     <li><strong>User stories (§5):</strong> written in standard <em>As-a / I-want / So-that</em> format with Given-When-Then acceptance criteria — ready to paste into Jira/ADO. Priorities use MoSCoW badges.</li>
     <li><strong>Persona-based flow (§3b):</strong> screen-by-screen build spec per persona — UI elements, user actions, and the exact integration call each triggers — for the team building the screens, flow, and MFT integration.</li>
+    <li><strong>How Boomi achieves MFT (§1b):</strong> the technical mechanism — Try/Catch, connectors, and error notification — behind every interface this product provisions.</li>
     <li><strong>Design authority sections (§6–§8):</strong> the recommended build approach (template + configuration-driven) and the patterns that justify it. This aligns with the P-116 MFT pattern in the wider integration catalogue.</li>
     <li><strong>Live diagram viewer (§6b):</strong> every <code>.drawio</code> file in the repo renders inline, panable and zoomable, with no download required.</li>
   </ul>
@@ -138,6 +141,43 @@
     <div class="card"><h4>Out of scope (v1)</h4>
     <ul><li>Event-triggered (file-arrival) transfers — v1 is scheduled only</li><li>In-flight transformation/mapping (pass-through file movement only)</li><li>Auto-promotion beyond Dev (Test/Prod promotion stays governed)</li></ul></div>
   </div>
+</section>
+
+<section id="howmft">
+  <h2>1b. How Boomi achieves MFT — technical mechanism &amp; error notification</h2>
+  <p class="lead">Boomi supports two distinct ways to move files under management. This catalogue and the Intelligrator Generic MFT Engine (§7–§8) use <strong>Option A</strong>. <strong>Option B</strong>, Boomi's own native Managed File Transfer product, is documented here for completeness and as a deliberate future evaluation, not something in scope today.</p>
+
+  <img src="assets/boomi-mft-mechanism.svg" alt="How Boomi achieves MFT — technical mechanism and error notification" style="width:100%;max-width:1180px;border:1px solid var(--border);border-radius:10px;background:#fff;margin:14px 0" />
+
+  <h3>Option A — Boomi Integration process-based transfer (used by this catalogue)</h3>
+  <ol>
+    <li>A <strong>Scheduled Start shape</strong> triggers a deployed process on the Atom at the interface's configured cron.</li>
+    <li>A <strong>source connector</strong> operation (Disk, SFTP, FTPS, or AS2 — Get/List) retrieves matching files from the source folder.</li>
+    <li>Optional <strong>validation/transform</strong> steps check the file profile, compute a checksum, and set tracked document properties.</li>
+    <li>A <strong>destination connector</strong> operation (Send/Put) delivers the file to the target folder.</li>
+    <li>A <strong>post-action</strong> step archives, deletes, or renames the source file per the interface's configuration.</li>
+    <li>Every execution — success or failure — is automatically visible in <strong>Process Reporting</strong>, keyed by execution ID.</li>
+  </ol>
+
+  <h3>Error handling &amp; notification (this is the mechanism behind F3.3 / US-207's notification opt-in)</h3>
+  <ul>
+    <li>Connector steps are wrapped in a <strong>Try/Catch shape</strong> with a configurable retry count (0–5). The failed document and its <code>Try/Catch Message</code> property are carried down the Catch path — the original document isn't lost.</li>
+    <li>The Catch path feeds a <strong>Message/Notify step</strong> that assembles a structured error (interface name, file name, failing step, error text, execution ID).</li>
+    <li>A <strong>Mail connector</strong> (or webhook, for Slack/Teams-style alerts) sends that error to the recipients captured at request time — this only fires when the interface's notification preference is <em>opted in</em>.</li>
+    <li>Critical failures can additionally raise an <strong>Exception shape</strong> to deliberately halt execution with a custom message, rather than letting a partial transfer continue silently.</li>
+    <li>Account/environment-level <strong>PROCESS.EXECUTION</strong> alerts (Log Level = ERROR) and <strong>USER.NOTIFICATION</strong> alerts (for non-terminating business warnings raised via Notify) provide a second, platform-wide safety net independent of any one process's own Mail connector.</li>
+    <li>Alert emails commonly embed a direct link to the execution in Process Reporting (<code>...searchType=executions;executionId={execId}</code>), so the platform team can jump straight to the failing run.</li>
+  </ul>
+
+  <h3>Option B — Boomi native Managed File Transfer (Boomi MFT, powered by Thru)</h3>
+  <p>A separate, licensed managed service rather than a hand-built process. It splits responsibilities into two channels:</p>
+  <table>
+    <tr><th>Channel</th><th>Responsibility</th></tr>
+    <tr><td><strong>Management Channel</strong></td><td>Flow definitions, partner/endpoint credentials, tracking, audit, and proof of delivery — all run in Boomi's cloud, with native alerts on failed transfers and a partner self-service portal for endpoint management.</td></tr>
+    <tr><td><strong>Data Channel</strong></td><td>The actual file payload transfer between Boomi, Thru, and external endpoints — with persistent storage until delivered, automatic retry, auto-resume, and guaranteed delivery even across network interruption. Files are encrypted at rest, in transit, and at the file level.</td></tr>
+  </table>
+  <p>A Boomi Integration process talks to it through the <strong>Managed File Transfer connector</strong>: a <code>Get</code> operation picks up a file from a Flow, a <code>Create</code> operation drops one off, and a <code>Create</code> with <code>Type=Exception</code> pushes error/exception context back into MFT's own tracking and audit trail — so failures are visible in MFT's dashboards even independent of the calling process.</p>
+  <div class="callout">Option B is worth a deliberate evaluation specifically where external trading partners need to self-manage their own endpoints, or where transfer volumes and regulatory requirements exceed what a hand-built Try/Catch chain comfortably manages. It carries its own licensing and isn't a default — this catalogue's P-116 pattern and Intelligrator's Generic MFT Engine deliberately use Option A, keeping full control over the config-driven, approval-gated model already designed in §7.</div>
 </section>
 
 <section id="personas">
@@ -418,6 +458,12 @@
 <section id="livediagrams">
   <h2>6b. Live diagram viewer — no download needed</h2>
   <p class="lead">Every <code>.drawio</code> file in this repo can be browsed, panned, and zoomed directly in the browser below, rendered live from the file hosted on this GitHub Pages site via diagrams.net's public viewer. Nothing downloads to view them — the download buttons at the top of the page remain there only for taking an editable copy away with you.</p>
+
+  <div class="dgm-card">
+    <div class="dgm-head"><span>How Boomi Achieves MFT (mechanism &amp; error notification)</span><a href="assets/boomi-mft-mechanism.drawio" download>⬇ download source</a></div>
+    <iframe title="How Boomi Achieves MFT" loading="lazy"
+      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=boomi-mft-mechanism.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-mechanism.drawio"></iframe>
+  </div>
 
   <div class="dgm-card">
     <div class="dgm-head"><span>Intelligrator Architecture</span><a href="assets/intelligrator-architecture.drawio" download>⬇ download source</a></div>
