@@ -50,6 +50,12 @@
   tr:nth-child(even) td{background:var(--panel)}
   .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0}
   .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .dgm-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0}
+  .dgm-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--panel2);border-bottom:1px solid var(--border)}
+  .dgm-head span{font-weight:700;color:var(--teal);font-size:.9rem}
+  .dgm-head a{font-size:.78rem;color:var(--accent);text-decoration:none}
+  .dgm-head a:hover{text-decoration:underline}
+  .dgm-card iframe{width:100%;height:520px;border:0;display:block;background:#fff}
   .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em}
   .b-must{background:#1f3d2b;color:var(--green)} .b-should{background:#3d3520;color:var(--amber)}
   .b-could{background:#2a2440;color:var(--purple)} .b-epic{background:#0f2e4d;color:var(--accent)}
@@ -92,6 +98,7 @@
   <a href="#features">4. Feature catalogue</a>
   <a href="#stories">5. User stories</a>
   <a href="#architecture">6. Solution architecture</a>
+  <a href="#livediagrams">6b. Live diagram viewer</a>
   <a href="#provisioning">7. Automated Boomi build</a>
   <a href="#patterns">8. Design patterns</a>
   <a href="#datamodel">9. Data model &amp; states</a>
@@ -111,6 +118,7 @@
     <li><strong>Left navigation:</strong> jumps to each section; the active section is highlighted as you scroll.</li>
     <li><strong>User stories (§5):</strong> written in standard <em>As-a / I-want / So-that</em> format with Given-When-Then acceptance criteria — ready to paste into Jira/ADO. Priorities use MoSCoW badges.</li>
     <li><strong>Design authority sections (§6–§8):</strong> the recommended build approach (template + configuration-driven) and the patterns that justify it. This aligns with the P-116 MFT pattern in the wider integration catalogue.</li>
+    <li><strong>Live diagram viewer (§6b):</strong> every <code>.drawio</code> file in the repo renders inline, panable and zoomable, with no download required.</li>
   </ul>
 </section>
 
@@ -329,6 +337,31 @@
     <tr><td>Interface config store</td><td>Database table (one row per interface) with TTL-free durable config</td><td>DB-backed config works across clustered Atoms; node-local Cache shape is unsuitable in HA deployments.</td></tr>
     <tr><td>Secrets</td><td>Dedicated vault + Boomi environment extensions written via Platform API</td><td>Credentials never rest in the Intelligrator DB; rotation is possible without touching interface config.</td></tr>
   </table>
+</section>
+
+<section id="livediagrams">
+  <h2>6b. Live diagram viewer — no download needed</h2>
+  <p class="lead">Every <code>.drawio</code> file in this repo can be browsed, panned, and zoomed directly in the browser below, rendered live from the file hosted on this GitHub Pages site via diagrams.net's public viewer. Nothing downloads to view them — the download buttons at the top of the page remain there only for taking an editable copy away with you.</p>
+
+  <div class="dgm-card">
+    <div class="dgm-head"><span>Intelligrator Architecture</span><a href="assets/intelligrator-architecture.drawio" download>⬇ download source</a></div>
+    <iframe title="Intelligrator Architecture" loading="lazy"
+      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=intelligrator-architecture.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/intelligrator-architecture.drawio"></iframe>
+  </div>
+
+  <div class="dgm-card">
+    <div class="dgm-head"><span>Target Reference Architecture</span><a href="assets/target-reference-architecture.drawio" download>⬇ download source</a></div>
+    <iframe title="Target Reference Architecture" loading="lazy"
+      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=target-reference-architecture.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/target-reference-architecture.drawio"></iframe>
+  </div>
+
+  <div class="dgm-card">
+    <div class="dgm-head"><span>Pattern Selection Decision Tree</span><a href="assets/pattern-selection-decision-tree.drawio" download>⬇ download source</a></div>
+    <iframe title="Pattern Selection Decision Tree" loading="lazy"
+      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=pattern-selection-decision-tree.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/pattern-selection-decision-tree.drawio"></iframe>
+  </div>
+
+  <div class="callout">If a diagram above shows blank, the page was likely just deployed and GitHub Pages' CDN hasn't finished serving the new asset yet (usually resolves within a minute or two) — a hard refresh (Ctrl/Cmd+Shift+R) will pick up the latest version.</div>
 </section>
 
 <section id="provisioning">
