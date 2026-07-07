@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 860" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#0A6B36"/></marker>
+    <marker id="arB" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#1F4E79"/></marker>
+  </defs>
+  <rect width="1180" height="860" fill="#ffffff"/>
+  <text x="590" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#1F4E79">Boomi Managed File Transfer (Native) — Internal Architecture</text>
+  <text x="590" y="47" text-anchor="middle" font-size="12" fill="#595959">The postal-service model: Organizations subscribe to Flows that move files between Endpoints</text>
+
+  <!-- Postal model band -->
+  <rect x="30" y="70" width="1120" height="140" rx="10" fill="#F2FBF6" stroke="#0AAB52" stroke-width="1.3"/>
+  <text x="590" y="90" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0A6B36">Core model</text>
+
+  <rect x="55" y="105" width="220" height="90" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="165" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#0A6B36">Organizations</text>
+  <text x="165" y="145" text-anchor="middle" font-size="9.5" fill="#12291d">Each internal team or external</text>
+  <text x="165" y="158" text-anchor="middle" font-size="9.5" fill="#12291d">trading partner — with its own</text>
+  <text x="165" y="171" text-anchor="middle" font-size="9.5" fill="#12291d">credentials &amp; contacts</text>
+  <text x="165" y="188" text-anchor="middle" font-size="9" fill="#0A6B36" font-weight="600">subscribes to →</text>
+
+  <rect x="315" y="105" width="220" height="90" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="425" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#0A6B36">Flows</text>
+  <text x="425" y="145" text-anchor="middle" font-size="9.5" fill="#12291d">Reusable workflow definitions —</text>
+  <text x="425" y="158" text-anchor="middle" font-size="9.5" fill="#12291d">many-to-many routing, renaming,</text>
+  <text x="425" y="171" text-anchor="middle" font-size="9.5" fill="#12291d">encryption, compression</text>
+  <text x="425" y="188" text-anchor="middle" font-size="9" fill="#0A6B36" font-weight="600">moves files between →</text>
+
+  <rect x="575" y="105" width="220" height="90" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="685" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#0A6B36">Endpoints</text>
+  <text x="685" y="145" text-anchor="middle" font-size="9.5" fill="#12291d">Source/target locations — SFTP,</text>
+  <text x="685" y="158" text-anchor="middle" font-size="9.5" fill="#12291d">AS2, HTTPS, disk, or a Boomi</text>
+  <text x="685" y="171" text-anchor="middle" font-size="9.5" fill="#12291d">process itself</text>
+
+  <rect x="835" y="105" width="285" height="90" rx="8" fill="#fff" stroke="#0AAB52"/>
+  <text x="977" y="126" text-anchor="middle" font-size="12" font-weight="700" fill="#0A6B36">Pickup / Dropoff</text>
+  <text x="977" y="145" text-anchor="middle" font-size="9.5" fill="#12291d">Organizations pick up or drop off</text>
+  <text x="977" y="158" text-anchor="middle" font-size="9.5" fill="#12291d">files via the self-managed portal —</text>
+  <text x="977" y="171" text-anchor="middle" font-size="9.5" fill="#12291d">no scripts, no custom code</text>
+
+  <line x1="275" y1="150" x2="313" y2="150" stroke="#0A6B36" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <line x1="535" y1="150" x2="573" y2="150" stroke="#0A6B36" stroke-width="1.5" marker-end="url(#ar2)"/>
+  <line x1="795" y1="150" x2="833" y2="150" stroke="#0A6B36" stroke-width="1.5" marker-end="url(#ar2)"/>
+
+  <!-- Two applications -->
+  <rect x="30" y="230" width="545" height="110" rx="10" fill="#F5F9FF" stroke="#1F4E79" stroke-width="1.3"/>
+  <text x="302" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F4E79">Automated File Transfer (AFT)</text>
+  <text x="50" y="270" font-size="9.5" fill="#213a55">• System-to-system, scheduled, high-volume transfers</text>
+  <text x="50" y="286" font-size="9.5" fill="#213a55">• What this catalogue's MFT interfaces would use</text>
+  <text x="50" y="302" font-size="9.5" fill="#213a55">• Driven via the Boomi MFT connector or the AFT APIs</text>
+  <text x="50" y="318" font-size="9.5" fill="#213a55">• Suitable from basic pickups to advanced workflows</text>
+
+  <rect x="605" y="230" width="545" height="110" rx="10" fill="#F5F9FF" stroke="#1F4E79" stroke-width="1.3"/>
+  <text x="877" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F4E79">File Sharing (FS)</text>
+  <text x="625" y="270" font-size="9.5" fill="#213a55">• Organization-wide human collaboration &amp; sharing</text>
+  <text x="625" y="286" font-size="9.5" fill="#213a55">• Internal and external users, not just systems</text>
+  <text x="625" y="302" font-size="9.5" fill="#213a55">• Own admin guide, user guide, and API set</text>
+  <text x="625" y="318" font-size="9.5" fill="#213a55">• Not the focus for scheduled MFT interfaces</text>
+
+  <!-- Channels -->
+  <rect x="30" y="370" width="1120" height="130" rx="10" fill="#FFF8E1" stroke="#B26A00" stroke-width="1.3"/>
+  <text x="590" y="390" text-anchor="middle" font-size="12.5" font-weight="700" fill="#7A4A00">Two channels underpin every Flow</text>
+  <rect x="55" y="405" width="530" height="80" rx="8" fill="#fff" stroke="#B26A00"/>
+  <text x="320" y="424" text-anchor="middle" font-size="11.5" font-weight="700" fill="#7A4A00">Management Channel</text>
+  <text x="70" y="442" font-size="9.5" fill="#4a3200">Flow &amp; endpoint definitions, credentials, tracking,</text>
+  <text x="70" y="457" font-size="9.5" fill="#4a3200">audit trail, proof of delivery, partner self-service portal</text>
+  <text x="70" y="472" font-size="9.5" fill="#4a3200">— all runs in Boomi's cloud</text>
+
+  <rect x="605" y="405" width="530" height="80" rx="8" fill="#fff" stroke="#B26A00"/>
+  <text x="870" y="424" text-anchor="middle" font-size="11.5" font-weight="700" fill="#7A4A00">Data Channel</text>
+  <text x="620" y="442" font-size="9.5" fill="#4a3200">The actual file payload — persistent storage until</text>
+  <text x="620" y="457" font-size="9.5" fill="#4a3200">delivered, auto-resume, guaranteed delivery; encrypted</text>
+  <text x="620" y="472" font-size="9.5" fill="#4a3200">at rest, in transit, and at the file level</text>
+
+  <text x="590" y="512" text-anchor="middle" font-size="9.5" fill="#8a94a0">Distributed hybrid option: control plane stays in Boomi's cloud while large internal transfers can stay on the customer's own network</text>
+
+  <!-- Connector -->
+  <rect x="30" y="535" width="545" height="150" rx="10" fill="#F5F9FF" stroke="#1F4E79" stroke-width="1.3"/>
+  <text x="302" y="555" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F4E79">Boomi ↔ MFT Connector</text>
+  <text x="50" y="578" font-size="9.5" fill="#213a55">Connection: API URL, SiteURL, SiteKey</text>
+  <text x="50" y="596" font-size="9.5" fill="#213a55">Operation: Flow Secret (or set via Set Properties step)</text>
+  <text x="50" y="618" font-size="10" font-weight="700" fill="#1F4E79">GET — pickup a file from a Flow</text>
+  <text x="50" y="636" font-size="10" font-weight="700" fill="#1F4E79">CREATE — drop off a file to a Flow</text>
+  <text x="50" y="654" font-size="10" font-weight="700" fill="#1F4E79">CREATE (Type=Exception) — push error</text>
+  <text x="66" y="669" font-size="10" font-weight="700" fill="#1F4E79">context back into MFT's own audit trail</text>
+
+  <!-- Monitoring/alerts -->
+  <rect x="605" y="535" width="545" height="150" rx="10" fill="#FDECEC" stroke="#C62828" stroke-width="1.3"/>
+  <text x="877" y="555" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8E1B1B">Monitoring, Alerts &amp; Error Notification</text>
+  <text x="625" y="578" font-size="9.5" fill="#5c1414">"Single pane of glass" Activity Page across all Organizations</text>
+  <text x="625" y="595" font-size="9.5" fill="#5c1414">Real-time alerts on failed/stalled transfers, independent of</text>
+  <text x="625" y="609" font-size="9.5" fill="#5c1414">the calling Boomi process</text>
+  <text x="625" y="628" font-size="9.5" fill="#5c1414">Each alert links directly to the related Organization,</text>
+  <text x="625" y="642" font-size="9.5" fill="#5c1414">Endpoint, or Flow for fast investigation</text>
+  <text x="625" y="661" font-size="9.5" fill="#5c1414">Alerts can be Acknowledged or Cleared once triaged,</text>
+  <text x="625" y="675" font-size="9.5" fill="#5c1414">keeping the activity feed actionable</text>
+
+  <line x1="575" y1="610" x2="603" y2="610" stroke="#8E1B1B" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arB)"/>
+
+  <!-- Security & scale -->
+  <rect x="30" y="705" width="1120" height="120" rx="10" fill="#F2FBF6" stroke="#0AAB52" stroke-width="1.3"/>
+  <text x="590" y="725" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0A6B36">Security, compliance &amp; scale</text>
+  <text x="50" y="748" font-size="9.5" fill="#12291d">• Encryption at rest, in transit, and at the file level; zero-trust architecture</text>
+  <text x="50" y="765" font-size="9.5" fill="#12291d">• Multi-factor authentication and least-privilege, role-based access controls</text>
+  <text x="50" y="782" font-size="9.5" fill="#12291d">• Full audit logging with proof of delivery, aligned to SOC 2 and similar frameworks</text>
+  <text x="620" y="748" font-size="9.5" fill="#12291d">• Distributed, cloud-native microservices — capacity scales automatically</text>
+  <text x="620" y="765" font-size="9.5" fill="#12291d">• Processes millions of files per day; no size limit on individual transfers</text>
+  <text x="620" y="782" font-size="9.5" fill="#12291d">• Every GUI function has an equivalent API — full programmatic control</text>
+
+  <text x="590" y="848" text-anchor="middle" font-size="10" fill="#8a94a0">Licensing: usage-based pricing, full feature/API parity at every tier, purchased as an add-on via your Boomi Account Executive.</text>
+</svg>

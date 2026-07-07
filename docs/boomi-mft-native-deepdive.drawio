@@ -1,0 +1,77 @@
+<mxfile host="app.diagrams.net" modified="2026-07-07T14:00:00.000Z" agent="Intelligrator" version="24.0.0">
+  <diagram id="boomi-mft-native-deepdive" name="Boomi MFT Native Deep Dive">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1250" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Boomi Managed File Transfer (Native) — Internal Architecture" style="text;html=1;fontSize=17;fontStyle=1;fontColor=#1F4E79;align=center;" vertex="1" parent="1">
+          <mxGeometry x="120" y="10" width="1000" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="modelBox" value="Core model — Organizations subscribe to Flows that move files between Endpoints" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2FBF6;strokeColor=#0AAB52;verticalAlign=top;fontStyle=1;fontColor=#0A6B36;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="30" y="55" width="1180" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="orgs" value="Organizations&#10;Each internal team or external&#10;trading partner — own&#10;credentials &amp; contacts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36" vertex="1" parent="1">
+          <mxGeometry x="55" y="90" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="flows" value="Flows&#10;Reusable workflow definitions —&#10;many-to-many routing, renaming,&#10;encryption, compression" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36" vertex="1" parent="1">
+          <mxGeometry x="335" y="90" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="endpoints" value="Endpoints&#10;Source/target locations — SFTP,&#10;AS2, HTTPS, disk, or a Boomi&#10;process itself" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36" vertex="1" parent="1">
+          <mxGeometry x="615" y="90" width="240" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pickup" value="Pickup / Dropoff&#10;Organizations pick up or drop off&#10;files via the self-managed portal —&#10;no scripts, no custom code" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#0AAB52;fontColor=#0A6B36" vertex="1" parent="1">
+          <mxGeometry x="895" y="90" width="290" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="aft" value="Automated File Transfer (AFT)&#10;• System-to-system, scheduled, high-volume transfers&#10;• What this catalogue's MFT interfaces would use&#10;• Driven via the Boomi MFT connector or the AFT APIs&#10;• Suitable from basic pickups to advanced workflows" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F9FF;strokeColor=#1F4E79;fontColor=#1F4E79;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="30" y="225" width="575" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="fs" value="File Sharing (FS)&#10;• Organization-wide human collaboration &amp; sharing&#10;• Internal and external users, not just systems&#10;• Own admin guide, user guide, and API set&#10;• Not the focus for scheduled MFT interfaces" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F9FF;strokeColor=#1F4E79;fontColor=#1F4E79;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="625" y="225" width="575" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="channelsBox" value="Two channels underpin every Flow" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#B26A00;verticalAlign=top;fontStyle=1;fontColor=#7A4A00;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="30" y="360" width="1180" height="145" as="geometry" />
+        </mxCell>
+        <mxCell id="mgmtChan" value="Management Channel&#10;Flow &amp; endpoint definitions, credentials, tracking, audit&#10;trail, proof of delivery, partner self-service portal —&#10;all runs in Boomi's cloud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B26A00;fontColor=#4a3200;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="55" y="395" width="560" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="dataChan2" value="Data Channel&#10;The actual file payload — persistent storage until&#10;delivered, auto-resume, guaranteed delivery; encrypted at&#10;rest, in transit, and at the file level" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#B26A00;fontColor=#4a3200;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="635" y="395" width="560" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="hybridNote" value="Distributed hybrid option: control plane stays in Boomi's cloud while large internal transfers can stay on the customer's own network" style="text;html=1;fontSize=9.5;fontColor=#8a94a0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="30" y="500" width="1180" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="connBox" value="Boomi ↔ MFT Connector&#10;Connection: API URL, SiteURL, SiteKey&#10;Operation: Flow Secret (or Set Properties step)&#10;&#10;GET — pickup a file from a Flow&#10;CREATE — drop off a file to a Flow&#10;CREATE (Type=Exception) — push error context&#10;back into MFT's own audit trail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F9FF;strokeColor=#1F4E79;fontColor=#1F4E79;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="30" y="530" width="575" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="alertBox" value="Monitoring, Alerts &amp; Error Notification&#10;'Single pane of glass' Activity Page across all Organizations&#10;Real-time alerts on failed/stalled transfers, independent of&#10;the calling Boomi process&#10;Each alert links directly to the related Organization,&#10;Endpoint, or Flow for fast investigation&#10;Alerts can be Acknowledged or Cleared once triaged,&#10;keeping the activity feed actionable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDECEC;strokeColor=#C62828;fontColor=#5c1414;align=left;spacingLeft=8;verticalAlign=top;fontSize=10.5" vertex="1" parent="1">
+          <mxGeometry x="625" y="530" width="575" height="170" as="geometry" />
+        </mxCell>
+
+        <mxCell id="secBox" value="Security, compliance &amp; scale" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F2FBF6;strokeColor=#0AAB52;verticalAlign=top;fontStyle=1;fontColor=#0A6B36;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="30" y="720" width="1180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="secLeft" value="• Encryption at rest, in transit, and at the file level; zero-trust architecture&#10;• Multi-factor authentication and least-privilege, role-based access controls&#10;• Full audit logging with proof of delivery, aligned to SOC 2 and similar frameworks" style="text;html=1;fontSize=10;fontColor=#12291d;align=left;spacingLeft=8;verticalAlign=top" vertex="1" parent="1">
+          <mxGeometry x="55" y="750" width="560" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="secRight" value="• Distributed, cloud-native microservices — capacity scales automatically&#10;• Processes millions of files per day; no size limit on individual transfers&#10;• Every GUI function has an equivalent API — full programmatic control" style="text;html=1;fontSize=10;fontColor=#12291d;align=left;spacingLeft=8;verticalAlign=top" vertex="1" parent="1">
+          <mxGeometry x="635" y="750" width="560" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="footnote2" value="Licensing: usage-based pricing, full feature/API parity at every tier, purchased as an add-on via your Boomi Account Executive." style="text;html=1;fontSize=10;fontColor=#8a94a0;align=center;" vertex="1" parent="1">
+          <mxGeometry x="30" y="860" width="1180" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;" edge="1" parent="1" source="orgs" target="flows"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;" edge="1" parent="1" source="flows" target="endpoints"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#0A6B36;" edge="1" parent="1" source="endpoints" target="pickup"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#8E1B1B;dashed=1;" edge="1" parent="1" source="connBox" target="alertBox"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

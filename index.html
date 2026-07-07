@@ -82,6 +82,7 @@
   <a class="dl-btn dl-word" href="assets/intelligrator-mft-product-specification.docx" download>⬇ Word — Product Specification</a>
   <a class="dl-btn dl-drawio" href="assets/intelligrator-architecture.drawio" download>⬇ draw.io — Architecture Diagram</a>
   <a class="dl-btn dl-drawio" href="assets/boomi-mft-mechanism.drawio" download>⬇ draw.io — How Boomi Achieves MFT</a>
+  <a class="dl-btn dl-drawio" href="assets/boomi-mft-native-deepdive.drawio" download>⬇ draw.io — Boomi MFT (Native) Deep Dive</a>
   <a class="dl-btn dl-zip" href="assets/docs.zip" download>⬇ All documents (zip)</a>
 </div>
 
@@ -95,6 +96,7 @@
   <a href="#howto">How to use this page</a>
   <a href="#overview">1. Product overview</a>
   <a href="#howmft">1b. How Boomi achieves MFT</a>
+  <a href="#nativemft">1c. Boomi MFT (native) — deep dive</a>
   <a href="#personas">2. Personas &amp; roles</a>
   <a href="#workflow">3. End-to-end workflow</a>
   <a href="#personaflow">3b. Persona-based flow (dev build spec)</a>
@@ -122,6 +124,7 @@
     <li><strong>User stories (§5):</strong> written in standard <em>As-a / I-want / So-that</em> format with Given-When-Then acceptance criteria — ready to paste into Jira/ADO. Priorities use MoSCoW badges.</li>
     <li><strong>Persona-based flow (§3b):</strong> screen-by-screen build spec per persona — UI elements, user actions, and the exact integration call each triggers — for the team building the screens, flow, and MFT integration.</li>
     <li><strong>How Boomi achieves MFT (§1b):</strong> the technical mechanism — Try/Catch, connectors, and error notification — behind every interface this product provisions.</li>
+    <li><strong>Boomi MFT (native) deep dive (§1c):</strong> the full technical treatment of Boomi's own Managed File Transfer product — model, architecture, connector, and native alerting.</li>
     <li><strong>Design authority sections (§6–§8):</strong> the recommended build approach (template + configuration-driven) and the patterns that justify it. This aligns with the P-116 MFT pattern in the wider integration catalogue.</li>
     <li><strong>Live diagram viewer (§6b):</strong> every <code>.drawio</code> file in the repo renders inline, panable and zoomable, with no download required.</li>
   </ul>
@@ -179,6 +182,70 @@
   </table>
   <p>A Boomi Integration process talks to it through the <strong>Managed File Transfer connector</strong>: a <code>Get</code> operation picks up a file from a Flow, a <code>Create</code> operation drops one off, and a <code>Create</code> with <code>Type=Exception</code> pushes error/exception context back into MFT's own tracking and audit trail — so failures are visible in MFT's dashboards even independent of the calling process.</p>
   <div class="callout">Option B is worth a deliberate evaluation specifically where external trading partners need to self-manage their own endpoints, or where transfer volumes and regulatory requirements exceed what a hand-built Try/Catch chain comfortably manages. It carries its own licensing and isn't a default — this catalogue's P-116 pattern and Intelligrator's Generic MFT Engine deliberately use Option A, keeping full control over the config-driven, approval-gated model already designed in §7.</div>
+</section>
+
+<section id="nativemft">
+  <h2>1c. Boomi Managed File Transfer (native) — deep dive</h2>
+  <p class="lead">A full technical treatment of Option B on its own terms: the model it's built on, its two applications, its architecture, how a Boomi process talks to it, and how it monitors and alerts on failure.</p>
+
+  <img src="assets/boomi-mft-native-deepdive.svg" alt="Boomi Managed File Transfer native architecture — Organizations, Flows, Endpoints, channels, connector, and alerting" style="width:100%;max-width:1180px;border:1px solid var(--border);border-radius:10px;background:#fff;margin:14px 0" />
+
+  <h3>The core model — a postal service for files</h3>
+  <p>Boomi MFT organises everything around three concepts:</p>
+  <table>
+    <tr><th>Concept</th><th>What it is</th></tr>
+    <tr><td><strong>Organizations</strong></td><td>Every internal team or external trading partner participating in file exchange is represented as an Organization, with its own credentials, identifiers, and contacts — configured once, reused across every Flow it participates in.</td></tr>
+    <tr><td><strong>Flows</strong></td><td>Reusable workflow definitions that move files between endpoints. A single Flow can handle many-to-many endpoint routing, renaming, encryption, and compression. Organizations simply <em>subscribe</em> to a Flow to join it — no per-partner scripting.</td></tr>
+    <tr><td><strong>Endpoints</strong></td><td>The source or target locations for a transfer — an SFTP server, an AS2 endpoint, an HTTPS location, or a Boomi process itself.</td></tr>
+  </table>
+  <p>Participants <strong>pick up</strong> or <strong>drop off</strong> files against a Flow via a self-managed portal — the same pattern as a postal service, rather than either party needing to know the other's infrastructure details.</p>
+
+  <h3>Two applications, two different jobs</h3>
+  <table>
+    <tr><th>Application</th><th>Purpose</th><th>Relevance to this catalogue</th></tr>
+    <tr><td><strong>Automated File Transfer (AFT)</strong></td><td>System-to-system, scheduled, high-volume file transfer — from basic pickups to advanced multi-step workflows.</td><td><strong>This is the one that matters for MFT interfaces.</strong> AFT is driven from Boomi Integration via the MFT connector, or directly via the AFT APIs.</td></tr>
+    <tr><td><strong>File Sharing (FS)</strong></td><td>Organization-wide sharing designed for human collaboration, internal and external, with its own user guide, admin guide, and API set.</td><td>Not the focus here — FS is for people sharing files with people, not for scheduled system interfaces.</td></tr>
+  </table>
+
+  <h3>Architecture — two channels behind every Flow</h3>
+  <table>
+    <tr><th>Channel</th><th>Detail</th></tr>
+    <tr><td><strong>Management Channel</strong></td><td>Flow and endpoint definitions, partner credentials, tracking, audit trail, and proof of delivery — runs entirely in Boomi's cloud, with a partner self-service onboarding portal (subscribe to a Flow, add endpoints, manage credentials — no deployments needed).</td></tr>
+    <tr><td><strong>Data Channel</strong></td><td>The actual file payload transfer. Files are securely stored until delivered — with retry, auto-resume, and guaranteed delivery even across a network interruption. Encryption applies at rest, in transit, <em>and</em> at the file level.</td></tr>
+  </table>
+  <p>A <strong>distributed hybrid architecture</strong> option keeps the control plane in Boomi's cloud while letting large internal file transfers stay on the customer's own network — useful where data residency or network policy is a concern even though governance stays centralised.</p>
+
+  <h3>How a Boomi Integration process talks to it — the MFT connector</h3>
+  <ul>
+    <li><strong>Connection</strong> component: API URL, SiteURL, and SiteKey identify and authenticate to your MFT instance.</li>
+    <li><strong>Operation</strong> component: defines the Flow Secret to target (or leaves it blank and sets it dynamically via a Set Properties step, so one reusable operation can serve many Flows).</li>
+    <li><strong><code>GET</code></strong> — an inbound action that picks up a file from a Flow, returning the file in binary with its Filename and File Code as document properties.</li>
+    <li><strong><code>CREATE</code></strong> — an outbound action that drops a file off into a Flow, uploaded in chunks with no size limit.</li>
+    <li><strong><code>CREATE</code> with <code>Type=Exception</code></strong> — posts aggregated exception information back into MFT against the original File Code, so a failure detected inside a Boomi process is visible in MFT's own tracking, not just in Boomi's.</li>
+  </ul>
+
+  <h3>Monitoring, alerts, and error notification (native)</h3>
+  <ul>
+    <li>A <strong>"single pane of glass" Activity Page</strong> gives real-time, end-to-end visibility across every Organization, Endpoint, and Flow — not just the ones a given Boomi process touches.</li>
+    <li><strong>Real-time alerts</strong> fire on failed or stalled transfers independent of the calling Boomi process — so a failure is visible even if the triggering process itself never runs its own error branch.</li>
+    <li>Each alert links directly to the related <strong>Organization, Endpoint, or Flow</strong> page for investigation — the native equivalent of the execution-ID deep link described for Option A in §1b.</li>
+    <li>Alerts are triaged explicitly: an admin can <strong>Acknowledge</strong> or <strong>Clear</strong> each one from the Activity Page, keeping the feed a true outstanding-issues list rather than an ever-growing log.</li>
+    <li>Because every GUI function has a matching API, these alerts and their statuses can also be pulled into an external ticketing or monitoring system rather than relying solely on the native dashboard.</li>
+  </ul>
+
+  <h3>Security, compliance, and scale</h3>
+  <div class="grid2">
+    <div class="card"><h4>Security</h4>
+      <ul><li>Encryption at rest, in transit, and at the file level</li><li>Multi-factor authentication</li><li>Least-privilege, role-based access controls</li><li>Zero-trust architecture</li></ul></div>
+    <div class="card"><h4>Compliance</h4>
+      <ul><li>Full audit logging with proof of delivery and sender authenticity</li><li>Alignment with frameworks such as SOC 2</li><li>Supports regulatory file-exchange requirements in financial services, healthcare, and the public sector</li></ul></div>
+    <div class="card"><h4>Scale</h4>
+      <ul><li>Distributed, cloud-native microservices — capacity scales automatically</li><li>Processes millions of files per day</li><li>No imposed size limit on an individual file transfer</li></ul></div>
+    <div class="card"><h4>Licensing</h4>
+      <ul><li>Usage-based pricing</li><li>Full feature and API parity regardless of tier</li><li>Purchased as an add-on to the Boomi platform via your Boomi Account Executive</li></ul></div>
+  </div>
+
+  <div class="callout good">Where this leaves the choice for this programme: AFT is the relevant application (not File Sharing), and its connector maps directly onto the same Pickup/Dropoff/Exception vocabulary this catalogue already uses in §1b's Option A. The practical trade remains licensing and control — a hand-built Try/Catch chain costs nothing extra and stays fully config-driven and approval-gated (§7); Boomi MFT costs a separate line item but removes the need to build and maintain retry, auto-resume, partner onboarding, and alerting logic by hand, and gives external trading partners true self-service.</div>
 </section>
 
 
@@ -460,6 +527,12 @@
 <section id="livediagrams">
   <h2>6b. Live diagram viewer — no download needed</h2>
   <p class="lead">Every <code>.drawio</code> file in this repo can be browsed, panned, and zoomed directly in the browser below, rendered live from the file hosted on this GitHub Pages site via diagrams.net's public viewer. Nothing downloads to view them — the download buttons at the top of the page remain there only for taking an editable copy away with you.</p>
+
+  <div class="dgm-card">
+    <div class="dgm-head"><span>Boomi MFT (Native) — Deep Dive Architecture</span><a href="assets/boomi-mft-native-deepdive.drawio" download>⬇ download source</a></div>
+    <iframe title="Boomi MFT Native Deep Dive" loading="lazy"
+      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=boomi-mft-native-deepdive.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-native-deepdive.drawio"></iframe>
+  </div>
 
   <div class="dgm-card">
     <div class="dgm-head"><span>How Boomi Achieves MFT (mechanism &amp; error notification)</span><a href="assets/boomi-mft-mechanism.drawio" download>⬇ download source</a></div>
