@@ -3,30 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MFT on Boomi — 8-Week Delivery Plan</title>
+<title>MFT on Boomi — Strategic Question Framework</title>
 <style>
-  :root{
-    --bg:#0d1117; --panel:#161b22; --panel2:#1c2129; --border:#30363d;
-    --txt:#e6edf3; --muted:#9da7b3; --accent:#58a6ff; --green:#3fb950;
-    --amber:#d29922; --red:#f85149; --purple:#bc8cff; --teal:#39c5cf;
-  }
+  :root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2129;--border:#30363d;--txt:#e6edf3;--muted:#9da7b3;--accent:#58a6ff;--green:#3fb950;--amber:#d29922;--red:#f85149;--purple:#bc8cff;--teal:#39c5cf;--gold:#e3b341}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
-  .dl-bar{position:sticky;top:0;z-index:200;width:100%;background:linear-gradient(90deg,#123c2b,#0f2e4d);
-    border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-height:45px}
+  .dl-bar{position:sticky;top:0;z-index:200;width:100%;background:linear-gradient(90deg,#123c2b,#0f2e4d);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-height:45px}
   .dl-bar span.lbl{font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:#a7f3d0}
-  .dl-btn{display:inline-block;padding:6px 14px;border-radius:6px;font-size:.85rem;font-weight:600;text-decoration:none;
-    color:#fff;border:1px solid rgba(255,255,255,.25);transition:filter .15s}
+  .dl-btn{display:inline-block;padding:6px 14px;border-radius:6px;font-size:.85rem;font-weight:600;text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.25);transition:filter .15s}
   .dl-btn:hover{filter:brightness(1.25)}
-  .dl-word{background:#2b579a}.dl-excel{background:#217346}.dl-drawio{background:#d95f02}.dl-zip{background:#444c56}
-  header{position:sticky;top:45px;z-index:100;background:rgba(13,17,23,.95);backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--border);padding:14px 24px}
+  .dl-word{background:#2b579a}.dl-drawio{background:#d95f02}.dl-zip{background:#444c56}
+  header{position:sticky;top:45px;z-index:100;background:rgba(13,17,23,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);padding:14px 24px}
   header h1{font-size:1.15rem}
   header h1 em{color:var(--accent);font-style:normal}
   header p{color:var(--muted);font-size:.85rem}
   .layout{display:flex;max-width:1400px;margin:0 auto}
-  nav{width:250px;flex-shrink:0;position:sticky;top:125px;height:calc(100vh - 125px);overflow-y:auto;
-    padding:20px 12px;border-right:1px solid var(--border)}
+  nav{width:250px;flex-shrink:0;position:sticky;top:125px;height:calc(100vh - 125px);overflow-y:auto;padding:20px 12px;border-right:1px solid var(--border)}
   nav a{display:block;color:var(--muted);text-decoration:none;font-size:.85rem;padding:6px 10px;border-radius:6px;border-left:2px solid transparent}
   nav a:hover{color:var(--txt);background:var(--panel)}
   nav a.active{color:var(--accent);border-left-color:var(--accent);background:var(--panel)}
@@ -34,7 +26,6 @@
   section{margin-bottom:56px;scroll-margin-top:140px}
   h2{font-size:1.5rem;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--accent)}
   h3{font-size:1.1rem;margin:22px 0 10px;color:var(--teal)}
-  h4{font-size:.95rem;margin:16px 0 6px;color:var(--purple)}
   p{margin-bottom:10px;color:var(--txt)}
   .lead{font-size:1.05rem;color:var(--muted)}
   ul,ol{margin:0 0 12px 22px}
@@ -53,657 +44,158 @@
   .dgm-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--panel2);border-bottom:1px solid var(--border)}
   .dgm-head span{font-weight:700;color:var(--teal);font-size:.9rem}
   .dgm-head a{font-size:.78rem;color:var(--accent);text-decoration:none}
-  .dgm-head a:hover{text-decoration:underline}
   .dgm-card iframe{width:100%;height:560px;border:0;display:block;background:#fff}
   .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em}
-  .b-must{background:#1f3d2b;color:var(--green)} .b-should{background:#3d3520;color:var(--amber)}
-  .b-could{background:#2a2440;color:var(--purple)} .b-epic{background:#0f2e4d;color:var(--accent)}
-  .story{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin:10px 0}
-  .story .sid{font-weight:700;color:var(--accent);margin-right:8px}
-  .story .ac{margin-top:8px;font-size:.85rem;color:var(--muted)}
-  .story .ac strong{color:var(--teal)}
-  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
-  .flow .step{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.83rem;font-weight:600}
-  .flow .arr{color:var(--muted)}
+  .b-crit{background:#3a2f0a;color:var(--gold);border:1px solid #6b551a}
   .callout{border-left:4px solid var(--amber);background:#2a230f;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.9rem}
   .callout.good{border-left-color:var(--green);background:#0f2a1a}
-  .callout.bad{border-left-color:var(--red);background:#2a1414}
   footer{border-top:1px solid var(--border);padding:20px;text-align:center;color:var(--muted);font-size:.8rem}
   @media(max-width:900px){nav{display:none}main{padding:20px}}
 </style>
 </head>
 <body>
 
-<!-- Sticky download bar (first in DOM, z-index 200) -->
 <div class="dl-bar">
   <span class="lbl">Downloads</span>
-  <a class="dl-btn dl-word" href="assets/mft-8-week-delivery-plan.docx" download>⬇ Word — 8-Week Delivery Plan</a>
-  <a class="dl-btn dl-excel" href="assets/mft-8-week-backlog.xlsx" download>⬇ Excel — Sprint Backlog</a>
-  <a class="dl-btn dl-drawio" href="assets/mft-8week-sprint-roadmap.drawio" download>⬇ draw.io — Roadmap</a>
+  <a class="dl-btn dl-word" href="assets/mft-strategic-question-framework.docx" download>⬇ Word — Strategic Question Framework</a>
+  <a class="dl-btn dl-drawio" href="assets/mft-strategic-questions-map.drawio" download>⬇ draw.io — Strategic Question Map</a>
   <a class="dl-btn dl-zip" href="assets/docs.zip" download>⬇ All documents (zip)</a>
 </div>
 
 <header>
-  <h1><em>Managed File Transfer on Boomi</em> — 8-Week Delivery Plan</h1>
-  <p>4 × 2-week sprints · Discovery &amp; Mobilisation to first MFT interface live in Development · includes Intelligrator user stories · v1.0 · July 2026</p>
+  <h1><em>Managed File Transfer on Boomi</em> — Strategic Question Framework</h1>
+  <p>The decisions the programme needs to make, in priority order · 8 themes · 6 to decide first · v1.0 · July 2026</p>
 </header>
 
 <div class="layout">
 <nav id="toc">
   <a href="#howto">How to use this page</a>
-  <a href="#glance">1. At a glance</a>
-  <a href="#roadmap">2. Roadmap (live diagram)</a>
-  <a href="#sprint1">3. Sprint 1 — Discovery</a>
-  <a href="#sprint2">4. Sprint 2 — Design</a>
-  <a href="#sprint3">5. Sprint 3 — Build</a>
-  <a href="#sprint4">6. Sprint 4 — Deploy</a>
-  <a href="#stories">7. User stories</a>
-  <a href="#backlog">8. Backlog &amp; points</a>
-  <a href="#wow">9. Ways of working</a>
-  <a href="#raid">10. RAID</a>
+  <a href="#glance">At a glance</a>
+  <a href="#map">Strategic question map</a>
+  <a href="#decidefirst">The decide-first set</a>
+  <a href="#themes">The eight themes</a>
 </nav>
 
 <main>
 
 <section id="howto">
   <h2>How to use this page</h2>
-  <p class="lead">This page is the single reference for the eight-week plan to onboard the Boomi Managed File Transfer (MFT) programme and deliver the first MFT interface into the Development environment — across four two-week sprints, from Discovery &amp; Mobilisation through to a working, deployed interface.</p>
+  <p class="lead">This page sets out the strategic questions worth resolving early as the Boomi Managed File Transfer (MFT) programme onboards — the decisions that shape everything built afterwards.</p>
   <ul>
-    <li><strong>Read top-to-bottom</strong> for the narrative: at-a-glance summary → live roadmap → sprint-by-sprint detail → user stories → backlog → ways of working → RAID.</li>
-    <li><strong>Download the artefacts</strong> from the sticky bar at the very top: the Word delivery plan, the Excel sprint backlog (all stories with acceptance criteria and points), the draw.io roadmap, or everything as a single zip.</li>
-    <li><strong>Two workstreams run in parallel</strong> throughout — <em>MFT Interface Delivery</em> (design, build, deploy the pilot interface) and <em>Intelligrator</em> (the self-service provisioning portal). User stories are tagged by workstream.</li>
-    <li><strong>Design principle:</strong> provisioning is configuration-driven — one generic MFT engine process reads a config table with one row per interface. New interfaces are added as config rows, not by generating per-request Boomi components.</li>
+    <li><strong>Start with the map and the decide-first set.</strong> Six of the eight themes gate other work and are expensive to reverse — settle those before committing to build beyond the first pilot interface.</li>
+    <li><strong>Work through the eight themes</strong> below. Each lists the sharp questions to put to stakeholders, why the theme matters, and a <em>suggested default to react against</em> — a starting position, not a decision already taken.</li>
+    <li><strong>Download the artefacts</strong> from the sticky bar at the very top: the Word framework and the draw.io question map, or both as a zip.</li>
   </ul>
-  <div class="callout"><strong>Context.</strong> Boomi's native MFT is based on the Thru, Inc. technology acquired in May 2025: the postal-service model of Organizations, Flows and Endpoints, with Automated File Transfer, Management and Data channels, and monitoring via the Activity Page. This plan assumes one pilot interface in scope for the eight weeks.</div>
+  <div class="callout"><strong>Context.</strong> Boomi's native MFT is based on the Thru, Inc. technology acquired in May 2025 — Organizations, Flows and Endpoints; Automated File Transfer vs File Sharing; Management and Data channels; Activity-Page monitoring. Suggested positions that mention node-local staging or config-driven provisioning reflect that platform reality.</div>
 </section>
 
 <section id="glance">
-  <h2>1. At a glance</h2>
+  <h2>At a glance</h2>
   <div class="grid2">
-    <div class="stat"><div class="n">8</div><div class="l">weeks</div></div>
-    <div class="stat"><div class="n">4</div><div class="l">two-week sprints</div></div>
-    <div class="stat"><div class="n">30</div><div class="l">user stories</div></div>
-    <div class="stat"><div class="n">156</div><div class="l">story points</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">strategic themes</div></div>
+    <div class="stat"><div class="n">6</div><div class="l">decide first</div></div>
+    <div class="stat"><div class="n">24</div><div class="l">framing questions</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">pilot in flight</div></div>
   </div>
-  <h3>The four sprints</h3>
-  <div class="flow">
-    <div class="step" style="border-color:var(--green)">Sprint 1 · Discovery &amp; Mobilisation</div><span class="arr">→</span>
-    <div class="step" style="border-color:var(--accent)">Sprint 2 · Design &amp; Readiness</div><span class="arr">→</span>
-    <div class="step" style="border-color:var(--amber)">Sprint 3 · Build &amp; Configure</div><span class="arr">→</span>
-    <div class="step" style="border-color:var(--purple)">Sprint 4 · Test &amp; Deploy to Dev</div>
-  </div>
-  <table>
-    <thead><tr><th>Sprint</th><th>Weeks</th><th>Phase</th><th>Milestone</th></tr></thead>
-    <tbody><tr><td><strong>Sprint 1</strong></td><td>Weeks 1–2</td><td>Discovery &amp; Mobilisation</td><td>M1 — Discovery complete, pilot selected, Dev + MFT access secured.</td></tr><tr><td><strong>Sprint 2</strong></td><td>Weeks 3–4</td><td>Solution Design &amp; Environment Readiness</td><td>M2 — Solution design signed off; environment &amp; connectivity ready.</td></tr><tr><td><strong>Sprint 3</strong></td><td>Weeks 5–6</td><td>Build &amp; Configure</td><td>M3 — Pilot built &amp; unit-tested; Intelligrator MVP built.</td></tr><tr><td><strong>Sprint 4</strong></td><td>Weeks 7–8</td><td>Test, Deploy to Dev &amp; Handover</td><td>M4 — MFT interface LIVE in Dev; auto-provisioning demonstrated.</td></tr></tbody>
-  </table>
 </section>
 
-<section id="roadmap">
-  <h2>2. Roadmap (live diagram)</h2>
-  <p>The delivery roadmap below shows both workstreams across the four sprints, with milestones. It renders live from the draw.io source in this repository — pan and zoom inside the frame, or download the editable <code>.drawio</code> from the bar at the top.</p>
+<section id="map">
+  <h2>Strategic question map</h2>
+  <p>The map places all eight themes around the central question. Themes marked ★ are the decide-first set. It renders live from the draw.io source in this repository — pan and zoom inside the frame, or download the editable file from the bar at the top.</p>
   <div class="dgm-card">
-    <div class="dgm-head"><span>8-Week MFT Delivery Roadmap</span><a href="assets/mft-8week-sprint-roadmap.drawio" download>Download .drawio ⬇</a></div>
-    <iframe title="8-Week MFT Delivery Roadmap" loading="lazy"
-      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=mft-8week-sprint-roadmap.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/mft-8week-sprint-roadmap.drawio"></iframe>
+    <div class="dgm-head"><span>MFT Strategic Question Map</span><a href="assets/mft-strategic-questions-map.drawio" download>Download .drawio ⬇</a></div>
+    <iframe title="MFT Strategic Question Map" loading="lazy"
+      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=mft-strategic-questions-map.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/mft-strategic-questions-map.drawio"></iframe>
   </div>
 </section>
 
+<section id="decidefirst">
+  <h2>The decide-first set</h2>
+  <p>These decisions gate the rest of the programme. Sequence them roughly in this order before scaling beyond the pilot.</p>
+  <table><thead><tr><th>#</th><th>Theme</th><th>Decision</th><th>Why it goes first</th></tr></thead>
+  <tbody><tr><td style="text-align:center;font-weight:700;color:var(--amber)">1</td><td><strong>A / G</strong></td><td><strong>Operating model &amp; the self-service automation boundary</strong></td><td>Shapes Intelligrator guardrails and the platform team — everything inherits from it.</td></tr><tr><td style="text-align:center;font-weight:700;color:var(--amber)">2</td><td><strong>B</strong></td><td><strong>Pattern boundary — what belongs on MFT</strong></td><td>Controls demand and keeps MFT from becoming a catch-all; sets catalogue placement.</td></tr><tr><td style="text-align:center;font-weight:700;color:var(--amber)">3</td><td><strong>C</strong></td><td><strong>Legacy migration &amp; coexistence approach</strong></td><td>Drives the roadmap, decommissioning, and partner impact.</td></tr><tr><td style="text-align:center;font-weight:700;color:var(--amber)">4</td><td><strong>E</strong></td><td><strong>Data residency, classification &amp; security bar</strong></td><td>Hard go-live gate, especially for tax data; constrains hosting.</td></tr><tr><td style="text-align:center;font-weight:700;color:var(--amber)">5</td><td><strong>F</strong></td><td><strong>HA topology &amp; file-staging design</strong></td><td>Foundational and hard to reverse; node-local staging is a known trap.</td></tr><tr><td style="text-align:center;font-weight:700;color:var(--amber)">6</td><td><strong>G</strong></td><td><strong>Environment promotion / config-as-code</strong></td><td>Determines whether config-driven provisioning scales and stays auditable.</td></tr></tbody></table>
+</section>
 
-  <section id="sprint1">
-    <h2>Sprint 1 · Weeks 1–2 — Discovery &amp; Mobilisation</h2>
-    <div class="card" style="border-left:4px solid var(--green)">
-      <p><strong style="color:var(--accent)">Sprint goal.</strong> Stand up the squad and access, understand the current-state file-transfer landscape, agree the pilot interface, and establish the target MFT operating model on Boomi. Confirm Intelligrator MVP scope and personas.</p>
-    </div>
-    <h3>Key activities</h3>
-    <ul><li>Team onboarding, RACI, ways of working and ceremony cadence agreed</li><li>Environment access requested: Boomi platform, Dev runtime (Atom/Molecule) and native MFT capability enablement</li><li>Current-state discovery: inventory of existing file interfaces (endpoints, protocols, schedules, volumes, file formats, encryption)</li><li>Pilot interface scored, shortlisted and selected</li><li>Target MFT operating model documented — Thru-based postal model (Organizations / Flows / Endpoints), Automated File Transfer vs File Sharing, Management vs Data channels, naming and Activity-Page monitoring conventions</li><li>Intelligrator vision, MVP boundary and personas (Requester, MFT Admin/Approver, Platform Engineer, Auditor) confirmed</li></ul>
-    <h3>Deliverables</h3>
-    <ul><li>Current-state file-transfer inventory</li><li>Pilot interface selection &amp; scoring</li><li>Mobilisation pack &amp; RACI</li><li>MFT operating model v0.1</li><li>Intelligrator MVP scope statement</li></ul>
-    <div class="callout good"><strong>Milestone:</strong> M1 — Discovery complete, pilot selected, Dev + MFT access secured.</div>
-  </section>
-
-  <section id="sprint2">
-    <h2>Sprint 2 · Weeks 3–4 — Solution Design &amp; Environment Readiness</h2>
-    <div class="card" style="border-left:4px solid var(--accent)">
-      <p><strong style="color:var(--accent)">Sprint goal.</strong> Produce the detailed design for the pilot MFT interface, provision and secure the Dev environment and connectivity, and design the Intelligrator config-driven provisioning model, wizard, approval queue and lifecycle.</p>
-    </div>
-    <h3>Key activities</h3>
-    <ul><li>Pilot interface solution design (SDD): Organizations, Flow, source/target Endpoints, protocol (SFTP/AS2), schedule, transformation (if any), error handling</li><li>Connectivity &amp; network readiness: firewall rules, routes, SFTP host keys, IP allow-listing in Dev</li><li>Security &amp; key-management design: PGP handling, credential vaulting, data-classification controls in transit and at rest</li><li>Config-driven engine design: single generic MFT engine process driven by a config table (one row per interface) — preferred over per-request component generation</li><li>Monitoring &amp; alerting design against the Activity Page, with alert thresholds and SLAs</li><li>Intelligrator: data model, provisioning config schema, wizard field spec, approval queue design and lifecycle state machine</li></ul>
-    <h3>Deliverables</h3>
-    <ul><li>Pilot interface Solution Design Document (SDD)</li><li>Environment &amp; connectivity readiness checklist</li><li>Config/cross-reference schema &amp; data model</li><li>Intelligrator design pack (wizard + approval + states)</li></ul>
-    <div class="callout good"><strong>Milestone:</strong> M2 — Solution design signed off; environment &amp; connectivity ready.</div>
-  </section>
-
-  <section id="sprint3">
-    <h2>Sprint 3 · Weeks 5–6 — Build &amp; Configure</h2>
-    <div class="card" style="border-left:4px solid var(--amber)">
-      <p><strong style="color:var(--accent)">Sprint goal.</strong> Build and configure the pilot MFT interface using the config-driven engine, and build the Intelligrator MVP (wizard → approval → provisioning trigger).</p>
-    </div>
-    <h3>Key activities</h3>
-    <ul><li>Configure Boomi MFT Organizations, Flow and source/target Endpoints for the pilot</li><li>Build the generic MFT engine process, parameterised from the config table</li><li>Populate the config/cross-reference row for the pilot interface</li><li>Implement error handling, retries, dead-letter handling, notifications and logging</li><li>Wire up monitoring &amp; alerting via the Activity Page in Dev</li><li>Intelligrator MVP: wizard workflow, approval queue, config-write on approval and provisioning trigger into the generic engine</li><li>Unit-test the configured components</li></ul>
-    <h3>Deliverables</h3>
-    <ul><li>Configured, unit-tested pilot MFT interface</li><li>Generic MFT engine process</li><li>Intelligrator MVP build (wizard + approval + provisioning trigger)</li><li>Unit-test evidence</li></ul>
-    <div class="callout good"><strong>Milestone:</strong> M3 — Pilot built &amp; unit-tested; Intelligrator MVP built.</div>
-  </section>
-
-  <section id="sprint4">
-    <h2>Sprint 4 · Weeks 7–8 — Test, Deploy to Dev &amp; Handover</h2>
-    <div class="card" style="border-left:4px solid var(--purple)">
-      <p><strong style="color:var(--accent)">Sprint goal.</strong> End-to-end SIT of the pilot interface, deploy to Development, produce the runbook, and demonstrate Intelligrator provisioning into Dev end-to-end. Decide Dev go/no-go and shape the Phase-2 backlog.</p>
-    </div>
-    <h3>Key activities</h3>
-    <ul><li>End-to-end SIT: automated file transfer source → Boomi MFT → target; positive, negative, encryption, large-file and resend cases</li><li>Non-functional checks: throughput, file size, schedule adherence</li><li>Deploy the pilot interface to Development (config row / packaged component)</li><li>Operational runbook &amp; support model (start/stop, reprocessing, alerts, escalation)</li><li>Intelligrator: lifecycle transitions (Requested → Approved → Provisioned → Active → Retired), audit log, and provisioning-into-Dev demonstrated</li><li>Sprint review &amp; Dev go/no-go; retrospective; prioritised Phase-2 backlog</li></ul>
-    <h3>Deliverables</h3>
-    <ul><li>SIT results &amp; defect log</li><li>Pilot MFT interface live in Development</li><li>Operational runbook</li><li>Intelligrator end-to-end provisioning demo + audit trail</li><li>Phase-2 backlog &amp; recommendations</li></ul>
-    <div class="callout good"><strong>Milestone:</strong> M4 — MFT interface LIVE in Dev; auto-provisioning demonstrated.</div>
-  </section>
-
-<section id="stories">
-  <h2>7. User stories</h2>
-  <p>Stories are tagged by workstream — <span class="badge b-epic">MFT Interface</span> <span class="badge b-could">Intelligrator</span> <span class="badge b-should">Programme</span> — with a MoSCoW priority and an indicative point estimate. Full detail is also in the downloadable Excel backlog.</p>
+<section id="themes">
+  <h2>The eight themes</h2>
+  <p>Each theme carries a suggested default position in <em>italics</em> — something concrete to agree or push back on, rather than a blank page.</p>
   
-    <h3 style="color:var(--green)">Sprint 1 — Discovery &amp; Mobilisation</h3>
-    
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-01</span>
-          <span class="badge b-should">Programme</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Delivery Lead</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Team onboarding &amp; ways of working</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a delivery lead, I want the squad onboarded with a RACI and agreed ceremonies so that the team can deliver predictably.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Squad, roles and RACI published</li><li>Ceremony cadence and Definition of Done agreed</li><li>Backlog tool and boards set up</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-02</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Boomi Dev environment &amp; MFT access</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want access to the Boomi platform with the Dev runtime and native MFT capability enabled so that I can begin configuration.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Boomi accounts provisioned with correct roles</li><li>Dev Atom/Molecule runtime available</li><li>MFT capability enabled and reachable</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-03</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Integration Architect</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Current-state file-transfer discovery</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Integration Architect, I want an inventory of existing file-transfer interfaces (endpoints, protocols, schedules, volumes, encryption) so that I can size and prioritise migration.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Inventory captures source/target, protocol, schedule, volume, format, encryption</li><li>Interfaces classified by complexity and risk</li><li>Inventory reviewed with stakeholders</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-04</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Product Owner</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Pilot interface selection</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Product Owner, I want a scored shortlist and a chosen pilot interface so that Sprint 2 design has a clear target.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Scoring criteria agreed (risk, value, complexity)</li><li>Shortlist scored</li><li>Pilot selected and signed off</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-05</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-should" style="margin-left:4px">Should</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Integration Architect</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>MFT operating model &amp; guardrails</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Integration Architect, I want the target MFT operating model documented (postal model roles, AFT vs File Sharing usage, channels, naming) so that all interfaces follow consistent standards.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Postal model (Organizations/Flows/Endpoints) usage defined</li><li>AFT vs File Sharing selection criteria documented</li><li>Naming, channels and monitoring conventions agreed</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-06</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Product Owner</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Intelligrator vision &amp; MVP scope</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Product Owner, I want the Intelligrator MVP scope and personas confirmed so that build stays bounded.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>MVP boundary agreed (in/out of scope)</li><li>Personas confirmed</li><li>Success measures defined</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--green)">
-        <div><span class="sid">S1-07</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-should" style="margin-left:4px">Should</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · MFT Admin</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Persona &amp; permission model</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an MFT Admin, I want personas (Requester, Approver, Platform Engineer, Auditor) and their permissions defined so that access is least-privilege.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Personas mapped to permissions</li><li>Least-privilege model documented</li><li>Segregation of duties preserved (requester ≠ approver)</li></ul>
-        </div>
-      </div>
+    <div class="card" style="border-left:4px solid var(--green)">
+      <h3 style="margin-top:0;color:var(--green)">Theme A · Operating model &amp; ownership <span class="badge b-crit">★ decide first</span></h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>Is MFT a centrally-owned strategic shared service, or federated per programme?</li><li>Where is the line between central control and team self-service via Intelligrator — where does a human approval gate stay, and where is full automation acceptable?</li><li>What is the funding / chargeback model as transfer volumes and partner counts grow?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> This shapes the platform team, the guardrails Intelligrator must enforce, and how far self-service can safely go. Almost every other decision inherits from it.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Central platform ownership with governed self-service. Intelligrator auto-provisions within a fixed guardrail set; anything outside the guardrails routes to human approval.</em></p>
+    </div>
 
-    <h3 style="color:var(--accent)">Sprint 2 — Solution Design &amp; Environment Readiness</h3>
-    
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-01</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Integration Architect</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Pilot interface solution design</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Integration Architect, I want a detailed SDD for the pilot (Organizations/Flow/Endpoints, protocol, schedule, transformation, error handling) so that build is unambiguous.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>SDD covers full transfer path and endpoints</li><li>Protocol, schedule and error handling specified</li><li>Design reviewed and signed off</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-02</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Connectivity &amp; network readiness</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want firewall rules, routes and SFTP host keys provisioned in Dev so that endpoints are reachable.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Firewall/route requests raised and confirmed</li><li>SFTP host keys exchanged</li><li>Connectivity verified from Dev runtime</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-03</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Security Architect</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Security &amp; key-management design</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Security Architect, I want PGP/credential handling and data-classification controls designed so that files are protected in transit and at rest.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>PGP key lifecycle defined</li><li>Credential vaulting approach agreed</li><li>Data-classification handling documented</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-04</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Integration Architect</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Config-driven engine design</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Integration Architect, I want a single generic MFT engine process driven by a config table (one row per interface) so that new interfaces are provisioned without per-request component builds.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Config schema defines one row per interface</li><li>Generic engine behaviour specified</li><li>No per-request component generation required</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-05</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-should" style="margin-left:4px">Should</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Operations Analyst</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Monitoring &amp; alerting design</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Operations Analyst, I want monitoring via the Activity Page plus alerts and SLA thresholds designed so that failures are detected quickly.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Monitoring approach mapped to Activity Page</li><li>Alert thresholds and channels defined</li><li>SLA targets agreed</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-06</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Intelligrator data model &amp; config schema</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want the Intelligrator data model and provisioning config schema defined so that requests map cleanly to engine config rows.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Data model covers request, approval and interface entities</li><li>Request fields map to engine config columns</li><li>Schema reviewed</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-07</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Requester</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Wizard field specification</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Requester, I want a guided wizard capturing all details needed to provision a transfer (source, target, protocol, schedule, format, encryption) so that I can self-serve a request.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>All mandatory provisioning fields captured</li><li>Validation rules defined</li><li>Wizard steps and help text specified</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--accent)">
-        <div><span class="sid">S2-08</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Approver</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Approval queue &amp; lifecycle design</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Approver, I want an approval queue and a defined lifecycle (Requested → Approved → Provisioned → Active → Retired) so that governance is enforced.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>State machine documented with allowed transitions</li><li>Approval queue behaviour defined</li><li>Rejection and rework paths covered</li></ul>
-        </div>
-      </div>
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <h3 style="margin-top:0;color:var(--accent)">Theme B · Pattern boundary — what belongs on MFT <span class="badge b-crit">★ decide first</span></h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>What is the explicit decision rule for MFT vs synchronous API vs event streaming vs batch ETL?</li><li>Is MFT the strategic target for all file-based movement, or scoped to external / partner exchange with internal movement pushed to APIs and events?</li><li>When is ad hoc File Sharing acceptable versus governed Automated File Transfer?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> Without a boundary rule, MFT becomes a catch-all and the demand pipeline is unmanageable. It also determines what lands in the pattern catalogue.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>MFT is the strategic target for external / partner and bulk file exchange. Internal system-to-system movement defaults to API or event patterns unless file semantics are genuinely required.</em></p>
+    </div>
 
-    <h3 style="color:var(--amber)">Sprint 3 — Build &amp; Configure</h3>
-    
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-01</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Configure pilot Organizations/Flow/Endpoints</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want the pilot's Boomi MFT Organizations, Flow and source/target Endpoints configured so that a transfer path exists.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Organizations and Flow created</li><li>Source and target Endpoints configured</li><li>Path validated in Dev</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-02</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Build generic MFT engine process</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want the parameterised engine process built and reading from the config table so that interfaces run from configuration.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Engine reads interface config at runtime</li><li>Pilot config row drives the transfer</li><li>No hard-coded, per-request logic</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-03</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Operations Analyst</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Error handling, retries &amp; notifications</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Operations Analyst, I want retries, dead-letter handling and failure notifications implemented so that transient errors don't cause data loss.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Retry policy implemented</li><li>Failed files routed to dead-letter handling</li><li>Notifications raised on failure</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-04</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-should" style="margin-left:4px">Should</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Operations Analyst</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Monitoring &amp; alerting build</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Operations Analyst, I want the Activity Page monitoring and alerts wired up so that I can see transfer status in Dev.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Transfers visible on the Activity Page</li><li>Alerts fire on failure/SLA breach</li><li>Status verified during unit test</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-05</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Unit-test the pilot interface</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want the configured interface unit-tested so that components behave as designed before SIT.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Test cases cover happy and error paths</li><li>Results recorded</li><li>Defects logged and triaged</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-06</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Requester</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Wizard workflow build (MVP)</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Requester, I want to complete and submit an MFT request through the wizard so that it enters the approval queue.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Wizard captures and validates all fields</li><li>Submission creates a request in Requested state</li><li>Request appears in the approval queue</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-07</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Approver</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Approval queue build (MVP)</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Approver, I want to review, approve or reject requests from a queue so that only governed transfers proceed.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Queue lists pending requests with detail</li><li>Approve/reject with comments supported</li><li>State updates on decision</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--amber)">
-        <div><span class="sid">S3-08</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Config-write provisioning trigger</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want approved requests to write a config row and trigger the generic engine so that provisioning is automated (no per-request components).</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Approval writes a config row</li><li>Generic engine picks up the new interface</li><li>No per-request component is generated</li></ul>
-        </div>
-      </div>
+    <div class="card" style="border-left:4px solid var(--amber)">
+      <h3 style="margin-top:0;color:var(--amber)">Theme C · Legacy migration &amp; coexistence <span class="badge b-crit">★ decide first</span></h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>Do we replicate existing flows one-to-one (lift-and-shift), or rationalise and re-architect during migration?</li><li>How long do the legacy platforms and Boomi MFT coexist, and is cutover phased (strangler) or big-bang?</li><li>Can we preserve the partner side with a facade so external parties do not have to change endpoints or protocols mid-migration?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> This drives the whole roadmap, the decommissioning plan, and the blast radius on external partners. Getting coexistence wrong risks broken partner flows.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Strangler-style phased cutover, rationalising as you migrate rather than porting legacy debt. Preserve partner-facing endpoints via a facade to keep partner change to a minimum.</em></p>
+    </div>
 
-    <h3 style="color:var(--purple)">Sprint 4 — Test, Deploy to Dev &amp; Handover</h3>
-    
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-01</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">8 pts · Test Analyst</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>End-to-end SIT</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Test Analyst, I want an end-to-end automated file transfer tested (positive, negative, encryption, large file, resend) so that the interface is proven.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Positive and negative cases pass</li><li>Encryption and large-file cases pass</li><li>Resend/reprocess verified; results recorded</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-02</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Platform Engineer</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Deploy interface to Development</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Platform Engineer, I want the pilot interface deployed and running in Dev so that it is operational for integrated testing.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Interface deployed to Dev</li><li>Scheduled transfer runs successfully</li><li>Deployment recorded/repeatable</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-03</span>
-          <span class="badge b-epic">MFT Interface</span>
-          <span class="badge b-should" style="margin-left:4px">Should</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Operations Analyst</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Operational runbook &amp; support model</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Operations Analyst, I want a runbook (start/stop, reprocessing, alerts, escalation) so that the interface can be supported.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Runbook covers operate, monitor and recover</li><li>Escalation path defined</li><li>Reviewed with support</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-04</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-should" style="margin-left:4px">Should</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Requester</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Lifecycle transitions &amp; status visibility</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Requester, I want to see my request move through its lifecycle states so that I know when the transfer is live.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>State shown to requester</li><li>Transitions reflect real provisioning status</li><li>Active state confirmed on go-live</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-05</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Auditor</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Audit log</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As an Auditor, I want an immutable audit trail of who requested, approved and provisioned each transfer so that governance is evidenced.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Request, approval and provisioning events logged</li><li>Actor and timestamp captured</li><li>Log is tamper-evident/immutable</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-06</span>
-          <span class="badge b-could">Intelligrator</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">5 pts · Product Owner</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Provision-into-Dev demo (end-to-end)</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a Product Owner, I want an end-to-end demo (request → approve → auto-provision → active in Dev) so that the MVP value is proven.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Full flow demonstrated end-to-end</li><li>Interface active in Dev after approval</li><li>Stakeholder sign-off captured</li></ul>
-        </div>
-      </div>
-      <div class="story" style="border-left-color:var(--purple)">
-        <div><span class="sid">S4-07</span>
-          <span class="badge b-should">Programme</span>
-          <span class="badge b-must" style="margin-left:4px">Must</span>
-          <span style="float:right;color:var(--muted);font-size:.8rem">3 pts · Delivery Lead</span>
-        </div>
-        <p style="margin:8px 0 4px"><strong>Go/No-go &amp; Phase-2 backlog</strong></p>
-        <p style="font-style:italic;color:var(--muted);margin-bottom:6px">As a delivery lead, I want a Dev sign-off decision and a prioritised Phase-2 backlog so that the next phase is ready to start.</p>
-        <div class="ac"><strong>Acceptance criteria:</strong>
-          <ul style="margin-top:4px"><li>Go/no-go decision recorded</li><li>Retro actions captured</li><li>Phase-2 backlog prioritised</li></ul>
-        </div>
-      </div>
-</section>
+    <div class="card" style="border-left:4px solid var(--teal)">
+      <h3 style="margin-top:0;color:var(--teal)">Theme D · Connectivity, protocols &amp; partner onboarding </h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>Which protocols are strategic (SFTP, AS2, HTTPS) and which do we sunset (plain FTP / FTPS)?</li><li>What is the partner onboarding model at scale — managed vs self-service, static vs dynamic endpoints?</li><li>Where does MFT sit relative to the network edge / DMZ, and how is IP allow-listing managed at scale?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> Determines the reference connectivity architecture and how quickly new partners can be onboarded — a common bottleneck.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Standardise on SFTP and AS2 for partner exchange; publish a partner onboarding runbook with defined SLAs. Sunset plain FTP.</em></p>
+    </div>
 
-<section id="backlog">
-  <h2>8. Backlog &amp; points</h2>
-  <h3>Backlog index</h3>
-  <table><thead><tr><th>ID</th><th>Sprint</th><th>Workstream</th><th>Story</th><th>Priority</th><th>Pts</th></tr></thead>
-    <tbody><tr>
-    <td><strong>S1-01</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-should">Programme</span></td>
-    <td>Team onboarding &amp; ways of working</td><td>Must</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S1-02</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Boomi Dev environment &amp; MFT access</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S1-03</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Current-state file-transfer discovery</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S1-04</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Pilot interface selection</td><td>Must</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S1-05</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>MFT operating model &amp; guardrails</td><td>Should</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S1-06</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Intelligrator vision &amp; MVP scope</td><td>Must</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S1-07</strong></td><td>Sprint 1</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Persona &amp; permission model</td><td>Should</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S2-01</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Pilot interface solution design</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S2-02</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Connectivity &amp; network readiness</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S2-03</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Security &amp; key-management design</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S2-04</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Config-driven engine design</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S2-05</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Monitoring &amp; alerting design</td><td>Should</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S2-06</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Intelligrator data model &amp; config schema</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S2-07</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Wizard field specification</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S2-08</strong></td><td>Sprint 2</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Approval queue &amp; lifecycle design</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S3-01</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Configure pilot Organizations/Flow/Endpoints</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S3-02</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Build generic MFT engine process</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S3-03</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Error handling, retries &amp; notifications</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S3-04</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Monitoring &amp; alerting build</td><td>Should</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S3-05</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Unit-test the pilot interface</td><td>Must</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S3-06</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Wizard workflow build (MVP)</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S3-07</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Approval queue build (MVP)</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S3-08</strong></td><td>Sprint 3</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Config-write provisioning trigger</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S4-01</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>End-to-end SIT</td><td>Must</td><td style="text-align:center">8</td></tr><tr>
-    <td><strong>S4-02</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Deploy interface to Development</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S4-03</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-epic">MFT Interface</span></td>
-    <td>Operational runbook &amp; support model</td><td>Should</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S4-04</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Lifecycle transitions &amp; status visibility</td><td>Should</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S4-05</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Audit log</td><td>Must</td><td style="text-align:center">3</td></tr><tr>
-    <td><strong>S4-06</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-could">Intelligrator</span></td>
-    <td>Provision-into-Dev demo (end-to-end)</td><td>Must</td><td style="text-align:center">5</td></tr><tr>
-    <td><strong>S4-07</strong></td><td>Sprint 4</td>
-    <td><span class="badge b-should">Programme</span></td>
-    <td>Go/No-go &amp; Phase-2 backlog</td><td>Must</td><td style="text-align:center">3</td></tr><tr><td colspan="5" style="text-align:right;font-weight:700;background:var(--panel2)">Total (30 stories)</td><td style="text-align:center;font-weight:700;background:var(--panel2)">156</td></tr></tbody></table>
-  <h3>Points by sprint &amp; workstream</h3>
-  <table><thead><tr><th>Sprint</th><th>MFT Interface</th><th>Intelligrator</th><th>Programme</th><th>Total pts</th><th>Stories</th></tr></thead><tbody><tr><td><strong>Sprint 1</strong></td><td style="text-align:center">21</td><td style="text-align:center">6</td><td style="text-align:center">3</td><td style="text-align:center;font-weight:700">30</td><td style="text-align:center">7</td></tr><tr><td><strong>Sprint 2</strong></td><td style="text-align:center">31</td><td style="text-align:center">15</td><td style="text-align:center">0</td><td style="text-align:center;font-weight:700">46</td><td style="text-align:center">8</td></tr><tr><td><strong>Sprint 3</strong></td><td style="text-align:center">27</td><td style="text-align:center">21</td><td style="text-align:center">0</td><td style="text-align:center;font-weight:700">48</td><td style="text-align:center">8</td></tr><tr><td><strong>Sprint 4</strong></td><td style="text-align:center">16</td><td style="text-align:center">13</td><td style="text-align:center">3</td><td style="text-align:center;font-weight:700">32</td><td style="text-align:center">7</td></tr></tbody></table>
-</section>
+    <div class="card" style="border-left:4px solid var(--red)">
+      <h3 style="margin-top:0;color:var(--red)">Theme E · Security, compliance &amp; data residency <span class="badge b-crit">★ decide first</span></h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>What are the encryption and key-management standards (PGP at rest, TLS in transit), and who owns key rotation?</li><li>How is data classification handled — where can files land and rest, and is UK data residency required for runtimes and file stores?</li><li>What non-repudiation, audit-evidence retention, and DLP / anti-virus scanning is mandated for file movement (especially tax data)?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> Non-negotiable and gates go-live. For tax data the residency, audit and non-repudiation bar is high, and it constrains the hosting topology.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Assume UK data residency for runtimes and file staging, PGP at rest plus TLS in transit, immutable transfer-audit retention, and AV/DLP scanning inline. Confirm early — it is a hard gate.</em></p>
+    </div>
 
-<section id="wow">
-  <h2>9. Ways of working</h2>
-  <h3>Ceremonies</h3>
-  <table><thead><tr><th>Ceremony</th><th>When</th><th>Who</th><th>Purpose</th></tr></thead>
-    <tbody><tr><td><strong>Sprint Planning</strong></td><td>Day 1 of each sprint</td><td>Team + PO</td><td>Commit sprint goal and backlog for the two weeks.</td></tr><tr><td><strong>Daily Stand-up</strong></td><td>Daily, 15 min</td><td>Delivery team</td><td>Progress, plan, blockers.</td></tr><tr><td><strong>Backlog Refinement</strong></td><td>Mid-sprint</td><td>Team + PO</td><td>Groom and estimate upcoming stories; keep two-sprints-ahead ready.</td></tr><tr><td><strong>Sprint Review</strong></td><td>Last day</td><td>Team + stakeholders</td><td>Demo increment; gather feedback; confirm milestone.</td></tr><tr><td><strong>Retrospective</strong></td><td>Last day</td><td>Delivery team</td><td>Inspect and adapt ways of working.</td></tr></tbody></table>
-  <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-    <div class="card"><h4 style="margin-top:0">Definition of Ready</h4><ul><li>Story has a clear user-value statement and acceptance criteria</li><li>Dependencies and test data identified</li><li>Sized by the team and small enough for one sprint</li><li>No unresolved blocking questions</li></ul></div>
-    <div class="card"><h4 style="margin-top:0">Definition of Done</h4><ul><li>Acceptance criteria met and demonstrated</li><li>Built config-driven (no per-request components) where applicable</li><li>Unit-tested; defects logged/triaged</li><li>Peer-reviewed and documented</li><li>Deployed to the target environment for the sprint</li><li>Published web page uses generic programme terms only (governance naming rule)</li></ul></div>
-  </div>
-</section>
+    <div class="card" style="border-left:4px solid var(--purple)">
+      <h3 style="margin-top:0;color:var(--purple)">Theme F · Architecture, scale &amp; resilience <span class="badge b-crit">★ decide first</span></h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>What is the runtime topology (clustered Molecule for HA), and where do files stage — given node-local staging is a known risk in clustered runtimes?</li><li>What are the expected volumes and peak file sizes, and does native MFT meet the throughput ceiling? What is the scaling lever?</li><li>What is the DR posture (RPO / RTO), the fate of in-flight files on failover, and the duplicate / ordering guarantees?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> Foundational and hard to reverse. File staging on node-local storage in a clustered runtime causes correctness and resilience problems, so it must be designed deliberately.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Clustered runtime for HA with shared, resilient staging (not node-local). Size against real peak volumes; define RPO/RTO and in-flight-file recovery explicitly in the NFRs.</em></p>
+    </div>
 
-<section id="raid">
-  <h2>10. Risks, assumptions, issues &amp; dependencies</h2>
-  <table><thead><tr><th>Type</th><th>Description</th><th>Impact</th><th>Mitigation / action</th></tr></thead>
-    <tbody><tr><td><strong>Risk</strong></td><td>MFT capability enablement or Dev runtime access slips</td><td>Blocks Sprint 1–2 build path</td><td>Raise access requests on day 1; track to M1; escalate early.</td></tr><tr><td><strong>Assumption</strong></td><td>One pilot interface is in scope for the 8 weeks</td><td>Keeps scope achievable to Dev deployment</td><td>Confirm at pilot selection (S1-04).</td></tr><tr><td><strong>Issue</strong></td><td>Source/target endpoint owners unavailable for connectivity</td><td>Delays SIT</td><td>Book connectivity slots in Sprint 2; confirm host keys early.</td></tr><tr><td><strong>Dependency</strong></td><td>Firewall/network changes for SFTP endpoints</td><td>Gates connectivity and SIT</td><td>Raise in Sprint 2; verify from Dev runtime before build.</td></tr><tr><td><strong>Dependency</strong></td><td>Security sign-off on PGP/credential handling</td><td>Gates go-live in Dev</td><td>Design in Sprint 2; sign off before Sprint 4 deploy.</td></tr></tbody></table>
+    <div class="card" style="border-left:4px solid var(--green)">
+      <h3 style="margin-top:0;color:var(--green)">Theme G · Governance, standards &amp; environment promotion <span class="badge b-crit">★ decide first</span></h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>Is the config-driven model (one generic engine + one config row per interface) the mandated organisation-wide standard?</li><li>How do config rows promote Dev → Test → Prod — config-as-code / GitOps, or manual?</li><li>What guardrails must hold for Intelligrator to auto-provision without a human, and what always requires approval?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> Determines whether the config-driven approach actually scales and stays auditable, and defines the automation boundary for Intelligrator.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Adopt config-driven provisioning as the standard and promote config-as-code through environments. Keep a tight, explicit guardrail set for unattended provisioning.</em></p>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--teal)">
+      <h3 style="margin-top:0;color:var(--teal)">Theme H · Operations, support &amp; commercials </h3>
+      <p style="color:var(--muted);margin-bottom:6px"><strong style="color:var(--amber)">Strategic questions</strong></p>
+      <ul><li>What is the run / support model (L1–L3), who holds reprocessing rights (self-service vs ops-gated), and is it 24/7 or business hours?</li><li>Is the native Activity Page enough for observability, or must transfers feed enterprise SIEM / ops tooling?</li><li>What is the licensing / cost model at scale, and what is the exit and configuration-portability position?</li></ul>
+      <p style="margin:8px 0 4px"><strong style="color:var(--accent)">Why it matters.</strong> Drives the support model, tooling integration, and total cost of ownership as the estate grows.</p>
+      <p style="margin:0"><strong style="color:var(--green)">Suggested default to react against.</strong> <em>Feed transfer telemetry into enterprise monitoring rather than relying on the Activity Page alone; define reprocessing rights and support tiers before Prod.</em></p>
+    </div>
 </section>
 
 </main>
 </div>
 
 <footer>
-  Managed File Transfer on Boomi — 8-Week Delivery Plan · v1.0 · July 2026 · generated for the Boomi integration programme ·
-  <a href="assets/docs.zip" style="color:var(--accent)">download all documents</a>
+  Managed File Transfer on Boomi — Strategic Question Framework · v1.0 · July 2026 · <a href="assets/docs.zip" style="color:var(--accent)">download all documents</a>
 </footer>
 
 <script>
   const links=[...document.querySelectorAll('nav a')];
   const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
-  const obs=new IntersectionObserver(es=>{
-    es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.remove('active')); const a=map.get(e.target.id); if(a)a.classList.add('active'); } });
-  },{rootMargin:'-25% 0px -65% 0px'});
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=map.get(e.target.id);if(a)a.classList.add('active');}});},{rootMargin:'-25% 0px -65% 0px'});
   document.querySelectorAll('main section').forEach(s=>obs.observe(s));
 </script>
 </body>

@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net" agent="Integration Catalogue Bot" version="24.7.7">
+  <diagram id="mft-strategy-map" name="MFT Strategic Questions">
+    <mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Managed File Transfer on Boomi — Strategic Question Map (★ = decide first)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#0F2E4D;" vertex="1" parent="1">
+          <mxGeometry x="24" y="14" width="1140" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Center hub -->
+        <mxCell id="hub" value="MFT STRATEGY&#10;What must the programme decide?" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F2E4D;strokeColor=#0a2036;fontColor=#FFFFFF;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="470" y="330" width="250" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- A top-left (critical) -->
+        <mxCell id="tA" value="A · ★ Operating model &amp; ownership&#10;Central vs federated · self-service boundary · funding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF6EF;strokeColor=#d4a017;strokeWidth=3;fontColor=#123C2B;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="150" y="70" width="230" height="82" as="geometry" />
+        </mxCell>
+        <!-- B top-right (critical) -->
+        <mxCell id="tB" value="B · ★ Pattern boundary&#10;What belongs on MFT vs API / event / batch" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E4EFF6;strokeColor=#d4a017;strokeWidth=3;fontColor=#1b4d6b;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="810" y="70" width="230" height="82" as="geometry" />
+        </mxCell>
+        <!-- H mid-left-upper -->
+        <mxCell id="tH" value="H · Operations, support &amp; commercials&#10;Run model · observability · licensing / exit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E4F6F6;strokeColor=#39c5cf;strokeWidth=2;fontColor=#0f4d52;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="30" y="248" width="230" height="82" as="geometry" />
+        </mxCell>
+        <!-- C mid-right-upper -->
+        <mxCell id="tC" value="C · ★ Legacy migration &amp; coexistence&#10;Lift-and-shift vs re-architect · cutover · partner facade" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F6EFDD;strokeColor=#d4a017;strokeWidth=3;fontColor=#6b4d1b;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="930" y="248" width="240" height="82" as="geometry" />
+        </mxCell>
+        <!-- G mid-left-lower (critical) -->
+        <mxCell id="tG" value="G · ★ Governance &amp; environment promotion&#10;Config-driven standard · config-as-code · guardrails" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF6EF;strokeColor=#d4a017;strokeWidth=3;fontColor=#123C2B;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="30" y="430" width="230" height="82" as="geometry" />
+        </mxCell>
+        <!-- D mid-right-lower -->
+        <mxCell id="tD" value="D · Connectivity, protocols &amp; partner onboarding&#10;SFTP / AS2 · onboarding at scale · edge / DMZ" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E4F6F6;strokeColor=#39c5cf;strokeWidth=2;fontColor=#0f4d52;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="930" y="430" width="240" height="82" as="geometry" />
+        </mxCell>
+        <!-- F bottom-left (critical) -->
+        <mxCell id="tF" value="F · ★ Architecture, scale &amp; resilience&#10;HA topology · file staging (not node-local) · DR / volumes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1E9FA;strokeColor=#d4a017;strokeWidth=3;fontColor=#4a2f6b;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="150" y="600" width="240" height="82" as="geometry" />
+        </mxCell>
+        <!-- E bottom-right (critical) -->
+        <mxCell id="tE" value="E · ★ Security, compliance &amp; data residency&#10;Encryption / keys · classification · UK residency · audit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F9E4E4;strokeColor=#d4a017;strokeWidth=3;fontColor=#7a1f1f;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="800" y="600" width="250" height="82" as="geometry" />
+        </mxCell>
+
+        <!-- edges -->
+        <mxCell id="eA" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tA"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eB" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tB"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eC" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tC"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eD" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tD"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eE" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tE"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eF" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tF"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eG" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tG"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="eH" style="endArrow=none;strokeColor=#9DB0C2;strokeWidth=2;html=1;" edge="1" parent="1" source="hub" target="tH"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="leg" value="Decide-first sequence:  A/G operating model &amp; automation boundary  →  B pattern boundary  →  C migration &amp; coexistence  →  E data residency &amp; security  →  F HA topology &amp; staging  →  G config-as-code promotion" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=10;fontColor=#5b6572;" vertex="1" parent="1">
+          <mxGeometry x="24" y="708" width="1150" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
