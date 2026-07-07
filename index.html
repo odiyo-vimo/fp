@@ -169,16 +169,18 @@
     <li>Alert emails commonly embed a direct link to the execution in Process Reporting (<code>...searchType=executions;executionId={execId}</code>), so the platform team can jump straight to the failing run.</li>
   </ul>
 
-  <h3>Option B — Boomi native Managed File Transfer (Boomi MFT, powered by Thru)</h3>
-  <p>A separate, licensed managed service rather than a hand-built process. It splits responsibilities into two channels:</p>
+  <h3>Option B — Boomi native Managed File Transfer (Boomi MFT, formerly Thru)</h3>
+  <div class="callout"><strong>Who is Thru, and why "formerly"?</strong> Thru, Inc. was an independent company founded in 2002, building one of the first cloud-native Managed File Transfer platforms — early work included a global edge transfer network and, in 2010, the first public API for cloud MFT. For years Thru held Boomi's highest partner tier ("Technology Partner") and shipped the <em>Thru MFT Connector for Boomi</em> as a joint third-party integration. That changed on 15 May 2025, when Boomi announced a definitive agreement to <strong>acquire Thru, Inc. outright</strong> (deal expected to close by end of June 2025). Thru's technology is now embedded directly into the Boomi Enterprise Platform as Boomi's own native MFT offering — it's Boomi-owned IP today, not a third-party add-on being resold.</div>
+  <p>Boomi MFT still operates the way Thru originally built it, splitting responsibilities into two channels:</p>
   <table>
     <tr><th>Channel</th><th>Responsibility</th></tr>
     <tr><td><strong>Management Channel</strong></td><td>Flow definitions, partner/endpoint credentials, tracking, audit, and proof of delivery — all run in Boomi's cloud, with native alerts on failed transfers and a partner self-service portal for endpoint management.</td></tr>
-    <tr><td><strong>Data Channel</strong></td><td>The actual file payload transfer between Boomi, Thru, and external endpoints — with persistent storage until delivered, automatic retry, auto-resume, and guaranteed delivery even across network interruption. Files are encrypted at rest, in transit, and at the file level.</td></tr>
+    <tr><td><strong>Data Channel</strong></td><td>The actual file payload transfer between Boomi and external endpoints — with persistent storage until delivered, automatic retry, auto-resume, and guaranteed delivery even across network interruption. Files are encrypted at rest, in transit, and at the file level, within a zero-trust, SOC 2-aligned architecture.</td></tr>
   </table>
   <p>A Boomi Integration process talks to it through the <strong>Managed File Transfer connector</strong>: a <code>Get</code> operation picks up a file from a Flow, a <code>Create</code> operation drops one off, and a <code>Create</code> with <code>Type=Exception</code> pushes error/exception context back into MFT's own tracking and audit trail — so failures are visible in MFT's dashboards even independent of the calling process.</p>
   <div class="callout">Option B is worth a deliberate evaluation specifically where external trading partners need to self-manage their own endpoints, or where transfer volumes and regulatory requirements exceed what a hand-built Try/Catch chain comfortably manages. It carries its own licensing and isn't a default — this catalogue's P-116 pattern and Intelligrator's Generic MFT Engine deliberately use Option A, keeping full control over the config-driven, approval-gated model already designed in §7.</div>
 </section>
+
 
 <section id="personas">
   <h2>2. Personas &amp; roles</h2>
