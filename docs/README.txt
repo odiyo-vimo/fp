@@ -1,1 +1,2 @@
-Generated deliverables (Word, draw.io, PPT, SVG, etc.) for the HMRC Boomi Integration Pattern Catalogue will be placed in this /docs folder, and bundled into ../assets/docs.zip for the 'Download all docs' button on the live site.
+Reference copies of every deliverable published to https://odiyo-vimo.github.io/fp/
+Latest addition: MFT on Boomi — 8-Week Delivery Plan (Word), Sprint Backlog (Excel), Roadmap (draw.io).
