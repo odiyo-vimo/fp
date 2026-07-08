@@ -3,847 +3,290 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intelligrator — Self-Service MFT Provisioning on Boomi</title>
+<title>Intelligrator — Managed File Transfer on Boomi | Product Overview</title>
 <style>
   :root{
-    --bg:#0d1117; --panel:#161b22; --panel2:#1c2129; --border:#30363d;
-    --txt:#e6edf3; --muted:#9da7b3; --accent:#58a6ff; --green:#3fb950;
-    --amber:#d29922; --red:#f85149; --purple:#bc8cff; --teal:#39c5cf;
+    --bg:#FAFBFC; --panel:#FFFFFF; --border:#E2E8F0; --border2:#EDF1F5;
+    --txt:#1F2937; --muted:#64748B; --accent:#1F4E79; --accent2:#2C6CA8;
+    --green:#0AAB52; --greenD:#078540; --amber:#B26A00; --purple:#5B3AA6; --red:#DC2626;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
-  /* ---- Sticky download bar ---- */
-  .dl-bar{position:sticky;top:0;z-index:200;width:100%;background:linear-gradient(90deg,#123c2b,#0f2e4d);
-    border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-height:45px}
-  .dl-bar span.lbl{font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:#a7f3d0}
-  .dl-btn{display:inline-block;padding:6px 14px;border-radius:6px;font-size:.85rem;font-weight:600;text-decoration:none;
-    color:#fff;border:1px solid rgba(255,255,255,.25);transition:filter .15s}
-  .dl-btn:hover{filter:brightness(1.25)}
-  .dl-word{background:#2b579a}.dl-drawio{background:#d95f02}.dl-zip{background:#444c56}
-  /* ---- Header / nav ---- */
-  header{position:sticky;top:45px;z-index:100;background:rgba(13,17,23,.95);backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--border);padding:14px 24px}
-  header h1{font-size:1.15rem}
-  header h1 em{color:var(--accent);font-style:normal}
-  header p{color:var(--muted);font-size:.85rem}
-  .layout{display:flex;max-width:1400px;margin:0 auto}
-  nav{width:250px;flex-shrink:0;position:sticky;top:125px;height:calc(100vh - 125px);overflow-y:auto;
-    padding:20px 12px;border-right:1px solid var(--border)}
-  nav a{display:block;color:var(--muted);text-decoration:none;font-size:.85rem;padding:6px 10px;border-radius:6px;border-left:2px solid transparent}
-  nav a:hover{color:var(--txt);background:var(--panel)}
-  nav a.active{color:var(--accent);border-left-color:var(--accent);background:var(--panel)}
-  main{flex:1;padding:28px 36px;min-width:0}
-  section{margin-bottom:56px;scroll-margin-top:140px}
-  h2{font-size:1.5rem;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--accent)}
-  h3{font-size:1.1rem;margin:22px 0 10px;color:var(--teal)}
-  h4{font-size:.95rem;margin:16px 0 6px;color:var(--purple)}
-  p{margin-bottom:10px;color:var(--txt)}
-  .lead{font-size:1.05rem;color:var(--muted)}
+  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .dl-bar{position:sticky;top:0;z-index:200;width:100%;background:#0F2E4D;border-bottom:1px solid #0A2038;
+    padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-height:48px}
+  .dl-bar span.lbl{font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:#9FC6EA;margin-right:4px}
+  .dl-btn{display:inline-block;padding:7px 16px;border-radius:7px;font-size:.85rem;font-weight:600;text-decoration:none;
+    color:#fff;transition:filter .15s,transform .1s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+  .dl-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+  .dl-word{background:#2b579a}.dl-drawio{background:#c2660a}.dl-zip{background:#3f4a5a}
+  header{background:linear-gradient(135deg,#0F2E4D 0%,#1F4E79 60%,#2C6CA8 100%);padding:46px 24px 40px;color:#fff}
+  header .inner{max-width:1200px;margin:0 auto}
+  header .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9FC6EA;margin-bottom:10px}
+  header h1{font-size:2.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
+  header p{font-size:1.02rem;color:#D3E4F3;max-width:760px}
+  .layout{display:flex;max-width:1200px;margin:0 auto}
+  nav{width:250px;flex-shrink:0;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;padding:28px 14px}
+  nav a{display:block;color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;padding:7px 12px;border-radius:8px;border-left:3px solid transparent;margin-bottom:2px}
+  nav a:hover{color:var(--accent);background:#F1F5F9}
+  nav a.active{color:var(--accent);border-left-color:var(--green);background:#EAF1FA;font-weight:700}
+  main{flex:1;padding:36px 40px 60px;min-width:0}
+  section{margin-bottom:52px;scroll-margin-top:64px}
+  h2{font-size:1.55rem;font-weight:800;margin-bottom:6px;color:#0F172A;letter-spacing:-.01em}
+  .section-kicker{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
+  h3{font-size:1.12rem;font-weight:700;margin:22px 0 10px;color:var(--accent)}
+  p{margin-bottom:12px}
+  .lead{font-size:1.02rem;color:var(--muted);margin-top:10px}
   ul,ol{margin:0 0 12px 22px}
-  li{margin-bottom:5px}
-  code{background:var(--panel2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.85em;color:#79c0ff}
-  pre{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:14px;overflow-x:auto;margin:12px 0;font-size:.82rem;line-height:1.5}
-  pre code{background:none;border:none;padding:0}
-  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.87rem}
-  th{background:var(--panel2);text-align:left;padding:9px 12px;border:1px solid var(--border);color:var(--accent)}
-  td{padding:8px 12px;border:1px solid var(--border);vertical-align:top}
-  tr:nth-child(even) td{background:var(--panel)}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0}
-  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
-  .dgm-card{background:var(--panel);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:16px 0}
-  .dgm-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--panel2);border-bottom:1px solid var(--border)}
-  .dgm-head span{font-weight:700;color:var(--teal);font-size:.9rem}
-  .dgm-head a{font-size:.78rem;color:var(--accent);text-decoration:none}
-  .dgm-head a:hover{text-decoration:underline}
-  .dgm-card iframe{width:100%;height:520px;border:0;display:block;background:#fff}
-  .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.04em}
-  .b-must{background:#1f3d2b;color:var(--green)} .b-should{background:#3d3520;color:var(--amber)}
-  .b-could{background:#2a2440;color:var(--purple)} .b-epic{background:#0f2e4d;color:var(--accent)}
-  .story{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:8px;padding:14px 16px;margin:10px 0}
-  .story .sid{font-weight:700;color:var(--accent);margin-right:8px}
-  .story .ac{margin-top:8px;font-size:.85rem;color:var(--muted)}
-  .story .ac strong{color:var(--teal)}
-  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
-  .flow .step{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.83rem;font-weight:600}
-  .flow .arr{color:var(--muted)}
-  .callout{border-left:4px solid var(--amber);background:#2a230f;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.9rem}
-  .callout.good{border-left-color:var(--green);background:#0f2a1a}
-  .callout.bad{border-left-color:var(--red);background:#2a1414}
-  svg text{font-family:inherit}
-  footer{border-top:1px solid var(--border);padding:20px;text-align:center;color:var(--muted);font-size:.8rem}
-  @media(max-width:900px){nav{display:none}main{padding:20px}}
+  li{margin-bottom:6px}
+  code{background:#F1F5F9;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.85em;color:#1F4E79}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:16px 0}
+  .callout{border-radius:12px;padding:16px 20px;margin:16px 0;font-size:.95rem;background:#FDF3E2;border:1px solid #F3D9A6}
+  .callout.good{background:#EAF7EF;border-color:#BEE6CC}
+  .callout.info{background:#EAF1FA;border-color:#C7DBEF}
+  .callout.no{background:#FDECEC;border-color:#F3C2C2}
+  .callout strong{display:block;margin-bottom:4px;color:#1F2937}
+  .vision-box{background:linear-gradient(135deg,#0F2E4D,#1F4E79 55%,#2C6CA8);color:#fff;border-radius:18px;padding:36px 40px;margin:18px 0;box-shadow:0 8px 24px rgba(15,46,77,.25)}
+  .vision-box .tag{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9FC6EA;margin-bottom:14px}
+  .vision-box p{font-size:1.28rem;font-weight:600;line-height:1.55;color:#fff;margin:0}
+  .vision-box .who{color:#9FC6EA;font-weight:700}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem}
+  th{background:#F1F5F9;text-align:left;padding:10px 14px;border:1px solid var(--border);color:var(--accent);font-weight:700}
+  td{padding:9px 14px;border:1px solid var(--border);vertical-align:top}
+  tr:nth-child(even) td{background:#FAFBFC}
+  .persona-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;text-align:left;box-shadow:0 1px 3px rgba(15,23,42,.05);border-top:5px solid var(--accent)}
+  .persona-card.admin{border-top-color:var(--green)}
+  .persona-card.eng{border-top-color:var(--purple)}
+  .persona-card .p-icon{width:44px;height:44px;border-radius:50%;background:#EAF1FA;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1.3rem}
+  .persona-card.admin .p-icon{background:#E7F7ED}
+  .persona-card.eng .p-icon{background:#F1EBFB}
+  .persona-card h4{font-size:1.05rem;font-weight:800;margin-bottom:8px;color:#0F172A}
+  .badge{display:inline-block;padding:3px 11px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.03em}
+  .b-must{background:#E7F7ED;color:var(--greenD)} .b-should{background:#FDF3E2;color:var(--amber)}
+  .story{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+  .story .sid{font-weight:800;color:var(--accent);margin-right:8px}
+  .journey{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0}
+  .journey .step{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:.88rem;font-weight:700;color:var(--accent);box-shadow:0 1px 2px rgba(15,23,42,.05);flex:1;min-width:130px;text-align:center}
+  .journey .step .num{display:block;font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:4px;letter-spacing:.06em}
+  .journey .arr{color:#CBD5E1;font-size:1.3rem;font-weight:700}
+  .tech-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+  .tech-card h4{color:var(--accent);font-size:1.05rem;margin-bottom:10px}
+  img.diagram{width:100%;max-width:1180px;border:1px solid var(--border);border-radius:16px;background:#fff;margin:18px 0;box-shadow:0 4px 16px rgba(15,23,42,.06)}
+  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.82rem;background:#fff}
+  @media(max-width:900px){nav{display:none}main{padding:24px}header{padding:32px 20px}}
 </style>
 </head>
 <body>
 
-<!-- Sticky download bar (always first in DOM, z-index 200) -->
 <div class="dl-bar">
   <span class="lbl">Downloads</span>
-  <a class="dl-btn dl-word" href="assets/intelligrator-mft-product-specification.docx" download>⬇ Word — Product Specification</a>
-  <a class="dl-btn dl-drawio" href="assets/intelligrator-architecture.drawio" download>⬇ draw.io — Architecture Diagram</a>
-  <a class="dl-btn dl-drawio" href="assets/boomi-mft-mechanism.drawio" download>⬇ draw.io — How Boomi Achieves MFT</a>
-  <a class="dl-btn dl-drawio" href="assets/boomi-mft-native-deepdive.drawio" download>⬇ draw.io — Boomi MFT (Native) Deep Dive</a>
+  <a class="dl-btn dl-word" href="assets/intelligrator-mft-product-overview.docx" download>⬇ Word — Product Overview</a>
+  <a class="dl-btn dl-drawio" href="assets/request-flow.drawio" download>⬇ draw.io — Request Flow Diagram</a>
   <a class="dl-btn dl-zip" href="assets/docs.zip" download>⬇ All documents (zip)</a>
 </div>
 
 <header>
-  <h1><em>Intelligrator</em> — Self-Service MFT Provisioning Portal on Boomi</h1>
-  <p>Product specification · features · user stories · design patterns · automated build &amp; deploy approach · v1.0 · July 2026</p>
+  <div class="inner">
+    <div class="eyebrow">Product Overview · Managed File Transfer</div>
+    <h1>Intelligrator</h1>
+    <p>A self-service portal that turns requesting a Managed File Transfer interface into a five-minute conversation — and turns an approved request into a live, running interface with no manual build.</p>
+  </div>
 </header>
 
 <div class="layout">
 <nav id="toc">
-  <a href="#howto">How to use this page</a>
-  <a href="#overview">1. Product overview</a>
-  <a href="#vision">1a. Product vision</a>
-  <a href="#howmft">1b. How Boomi achieves MFT</a>
-  <a href="#nativemft">1c. Boomi MFT (native) — deep dive</a>
-  <a href="#personas">2. Personas &amp; roles</a>
-  <a href="#workflow">3. End-to-end workflow</a>
-  <a href="#personaflow">3b. Persona-based flow (dev build spec)</a>
-  <a href="#features">4. Feature catalogue</a>
-  <a href="#stories">5. User stories</a>
-  <a href="#architecture">6. Solution architecture</a>
-  <a href="#livediagrams">6b. Live diagram viewer</a>
-  <a href="#provisioning">7. Automated Boomi build</a>
-  <a href="#patterns">8. Design patterns</a>
-  <a href="#datamodel">9. Data model &amp; states</a>
-  <a href="#api">10. API design</a>
-  <a href="#security">11. Security &amp; credentials</a>
-  <a href="#nfr">12. NFRs</a>
-  <a href="#roadmap">13. MVP &amp; roadmap</a>
+  <a href="#purpose">1. Purpose &amp; scope</a>
+  <a href="#vision">2. Product vision</a>
+  <a href="#highlights">3. Key highlights &amp; features</a>
+  <a href="#personas">4. Who uses Intelligrator</a>
+  <a href="#flow">5. Request flow</a>
+  <a href="#journey">6. End-to-end journey</a>
+  <a href="#technical">7. How it works — technical approach</a>
+  <a href="#stories">8. User stories</a>
 </nav>
 
 <main>
 
-<section id="howto">
-  <h2>How to use this page</h2>
-  <p class="lead">This page is the single reference for the <strong>Intelligrator</strong> product — a self-service portal where users request scheduled Managed File Transfer (MFT) interfaces, an admin approves them from a queue, and Boomi automatically builds and deploys the interface to the Dev environment.</p>
-  <ul>
-    <li><strong>Download bar (top):</strong> grab the Word product specification (for circulation and review), the draw.io architecture diagram (editable in <a href="https://app.diagrams.net" style="color:var(--accent)">app.diagrams.net</a> via File → Open From → Device), or the full zip bundle.</li>
-    <li><strong>Left navigation:</strong> jumps to each section; the active section is highlighted as you scroll.</li>
-    <li><strong>Product vision (§1a):</strong> the vision statement, guiding principles, and success signals behind why Intelligrator exists.</li>
-    <li><strong>User stories (§5):</strong> written in standard <em>As-a / I-want / So-that</em> format with Given-When-Then acceptance criteria — ready to paste into Jira/ADO. Priorities use MoSCoW badges.</li>
-    <li><strong>Persona-based flow (§3b):</strong> screen-by-screen build spec per persona — UI elements, user actions, and the exact integration call each triggers — for the team building the screens, flow, and MFT integration.</li>
-    <li><strong>How Boomi achieves MFT (§1b):</strong> the technical mechanism — Try/Catch, connectors, and error notification — behind every interface this product provisions.</li>
-    <li><strong>Boomi MFT (native) deep dive (§1c):</strong> the full technical treatment of Boomi's own Managed File Transfer product — model, architecture, connector, and native alerting.</li>
-    <li><strong>Design authority sections (§6–§8):</strong> the recommended build approach (template + configuration-driven) and the patterns that justify it. This aligns with the P-116 MFT pattern in the wider integration catalogue.</li>
-    <li><strong>Live diagram viewer (§6b):</strong> every <code>.drawio</code> file in the repo renders inline, panable and zoomable, with no download required.</li>
-  </ul>
-</section>
-
-<section id="overview">
-  <h2>1. Product overview</h2>
-  <p class="lead"><strong>Intelligrator</strong> turns MFT interface delivery from a weeks-long engineering engagement into a governed, minutes-long self-service request. Users describe <em>what</em> they need through a guided wizard; the platform validates connectivity up front, prevents duplicates, enforces naming standards, routes the request through approval, and then provisions the interface on Boomi automatically.</p>
+<section id="purpose">
+  <div class="section-kicker">Section 1</div>
+  <h2>Purpose &amp; scope</h2>
+  <p class="lead">This document describes Intelligrator's <strong>Managed File Transfer (MFT)</strong> capability — what it does, who it's for, and how it's built.</p>
 
   <div class="grid2">
-    <div class="card"><h4>Problem</h4>
-    <p>Every new file-transfer interface today requires manual requirement gathering, manual Boomi development, and manual deployment — slow, inconsistent, error-prone, and invisible to requesters until delivery.</p></div>
-    <div class="card"><h4>Solution</h4>
-    <p>A wizard-driven request portal + approval queue + provisioning engine. Approved requests become live, scheduled MFT interfaces on Boomi Dev with zero hand-written integration code per interface.</p></div>
-    <div class="card"><h4>Key differentiators</h4>
-    <ul><li>Connectivity and folder existence tested <em>at request time</em>, not at delivery time</li><li>Duplicate-interface detection before submission</li><li>System-suggested interface names enforcing conventions</li><li>Full lifecycle visibility: request → approval → build → deployment → run status</li></ul></div>
-    <div class="card"><h4>Out of scope (v1)</h4>
-    <ul><li>Event-triggered (file-arrival) transfers — v1 is scheduled only</li><li>In-flight transformation/mapping (pass-through file movement only)</li><li>Auto-promotion beyond Dev (Test/Prod promotion stays governed)</li></ul></div>
+    <div class="callout no"><strong>Not in scope</strong>
+      This document does not cover Intelligrator's API management or asynchronous/event-driven integration capabilities — those are addressed separately. It also assumes standard platform foundations — sign-on, account administration, and general portal navigation — as a given baseline, rather than describing them here. The focus throughout is MFT, and MFT alone.</div>
+    <div class="callout info"><strong>Built on Boomi</strong>
+      Intelligrator achieves its vision by combining three Boomi capabilities: <strong>Boomi Integration (iPaaS)</strong>, the process engine that performs every file transfer; <strong>Boomi Managed File Transfer</strong>, for secure, governed file movement at scale; and <strong>Boomi Companion</strong>, Boomi's AI-assisted development capability, which accelerates how the platform team builds, tests, deploys, and diagnoses the integrations underneath Intelligrator itself.</div>
   </div>
 </section>
 
 <section id="vision">
-  <h2>1a. Product vision</h2>
-  <div class="callout good"><strong>Vision statement.</strong> For integration teams and business requesters across the tax authority's technology estate who need managed file transfer interfaces to move data reliably between systems, Intelligrator is a self-service MFT provisioning portal that turns a multi-week engineering engagement into a five-minute request and a five-minute automated build. Unlike the current model — where every interface demands manual requirements-gathering, manual Boomi development, and manual deployment — Intelligrator validates connectivity, prevents duplication, and provisions the interface automatically the moment it's approved, with zero hand-written integration code per interface.</div>
-
-  <h3>The problem worth solving</h3>
-  <p>Every new file-transfer interface today is a bespoke engineering project: someone gathers requirements informally, an engineer hand-builds a Boomi process, testing happens late, and the requester finds out whether it actually works only after delivery. That's slow, inconsistent across engineers, invisible to the business while it's in flight, and it doesn't scale as the WebMethods/ChRIS estate migrates onto Boomi.</p>
-
-  <h3>Why now</h3>
-  <p>The platform is already moving toward Boomi iPaaS under a strangler-fig migration. That only pays off if new interfaces stop being built one bespoke process at a time. Intelligrator is the mechanism that makes the config-driven, generic-engine architectural decision (one engine process, each interface a config row — §7) real for the people requesting interfaces, not just the architecture diagram.</p>
-
-  <h3>Guiding principles</h3>
-  <table>
-    <tr><th>#</th><th>Principle</th><th>What it means in practice</th></tr>
-    <tr><td>1</td><td><strong>Configuration over construction</strong></td><td>Approval creates a config row, not a new component. This is the one architectural bet the whole product stands on.</td></tr>
-    <tr><td>2</td><td><strong>Prove it before you promise it</strong></td><td>Every connection claim is tested, not assumed — at request time, not at delivery time.</td></tr>
-    <tr><td>3</td><td><strong>Governance without a bottleneck</strong></td><td>Four-eyes approval stays human, but everything an approver needs to decide is already on the screen.</td></tr>
-    <tr><td>4</td><td><strong>Visibility is a feature, not an afterthought</strong></td><td>Status, run history, and audit are first-class screens, not database queries someone runs on request.</td></tr>
-  </table>
-
-  <h3>How you'd know it's working</h3>
-  <table>
-    <tr><th>Signal</th><th>Target direction</th></tr>
-    <tr><td>Time from approved request to live interface on Dev</td><td>Minutes, not weeks</td></tr>
-    <tr><td>Share of new interfaces built with zero manual Boomi development</td><td>Approaching 100%</td></tr>
-    <tr><td>Duplicate/near-duplicate interfaces</td><td>Caught before build, not discovered in production</td></tr>
-    <tr><td>Requesters emailing someone to ask "what's the status?"</td><td>Trending to zero — they check the tracker instead (§3b, US-601)</td></tr>
-  </table>
-
-  <h3>What it deliberately isn't, yet</h3>
-  <p>Not an event-triggered/file-arrival platform, not a transformation/mapping tool, not an auto-promoter to Test/Prod (see the Out of scope card above) — and not a replacement for platform engineering judgement. It removes the <em>manual</em> work, not the <em>oversight</em>.</p>
-
-  <div class="callout"><strong>The horizon.</strong> MVP proves the config-driven engine and the core request → approve → deploy loop. From there, the same self-service instinct extends outward: partners onboarding themselves for event-triggered transfers, promotion pipelines that carry the same evidence-based trust into Test and Prod, and eventually a genuine choice at request time between the hand-built engine (§1b) and Boomi's native MFT (§1c) — governed the same way, from the same portal. See §13 for the phased roadmap this vision points toward.</div>
-</section>
-
-<section id="howmft">
-  <h2>1b. How Boomi achieves MFT — technical mechanism &amp; error notification</h2>
-  <p class="lead">Boomi supports two distinct ways to move files under management. This catalogue and the Intelligrator Generic MFT Engine (§7–§8) use <strong>Option A</strong>. <strong>Option B</strong>, Boomi's own native Managed File Transfer product, is documented here for completeness and as a deliberate future evaluation, not something in scope today.</p>
-
-  <img src="assets/boomi-mft-mechanism.svg" alt="How Boomi achieves MFT — technical mechanism and error notification" style="width:100%;max-width:1180px;border:1px solid var(--border);border-radius:10px;background:#fff;margin:14px 0" />
-
-  <h3>Option A — Boomi Integration process-based transfer (used by this catalogue)</h3>
-  <ol>
-    <li>A <strong>Scheduled Start shape</strong> triggers a deployed process on the Atom at the interface's configured cron.</li>
-    <li>A <strong>source connector</strong> operation (Disk, SFTP, FTPS, or AS2 — Get/List) retrieves matching files from the source folder.</li>
-    <li>Optional <strong>validation/transform</strong> steps check the file profile, compute a checksum, and set tracked document properties.</li>
-    <li>A <strong>destination connector</strong> operation (Send/Put) delivers the file to the target folder.</li>
-    <li>A <strong>post-action</strong> step archives, deletes, or renames the source file per the interface's configuration.</li>
-    <li>Every execution — success or failure — is automatically visible in <strong>Process Reporting</strong>, keyed by execution ID.</li>
-  </ol>
-
-  <h3>Error handling &amp; notification (this is the mechanism behind F3.3 / US-207's notification opt-in)</h3>
-  <ul>
-    <li>Connector steps are wrapped in a <strong>Try/Catch shape</strong> with a configurable retry count (0–5). The failed document and its <code>Try/Catch Message</code> property are carried down the Catch path — the original document isn't lost.</li>
-    <li>The Catch path feeds a <strong>Message/Notify step</strong> that assembles a structured error (interface name, file name, failing step, error text, execution ID).</li>
-    <li>A <strong>Mail connector</strong> (or webhook, for Slack/Teams-style alerts) sends that error to the recipients captured at request time — this only fires when the interface's notification preference is <em>opted in</em>.</li>
-    <li>Critical failures can additionally raise an <strong>Exception shape</strong> to deliberately halt execution with a custom message, rather than letting a partial transfer continue silently.</li>
-    <li>Account/environment-level <strong>PROCESS.EXECUTION</strong> alerts (Log Level = ERROR) and <strong>USER.NOTIFICATION</strong> alerts (for non-terminating business warnings raised via Notify) provide a second, platform-wide safety net independent of any one process's own Mail connector.</li>
-    <li>Alert emails commonly embed a direct link to the execution in Process Reporting (<code>...searchType=executions;executionId={execId}</code>), so the platform team can jump straight to the failing run.</li>
-  </ul>
-
-  <h3>Option B — Boomi native Managed File Transfer (Boomi MFT, formerly Thru)</h3>
-  <div class="callout"><strong>Who is Thru, and why "formerly"?</strong> Thru, Inc. was an independent company founded in 2002, building one of the first cloud-native Managed File Transfer platforms — early work included a global edge transfer network and, in 2010, the first public API for cloud MFT. For years Thru held Boomi's highest partner tier ("Technology Partner") and shipped the <em>Thru MFT Connector for Boomi</em> as a joint third-party integration. That changed on 15 May 2025, when Boomi announced a definitive agreement to <strong>acquire Thru, Inc. outright</strong> (deal expected to close by end of June 2025). Thru's technology is now embedded directly into the Boomi Enterprise Platform as Boomi's own native MFT offering — it's Boomi-owned IP today, not a third-party add-on being resold.</div>
-  <p>Boomi MFT still operates the way Thru originally built it, splitting responsibilities into two channels:</p>
-  <table>
-    <tr><th>Channel</th><th>Responsibility</th></tr>
-    <tr><td><strong>Management Channel</strong></td><td>Flow definitions, partner/endpoint credentials, tracking, audit, and proof of delivery — all run in Boomi's cloud, with native alerts on failed transfers and a partner self-service portal for endpoint management.</td></tr>
-    <tr><td><strong>Data Channel</strong></td><td>The actual file payload transfer between Boomi and external endpoints — with persistent storage until delivered, automatic retry, auto-resume, and guaranteed delivery even across network interruption. Files are encrypted at rest, in transit, and at the file level, within a zero-trust, SOC 2-aligned architecture.</td></tr>
-  </table>
-  <p>A Boomi Integration process talks to it through the <strong>Managed File Transfer connector</strong>: a <code>Get</code> operation picks up a file from a Flow, a <code>Create</code> operation drops one off, and a <code>Create</code> with <code>Type=Exception</code> pushes error/exception context back into MFT's own tracking and audit trail — so failures are visible in MFT's dashboards even independent of the calling process.</p>
-  <div class="callout">Option B is worth a deliberate evaluation specifically where external trading partners need to self-manage their own endpoints, or where transfer volumes and regulatory requirements exceed what a hand-built Try/Catch chain comfortably manages. It carries its own licensing and isn't a default — this catalogue's P-116 pattern and Intelligrator's Generic MFT Engine deliberately use Option A, keeping full control over the config-driven, approval-gated model already designed in §7.</div>
-</section>
-
-<section id="nativemft">
-  <h2>1c. Boomi Managed File Transfer (native) — deep dive</h2>
-  <p class="lead">A full technical treatment of Option B on its own terms: the model it's built on, its two applications, its architecture, how a Boomi process talks to it, and how it monitors and alerts on failure.</p>
-
-  <img src="assets/boomi-mft-native-deepdive.svg" alt="Boomi Managed File Transfer native architecture — Organizations, Flows, Endpoints, channels, connector, and alerting" style="width:100%;max-width:1180px;border:1px solid var(--border);border-radius:10px;background:#fff;margin:14px 0" />
-
-  <h3>The core model — a postal service for files</h3>
-  <p>Boomi MFT organises everything around three concepts:</p>
-  <table>
-    <tr><th>Concept</th><th>What it is</th></tr>
-    <tr><td><strong>Organizations</strong></td><td>Every internal team or external trading partner participating in file exchange is represented as an Organization, with its own credentials, identifiers, and contacts — configured once, reused across every Flow it participates in.</td></tr>
-    <tr><td><strong>Flows</strong></td><td>Reusable workflow definitions that move files between endpoints. A single Flow can handle many-to-many endpoint routing, renaming, encryption, and compression. Organizations simply <em>subscribe</em> to a Flow to join it — no per-partner scripting.</td></tr>
-    <tr><td><strong>Endpoints</strong></td><td>The source or target locations for a transfer — an SFTP server, an AS2 endpoint, an HTTPS location, or a Boomi process itself.</td></tr>
-  </table>
-  <p>Participants <strong>pick up</strong> or <strong>drop off</strong> files against a Flow via a self-managed portal — the same pattern as a postal service, rather than either party needing to know the other's infrastructure details.</p>
-
-  <h3>Two applications, two different jobs</h3>
-  <table>
-    <tr><th>Application</th><th>Purpose</th><th>Relevance to this catalogue</th></tr>
-    <tr><td><strong>Automated File Transfer (AFT)</strong></td><td>System-to-system, scheduled, high-volume file transfer — from basic pickups to advanced multi-step workflows.</td><td><strong>This is the one that matters for MFT interfaces.</strong> AFT is driven from Boomi Integration via the MFT connector, or directly via the AFT APIs.</td></tr>
-    <tr><td><strong>File Sharing (FS)</strong></td><td>Organization-wide sharing designed for human collaboration, internal and external, with its own user guide, admin guide, and API set.</td><td>Not the focus here — FS is for people sharing files with people, not for scheduled system interfaces.</td></tr>
-  </table>
-
-  <h3>Architecture — two channels behind every Flow</h3>
-  <table>
-    <tr><th>Channel</th><th>Detail</th></tr>
-    <tr><td><strong>Management Channel</strong></td><td>Flow and endpoint definitions, partner credentials, tracking, audit trail, and proof of delivery — runs entirely in Boomi's cloud, with a partner self-service onboarding portal (subscribe to a Flow, add endpoints, manage credentials — no deployments needed).</td></tr>
-    <tr><td><strong>Data Channel</strong></td><td>The actual file payload transfer. Files are securely stored until delivered — with retry, auto-resume, and guaranteed delivery even across a network interruption. Encryption applies at rest, in transit, <em>and</em> at the file level.</td></tr>
-  </table>
-  <p>A <strong>distributed hybrid architecture</strong> option keeps the control plane in Boomi's cloud while letting large internal file transfers stay on the customer's own network — useful where data residency or network policy is a concern even though governance stays centralised.</p>
-
-  <h3>How a Boomi Integration process talks to it — the MFT connector</h3>
-  <ul>
-    <li><strong>Connection</strong> component: API URL, SiteURL, and SiteKey identify and authenticate to your MFT instance.</li>
-    <li><strong>Operation</strong> component: defines the Flow Secret to target (or leaves it blank and sets it dynamically via a Set Properties step, so one reusable operation can serve many Flows).</li>
-    <li><strong><code>GET</code></strong> — an inbound action that picks up a file from a Flow, returning the file in binary with its Filename and File Code as document properties.</li>
-    <li><strong><code>CREATE</code></strong> — an outbound action that drops a file off into a Flow, uploaded in chunks with no size limit.</li>
-    <li><strong><code>CREATE</code> with <code>Type=Exception</code></strong> — posts aggregated exception information back into MFT against the original File Code, so a failure detected inside a Boomi process is visible in MFT's own tracking, not just in Boomi's.</li>
-  </ul>
-
-  <h3>Monitoring, alerts, and error notification (native)</h3>
-  <ul>
-    <li>A <strong>"single pane of glass" Activity Page</strong> gives real-time, end-to-end visibility across every Organization, Endpoint, and Flow — not just the ones a given Boomi process touches.</li>
-    <li><strong>Real-time alerts</strong> fire on failed or stalled transfers independent of the calling Boomi process — so a failure is visible even if the triggering process itself never runs its own error branch.</li>
-    <li>Each alert links directly to the related <strong>Organization, Endpoint, or Flow</strong> page for investigation — the native equivalent of the execution-ID deep link described for Option A in §1b.</li>
-    <li>Alerts are triaged explicitly: an admin can <strong>Acknowledge</strong> or <strong>Clear</strong> each one from the Activity Page, keeping the feed a true outstanding-issues list rather than an ever-growing log.</li>
-    <li>Because every GUI function has a matching API, these alerts and their statuses can also be pulled into an external ticketing or monitoring system rather than relying solely on the native dashboard.</li>
-  </ul>
-
-  <h3>Security, compliance, and scale</h3>
-  <div class="grid2">
-    <div class="card"><h4>Security</h4>
-      <ul><li>Encryption at rest, in transit, and at the file level</li><li>Multi-factor authentication</li><li>Least-privilege, role-based access controls</li><li>Zero-trust architecture</li></ul></div>
-    <div class="card"><h4>Compliance</h4>
-      <ul><li>Full audit logging with proof of delivery and sender authenticity</li><li>Alignment with frameworks such as SOC 2</li><li>Supports regulatory file-exchange requirements in financial services, healthcare, and the public sector</li></ul></div>
-    <div class="card"><h4>Scale</h4>
-      <ul><li>Distributed, cloud-native microservices — capacity scales automatically</li><li>Processes millions of files per day</li><li>No imposed size limit on an individual file transfer</li></ul></div>
-    <div class="card"><h4>Licensing</h4>
-      <ul><li>Usage-based pricing</li><li>Full feature and API parity regardless of tier</li><li>Purchased as an add-on to the Boomi platform via your Boomi Account Executive</li></ul></div>
+  <div class="section-kicker">Section 2</div>
+  <h2>Product vision</h2>
+  <div class="vision-box">
+    <div class="tag">Vision statement</div>
+    <p><span class="who">For integration teams and business requesters</span> who need file transfer interfaces built reliably and fast, <strong>Intelligrator</strong> replaces a multi-week engineering request with a five-minute conversation and an automatic build — turning managed file transfer from something you wait on into something you simply ask for.</p>
   </div>
-
-  <div class="callout good">Where this leaves the choice for this programme: AFT is the relevant application (not File Sharing), and its connector maps directly onto the same Pickup/Dropoff/Exception vocabulary this catalogue already uses in §1b's Option A. The practical trade remains licensing and control — a hand-built Try/Catch chain costs nothing extra and stays fully config-driven and approval-gated (§7); Boomi MFT costs a separate line item but removes the need to build and maintain retry, auto-resume, partner onboarding, and alerting logic by hand, and gives external trading partners true self-service.</div>
+  <p class="lead">Every connection is proven before a request is submitted. Every interface is named and checked for duplicates automatically. Every approval leads straight to a live, deployed interface — with nothing built by hand.</p>
 </section>
 
+<section id="highlights">
+  <div class="section-kicker">Section 3</div>
+  <h2>Key highlights &amp; features</h2>
+  <div class="grid3">
+    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">✅ Prove it before you submit</h4><p style="margin:0">Source and destination connections — and the folders on them — are tested live in the wizard, not discovered as a failure after delivery.</p></div>
+    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">🔍 No duplicate interfaces</h4><p style="margin:0">Every request is checked against existing interfaces automatically, before anything is built twice.</p></div>
+    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">🏷️ Consistent naming, automatically</h4><p style="margin:0">Intelligrator suggests the interface name for you, following a standard convention — no naming guesswork.</p></div>
+    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">⚡ Zero manual build</h4><p style="margin:0">Approval triggers automatic provisioning on Boomi — the interface is live in minutes, not weeks.</p></div>
+    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">👁️ Full visibility, always</h4><p style="margin:0">Requesters track their request end to end; nobody has to email to ask "what's the status?"</p></div>
+    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">🛡️ Governed, not gatekept</h4><p style="margin:0">A human approver still decides — but every piece of evidence they need is already on the screen.</p></div>
+  </div>
+</section>
 
 <section id="personas">
-  <h2>2. Personas &amp; roles</h2>
+  <div class="section-kicker">Section 4</div>
+  <h2>Who uses Intelligrator</h2>
+  <p class="lead">Three roles cover the full MFT lifecycle:</p>
+  <div class="grid3">
+    <div class="persona-card"><div class="p-icon">🧑‍💼</div><h4>Standard User</h4><p>Requests an MFT interface through the wizard, tests connections, and tracks the request through to a live interface — no technical Boomi knowledge required.</p></div>
+    <div class="persona-card admin"><div class="p-icon">✅</div><h4>MFT Admin</h4><p>Reviews every request in the queue — with connection evidence and duplicate checks already attached — and approves or denies it.</p></div>
+    <div class="persona-card eng"><div class="p-icon">⚙️</div><h4>Platform Engineer</h4><p>Maintains the underlying Boomi engine, and steps in only when something needs deeper investigation — most requests never need them at all.</p></div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="section-kicker">Section 5</div>
+  <h2>Request flow</h2>
+  <p class="lead">How a standard user's request becomes a live, running interface:</p>
+  <img class="diagram" src="assets/request-flow.svg" alt="Request flow: standard user submits a request, it waits in a queue, the MFT admin approves or denies it, and on approval Boomi provisions a live interface automatically" />
+</section>
+
+<section id="journey">
+  <div class="section-kicker">Section 6</div>
+  <h2>End-to-end journey</h2>
+
+  <h3>Standard User — the request wizard</h3>
+  <div class="journey">
+    <div class="step"><span class="num">STEP 1</span>Log in</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 2</span>Requirement details</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 3</span>Source details</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 4</span>Destination details</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 5</span>File &amp; trigger</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 6</span>Summary &amp; submit</div>
+  </div>
   <table>
-    <tr><th>Persona</th><th>Description</th><th>Primary goals</th></tr>
-    <tr><td><strong>Requester</strong> (Business/Project team member)</td><td>Owns a business need to move files between two systems on a schedule.</td><td>Submit a request quickly, know it will work (connection tested), track status without chasing anyone.</td></tr>
-    <tr><td><strong>MFT Admin / Approver</strong></td><td>Platform gatekeeper reviewing the request queue.</td><td>Approve/reject with full context, enforce standards, avoid duplicate or unsafe interfaces.</td></tr>
-    <tr><td><strong>Platform Engineer</strong></td><td>Maintains the provisioning engine, process templates, and Boomi runtimes.</td><td>Zero manual per-interface builds; fast diagnosis when provisioning fails.</td></tr>
-    <tr><td><strong>Auditor / Service Manager</strong></td><td>Needs traceability of who requested, approved, and deployed what and when.</td><td>Complete, immutable audit trail; run history per interface.</td></tr>
+    <tr><th>Step</th><th>What happens</th></tr>
+    <tr><td>Log in</td><td>The user signs in and lands on a simple dashboard of their own requests.</td></tr>
+    <tr><td>Requirement details</td><td>Purpose, business value, and a point of contact — the "why" behind the request.</td></tr>
+    <tr><td>Source details</td><td>Where the file comes from — tested live, with the folder confirmed to exist, before moving on.</td></tr>
+    <tr><td>Destination details</td><td>Where the file needs to go — tested the same way.</td></tr>
+    <tr><td>File &amp; trigger</td><td>What the file looks like, and when the transfer should run.</td></tr>
+    <tr><td>Summary &amp; submit</td><td>A plain-English recap of everything entered, then one click to submit into the queue.</td></tr>
+  </table>
+
+  <h3>MFT Admin — review to production</h3>
+  <div class="journey">
+    <div class="step"><span class="num">STEP 1</span>Log in</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 2</span>Open the queue</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 3</span>Approve or deny</div>
+    <span class="arr">→</span>
+    <div class="step"><span class="num">STEP 4</span>Interface goes live</div>
+  </div>
+  <table>
+    <tr><th>Step</th><th>What happens</th></tr>
+    <tr><td>Log in</td><td>The admin signs in to a queue of everything awaiting a decision.</td></tr>
+    <tr><td>Open the queue</td><td>Every request already carries its connection-test results and duplicate-check outcome — no chasing for information.</td></tr>
+    <tr><td>Approve or deny</td><td>One decision, with a comment if it's a denial. The requester is notified immediately either way.</td></tr>
+    <tr><td>Interface goes live</td><td>An approval is all it takes — Boomi provisions and deploys the MFT interface automatically, with no manual build.</td></tr>
   </table>
 </section>
 
-<section id="workflow">
-  <h2>3. End-to-end workflow</h2>
-  <div class="flow">
-    <span class="step">1. Login</span><span class="arr">→</span>
-    <span class="step">2. Wizard: requirement details</span><span class="arr">→</span>
-    <span class="step">3. Wizard: source &amp; destination + connection tests</span><span class="arr">→</span>
-    <span class="step">4. Duplicate check + name suggestion</span><span class="arr">→</span>
-    <span class="step">5. Wizard: file, trigger &amp; notifications</span><span class="arr">→</span>
-    <span class="step">6. Summary &amp; submit</span><span class="arr">→</span>
-    <span class="step">7. Approval queue</span><span class="arr">→</span>
-    <span class="step">8. Auto-build on Boomi</span><span class="arr">→</span>
-    <span class="step">9. Deploy to Dev</span><span class="arr">→</span>
-    <span class="step">10. Smoke test &amp; notify</span>
+<section id="technical">
+  <div class="section-kicker">Section 7</div>
+  <h2>How it works — technical approach</h2>
+  <p class="lead">Intelligrator's automation is built on two complementary Boomi capabilities.</p>
+
+  <div class="grid2">
+    <div class="tech-card">
+      <h4>Boomi Integration (iPaaS)</h4>
+      <p>A single, reusable process on Boomi's runtime performs the transfer itself: it picks up the file from the source, validates it, delivers it to the destination, and carries out any follow-up action such as archiving the original. Every approved request becomes a configuration entry for this one process, rather than a new process being built each time — which is what makes "no manual build" possible.</p>
+    </div>
+    <div class="tech-card">
+      <h4>Boomi Managed File Transfer</h4>
+      <p>For interfaces that call for it, Boomi's own native Managed File Transfer product provides a governed, secure channel for the transfer — with built-in retry, guaranteed delivery, and encryption at every stage.</p>
+    </div>
   </div>
 
-  <h3>Wizard step detail</h3>
+  <h3>Boomi MFT's two applications</h3>
   <table>
-    <tr><th>Step</th><th>Captured / performed</th><th>Validation</th></tr>
-    <tr><td><strong>1. Interface requirement details</strong></td><td>Purpose · Business domain · Business value · Point of contact</td><td>Mandatory fields; domain from controlled list; contact validated against directory.</td></tr>
-    <tr><td><strong>2. Source details</strong></td><td>Protocol (SFTP/FTPS), server, host, port, credentials or key reference; folder selection with live folder browse where permitted</td><td><em>Test Source Connection</em> button: authenticates <strong>and verifies the folder exists</strong>. Result shown inline. Cannot proceed on failure (override requires justification).</td></tr>
-    <tr><td><strong>3. Destination details</strong></td><td>Same as source, for target system; destination folder selection/browse</td><td><em>Test Destination Connection</em> button: authenticates <strong>and verifies the folder exists</strong> plus write permission probe.</td></tr>
-    <tr><td><strong>4. Uniqueness &amp; naming</strong></td><td>Intelligrator computes an interface fingerprint and checks the registry</td><td>If the same source/destination/file-pattern combination exists → block or link to existing interface. Otherwise Intelligrator <strong>suggests the MFT interface name</strong> per naming convention.</td></tr>
-    <tr><td><strong>5. File &amp; trigger details</strong></td><td>File name pattern, expected size/volume, format, post-transfer action (archive/delete/rename) · Trigger: schedule (cron / frequency picker), timezone, blackout windows · Error notification opt-in/opt-out with recipients</td><td>Cron expression validated and rendered in plain English ("Every weekday at 06:30"). Notification recipients validated.</td></tr>
-    <tr><td><strong>6. Summary &amp; submit</strong></td><td>Read-only recap of every step with edit links; declaration checkbox</td><td>Submission creates the request record, emits a lifecycle event, and places it in the approval queue.</td></tr>
+    <tr><th>Application</th><th>What it's for</th></tr>
+    <tr><td><strong>Automated File Transfer (AFT)</strong></td><td>System-to-system, scheduled file transfer — this is the application Intelligrator's MFT interfaces use.</td></tr>
+    <tr><td><strong>File Sharing (FS)</strong></td><td>Person-to-person file sharing and collaboration — a different use case, not part of this capability.</td></tr>
   </table>
 
-  <h3>Post-submission lifecycle</h3>
-  <ol>
-    <li><strong>Queue:</strong> request lands in the admin approval queue (FIFO with priority override), visible to the requester as <code>SUBMITTED</code>.</li>
-    <li><strong>Review:</strong> admin sees the full request, the connection-test evidence, the duplicate-check result, and the generated name. Actions: <em>Approve</em>, <em>Reject (with reason)</em>, <em>Return for changes</em>.</li>
-    <li><strong>Provision:</strong> on approval, the provisioning engine configures the interface on Boomi (see §7), applies credentials to the environment via secure extension injection, and attaches the schedule.</li>
-    <li><strong>Deploy &amp; verify:</strong> deployment to the Dev runtime, followed by an automated smoke test (connect to both endpoints, list folders). Status moves to <code>DEPLOYED_DEV</code>.</li>
-    <li><strong>Notify:</strong> requester and point of contact receive confirmation with the interface name, schedule, and a link to the run-status dashboard. Failures at any stage move the request to <code>PROVISION_FAILED</code> with diagnostics for the platform team.</li>
-  </ol>
-</section>
-
-<section id="personaflow">
-  <h2>3b. Persona-based flow — build spec for the development team</h2>
-  <p class="lead">This section hands the development team a screen-by-screen, action-by-action build spec: for each persona, every screen, the UI elements on it, the user action taken, the exact integration call it triggers (cross-referenced to the API in §10 and the Boomi Platform API objects in §7), and the resulting state transition (§9). Build the four persona flows below as separate route groups sharing the same design system.</p>
-
-  <h3>Persona 1 — Requester</h3>
-  <div class="flow">
-    <span class="step">SSO Login</span><span class="arr">→</span>
-    <span class="step">My Requests dashboard</span><span class="arr">→</span>
-    <span class="step">Wizard Steps 1–6</span><span class="arr">→</span>
-    <span class="step">Tracker</span><span class="arr">→</span>
-    <span class="step">Run dashboard</span>
-  </div>
+  <h3>Connecting Boomi Integration to Boomi MFT</h3>
+  <p>A Boomi process interacts with Boomi MFT through a dedicated connector, using two operations:</p>
   <table>
-    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
-    <tr><td>1</td><td>SSO Login</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML (F1.1)</td><td>Session established → dashboard</td></tr>
-    <tr><td>2</td><td>My Requests dashboard</td><td>Status-badged table; filters; "New Request" button</td><td>Click New Request, or open a draft</td><td><code>GET /requests?mine=true</code></td><td>Opens Wizard at step 1, or at last saved step for a draft</td></tr>
-    <tr><td>3</td><td>Wizard 1 — Requirement details</td><td>Purpose (textarea), Business Domain (governed dropdown), Business Value (textarea), Point of Contact (directory typeahead)</td><td>Next</td><td><code>POST /requests</code> then <code>PUT /requests/{id}</code> per field save</td><td>State <code>DRAFT</code>; advance to step 2</td></tr>
-    <tr><td>4</td><td>Wizard 2 — Source details</td><td>Protocol radio (SFTP/FTPS), host/port, credential entry or vault-reference picker, folder path/browser</td><td>Click <em>Test Source Connection</em></td><td><code>POST /requests/{id}/test-source</code> → Boomi Connection Test API process (auth + folder-exists)</td><td>Inline pass/fail badge + timestamp stored; fail requires documented override to proceed</td></tr>
-    <tr><td>5</td><td>Wizard 3 — Destination details</td><td>Same as step 4 for target</td><td>Click <em>Test Destination Connection</em></td><td><code>POST /requests/{id}/test-destination</code> (adds write-probe)</td><td>As above</td></tr>
-    <tr><td>6</td><td>Wizard 4 — Uniqueness &amp; naming</td><td>Read-only suggested-name field; duplicate banner (green/amber/red)</td><td>Auto-runs on step entry</td><td><code>GET /requests/{id}/duplicate-check</code></td><td>Exact match blocks Next; similar match warns and requires confirmation</td></tr>
-    <tr><td>7</td><td>Wizard 5 — File &amp; trigger</td><td>Filename pattern, format dropdown, expected volume, post-action dropdown, visual cron builder + plain-English preview, timezone, blackout date-range, notification opt-in toggle + recipient chips</td><td>Next</td><td>Client-side cron validation; <code>PUT /requests/{id}</code></td><td>Advance to summary</td></tr>
-    <tr><td>8</td><td>Wizard 6 — Summary &amp; submit</td><td>Read-only recap grouped by step with Edit links; declaration checkbox</td><td>Submit</td><td><code>POST /requests/{id}/submit</code></td><td>State → <code>SUBMITTED</code>; <code>RequestSubmitted</code> event published; redirect to Tracker</td></tr>
-    <tr><td>9</td><td>Tracker</td><td>Vertical stepper across the full state machine with timestamps/actors</td><td>Passive / refresh</td><td><code>GET /requests/{id}</code> (poll or SSE)</td><td>Updates live as admin and engine progress the request</td></tr>
-    <tr><td>10</td><td>Run dashboard</td><td>Per-interface run table: date, overall status, file count</td><td>Drill into a run</td><td><code>GET /interfaces/{name}/runs</code></td><td>Per-file name/size/outcome/error detail</td></tr>
+    <tr><th>Operation</th><th>What it does</th></tr>
+    <tr><td><strong>Get</strong></td><td>Picks up a file that's waiting to be collected.</td></tr>
+    <tr><td><strong>Create</strong></td><td>Drops a file off for delivery.</td></tr>
   </table>
-
-  <h3>Persona 2 — MFT Admin / Approver</h3>
-  <div class="flow">
-    <span class="step">SSO Login</span><span class="arr">→</span>
-    <span class="step">Approval queue</span><span class="arr">→</span>
-    <span class="step">Review detail</span><span class="arr">→</span>
-    <span class="step">Decision modal</span><span class="arr">→</span>
-    <span class="step">Provisioning status</span>
-  </div>
-  <table>
-    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
-    <tr><td>1</td><td>SSO Login (Approver role)</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML + role check (F1.2)</td><td>Non-approvers denied and audited</td></tr>
-    <tr><td>2</td><td>Approval queue</td><td>Oldest-first table: Request ID, suggested name, domain, requester, age, SLA flag; filters</td><td>Open a row</td><td><code>GET /approvals?state=SUBMITTED</code></td><td>Opens Review detail</td></tr>
-    <tr><td>3</td><td>Review detail</td><td>Full six-step wizard recap + Connection Test Evidence panel (timestamped) + Duplicate Check outcome panel</td><td>Choose Approve / Reject / Return</td><td>—</td><td>Opens Decision modal (comment mandatory for Reject/Return)</td></tr>
-    <tr><td>4</td><td>Decision modal</td><td>Comment box, confirm button</td><td>Confirm decision</td><td><code>POST /approvals/{id}/decision</code></td><td>State → <code>APPROVED</code> / <code>REJECTED</code> / <code>RETURNED</code>; requester notified</td></tr>
-    <tr><td>5</td><td>Provisioning status (approve path)</td><td>Read-only progress: Config → Secrets → Schedule → Smoke test</td><td>Passive / refresh</td><td>Subscribes to <code>ProvisioningStepCompleted</code> events</td><td><code>DEPLOYED_DEV</code> or <code>PROVISION_FAILED</code></td></tr>
-  </table>
-
-  <h3>Persona 3 — Platform Engineer</h3>
-  <div class="flow">
-    <span class="step">SSO Login</span><span class="arr">→</span>
-    <span class="step">Provisioning failures dashboard</span><span class="arr">→</span>
-    <span class="step">Failure detail</span><span class="arr">→</span>
-    <span class="step">Retry / engine management</span>
-  </div>
-  <table>
-    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
-    <tr><td>1</td><td>SSO Login (Platform Admin role)</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML + role check</td><td>Access to platform-only screens</td></tr>
-    <tr><td>2</td><td>Provisioning failures dashboard</td><td>List: failing step, error summary, correlation ID, age</td><td>Open a failure</td><td><code>GET /requests?state=PROVISION_FAILED</code></td><td>Opens Failure detail</td></tr>
-    <tr><td>3</td><td>Failure detail</td><td>Full diagnostics: error payload, step log, compensation actions taken</td><td>Click Retry from failed step</td><td><code>POST /requests/{id}/retry-provisioning</code></td><td>Re-enters <code>PROVISIONING</code> at the failed step, no re-approval needed</td></tr>
-    <tr><td>4</td><td>Engine version / config management</td><td>Deployed engine versions list; canary config toggle</td><td>Promote / roll back a version</td><td>Boomi Platform API: <code>Component</code> / <code>PackagedComponent</code> / <code>DeployedPackage</code></td><td>Controlled engine upgrades outside the self-service flow</td></tr>
-  </table>
-
-  <h3>Persona 4 — Auditor</h3>
-  <div class="flow">
-    <span class="step">SSO Login</span><span class="arr">→</span>
-    <span class="step">Audit trail search</span><span class="arr">→</span>
-    <span class="step">Results + export</span>
-  </div>
-  <table>
-    <tr><th>#</th><th>Screen</th><th>Key UI elements</th><th>User action</th><th>Integration call</th><th>Result / next state</th></tr>
-    <tr><td>1</td><td>SSO Login (Auditor role)</td><td>Corporate SSO button</td><td>Authenticate</td><td>OIDC/SAML + role check</td><td>Access to audit screens</td></tr>
-    <tr><td>2</td><td>Audit trail search</td><td>Filters: entity/request ID, date range, actor, event type</td><td>Search</td><td><code>GET /audit?entity=...</code></td><td>Results table</td></tr>
-    <tr><td>3</td><td>Results + export</td><td>Paginated event list: actor, timestamp, transition, before/after state; Export CSV button</td><td>Export</td><td>Same endpoint with CSV format</td><td>Browser-native file download</td></tr>
-  </table>
-
-  <div class="callout">Every "Integration call" column above is the contract the frontend and backend teams build to — the frontend needs nothing beyond these calls, and the backend needs nothing beyond implementing exactly these calls plus the provisioning saga in §7.</div>
-</section>
-
-<section id="features">
-  <h2>4. Feature catalogue</h2>
-  <table>
-    <tr><th>Epic</th><th>Feature</th><th>Description</th><th>Priority</th></tr>
-    <tr><td rowspan="2"><span class="badge b-epic">E1 Access &amp; Identity</span></td><td>F1.1 SSO login</td><td>OIDC/SAML single sign-on; session management.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F1.2 Role-based access</td><td>Requester, Approver, Platform Admin, Auditor roles; approvers cannot approve their own requests.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td rowspan="7"><span class="badge b-epic">E2 Request Wizard</span></td><td>F2.1 Requirement capture</td><td>Purpose, business domain, business value, point of contact.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F2.2 Source/destination capture</td><td>Protocol, host, port, credential entry or vault reference.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F2.3 Live connection test</td><td>On-demand test of source and destination: authenticate + folder-exists + (destination) write probe; evidence stored with the request.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F2.4 Folder browser</td><td>Where the endpoint permits listing, present a navigable folder picker instead of free text.</td><td><span class="badge b-should">SHOULD</span></td></tr>
-    <tr><td>F2.5 Duplicate detection</td><td>Fingerprint (source host+folder, destination host+folder, file pattern) checked against the interface registry before submission.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F2.6 Name suggestion</td><td>System-generated interface name per convention, e.g. <code>MFT-&lt;DOMAIN&gt;-&lt;SRC&gt;-&lt;TGT&gt;-&lt;NNN&gt;</code>; admin may override.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F2.7 Draft save &amp; resume</td><td>Wizard state persists; requester can resume incomplete requests.</td><td><span class="badge b-should">SHOULD</span></td></tr>
-    <tr><td rowspan="3"><span class="badge b-epic">E3 Trigger &amp; Files</span></td><td>F3.1 File details</td><td>Filename pattern (glob/regex), format, expected volume, post-transfer action.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F3.2 Schedule builder</td><td>Frequency picker generating cron; plain-English rendering; timezone; blackout windows.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F3.3 Error notification preference</td><td>Opt-in/opt-out per interface; recipient list; channel (email v1).</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td rowspan="4"><span class="badge b-epic">E4 Approval Workflow</span></td><td>F4.1 Approval queue</td><td>Filterable queue with SLA ageing indicators.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F4.2 Review screen</td><td>Full request + connection-test evidence + duplicate result in one view; approve / reject / return-for-changes with comments.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F4.3 Four-eyes control</td><td>Requester ≠ approver enforced; all decisions audited.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F4.4 Queue notifications</td><td>Approvers notified of new items; requesters notified of decisions.</td><td><span class="badge b-should">SHOULD</span></td></tr>
-    <tr><td rowspan="4"><span class="badge b-epic">E5 Automated Provisioning</span></td><td>F5.1 Template-based build</td><td>Approved request becomes configuration for the generic MFT engine process (see §7); no per-interface code.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F5.2 Secure credential injection</td><td>Credentials written to the secrets store / Boomi environment extensions at provision time — never persisted in the Intelligrator database.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F5.3 Automated Dev deployment</td><td>Schedule attached and interface activated on the Dev runtime via Boomi Platform API.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F5.4 Post-deploy smoke test</td><td>Automated connectivity re-verification after deployment; result recorded on the request.</td><td><span class="badge b-should">SHOULD</span></td></tr>
-    <tr><td rowspan="3"><span class="badge b-epic">E6 Observability &amp; Ops</span></td><td>F6.1 Request tracker</td><td>Requester-facing status timeline across the full lifecycle state machine.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F6.2 Run dashboard</td><td>Per-interface run history: overall run status and the files transferred successfully, failures with reasons.</td><td><span class="badge b-must">MUST</span></td></tr>
-    <tr><td>F6.3 Audit trail</td><td>Immutable event log of every state transition, decision, and provisioning action.</td><td><span class="badge b-must">MUST</span></td></tr>
-  </table>
+  <div class="callout good"><strong>The result</strong> A requester never sees any of this — they see a wizard, a queue, and a live interface. Everything above happens automatically, the moment a request is approved.</div>
 </section>
 
 <section id="stories">
-  <h2>5. User stories</h2>
+  <div class="section-kicker">Section 8</div>
+  <h2>User stories</h2>
 
-  <h3>Epic E1 — Access &amp; identity</h3>
-  <div class="story"><span class="sid">US-101</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to sign in with my corporate identity <strong>so that</strong> my requests are attributable to me without a separate account.</p>
-    <p class="ac"><strong>AC:</strong> Given a valid corporate identity, when I access Intelligrator, then I am authenticated via SSO and my display name and email are pre-populated on requests. Sessions expire per security policy.</p></div>
-  <div class="story"><span class="sid">US-102</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> platform admin <strong>I want</strong> role-based permissions <strong>so that</strong> only authorised approvers can action the queue.</p>
-    <p class="ac"><strong>AC:</strong> Given a user without the Approver role, when they open the approval queue, then access is denied and the attempt is audited. An approver can never approve a request they raised.</p></div>
+  <h3>Standard User</h3>
+  <div class="story"><span class="sid">US-01</span><span class="badge b-must">MUST</span>
+    <p><strong>As a</strong> standard user, <strong>I want</strong> to log in and see my own requests <strong>so that</strong> I always know where things stand without asking anyone.</p></div>
+  <div class="story"><span class="sid">US-02</span><span class="badge b-must">MUST</span>
+    <p><strong>As a</strong> standard user, <strong>I want</strong> to describe the purpose and business value of my request <strong>so that</strong> the admin has the context to approve it quickly.</p></div>
+  <div class="story"><span class="sid">US-03</span><span class="badge b-must">MUST</span>
+    <p><strong>As a</strong> standard user, <strong>I want</strong> to test my source and destination connections before submitting <strong>so that</strong> I know the interface will work before anyone builds it.</p></div>
+  <div class="story"><span class="sid">US-04</span><span class="badge b-must">MUST</span>
+    <p><strong>As a</strong> standard user, <strong>I want</strong> to be warned if a similar interface already exists <strong>so that</strong> I don't accidentally request a duplicate.</p></div>
+  <div class="story"><span class="sid">US-05</span><span class="badge b-must">MUST</span>
+    <p><strong>As a</strong> standard user, <strong>I want</strong> a plain-English summary before I submit <strong>so that</strong> I can catch mistakes before they go to review.</p></div>
+  <div class="story"><span class="sid">US-06</span><span class="badge b-must">MUST</span>
+    <p><strong>As a</strong> standard user, <strong>I want</strong> to track my request through every stage <strong>so that</strong> I know the moment it's approved and live.</p></div>
 
-  <h3>Epic E2 — Request wizard</h3>
-  <div class="story"><span class="sid">US-201</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to capture purpose, business domain, business value and point of contact <strong>so that</strong> approvers have the business context to make a decision.</p>
-    <p class="ac"><strong>AC:</strong> Given the requirement step, when any mandatory field is empty, then I cannot advance and the missing field is highlighted. Business domain is selected from a governed list. Point of contact is validated against the directory.</p></div>
-  <div class="story"><span class="sid">US-202</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to enter source server details and test the connection <strong>so that</strong> I know the interface will work before I submit.</p>
-    <p class="ac"><strong>AC:</strong> Given valid source details, when I click <em>Test Source Connection</em>, then the system authenticates, verifies the selected folder exists, and displays pass/fail with detail within 15 seconds. The test result (timestamp + outcome) is stored with the request. Given a failed test, then I cannot proceed without a documented override.</p></div>
-  <div class="story"><span class="sid">US-203</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to enter destination details and test the connection <strong>so that</strong> delivery-side failures are caught at request time.</p>
-    <p class="ac"><strong>AC:</strong> As US-202 for the destination, plus a write-permission probe (create/delete a zero-byte marker file where policy permits).</p></div>
-  <div class="story"><span class="sid">US-204</span><span class="badge b-should">SHOULD</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to browse and select the source/destination folder <strong>so that</strong> I don't mistype paths.</p>
-    <p class="ac"><strong>AC:</strong> Given a successful authentication and an endpoint that permits listing, when I open the folder picker, then I can navigate directories and select one; the selected path populates the form. If listing is not permitted, free-text entry with validation applies.</p></div>
-  <div class="story"><span class="sid">US-205</span><span class="badge b-must">MUST</span>
-    <p><strong>As</strong> Intelligrator <strong>I want</strong> to check that the requested interface is new and not a duplicate <strong>so that</strong> the estate stays clean and costs aren't duplicated.</p>
-    <p class="ac"><strong>AC:</strong> Given completed source and destination details, when I advance, then a fingerprint of (source host+folder, destination host+folder, file pattern) is checked against the interface registry. On a match, the existing interface name and owner are shown and submission of an identical request is blocked; a "similar" match (same endpoints, different pattern) shows a warning requiring confirmation.</p></div>
-  <div class="story"><span class="sid">US-206</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> Intelligrator to suggest the MFT interface name <strong>so that</strong> naming is consistent without me knowing the standard.</p>
-    <p class="ac"><strong>AC:</strong> Given a non-duplicate request, then a name of the form <code>MFT-&lt;DOMAIN&gt;-&lt;SOURCE&gt;-&lt;TARGET&gt;-&lt;SEQ&gt;</code> is generated, guaranteed unique, and shown read-only to the requester (approver may override).</p></div>
-  <div class="story"><span class="sid">US-207</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to define file details, a schedule, and error-notification preferences <strong>so that</strong> the interface runs when and how the business needs.</p>
-    <p class="ac"><strong>AC:</strong> Given the trigger step, when I pick a frequency, then the equivalent cron and a plain-English description are displayed. Invalid cron is rejected. Notification is explicit opt-in/opt-out with at least one recipient required when opted in.</p></div>
-  <div class="story"><span class="sid">US-208</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> a summary of all captured steps before submitting <strong>so that</strong> I can verify and correct mistakes.</p>
-    <p class="ac"><strong>AC:</strong> Given the summary step, then every captured value is shown grouped by wizard step with an edit link per group; when I submit, the request becomes read-only, receives a unique request ID, and appears in my tracker as <code>SUBMITTED</code>.</p></div>
-  <div class="story"><span class="sid">US-209</span><span class="badge b-should">SHOULD</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to save a draft and resume later <strong>so that</strong> I don't lose work while gathering connection details.</p>
-    <p class="ac"><strong>AC:</strong> Wizard state persists on every step change; drafts appear in "My requests" as <code>DRAFT</code> and reopen at the last completed step.</p></div>
+  <h3>MFT Admin</h3>
+  <div class="story"><span class="sid">US-07</span><span class="badge b-must">MUST</span>
+    <p><strong>As an</strong> MFT admin, <strong>I want</strong> a single queue of everything awaiting my decision <strong>so that</strong> nothing gets missed.</p></div>
+  <div class="story"><span class="sid">US-08</span><span class="badge b-must">MUST</span>
+    <p><strong>As an</strong> MFT admin, <strong>I want</strong> connection-test results and duplicate checks already attached to each request <strong>so that</strong> I can decide without chasing anyone for information.</p></div>
+  <div class="story"><span class="sid">US-09</span><span class="badge b-must">MUST</span>
+    <p><strong>As an</strong> MFT admin, <strong>I want</strong> to approve or deny with a comment <strong>so that</strong> the requester understands the outcome.</p></div>
+  <div class="story"><span class="sid">US-10</span><span class="badge b-must">MUST</span>
+    <p><strong>As an</strong> MFT admin, <strong>I want</strong> approval to trigger automatic provisioning <strong>so that</strong> I never have to ask engineering to build anything by hand.</p></div>
 
-  <h3>Epic E4 — Approval workflow</h3>
-  <div class="story"><span class="sid">US-401</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> MFT admin <strong>I want</strong> a queue of submitted requests <strong>so that</strong> I can process approvals in order and within SLA.</p>
-    <p class="ac"><strong>AC:</strong> Given submitted requests, then the queue lists them oldest-first with request ID, name, domain, requester, age, and SLA indicator; filters by domain/status/requester are available.</p></div>
-  <div class="story"><span class="sid">US-402</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> MFT admin <strong>I want</strong> the full request with connection-test evidence and duplicate-check outcome in one view <strong>so that</strong> I can decide without leaving the screen.</p>
-    <p class="ac"><strong>AC:</strong> Given a queue item, when opened, then all wizard data, both test results (with timestamps), and the fingerprint check outcome are displayed; actions <em>Approve</em>, <em>Reject</em>, <em>Return for changes</em> each require/permit a comment and are audited with actor and timestamp.</p></div>
-  <div class="story"><span class="sid">US-403</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to be notified of the approval decision <strong>so that</strong> I know whether to expect deployment or to amend my request.</p>
-    <p class="ac"><strong>AC:</strong> On any decision, the requester and point of contact receive a notification containing the decision, comment, and next steps; returned requests reopen as editable drafts.</p></div>
-
-  <h3>Epic E5 — Automated provisioning</h3>
-  <div class="story"><span class="sid">US-501</span><span class="badge b-must">MUST</span>
-    <p><strong>As the</strong> provisioning engine <strong>I want</strong> to configure an approved request onto the Boomi MFT engine automatically <strong>so that</strong> no per-interface development is needed.</p>
-    <p class="ac"><strong>AC:</strong> Given an <code>APPROVED</code> request, then within 5 minutes the interface configuration is registered, credentials are injected into the secure store (never the application DB), the schedule is attached, and the interface is active on Dev. All provisioning steps are idempotent — re-running for the same request ID never creates duplicates.</p></div>
-  <div class="story"><span class="sid">US-502</span><span class="badge b-should">SHOULD</span>
-    <p><strong>As the</strong> provisioning engine <strong>I want</strong> to run a post-deployment smoke test <strong>so that</strong> the interface is verified working before the requester is told it's live.</p>
-    <p class="ac"><strong>AC:</strong> After deployment, both endpoints are re-tested from the Dev runtime; success moves the request to <code>DEPLOYED_DEV</code>; failure moves it to <code>PROVISION_FAILED</code> with diagnostics and alerts the platform team, and compensating actions de-schedule the partial deployment.</p></div>
-  <div class="story"><span class="sid">US-503</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> platform engineer <strong>I want</strong> provisioning failures surfaced with full diagnostics <strong>so that</strong> I can remediate quickly.</p>
-    <p class="ac"><strong>AC:</strong> Failed provisioning records the failing step, error payload, and correlation ID; retry from the failed step is possible without re-approval.</p></div>
-
-  <h3>Epic E6 — Observability</h3>
-  <div class="story"><span class="sid">US-601</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> requester <strong>I want</strong> to track my request through every state <strong>so that</strong> I never need to email anyone for status.</p>
-    <p class="ac"><strong>AC:</strong> The tracker shows a timeline of state transitions with timestamps and actors, matching the state machine in §9.</p></div>
-  <div class="story"><span class="sid">US-602</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> interface owner <strong>I want</strong> to see run history — overall run status and the files transferred successfully <strong>so that</strong> I can confirm business data is flowing.</p>
-    <p class="ac"><strong>AC:</strong> Per interface, each execution shows start/end, overall status, file count, per-file name/size/outcome, and error detail for failures. Data retained ≥ 90 days.</p></div>
-  <div class="story"><span class="sid">US-603</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> auditor <strong>I want</strong> an immutable audit trail <strong>so that</strong> every request, decision, and deployment is evidenced.</p>
-    <p class="ac"><strong>AC:</strong> All lifecycle events are append-only with actor, timestamp, and before/after state; export to CSV is available to the Auditor role.</p></div>
+  <h3>Platform Engineer</h3>
+  <div class="story"><span class="sid">US-11</span><span class="badge b-should">SHOULD</span>
+    <p><strong>As a</strong> platform engineer, <strong>I want</strong> to be alerted only when automatic provisioning fails <strong>so that</strong> my time goes to genuine exceptions, not routine builds.</p></div>
+  <div class="story"><span class="sid">US-12</span><span class="badge b-should">SHOULD</span>
+    <p><strong>As a</strong> platform engineer, <strong>I want</strong> clear diagnostics on any failed provisioning <strong>so that</strong> I can resolve it quickly and keep the queue moving.</p></div>
 </section>
 
-<section id="architecture">
-  <h2>6. Solution architecture</h2>
-  <p class="lead">Three planes: a <strong>portal plane</strong> (Intelligrator web app + API), a <strong>control plane</strong> (approval workflow, provisioning engine, interface registry), and an <strong>execution plane</strong> (the generic MFT engine running on Boomi).</p>
-
-  <svg viewBox="0 0 980 430" style="width:100%;max-width:980px;background:#11161d;border:1px solid var(--border);border-radius:10px;margin:14px 0">
-    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 z" fill="#9da7b3"/></marker></defs>
-    <!-- Portal plane -->
-    <rect x="20" y="20" width="290" height="390" rx="10" fill="#0f2e4d" opacity="0.35" stroke="#58a6ff"/>
-    <text x="165" y="45" fill="#58a6ff" font-size="14" font-weight="bold" text-anchor="middle">PORTAL PLANE</text>
-    <rect x="45" y="65" width="240" height="52" rx="8" fill="#1c2129" stroke="#58a6ff"/><text x="165" y="88" fill="#e6edf3" font-size="12" text-anchor="middle">Intelligrator Web UI</text><text x="165" y="105" fill="#9da7b3" font-size="10" text-anchor="middle">wizard · queue · dashboards (SSO)</text>
-    <rect x="45" y="135" width="240" height="52" rx="8" fill="#1c2129" stroke="#58a6ff"/><text x="165" y="158" fill="#e6edf3" font-size="12" text-anchor="middle">Intelligrator API</text><text x="165" y="175" fill="#9da7b3" font-size="10" text-anchor="middle">REST · RFC 7807 errors · OAuth2</text>
-    <rect x="45" y="205" width="240" height="52" rx="8" fill="#1c2129" stroke="#39c5cf"/><text x="165" y="228" fill="#e6edf3" font-size="12" text-anchor="middle">Connection Test Service</text><text x="165" y="245" fill="#9da7b3" font-size="10" text-anchor="middle">auth + folder-exists + write probe</text>
-    <rect x="45" y="275" width="240" height="52" rx="8" fill="#1c2129" stroke="#bc8cff"/><text x="165" y="298" fill="#e6edf3" font-size="12" text-anchor="middle">Request DB (Postgres)</text><text x="165" y="315" fill="#9da7b3" font-size="10" text-anchor="middle">requests · states · audit events</text>
-    <rect x="45" y="345" width="240" height="52" rx="8" fill="#1c2129" stroke="#f85149"/><text x="165" y="368" fill="#e6edf3" font-size="12" text-anchor="middle">Secrets Vault</text><text x="165" y="385" fill="#9da7b3" font-size="10" text-anchor="middle">endpoint credentials (never in DB)</text>
-    <!-- Control plane -->
-    <rect x="345" y="20" width="290" height="390" rx="10" fill="#123c2b" opacity="0.35" stroke="#3fb950"/>
-    <text x="490" y="45" fill="#3fb950" font-size="14" font-weight="bold" text-anchor="middle">CONTROL PLANE</text>
-    <rect x="370" y="65" width="240" height="52" rx="8" fill="#1c2129" stroke="#3fb950"/><text x="490" y="88" fill="#e6edf3" font-size="12" text-anchor="middle">Lifecycle Event Topic</text><text x="490" y="105" fill="#9da7b3" font-size="10" text-anchor="middle">Boomi Event Streams (queue)</text>
-    <rect x="370" y="135" width="240" height="52" rx="8" fill="#1c2129" stroke="#3fb950"/><text x="490" y="158" fill="#e6edf3" font-size="12" text-anchor="middle">Approval Workflow</text><text x="490" y="175" fill="#9da7b3" font-size="10" text-anchor="middle">queue · four-eyes · decisions</text>
-    <rect x="370" y="205" width="240" height="52" rx="8" fill="#1c2129" stroke="#d29922"/><text x="490" y="228" fill="#e6edf3" font-size="12" text-anchor="middle">Provisioning Engine (Saga)</text><text x="490" y="245" fill="#9da7b3" font-size="10" text-anchor="middle">config → secrets → schedule → verify</text>
-    <rect x="370" y="275" width="240" height="52" rx="8" fill="#1c2129" stroke="#bc8cff"/><text x="490" y="298" fill="#e6edf3" font-size="12" text-anchor="middle">Interface Registry</text><text x="490" y="315" fill="#9da7b3" font-size="10" text-anchor="middle">fingerprints · names · ownership</text>
-    <rect x="370" y="345" width="240" height="52" rx="8" fill="#1c2129" stroke="#39c5cf"/><text x="490" y="368" fill="#e6edf3" font-size="12" text-anchor="middle">Boomi Platform API Client</text><text x="490" y="385" fill="#9da7b3" font-size="10" text-anchor="middle">extensions · schedules · deploys</text>
-    <!-- Execution plane -->
-    <rect x="670" y="20" width="290" height="390" rx="10" fill="#3d2a10" opacity="0.4" stroke="#d29922"/>
-    <text x="815" y="45" fill="#d29922" font-size="14" font-weight="bold" text-anchor="middle">EXECUTION PLANE (Boomi Dev)</text>
-    <rect x="695" y="65" width="240" height="62" rx="8" fill="#1c2129" stroke="#d29922"/><text x="815" y="90" fill="#e6edf3" font-size="12" text-anchor="middle">Generic MFT Engine Process</text><text x="815" y="107" fill="#9da7b3" font-size="10" text-anchor="middle">template · config-driven · DPPs</text>
-    <rect x="695" y="145" width="240" height="52" rx="8" fill="#1c2129" stroke="#bc8cff"/><text x="815" y="168" fill="#e6edf3" font-size="12" text-anchor="middle">Interface Config Table</text><text x="815" y="185" fill="#9da7b3" font-size="10" text-anchor="middle">DB-backed, one row per interface</text>
-    <rect x="695" y="215" width="240" height="52" rx="8" fill="#1c2129" stroke="#3fb950"/><text x="815" y="238" fill="#e6edf3" font-size="12" text-anchor="middle">Scheduler</text><text x="815" y="255" fill="#9da7b3" font-size="10" text-anchor="middle">per-interface cron on Atom</text>
-    <rect x="695" y="285" width="112" height="52" rx="8" fill="#0f3a3f" stroke="#39c5cf"/><text x="751" y="308" fill="#e6edf3" font-size="11" text-anchor="middle">Source</text><text x="751" y="324" fill="#9da7b3" font-size="9" text-anchor="middle">SFTP/FTPS</text>
-    <rect x="823" y="285" width="112" height="52" rx="8" fill="#3a1518" stroke="#f85149"/><text x="879" y="308" fill="#e6edf3" font-size="11" text-anchor="middle">Destination</text><text x="879" y="324" fill="#9da7b3" font-size="9" text-anchor="middle">SFTP/FTPS</text>
-    <rect x="695" y="355" width="240" height="42" rx="8" fill="#1c2129" stroke="#9da7b3"/><text x="815" y="381" fill="#e6edf3" font-size="11" text-anchor="middle">Run Records → dashboards</text>
-    <!-- arrows -->
-    <line x1="310" y1="160" x2="368" y2="90" stroke="#9da7b3" stroke-width="1.5" marker-end="url(#ar)"/>
-    <line x1="612" y1="230" x2="693" y2="95" stroke="#9da7b3" stroke-width="1.5" marker-end="url(#ar)"/>
-    <line x1="612" y1="371" x2="693" y2="240" stroke="#9da7b3" stroke-width="1.5" marker-end="url(#ar)"/>
-  </svg>
-
-  <h3>Technology choices</h3>
-  <table>
-    <tr><th>Concern</th><th>Recommendation</th><th>Rationale</th></tr>
-    <tr><td>Portal UI</td><td>React SPA behind SSO</td><td>Wizard-heavy UX; component reuse across queue/dashboards.</td></tr>
-    <tr><td>Portal API</td><td>REST, OpenAPI-first, RFC 7807 problem details</td><td>Contract-first governance; consistent error semantics.</td></tr>
-    <tr><td>Request queue &amp; lifecycle events</td><td>Boomi Event Streams topic (<code>mft.request.lifecycle</code>)</td><td>Decouples portal from provisioning; natural audit feed; retries and DLQ for provisioning failures.</td></tr>
-    <tr><td>Connection tests</td><td>Boomi low-latency API process invoking SFTP/FTPS connectors</td><td>Tests run from the same network position as production transfers — the result is genuinely representative.</td></tr>
-    <tr><td>MFT execution</td><td>Generic, configuration-driven Boomi MFT engine process (aligned to catalogue pattern P-116)</td><td>See §7 — the central design decision.</td></tr>
-    <tr><td>Interface config store</td><td>Database table (one row per interface) with TTL-free durable config</td><td>DB-backed config works across clustered Atoms; node-local Cache shape is unsuitable in HA deployments.</td></tr>
-    <tr><td>Secrets</td><td>Dedicated vault + Boomi environment extensions written via Platform API</td><td>Credentials never rest in the Intelligrator DB; rotation is possible without touching interface config.</td></tr>
-  </table>
-</section>
-
-<section id="livediagrams">
-  <h2>6b. Live diagram viewer — no download needed</h2>
-  <p class="lead">Every <code>.drawio</code> file in this repo can be browsed, panned, and zoomed directly in the browser below, rendered live from the file hosted on this GitHub Pages site via diagrams.net's public viewer. Nothing downloads to view them — the download buttons at the top of the page remain there only for taking an editable copy away with you.</p>
-
-  <div class="dgm-card">
-    <div class="dgm-head"><span>Boomi MFT (Native) — Deep Dive Architecture</span><a href="assets/boomi-mft-native-deepdive.drawio" download>⬇ download source</a></div>
-    <iframe title="Boomi MFT Native Deep Dive" loading="lazy"
-      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=boomi-mft-native-deepdive.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-native-deepdive.drawio"></iframe>
-  </div>
-
-  <div class="dgm-card">
-    <div class="dgm-head"><span>How Boomi Achieves MFT (mechanism &amp; error notification)</span><a href="assets/boomi-mft-mechanism.drawio" download>⬇ download source</a></div>
-    <iframe title="How Boomi Achieves MFT" loading="lazy"
-      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=boomi-mft-mechanism.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-mechanism.drawio"></iframe>
-  </div>
-
-  <div class="dgm-card">
-    <div class="dgm-head"><span>Intelligrator Architecture</span><a href="assets/intelligrator-architecture.drawio" download>⬇ download source</a></div>
-    <iframe title="Intelligrator Architecture" loading="lazy"
-      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=intelligrator-architecture.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/intelligrator-architecture.drawio"></iframe>
-  </div>
-
-  <div class="dgm-card">
-    <div class="dgm-head"><span>Target Reference Architecture</span><a href="assets/target-reference-architecture.drawio" download>⬇ download source</a></div>
-    <iframe title="Target Reference Architecture" loading="lazy"
-      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=target-reference-architecture.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/target-reference-architecture.drawio"></iframe>
-  </div>
-
-  <div class="dgm-card">
-    <div class="dgm-head"><span>Pattern Selection Decision Tree</span><a href="assets/pattern-selection-decision-tree.drawio" download>⬇ download source</a></div>
-    <iframe title="Pattern Selection Decision Tree" loading="lazy"
-      src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1&title=pattern-selection-decision-tree.drawio#Uhttps://odiyo-vimo.github.io/fp/assets/pattern-selection-decision-tree.drawio"></iframe>
-  </div>
-
-  <div class="callout">If a diagram above shows blank, the page was likely just deployed and GitHub Pages' CDN hasn't finished serving the new asset yet (usually resolves within a minute or two) — a hard refresh (Ctrl/Cmd+Shift+R) will pick up the latest version.</div>
-</section>
-
-<section id="provisioning">
-  <h2>7. Automated Boomi build — the central design decision</h2>
-
-  <div class="callout good"><strong>Recommendation: configuration-driven provisioning (Option A).</strong> Do <em>not</em> generate a new Boomi process per approved request. Deploy <strong>one generic MFT engine process once</strong>, and make each approved request a <strong>row of configuration</strong> plus a schedule. "Boomi automatically builds the interface" then means "the engine gains a new configuration entry" — instant, testable, reversible, and free of component sprawl.</div>
-
-  <h3>Option A — Template process + configuration (recommended)</h3>
-  <ol>
-    <li>A single <strong>MFT Engine</strong> process is built once by the platform team: read interface config → connect source → list/match files → transfer → post-action (archive/delete/rename) → write run records → notify on error (respecting opt-in).</li>
-    <li>All variability is externalised: endpoints, folders, file patterns, post-actions and notification preferences live in the <strong>interface config table</strong>; credentials live in <strong>environment extensions / vault</strong>, resolved at runtime via Dynamic Process Properties.</li>
-    <li>On approval, the provisioning engine: (1) inserts the config row, (2) writes credentials to the vault/extensions via the Boomi Platform API (<code>EnvironmentExtensions</code> object), (3) creates the per-interface schedule, (4) runs the smoke test, (5) marks the interface active.</li>
-    <li>Run visibility comes from run records written by the engine itself (interface ID, file names, sizes, outcomes) — richer and more queryable than raw platform execution logs.</li>
-  </ol>
-  <table>
-    <tr><th></th><th>Option A — Config-driven (recommended)</th><th>Option B — Generate components per interface</th></tr>
-    <tr><td>How</td><td>One engine process; each interface = config row + schedule</td><td>Provisioning engine clones a template via Boomi Platform API <code>Component</code> object, then <code>PackagedComponent</code> + <code>DeployedPackage</code> to deploy</td></tr>
-    <tr><td>Provisioning time</td><td>Seconds–minutes</td><td>Minutes; more moving parts (component XML manipulation, packaging, deployment)</td></tr>
-    <tr><td>Estate hygiene</td><td>Constant component count regardless of interface count</td><td>Hundreds of near-identical components; upgrades require mass re-generation</td></tr>
-    <tr><td>Change/patch</td><td>Fix the engine once; all interfaces benefit</td><td>Re-generate and re-deploy every cloned process</td></tr>
-    <tr><td>Isolation</td><td>Shared engine — a defect affects all (mitigate with canary config + engine versioning)</td><td>Full per-interface isolation</td></tr>
-    <tr><td>When to prefer</td><td>Default for standard scheduled pass-through MFT (this product's scope)</td><td>Only for genuinely bespoke interfaces that outgrow the engine's parameter space — handled as exceptions outside Intelligrator v1</td></tr>
-  </table>
-
-  <h3>Boomi Platform API objects used by the provisioning engine</h3>
-  <table>
-    <tr><th>API object</th><th>Used for</th></tr>
-    <tr><td><code>EnvironmentExtensions</code></td><td>Injecting per-interface connection credentials/parameters into the Dev environment without redeployment.</td></tr>
-    <tr><td><code>ProcessScheduleStatus</code> / schedule APIs</td><td>Creating, pausing, and resuming the per-interface schedule generated from the wizard's cron.</td></tr>
-    <tr><td><code>ExecutionRecord</code></td><td>Correlating engine runs to interfaces for the run dashboard (supplemented by the engine's own run records).</td></tr>
-    <tr><td><code>Component</code>, <code>PackagedComponent</code>, <code>DeployedPackage</code></td><td>Option B only — programmatic clone/package/deploy; also used once to deploy engine version upgrades.</td></tr>
-    <tr><td><code>Atom</code> / <code>Environment</code></td><td>Runtime health checks before provisioning; target resolution for Dev.</td></tr>
-  </table>
-
-  <div class="callout"><strong>Connection tests use the same connectors as production.</strong> Expose a low-latency Boomi API process (<code>POST /connection-test</code>) that performs authenticate → folder-exists → optional write probe, returning a structured RFC 7807-style result. Because it executes on the same Atom as the eventual transfers, a green test is real evidence, not a proxy.</div>
-</section>
-
-<section id="patterns">
-  <h2>8. Design patterns &amp; recommendations</h2>
-  <div class="grid2">
-    <div class="card"><h4>1. Configuration-Driven Integration (metadata-driven engine)</h4>
-      <p>Behaviour is data, not code. Each interface is a validated configuration record interpreted by a generic engine. This is what makes "auto-build" safe and instant, and keeps the Boomi estate flat.</p></div>
-    <div class="card"><h4>2. Queue-Based Load Levelling + Command</h4>
-      <p>Submission publishes a <em>ProvisionInterface</em> command to the lifecycle topic. The provisioning engine consumes at its own pace; spikes in approvals never overload Boomi Platform API rate limits. Failed commands go to a DLQ for replay.</p></div>
-    <div class="card"><h4>3. Saga (orchestrated) provisioning with compensation</h4>
-      <p>Provisioning is multi-step (config → secrets → schedule → smoke test). Model it as a saga: each step records completion; on failure, compensating steps (remove schedule, revoke secrets, deactivate config) return the system to a clean state before retry.</p></div>
-    <div class="card"><h4>4. Idempotent provisioning</h4>
-      <p>The request ID is the idempotency key on every provisioning step. Replays and retries can never create duplicate schedules, config rows, or secrets entries.</p></div>
-    <div class="card"><h4>5. State Machine for request lifecycle</h4>
-      <p>Explicit states with guarded transitions (see §9). Illegal transitions are impossible by construction; the audit trail is the event log of transitions (event-sourcing-lite).</p></div>
-    <div class="card"><h4>6. Fingerprint-based duplicate detection</h4>
-      <p>Canonical fingerprint = normalised hash of (source host + folder, destination host + folder, file pattern). Exact match blocks; endpoint-only match warns. Registry is the single source of truth for interface existence.</p></div>
-    <div class="card"><h4>7. Naming Convention Service</h4>
-      <p>Names are minted centrally: <code>MFT-&lt;DOMAIN&gt;-&lt;SRC&gt;-&lt;TGT&gt;-&lt;NNN&gt;</code>, with a sequence per domain pair. Uniqueness guaranteed by the registry, never by human vigilance.</p></div>
-    <div class="card"><h4>8. Credential Vaulting / Valet-Key</h4>
-      <p>The portal accepts credentials transiently over TLS, writes them straight to the vault, and stores only a reference. The engine resolves references at runtime. Rotation touches the vault, not the interface.</p></div>
-    <div class="card"><h4>9. Circuit Breaker + timeout on connection tests</h4>
-      <p>Endpoint tests are bounded (15 s) with a circuit breaker per endpoint host so a dead server can't stall the wizard or exhaust test-service threads.</p></div>
-    <div class="card"><h4>10. Strangler-fig alignment</h4>
-      <p>Intelligrator provisions <em>new</em> MFT interfaces on Boomi only. Existing legacy transfers remain where they are until migrated; migrated interfaces are re-created as Intelligrator requests, giving them the same governance as net-new ones.</p></div>
-    <div class="card"><h4>11. Anti-pattern: per-request process generation by default</h4>
-      <p>Component-per-interface (Option B) as the default creates unmaintainable sprawl. Reserve programmatic component generation for exceptional bespoke cases.</p></div>
-    <div class="card"><h4>12. Anti-pattern: node-local caching of interface config</h4>
-      <p>Boomi's Cache shape is node-local; on clustered Atoms different nodes would see different config. Use the DB-backed config table (with event-driven refresh) as the runtime source.</p></div>
-  </div>
-</section>
-
-<section id="datamodel">
-  <h2>9. Data model &amp; request state machine</h2>
-  <h3>Core entities</h3>
-  <table>
-    <tr><th>Entity</th><th>Key attributes</th></tr>
-    <tr><td><code>Request</code></td><td>requestId · purpose · businessDomain · businessValue · pointOfContact · state · createdBy/At · fingerprint</td></tr>
-    <tr><td><code>EndpointSpec</code> (×2: source, destination)</td><td>protocol · host · port · folder · credentialRef (vault) · lastTestResult · lastTestAt</td></tr>
-    <tr><td><code>FileSpec</code></td><td>filenamePattern · format · expectedVolume · postTransferAction</td></tr>
-    <tr><td><code>TriggerSpec</code></td><td>cron · humanReadable · timezone · blackoutWindows</td></tr>
-    <tr><td><code>NotificationPref</code></td><td>optIn · recipients[] · channel</td></tr>
-    <tr><td><code>ApprovalDecision</code></td><td>decision · comment · decidedBy · decidedAt</td></tr>
-    <tr><td><code>Interface</code> (registry)</td><td>interfaceName · fingerprint · owner · engineConfigRef · scheduleRef · status</td></tr>
-    <tr><td><code>ProvisioningJob</code></td><td>steps[] with status · correlationId · compensation log</td></tr>
-    <tr><td><code>RunRecord</code></td><td>interfaceId · start/end · overallStatus · files[]{name,size,outcome,error}</td></tr>
-    <tr><td><code>AuditEvent</code></td><td>append-only: entity · transition · actor · timestamp · payload</td></tr>
-  </table>
-
-  <h3>State machine</h3>
-  <div class="flow">
-    <span class="step">DRAFT</span><span class="arr">→</span>
-    <span class="step">SUBMITTED</span><span class="arr">→</span>
-    <span class="step">IN_REVIEW</span><span class="arr">→</span>
-    <span class="step" style="border-color:var(--green)">APPROVED</span><span class="arr">→</span>
-    <span class="step">PROVISIONING</span><span class="arr">→</span>
-    <span class="step" style="border-color:var(--green)">DEPLOYED_DEV</span>
-  </div>
-  <div class="flow">
-    <span class="step">IN_REVIEW</span><span class="arr">→</span>
-    <span class="step" style="border-color:var(--red)">REJECTED</span>
-    <span style="width:24px"></span>
-    <span class="step">IN_REVIEW</span><span class="arr">→</span>
-    <span class="step" style="border-color:var(--amber)">RETURNED</span><span class="arr">→</span>
-    <span class="step">DRAFT</span>
-    <span style="width:24px"></span>
-    <span class="step">PROVISIONING</span><span class="arr">→</span>
-    <span class="step" style="border-color:var(--red)">PROVISION_FAILED</span><span class="arr">→</span>
-    <span class="step">PROVISIONING (retry)</span>
-  </div>
-</section>
-
-<section id="api">
-  <h2>10. API design (portal API)</h2>
-  <p>OpenAPI-first; OAuth2; RFC 7807 problem details on every error.</p>
-  <pre><code>POST   /requests                          create draft
-PUT    /requests/{id}                     update draft (wizard step saves)
-POST   /requests/{id}/test-source         run source connection + folder-exists test
-POST   /requests/{id}/test-destination    run destination test (+ write probe)
-GET    /requests/{id}/duplicate-check     fingerprint lookup against registry
-POST   /requests/{id}/submit              validate + enqueue for approval
-GET    /requests?mine=true                requester's tracker
-GET    /approvals?state=SUBMITTED         admin queue
-POST   /approvals/{id}/decision           approve | reject | return (comment)
-GET    /interfaces/{name}/runs            run history: status + files transferred
-GET    /audit?entity=REQ-1234             audit trail (Auditor role)</code></pre>
-  <p>Lifecycle events published to <code>mft.request.lifecycle</code>: <code>RequestSubmitted</code>, <code>RequestApproved</code>, <code>RequestRejected</code>, <code>ProvisioningStarted</code>, <code>ProvisioningStepCompleted</code>, <code>InterfaceDeployed</code>, <code>ProvisioningFailed</code>.</p>
-</section>
-
-<section id="security">
-  <h2>11. Security &amp; credential handling</h2>
-  <ul>
-    <li><strong>Credentials never rest in the application database.</strong> Captured over TLS → written directly to the vault → only an opaque <code>credentialRef</code> stored. UI never redisplays secrets.</li>
-    <li><strong>Prefer key-based SFTP auth</strong> over passwords; support vault references to pre-registered credentials so requesters may not need to know secrets at all.</li>
-    <li><strong>Least privilege:</strong> the Boomi Platform API token used by the provisioning engine is scoped to the Dev environment and only the objects listed in §7.</li>
-    <li><strong>Four-eyes:</strong> requester ≠ approver enforced at API level, not just UI.</li>
-    <li><strong>Transport:</strong> SFTP/FTPS only; plain FTP is not selectable.</li>
-    <li><strong>Audit:</strong> append-only event log; connection-test evidence retained with the request for approval accountability.</li>
-    <li><strong>Write probes</strong> on destinations are policy-gated (some endpoints prohibit marker files) — configurable per connection profile.</li>
-  </ul>
-</section>
-
-<section id="nfr">
-  <h2>12. Non-functional requirements</h2>
-  <table>
-    <tr><th>Dimension</th><th>Target (v1)</th></tr>
-    <tr><td>Connection test latency</td><td>≤ 15 s (P95), hard timeout with clear failure reason</td></tr>
-    <tr><td>Provisioning lead time (approve → active on Dev)</td><td>≤ 5 minutes (P95)</td></tr>
-    <tr><td>Portal availability</td><td>99.5% business hours; queue absorbs provisioning-side outages</td></tr>
-    <tr><td>Auditability</td><td>100% of state transitions evidenced; 7-year audit retention</td></tr>
-    <tr><td>Run history retention</td><td>≥ 90 days online</td></tr>
-    <tr><td>Scale assumption</td><td>500 interfaces, 5,000 scheduled executions/day without engine redesign</td></tr>
-    <tr><td>Idempotency</td><td>All provisioning steps replay-safe by request ID</td></tr>
-  </table>
-</section>
-
-<section id="roadmap">
-  <h2>13. MVP &amp; roadmap</h2>
-  <table>
-    <tr><th>Phase</th><th>Scope</th></tr>
-    <tr><td><strong>MVP (Phase 1)</strong></td><td>SSO · wizard (all six steps) · connection tests with folder-exists · duplicate check · name suggestion · approval queue with four-eyes · config-driven provisioning to Dev · schedule attach · requester tracker · error-notification opt-in · audit trail.</td></tr>
-    <tr><td><strong>Phase 2</strong></td><td>Folder browser UX · draft resume · post-deploy smoke test automation · run dashboard with per-file detail · SLA ageing on queue · retry-from-step for failed provisioning.</td></tr>
-    <tr><td><strong>Phase 3</strong></td><td>Event-triggered (file-arrival) transfers · governed promotion workflow to Test · credential rotation self-service · PGP encryption/decryption options · bulk request import for migration waves.</td></tr>
-  </table>
-  <div class="callout good"><strong>Build order rationale:</strong> the config-driven engine (§7 Option A) is the riskiest and most valuable piece — build and prove it first with hand-inserted config rows, then wrap the wizard and approval workflow around it. The portal without the engine is a form; the engine without the portal is already useful.</div>
-</section>
-
-<section id="personaflows">
-  <h2>14. Persona-Based Screen &amp; Integration Flows (dev handoff)</h2>
-  <p class="lead">This section is written for the build team: for each persona, every screen is listed with its purpose, key UI elements and validation, the exact integration call(s) it triggers, and the transition to the next screen or state. Use §10 (API design) and §7 (Boomi Platform API objects) alongside this section for endpoint contracts.</p>
-
-  <h3>Screen inventory (all personas)</h3>
-  <table>
-    <tr><th>ID</th><th>Screen</th><th>Persona</th><th>Route (suggested)</th></tr>
-    <tr><td>R-01</td><td>SSO Landing</td><td>Requester</td><td><code>/</code></td></tr>
-    <tr><td>R-02</td><td>My Requests Dashboard</td><td>Requester</td><td><code>/requests</code></td></tr>
-    <tr><td>R-03</td><td>Wizard Step 1 — Requirement Details</td><td>Requester</td><td><code>/requests/new/details</code></td></tr>
-    <tr><td>R-04</td><td>Wizard Step 2 — Source Details</td><td>Requester</td><td><code>/requests/new/source</code></td></tr>
-    <tr><td>R-05</td><td>Wizard Step 3 — Destination Details</td><td>Requester</td><td><code>/requests/new/destination</code></td></tr>
-    <tr><td>R-06</td><td>Wizard Step 4 — Uniqueness &amp; Naming</td><td>Requester</td><td><code>/requests/new/naming</code></td></tr>
-    <tr><td>R-07</td><td>Wizard Step 5 — File &amp; Trigger Details</td><td>Requester</td><td><code>/requests/new/trigger</code></td></tr>
-    <tr><td>R-08</td><td>Wizard Step 6 — Summary &amp; Submit</td><td>Requester</td><td><code>/requests/new/summary</code></td></tr>
-    <tr><td>R-09</td><td>Request Tracker / Detail</td><td>Requester</td><td><code>/requests/{id}</code></td></tr>
-    <tr><td>R-10</td><td>Run Dashboard (per interface)</td><td>Requester / Owner</td><td><code>/interfaces/{name}/runs</code></td></tr>
-    <tr><td>A-01</td><td>Approval Queue</td><td>MFT Admin</td><td><code>/approvals</code></td></tr>
-    <tr><td>A-02</td><td>Request Review Detail</td><td>MFT Admin</td><td><code>/approvals/{id}</code></td></tr>
-    <tr><td>A-03</td><td>Decision Confirmation</td><td>MFT Admin</td><td>modal on A-02</td></tr>
-    <tr><td>P-01</td><td>Provisioning Monitor</td><td>Platform Engineer</td><td><code>/admin/provisioning</code></td></tr>
-    <tr><td>P-02</td><td>Failure Diagnostics Detail</td><td>Platform Engineer</td><td><code>/admin/provisioning/{jobId}</code></td></tr>
-    <tr><td>P-03</td><td>Engine &amp; Schedule Admin</td><td>Platform Engineer</td><td><code>/admin/interfaces/{name}</code></td></tr>
-    <tr><td>U-01</td><td>Audit Search</td><td>Auditor</td><td><code>/audit</code></td></tr>
-    <tr><td>U-02</td><td>Audit Trail Timeline</td><td>Auditor</td><td><code>/audit/{entityId}</code></td></tr>
-  </table>
-
-  <h3>Persona 1 — Requester</h3>
-  <table>
-    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
-    <tr><td><strong>R-01</strong> SSO Landing</td><td>Silent redirect to corporate IdP; no user input.</td><td>OIDC/SAML auth handshake; identity claims cached client-side.</td><td>On success → R-02.</td></tr>
-    <tr><td><strong>R-02</strong> My Requests Dashboard</td><td>Table of the requester's requests with status chip (Draft/Submitted/In Review/Approved/Provisioning/Deployed/Rejected/Returned), age, and row actions (Resume, View). Primary CTA "+ New Request".</td><td><code>GET /requests?mine=true</code></td><td>"+ New Request" → R-03. Row click on Draft → resumes at last completed wizard step. Row click on any other status → R-09.</td></tr>
-    <tr><td><strong>R-03</strong> Requirement Details</td><td>Fields: Purpose (textarea), Business Domain (governed dropdown), Business Value (textarea), Point of Contact (directory typeahead). All mandatory; contact must resolve to a directory match before Next is enabled.</td><td><code>POST /requests</code> on first field blur (creates draft); <code>PUT /requests/{id}</code> on subsequent edits (autosave).</td><td>Next → R-04. Back → R-02 (saved as Draft).</td></tr>
-    <tr><td><strong>R-04</strong> Source Details</td><td>Protocol select (SFTP/FTPS), host, port, auth method (password / key / vault reference), folder path field with "Browse" (opens folder-picker modal if listing is permitted), "Test Source Connection" button showing spinner then a pass/fail banner with timestamp and detail.</td><td><code>POST /requests/{id}/test-source</code> — authenticates and verifies folder exists; result and timestamp persisted to the request.</td><td>Next disabled until a pass, or an override-justification field is completed on fail. Next → R-05.</td></tr>
-    <tr><td><strong>R-05</strong> Destination Details</td><td>Mirrors R-04 plus a write-permission probe (marker file create/delete where policy allows).</td><td><code>POST /requests/{id}/test-destination</code></td><td>Next → R-06 on pass/override.</td></tr>
-    <tr><td><strong>R-06</strong> Uniqueness &amp; Naming</td><td>Mostly system-driven: green "No duplicate found" + read-only suggested name; red "Duplicate found" with link to the existing interface and owner (blocks Next); amber "Similar interface" with a confirm-to-proceed checkbox.</td><td><code>GET /requests/{id}/duplicate-check</code> — fingerprint lookup against the interface registry; name-suggestion service invoked on a clean result.</td><td>Next → R-07 (blocked on exact duplicate).</td></tr>
-    <tr><td><strong>R-07</strong> File &amp; Trigger Details</td><td>Filename pattern (glob/regex) with live example preview, format select, expected volume, post-transfer action (archive/delete/rename), schedule builder (frequency picker rendering cron + plain-English sentence live), timezone, blackout-window date range, notification opt-in toggle with recipient multi-select (required when on).</td><td>Client-side cron generation; <code>PUT /requests/{id}</code> to persist.</td><td>Next → R-08.</td></tr>
-    <tr><td><strong>R-08</strong> Summary &amp; Submit</td><td>Read-only recap grouped by wizard step with per-group "Edit" links back to R-03–R-07; declaration checkbox; Submit button.</td><td><code>POST /requests/{id}/submit</code> — validates completeness, assigns request ID, emits <code>RequestSubmitted</code> to <code>mft.request.lifecycle</code>.</td><td>Submit → R-09, state becomes <code>SUBMITTED</code>.</td></tr>
-    <tr><td><strong>R-09</strong> Request Tracker / Detail</td><td>State-machine timeline (§9) with timestamp/actor per transition; shows connection-test evidence and any approver comment; once Deployed, shows a link to R-10.</td><td><code>GET /requests/{id}</code>, refreshed on poll or lifecycle-event push.</td><td>Returned → reopens editable at R-03 (Draft). Deployed → link to R-10.</td></tr>
-    <tr><td><strong>R-10</strong> Run Dashboard</td><td>Run history table: start/end, overall status, file count; row expands to per-file name/size/outcome/error.</td><td><code>GET /interfaces/{name}/runs</code></td><td>Terminal screen; back → R-09 or R-02.</td></tr>
-  </table>
-
-  <h3>Persona 2 — MFT Admin / Approver</h3>
-  <table>
-    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
-    <tr><td><strong>A-01</strong> Approval Queue</td><td>Table: Request ID, Name, Domain, Requester, Age with SLA colour, status filter chips, search box. Oldest-first by default.</td><td><code>GET /approvals?state=SUBMITTED</code></td><td>Row click → A-02.</td></tr>
-    <tr><td><strong>A-02</strong> Request Review Detail</td><td>Full wizard data (read-only), connection-test evidence panel (source/destination pass-fail + timestamps), duplicate-check outcome panel, comment box, three actions: Approve / Reject / Return for changes. Approver ≠ requester enforced — button disabled with explanation if same user.</td><td><code>GET /approvals/{id}</code> (aggregated view assembling request + test evidence + fingerprint result); <code>POST /approvals/{id}/decision</code> on action.</td><td>Any decision → A-03.</td></tr>
-    <tr><td><strong>A-03</strong> Decision Confirmation</td><td>Modal confirming the action taken; auto-dismisses back to A-01.</td><td>Emits <code>RequestApproved</code> / <code>RequestRejected</code> event; on approval this triggers the Provisioning Engine (§7) asynchronously — no screen for this, it runs server-side.</td><td>Requester notified; on Approve, request state → <code>APPROVED</code> then <code>PROVISIONING</code> without further admin action.</td></tr>
-  </table>
-
-  <h3>Persona 3 — Platform Engineer</h3>
-  <table>
-    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
-    <tr><td><strong>P-01</strong> Provisioning Monitor</td><td>List of in-flight and failed provisioning jobs with per-step status (register config → inject secrets → attach schedule → smoke test) and correlation ID.</td><td>Subscribes to provisioning saga status events on <code>mft.request.lifecycle</code>.</td><td>Row click → P-02.</td></tr>
-    <tr><td><strong>P-02</strong> Failure Diagnostics Detail</td><td>Highlights the failing step, shows the raw error payload and correlation ID, links to the Boomi Atom process execution log. Buttons: "Retry from failed step" and "Escalate".</td><td>Retry invokes the saga resume handler via the Boomi Platform API from the failed step only (idempotent by request ID — no duplicate config/schedule created).</td><td>Success → job leaves the list, request state advances to <code>DEPLOYED_DEV</code>. Repeat failure stays on P-02 with updated diagnostics.</td></tr>
-    <tr><td><strong>P-03</strong> Engine &amp; Schedule Admin</td><td>View current MFT engine process version, interface config table row count, and per-interface schedule pause/resume control.</td><td>Boomi Platform API schedule pause/resume calls; read-only query against the interface config table.</td><td>Standalone ops screen, no forward flow.</td></tr>
-  </table>
-
-  <h3>Persona 4 — Auditor</h3>
-  <table>
-    <tr><th>Screen</th><th>Purpose, key elements &amp; validation</th><th>Integration triggered</th><th>Transition</th></tr>
-    <tr><td><strong>U-01</strong> Audit Search</td><td>Filters: entity/request ID, date range, actor.</td><td><code>GET /audit?entity=...</code></td><td>Row click → U-02.</td></tr>
-    <tr><td><strong>U-02</strong> Audit Trail Timeline</td><td>Append-only event list: transition, actor, timestamp, before/after state. "Export CSV" button.</td><td>Export triggers CSV generation directly from the append-only event store.</td><td>Terminal screen.</td></tr>
-  </table>
-
-  <h3>Cross-persona sequence (how one request moves through every screen)</h3>
-  <table>
-    <tr><th>#</th><th>Persona / screen</th><th>Action</th><th>Resulting state</th></tr>
-    <tr><td>1</td><td>Requester · R-03→R-08</td><td>Completes wizard, submits</td><td><code>SUBMITTED</code></td></tr>
-    <tr><td>2</td><td>MFT Admin · A-01→A-02</td><td>Reviews and approves</td><td><code>APPROVED</code></td></tr>
-    <tr><td>3</td><td>System · Provisioning Engine (§7)</td><td>Config, secrets, schedule, smoke test — no screen, server-side saga</td><td><code>PROVISIONING</code> → <code>DEPLOYED_DEV</code> (or <code>PROVISION_FAILED</code>)</td></tr>
-    <tr><td>4</td><td>Platform Engineer · P-01→P-02</td><td>(Only on failure) diagnoses and retries from failed step</td><td><code>PROVISIONING</code> (retry) → <code>DEPLOYED_DEV</code></td></tr>
-    <tr><td>5</td><td>Requester · R-09→R-10</td><td>Tracks status, then views run history once live</td><td>read-only, no state change</td></tr>
-    <tr><td>6</td><td>Auditor · U-01→U-02</td><td>Reviews the full trail at any point</td><td>read-only, no state change</td></tr>
-  </table>
-  <div class="callout">This section, combined with §9 (state machine), §10 (API design) and §7 (Boomi Platform API objects), is intended to be handed to the development team as the complete brief for screen design, navigation flow, and the integration work needed to build Intelligrator end-to-end.</div>
-</section>
-
-<footer>Intelligrator — Self-Service MFT Provisioning on Boomi · Integration Catalogue companion deliverable · Generated July 2026</footer>
 </main>
 </div>
+
+<footer>Intelligrator — Managed File Transfer on Boomi · Product Overview · July 2026</footer>
 
 <script>
   const links=document.querySelectorAll('#toc a');
   const map=new Map();
   links.forEach(l=>{const id=l.getAttribute('href').slice(1);const s=document.getElementById(id);if(s)map.set(s,l);});
-  const obs=new IntersectionObserver(es=>{es.forEach(e=>{const l=map.get(e.target);if(!l)return;if(e.isIntersecting){links.forEach(x=>x.classList.remove('active'));l.classList.add('active');}});},{rootMargin:'-25% 0px -65% 0px'});
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{const l=map.get(e.target);if(!l)return;if(e.isIntersecting){links.forEach(x=>x.classList.remove('active'));l.classList.add('active');}});},{rootMargin:'-20% 0px -70% 0px'});
   map.forEach((_,s)=>obs.observe(s));
 </script>
 </body>

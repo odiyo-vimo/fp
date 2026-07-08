@@ -1,0 +1,52 @@
+<mxfile host="app.diagrams.net" modified="2026-07-08T09:00:00.000Z" agent="Intelligrator" version="24.0.0">
+  <diagram id="request-flow" name="Request Flow">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1180" pageHeight="480" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="From request to live interface" style="text;html=1;fontSize=20;fontStyle=1;fontColor=#0F172A;align=center;" vertex="1" parent="1">
+          <mxGeometry x="240" y="15" width="700" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sub" value="How a standard user's request becomes a running MFT interface, end to end" style="text;html=1;fontSize=12;fontColor=#64748B;align=center;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="700" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="user" value="STANDARD USER&#10;&#10;Logs in &amp; opens the request wizard&#10;Requirement → Source → Destination →&#10;File &amp; Trigger&#10;&#10;Submits the request" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF1FA;strokeColor=#1F4E79;fontColor=#1F2937;verticalAlign=top;spacingTop=8;fontSize=11.5" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="230" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="userHdr" value="STANDARD USER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E79;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=13;arcSize=14" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="230" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="queue" value="REQUEST QUEUE&#10;&#10;Waits, oldest first, for admin review&#10;&#10;Connection tests &amp; duplicate check&#10;already attached" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FDF3E2;strokeColor=#B26A00;fontColor=#1F2937;verticalAlign=top;spacingTop=8;fontSize=11.5" vertex="1" parent="1">
+          <mxGeometry x="320" y="110" width="230" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="queueHdr" value="REQUEST QUEUE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B26A00;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=13;arcSize=14" vertex="1" parent="1">
+          <mxGeometry x="320" y="110" width="230" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="admin" value="MFT ADMIN&#10;&#10;Reviews evidence &amp; decides&#10;&#10;Approve  /  Deny" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E7F7ED;strokeColor=#0AAB52;fontColor=#1F2937;verticalAlign=top;spacingTop=8;fontSize=11.5" vertex="1" parent="1">
+          <mxGeometry x="600" y="110" width="230" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="adminHdr" value="MFT ADMIN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0AAB52;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=13;arcSize=14" vertex="1" parent="1">
+          <mxGeometry x="600" y="110" width="230" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="live" value="LIVE MFT INTERFACE&#10;&#10;Boomi provisions &amp; deploys&#10;automatically&#10;&#10;No manual build — the user is&#10;notified the moment it's live" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1EBFB;strokeColor=#5B3AA6;fontColor=#1F2937;verticalAlign=top;spacingTop=8;fontSize=11.5" vertex="1" parent="1">
+          <mxGeometry x="900" y="110" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="liveHdr" value="LIVE MFT INTERFACE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5B3AA6;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=13;arcSize=14" vertex="1" parent="1">
+          <mxGeometry x="900" y="110" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9AA5B1;strokeWidth=2;" edge="1" parent="1" source="user" target="queue"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9AA5B1;strokeWidth=2;" edge="1" parent="1" source="queue" target="admin"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="if approved" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#9AA5B1;strokeWidth=2;fontSize=10" edge="1" parent="1" source="admin" target="live"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="footer" value="Every step above is visible to the requester in real time — no status has to be chased by email." style="text;html=1;fontSize=11;fontColor=#94A3B8;align=center;" vertex="1" parent="1">
+          <mxGeometry x="240" y="390" width="700" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
