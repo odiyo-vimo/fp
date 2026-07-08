@@ -95,6 +95,7 @@
 <nav id="toc">
   <a href="#howto">How to use this page</a>
   <a href="#overview">1. Product overview</a>
+  <a href="#vision">1a. Product vision</a>
   <a href="#howmft">1b. How Boomi achieves MFT</a>
   <a href="#nativemft">1c. Boomi MFT (native) — deep dive</a>
   <a href="#personas">2. Personas &amp; roles</a>
@@ -121,6 +122,7 @@
   <ul>
     <li><strong>Download bar (top):</strong> grab the Word product specification (for circulation and review), the draw.io architecture diagram (editable in <a href="https://app.diagrams.net" style="color:var(--accent)">app.diagrams.net</a> via File → Open From → Device), or the full zip bundle.</li>
     <li><strong>Left navigation:</strong> jumps to each section; the active section is highlighted as you scroll.</li>
+    <li><strong>Product vision (§1a):</strong> the vision statement, guiding principles, and success signals behind why Intelligrator exists.</li>
     <li><strong>User stories (§5):</strong> written in standard <em>As-a / I-want / So-that</em> format with Given-When-Then acceptance criteria — ready to paste into Jira/ADO. Priorities use MoSCoW badges.</li>
     <li><strong>Persona-based flow (§3b):</strong> screen-by-screen build spec per persona — UI elements, user actions, and the exact integration call each triggers — for the team building the screens, flow, and MFT integration.</li>
     <li><strong>How Boomi achieves MFT (§1b):</strong> the technical mechanism — Try/Catch, connectors, and error notification — behind every interface this product provisions.</li>
@@ -144,6 +146,40 @@
     <div class="card"><h4>Out of scope (v1)</h4>
     <ul><li>Event-triggered (file-arrival) transfers — v1 is scheduled only</li><li>In-flight transformation/mapping (pass-through file movement only)</li><li>Auto-promotion beyond Dev (Test/Prod promotion stays governed)</li></ul></div>
   </div>
+</section>
+
+<section id="vision">
+  <h2>1a. Product vision</h2>
+  <div class="callout good"><strong>Vision statement.</strong> For integration teams and business requesters across the tax authority's technology estate who need managed file transfer interfaces to move data reliably between systems, Intelligrator is a self-service MFT provisioning portal that turns a multi-week engineering engagement into a five-minute request and a five-minute automated build. Unlike the current model — where every interface demands manual requirements-gathering, manual Boomi development, and manual deployment — Intelligrator validates connectivity, prevents duplication, and provisions the interface automatically the moment it's approved, with zero hand-written integration code per interface.</div>
+
+  <h3>The problem worth solving</h3>
+  <p>Every new file-transfer interface today is a bespoke engineering project: someone gathers requirements informally, an engineer hand-builds a Boomi process, testing happens late, and the requester finds out whether it actually works only after delivery. That's slow, inconsistent across engineers, invisible to the business while it's in flight, and it doesn't scale as the WebMethods/ChRIS estate migrates onto Boomi.</p>
+
+  <h3>Why now</h3>
+  <p>The platform is already moving toward Boomi iPaaS under a strangler-fig migration. That only pays off if new interfaces stop being built one bespoke process at a time. Intelligrator is the mechanism that makes the config-driven, generic-engine architectural decision (one engine process, each interface a config row — §7) real for the people requesting interfaces, not just the architecture diagram.</p>
+
+  <h3>Guiding principles</h3>
+  <table>
+    <tr><th>#</th><th>Principle</th><th>What it means in practice</th></tr>
+    <tr><td>1</td><td><strong>Configuration over construction</strong></td><td>Approval creates a config row, not a new component. This is the one architectural bet the whole product stands on.</td></tr>
+    <tr><td>2</td><td><strong>Prove it before you promise it</strong></td><td>Every connection claim is tested, not assumed — at request time, not at delivery time.</td></tr>
+    <tr><td>3</td><td><strong>Governance without a bottleneck</strong></td><td>Four-eyes approval stays human, but everything an approver needs to decide is already on the screen.</td></tr>
+    <tr><td>4</td><td><strong>Visibility is a feature, not an afterthought</strong></td><td>Status, run history, and audit are first-class screens, not database queries someone runs on request.</td></tr>
+  </table>
+
+  <h3>How you'd know it's working</h3>
+  <table>
+    <tr><th>Signal</th><th>Target direction</th></tr>
+    <tr><td>Time from approved request to live interface on Dev</td><td>Minutes, not weeks</td></tr>
+    <tr><td>Share of new interfaces built with zero manual Boomi development</td><td>Approaching 100%</td></tr>
+    <tr><td>Duplicate/near-duplicate interfaces</td><td>Caught before build, not discovered in production</td></tr>
+    <tr><td>Requesters emailing someone to ask "what's the status?"</td><td>Trending to zero — they check the tracker instead (§3b, US-601)</td></tr>
+  </table>
+
+  <h3>What it deliberately isn't, yet</h3>
+  <p>Not an event-triggered/file-arrival platform, not a transformation/mapping tool, not an auto-promoter to Test/Prod (see the Out of scope card above) — and not a replacement for platform engineering judgement. It removes the <em>manual</em> work, not the <em>oversight</em>.</p>
+
+  <div class="callout"><strong>The horizon.</strong> MVP proves the config-driven engine and the core request → approve → deploy loop. From there, the same self-service instinct extends outward: partners onboarding themselves for event-triggered transfers, promotion pipelines that carry the same evidence-based trust into Test and Prod, and eventually a genuine choice at request time between the hand-built engine (§1b) and Boomi's native MFT (§1c) — governed the same way, from the same portal. See §13 for the phased roadmap this vision points toward.</div>
 </section>
 
 <section id="howmft">
