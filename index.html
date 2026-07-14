@@ -1,293 +1,1106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intelligrator — Managed File Transfer on Boomi | Product Overview</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intelligrator — User Story Backlog | Integration Catalogue</title>
 <style>
   :root{
-    --bg:#FAFBFC; --panel:#FFFFFF; --border:#E2E8F0; --border2:#EDF1F5;
-    --txt:#1F2937; --muted:#64748B; --accent:#1F4E79; --accent2:#2C6CA8;
-    --green:#0AAB52; --greenD:#078540; --amber:#B26A00; --purple:#5B3AA6; --red:#DC2626;
+    --ink:#12161c; --ink-2:#3d4653; --line:#dfe4ea; --line-2:#eef1f4;
+    --bg:#f7f8fa; --card:#ffffff; --accent:#0b5fff; --accent-dk:#003d9e;
+    --must:#b3261e; --should:#8a5a00; --could:#3a6b35; --bar:#0f1723;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--txt);font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
-  .dl-bar{position:sticky;top:0;z-index:200;width:100%;background:#0F2E4D;border-bottom:1px solid #0A2038;
-    padding:10px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;min-height:48px}
-  .dl-bar span.lbl{font-weight:700;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:#9FC6EA;margin-right:4px}
-  .dl-btn{display:inline-block;padding:7px 16px;border-radius:7px;font-size:.85rem;font-weight:600;text-decoration:none;
-    color:#fff;transition:filter .15s,transform .1s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
-  .dl-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
-  .dl-word{background:#2b579a}.dl-drawio{background:#c2660a}.dl-zip{background:#3f4a5a}
-  header{background:linear-gradient(135deg,#0F2E4D 0%,#1F4E79 60%,#2C6CA8 100%);padding:46px 24px 40px;color:#fff}
-  header .inner{max-width:1200px;margin:0 auto}
-  header .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9FC6EA;margin-bottom:10px}
-  header h1{font-size:2.1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:10px}
-  header p{font-size:1.02rem;color:#D3E4F3;max-width:760px}
-  .layout{display:flex;max-width:1200px;margin:0 auto}
-  nav{width:250px;flex-shrink:0;position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;padding:28px 14px}
-  nav a{display:block;color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;padding:7px 12px;border-radius:8px;border-left:3px solid transparent;margin-bottom:2px}
-  nav a:hover{color:var(--accent);background:#F1F5F9}
-  nav a.active{color:var(--accent);border-left-color:var(--green);background:#EAF1FA;font-weight:700}
-  main{flex:1;padding:36px 40px 60px;min-width:0}
-  section{margin-bottom:52px;scroll-margin-top:64px}
-  h2{font-size:1.55rem;font-weight:800;margin-bottom:6px;color:#0F172A;letter-spacing:-.01em}
-  .section-kicker{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:6px}
-  h3{font-size:1.12rem;font-weight:700;margin:22px 0 10px;color:var(--accent)}
-  p{margin-bottom:12px}
-  .lead{font-size:1.02rem;color:var(--muted);margin-top:10px}
-  ul,ol{margin:0 0 12px 22px}
-  li{margin-bottom:6px}
-  code{background:#F1F5F9;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:.85em;color:#1F4E79}
-  .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
-  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:16px 0}
-  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:16px 0}
-  .callout{border-radius:12px;padding:16px 20px;margin:16px 0;font-size:.95rem;background:#FDF3E2;border:1px solid #F3D9A6}
-  .callout.good{background:#EAF7EF;border-color:#BEE6CC}
-  .callout.info{background:#EAF1FA;border-color:#C7DBEF}
-  .callout.no{background:#FDECEC;border-color:#F3C2C2}
-  .callout strong{display:block;margin-bottom:4px;color:#1F2937}
-  .vision-box{background:linear-gradient(135deg,#0F2E4D,#1F4E79 55%,#2C6CA8);color:#fff;border-radius:18px;padding:36px 40px;margin:18px 0;box-shadow:0 8px 24px rgba(15,46,77,.25)}
-  .vision-box .tag{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9FC6EA;margin-bottom:14px}
-  .vision-box p{font-size:1.28rem;font-weight:600;line-height:1.55;color:#fff;margin:0}
-  .vision-box .who{color:#9FC6EA;font-weight:700}
-  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem}
-  th{background:#F1F5F9;text-align:left;padding:10px 14px;border:1px solid var(--border);color:var(--accent);font-weight:700}
-  td{padding:9px 14px;border:1px solid var(--border);vertical-align:top}
-  tr:nth-child(even) td{background:#FAFBFC}
-  .persona-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;text-align:left;box-shadow:0 1px 3px rgba(15,23,42,.05);border-top:5px solid var(--accent)}
-  .persona-card.admin{border-top-color:var(--green)}
-  .persona-card.eng{border-top-color:var(--purple)}
-  .persona-card .p-icon{width:44px;height:44px;border-radius:50%;background:#EAF1FA;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1.3rem}
-  .persona-card.admin .p-icon{background:#E7F7ED}
-  .persona-card.eng .p-icon{background:#F1EBFB}
-  .persona-card h4{font-size:1.05rem;font-weight:800;margin-bottom:8px;color:#0F172A}
-  .badge{display:inline-block;padding:3px 11px;border-radius:999px;font-size:.72rem;font-weight:700;letter-spacing:.03em}
-  .b-must{background:#E7F7ED;color:var(--greenD)} .b-should{background:#FDF3E2;color:var(--amber)}
-  .story{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px;margin:12px 0;box-shadow:0 1px 2px rgba(15,23,42,.04)}
-  .story .sid{font-weight:800;color:var(--accent);margin-right:8px}
-  .journey{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0}
-  .journey .step{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:.88rem;font-weight:700;color:var(--accent);box-shadow:0 1px 2px rgba(15,23,42,.05);flex:1;min-width:130px;text-align:center}
-  .journey .step .num{display:block;font-size:.7rem;font-weight:700;color:var(--green);margin-bottom:4px;letter-spacing:.06em}
-  .journey .arr{color:#CBD5E1;font-size:1.3rem;font-weight:700}
-  .tech-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
-  .tech-card h4{color:var(--accent);font-size:1.05rem;margin-bottom:10px}
-  img.diagram{width:100%;max-width:1180px;border:1px solid var(--border);border-radius:16px;background:#fff;margin:18px 0;box-shadow:0 4px 16px rgba(15,23,42,.06)}
-  footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.82rem;background:#fff}
-  @media(max-width:900px){nav{display:none}main{padding:24px}header{padding:32px 20px}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  /* ---- sticky download bar ---- */
+  .dlbar{position:sticky;top:0;z-index:200;width:100%;background:var(--bar);
+    padding:8px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+    box-shadow:0 1px 0 rgba(255,255,255,.08)}
+  .dlbar .dl-label{color:#93a1b5;font-size:12px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;margin-right:6px}
+  .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#1e2a3a;color:#fff;
+    text-decoration:none;font-size:13px;font-weight:600;padding:7px 13px;border-radius:6px;
+    border:1px solid #2f3f54;transition:.15s}
+  .dlbar a:hover{background:var(--accent);border-color:var(--accent)}
+  .dlbar a.zip{background:#0b5fff;border-color:#0b5fff}
+  .dlbar a.zip:hover{background:#003d9e;border-color:#003d9e}
+
+  header.site{position:sticky;top:45px;z-index:100;background:#fff;border-bottom:1px solid var(--line);
+    padding:22px 24px}
+  header.site h1{margin:0;font-size:24px;letter-spacing:-.02em}
+  header.site .sub{margin:4px 0 0;color:var(--ink-2);font-size:14px}
+  header.site .plat{margin:8px 0 0;font-size:12px;color:#6b7583}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px;display:grid;
+    grid-template-columns:230px 1fr;gap:36px}
+  nav.toc{position:sticky;top:150px;align-self:start;max-height:calc(100vh - 180px);overflow:auto}
+  nav.toc h5{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:#7a8493}
+  nav.toc a{display:block;padding:5px 8px;font-size:13px;color:var(--ink-2);text-decoration:none;
+    border-left:2px solid transparent;border-radius:0 4px 4px 0}
+  nav.toc a:hover{background:#eef2f7;color:var(--ink)}
+  nav.toc a.active{border-left-color:var(--accent);background:#eaf1ff;color:var(--accent-dk);font-weight:600}
+  main{min-width:0}
+
+  section{margin-bottom:44px;scroll-margin-top:170px}
+  h2{font-size:20px;margin:0 0 6px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+  .epic-tag{background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;
+    border-radius:5px;letter-spacing:.05em}
+  .epic-desc{margin:0 0 18px;color:var(--ink-2);font-size:14px}
+  .epic-meta{display:inline-block;margin-left:8px;font-size:12px;color:#7a8493;
+    border-left:1px solid var(--line);padding-left:8px}
+
+  .story{background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:18px 20px;margin-bottom:14px;scroll-margin-top:170px}
+  .story-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:10px}
+  .sid{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:700;
+    color:#fff;background:var(--accent-dk);padding:3px 7px;border-radius:5px}
+  .story-head h3{margin:0;font-size:16px;flex:1 1 260px;letter-spacing:-.01em}
+  .badges{display:flex;gap:5px;flex-wrap:wrap}
+  .badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid var(--line);
+    color:var(--ink-2);background:#f4f6f8;white-space:nowrap}
+  .pri-must{color:#fff;background:var(--must);border-color:var(--must)}
+  .pri-should{color:#fff;background:var(--should);border-color:var(--should)}
+  .pri-could{color:#fff;background:var(--could);border-color:var(--could)}
+  blockquote.us{margin:0 0 12px;padding:12px 14px;background:#f4f7fc;border-left:3px solid var(--accent);
+    border-radius:0 7px 7px 0;font-size:15px;color:#1c2430}
+  .ac h4{margin:0 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#7a8493}
+  .ac ol{margin:0;padding-left:20px}
+  .ac li{margin-bottom:5px;font-size:14px;color:var(--ink-2)}
+  .ac li::marker{color:var(--accent);font-weight:700}
+
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);
+    border-radius:8px;overflow:hidden;font-size:14px}
+  th{background:#eef2f7;text-align:left;padding:9px 12px;font-size:12px;text-transform:uppercase;
+    letter-spacing:.05em;color:#5a6472;border-bottom:1px solid var(--line)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
+  tr:last-child td{border-bottom:0}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card h4{margin:0 0 6px;font-size:15px}
+  .card p{margin:0 0 6px;font-size:13.5px;color:var(--ink-2)}
+  .card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8b94a1;font-weight:700}
+
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 18px;flex:1 1 130px}
+  .stat b{display:block;font-size:26px;letter-spacing:-.02em}
+  .stat span{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8b94a1;font-weight:700}
+
+  .chal{background:#fff;border:1px solid var(--line);border-left:3px solid #b3261e;border-radius:0 10px 10px 0;
+    padding:16px 18px;margin-bottom:12px}
+  .chal h4{margin:0 0 8px;font-size:15px;color:#8f1d17}
+  .chal p{margin:0;font-size:14px;color:var(--ink-2)}
+
+  .howto{background:#0f1723;color:#dde4ec;border-radius:12px;padding:22px 24px;margin-bottom:34px}
+  .howto h2{color:#fff}
+  .howto .epic-tag{background:var(--accent)}
+  .howto ol,.howto ul{margin:0 0 12px;padding-left:20px}
+  .howto li{margin-bottom:7px;font-size:14px;color:#c3ccd8}
+  .howto strong{color:#fff}
+  .howto code{background:#1e2a3a;padding:2px 6px;border-radius:4px;font-size:13px;color:#9fd0ff}
+  .howto a{color:#7fb2ff}
+
+  @media(max-width:860px){
+    .wrap{grid-template-columns:1fr;padding:20px 16px 60px}
+    nav.toc{display:none}
+    header.site{position:static}
+  }
 </style>
 </head>
 <body>
 
-<div class="dl-bar">
-  <span class="lbl">Downloads</span>
-  <a class="dl-btn dl-word" href="assets/intelligrator-mft-product-overview.docx" download>⬇ Word — Product Overview</a>
-  <a class="dl-btn dl-drawio" href="assets/request-flow.drawio" download>⬇ draw.io — Request Flow Diagram</a>
-  <a class="dl-btn dl-zip" href="assets/docs.zip" download>⬇ All documents (zip)</a>
+<div class="dlbar">
+  <span class="dl-label">Download</span>
+  <a class="" href="assets/intelligrator-user-stories.docx" download>&#11015; User Stories (Word)</a>
+  <a class="" href="assets/intelligrator-user-stories.xlsx" download>&#11015; Backlog (Excel)</a>
+  <a class="" href="assets/intelligrator-request-lifecycle.drawio" download>&#11015; Lifecycle (draw.io)</a>
+  <a class="zip" href="assets/docs.zip" download>&#11015; All Deliverables (ZIP)</a>
 </div>
 
-<header>
-  <div class="inner">
-    <div class="eyebrow">Product Overview · Managed File Transfer</div>
-    <h1>Intelligrator</h1>
-    <p>A self-service portal that turns requesting a Managed File Transfer interface into a five-minute conversation — and turns an approved request into a live, running interface with no manual build.</p>
-  </div>
+<header class="site">
+  <h1>Intelligrator — User Story Backlog</h1>
+  <p class="sub">Self-Service Integration Onboarding Portal &middot; Requester journey (MFT + API) and Approver journey (accept / reject)</p>
+  <p class="plat">Version 1.0 &middot; 14 July 2026 &middot; Boomi iPaaS · Boomi native MFT (Thru) · Boomi API Management</p>
 </header>
 
-<div class="layout">
-<nav id="toc">
-  <a href="#purpose">1. Purpose &amp; scope</a>
-  <a href="#vision">2. Product vision</a>
-  <a href="#highlights">3. Key highlights &amp; features</a>
-  <a href="#personas">4. Who uses Intelligrator</a>
-  <a href="#flow">5. Request flow</a>
-  <a href="#journey">6. End-to-end journey</a>
-  <a href="#technical">7. How it works — technical approach</a>
-  <a href="#stories">8. User stories</a>
+<div class="wrap">
+<nav class="toc">
+  <h5>Contents</h5>
+  <a href="#howto">How to use this</a>
+  <a href="#overview">Overview</a>
+  <a href="#personas">Personas</a>
+  <a href="#principles">Design principles</a>
+  <a href="#E1">E1 &middot; Portal Access &amp; Identity</a>
+  <a href="#E2">E2 &middot; Request Initiation &amp; Guidance</a>
+  <a href="#E3">E3 &middot; MFT Request Submission</a>
+  <a href="#E4">E4 &middot; API Request Submission</a>
+  <a href="#E5">E5 &middot; Track, Amend &amp; Withdraw</a>
+  <a href="#E6">E6 &middot; Admin Access &amp; Approval Queue</a>
+  <a href="#E7">E7 &middot; Decision: Accept / Reject</a>
+  <a href="#E8">E8 &middot; Provisioning on Approval</a>
+  <a href="#E9">E9 &middot; Audit, Reporting &amp; NFRs</a>
+  <a href="#states">Request lifecycle</a>
+  <a href="#challenges">Challenges &amp; responses</a>
 </nav>
 
 <main>
 
-<section id="purpose">
-  <div class="section-kicker">Section 1</div>
-  <h2>Purpose &amp; scope</h2>
-  <p class="lead">This document describes Intelligrator's <strong>Managed File Transfer (MFT)</strong> capability — what it does, who it's for, and how it's built.</p>
-
-  <div class="grid2">
-    <div class="callout no"><strong>Not in scope</strong>
-      This document does not cover Intelligrator's API management or asynchronous/event-driven integration capabilities — those are addressed separately. It also assumes standard platform foundations — sign-on, account administration, and general portal navigation — as a given baseline, rather than describing them here. The focus throughout is MFT, and MFT alone.</div>
-    <div class="callout info"><strong>Built on Boomi</strong>
-      Intelligrator achieves its vision by combining three Boomi capabilities: <strong>Boomi Integration (iPaaS)</strong>, the process engine that performs every file transfer; <strong>Boomi Managed File Transfer</strong>, for secure, governed file movement at scale; and <strong>Boomi Companion</strong>, Boomi's AI-assisted development capability, which accelerates how the platform team builds, tests, deploys, and diagnoses the integrations underneath Intelligrator itself.</div>
-  </div>
+<section id="howto" class="howto">
+  <h2><span class="epic-tag">USE</span> How to use this page</h2>
+  <ol>
+    <li><strong>Read the backlog here, work it in the tools.</strong> This page is the readable, shareable version. The <strong>Excel backlog</strong> in the download bar above is the one to import into your delivery tool — it has one row per story with ID, epic, persona, priority, points and acceptance criteria, plus a summary sheet.</li>
+    <li><strong>The Word document</strong> is the client-facing artefact. It carries the same content, formatted for circulation and sign-off.</li>
+    <li><strong>The draw.io file</strong> renders the request lifecycle state machine — every state, who holds it, and every permitted transition. Open it at <a href="https://app.diagrams.net">app.diagrams.net</a> via <em>File &rarr; Open from &rarr; Device</em>.</li>
+    <li><strong>Story IDs are stable.</strong> <code>ACC-</code> access, <code>REQ-</code> request initiation, <code>MFT-</code> file transfer submission, <code>API-</code> API submission, <code>TRK-</code> tracking, <code>ADM-</code> admin access, <code>DEC-</code> decision, <code>PRV-</code> provisioning, <code>AUD-/NFR-</code> audit and non-functional. Quote the ID in refinement; do not renumber.</li>
+    <li><strong>Acceptance criteria are written Given/When/Then</strong> and are intended to be testable as written. If a criterion cannot be turned into a test, it is a defect in the story, not in the test.</li>
+  </ol>
+  <p style="margin:14px 0 6px;font-size:14px;color:#c3ccd8"><strong>Before you refine:</strong> read the <a href="#challenges">Challenges &amp; responses</a> section. It sets out the scope change this backlog represents (Intelligrator was previously specified as MFT-only) and the decisions that need to be taken before Sprint 1, not during it.</p>
+  <p style="margin:0;font-size:14px;color:#c3ccd8"><strong>The single hard rule:</strong> an approved request becomes a <em>configuration row</em> consumed by one generic engine process. It never generates a new Boomi component per interface. Any story that appears to breach that has been misread — challenge it.</p>
 </section>
 
-<section id="vision">
-  <div class="section-kicker">Section 2</div>
-  <h2>Product vision</h2>
-  <div class="vision-box">
-    <div class="tag">Vision statement</div>
-    <p><span class="who">For integration teams and business requesters</span> who need file transfer interfaces built reliably and fast, <strong>Intelligrator</strong> replaces a multi-week engineering request with a five-minute conversation and an automatic build — turning managed file transfer from something you wait on into something you simply ask for.</p>
+<section id="overview">
+  <h2><span class="epic-tag">1</span> Overview</h2>
+  <div class="stats">
+    <div class="stat"><b>49</b><span>User stories</span></div>
+    <div class="stat"><b>9</b><span>Epics</span></div>
+    <div class="stat"><b>242</b><span>Story points</span></div>
+    <div class="stat"><b>39</b><span>Must have</span></div>
+    <div class="stat"><b>9</b><span>Should have</span></div>
+    <div class="stat"><b>1</b><span>Could have</span></div>
   </div>
-  <p class="lead">Every connection is proven before a request is submitted. Every interface is named and checked for duplicates automatically. Every approval leads straight to a live, deployed interface — with nothing built by hand.</p>
-</section>
-
-<section id="highlights">
-  <div class="section-kicker">Section 3</div>
-  <h2>Key highlights &amp; features</h2>
-  <div class="grid3">
-    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">✅ Prove it before you submit</h4><p style="margin:0">Source and destination connections — and the folders on them — are tested live in the wizard, not discovered as a failure after delivery.</p></div>
-    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">🔍 No duplicate interfaces</h4><p style="margin:0">Every request is checked against existing interfaces automatically, before anything is built twice.</p></div>
-    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">🏷️ Consistent naming, automatically</h4><p style="margin:0">Intelligrator suggests the interface name for you, following a standard convention — no naming guesswork.</p></div>
-    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">⚡ Zero manual build</h4><p style="margin:0">Approval triggers automatic provisioning on Boomi — the interface is live in minutes, not weeks.</p></div>
-    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">👁️ Full visibility, always</h4><p style="margin:0">Requesters track their request end to end; nobody has to email to ask "what's the status?"</p></div>
-    <div class="card"><h4 style="color:var(--accent);margin-bottom:8px">🛡️ Governed, not gatekept</h4><p style="margin:0">A human approver still decides — but every piece of evidence they need is already on the screen.</p></div>
-  </div>
+  <p class="epic-desc">Requester journey (MFT + API request submission) and Approver journey (review, accept, reject). The backlog covers two journeys over one shared spine: a <strong>Requester</strong> signs in, is guided to the correct pattern, submits either a Managed File Transfer request or an API request, and tracks it. An <strong>Approver</strong> signs in with elevated rights, works a risk-prioritised queue with automated pre-checks already performed, and accepts, rejects, conditionally approves or returns each request — with every decision recorded immutably.</p>
+  <table>
+    <thead><tr><th style="width:60px">Epic</th><th>Name</th><th style="width:140px">Primary persona</th><th style="width:70px">Stories</th><th style="width:70px">Points</th></tr></thead>
+    <tbody>
+    <tr><td><strong>E1</strong></td><td><a href="#E1" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Portal Access &amp; Identity</a><br><span style="font-size:12.5px;color:#7a8493">Get the right person into the right view, securely.</span></td><td>P1 / P2</td><td>5</td><td>16</td></tr>
+    <tr><td><strong>E2</strong></td><td><a href="#E2" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Request Initiation &amp; Guidance</a><br><span style="font-size:12.5px;color:#7a8493">Route the user to the correct request type and warn them off anti-patterns before they fill anything in.</span></td><td>P1</td><td>3</td><td>16</td></tr>
+    <tr><td><strong>E3</strong></td><td><a href="#E3" style="color:var(--accent-dk);text-decoration:none;font-weight:600">MFT Request Submission</a><br><span style="font-size:12.5px;color:#7a8493">Capture everything the generic MFT engine needs as a config row.</span></td><td>P1</td><td>10</td><td>52</td></tr>
+    <tr><td><strong>E4</strong></td><td><a href="#E4" style="color:var(--accent-dk);text-decoration:none;font-weight:600">API Request Submission</a><br><span style="font-size:12.5px;color:#7a8493">Capture everything the gateway needs, contract-first.</span></td><td>P1</td><td>7</td><td>39</td></tr>
+    <tr><td><strong>E5</strong></td><td><a href="#E5" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Track, Amend &amp; Withdraw</a><br><span style="font-size:12.5px;color:#7a8493">Visibility and control after submission.</span></td><td>P1</td><td>6</td><td>23</td></tr>
+    <tr><td><strong>E6</strong></td><td><a href="#E6" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Admin Access &amp; Approval Queue</a><br><span style="font-size:12.5px;color:#7a8493">Get the approver to the work, prioritised and pre-checked.</span></td><td>P2</td><td>4</td><td>26</td></tr>
+    <tr><td><strong>E7</strong></td><td><a href="#E7" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Decision: Accept / Reject</a><br><span style="font-size:12.5px;color:#7a8493">The decision itself, with rationale and defensibility.</span></td><td>P2</td><td>7</td><td>31</td></tr>
+    <tr><td><strong>E8</strong></td><td><a href="#E8" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Provisioning on Approval</a><br><span style="font-size:12.5px;color:#7a8493">Turn an approval into a live config row, safely.</span></td><td>P2 / P3</td><td>3</td><td>21</td></tr>
+    <tr><td><strong>E9</strong></td><td><a href="#E9" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Audit, Reporting &amp; NFRs</a><br><span style="font-size:12.5px;color:#7a8493">Prove what happened, and hold the service to a standard.</span></td><td>All</td><td>4</td><td>18</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="personas">
-  <div class="section-kicker">Section 4</div>
-  <h2>Who uses Intelligrator</h2>
-  <p class="lead">Three roles cover the full MFT lifecycle:</p>
-  <div class="grid3">
-    <div class="persona-card"><div class="p-icon">🧑‍💼</div><h4>Standard User</h4><p>Requests an MFT interface through the wizard, tests connections, and tracks the request through to a live interface — no technical Boomi knowledge required.</p></div>
-    <div class="persona-card admin"><div class="p-icon">✅</div><h4>MFT Admin</h4><p>Reviews every request in the queue — with connection evidence and duplicate checks already attached — and approves or denies it.</p></div>
-    <div class="persona-card eng"><div class="p-icon">⚙️</div><h4>Platform Engineer</h4><p>Maintains the underlying Boomi engine, and steps in only when something needs deeper investigation — most requests never need them at all.</p></div>
-  </div>
-</section>
-
-<section id="flow">
-  <div class="section-kicker">Section 5</div>
-  <h2>Request flow</h2>
-  <p class="lead">How a standard user's request becomes a live, running interface:</p>
-  <img class="diagram" src="assets/request-flow.svg" alt="Request flow: standard user submits a request, it waits in a queue, the MFT admin approves or denies it, and on approval Boomi provisions a live interface automatically" />
-</section>
-
-<section id="journey">
-  <div class="section-kicker">Section 6</div>
-  <h2>End-to-end journey</h2>
-
-  <h3>Standard User — the request wizard</h3>
-  <div class="journey">
-    <div class="step"><span class="num">STEP 1</span>Log in</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 2</span>Requirement details</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 3</span>Source details</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 4</span>Destination details</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 5</span>File &amp; trigger</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 6</span>Summary &amp; submit</div>
-  </div>
-  <table>
-    <tr><th>Step</th><th>What happens</th></tr>
-    <tr><td>Log in</td><td>The user signs in and lands on a simple dashboard of their own requests.</td></tr>
-    <tr><td>Requirement details</td><td>Purpose, business value, and a point of contact — the "why" behind the request.</td></tr>
-    <tr><td>Source details</td><td>Where the file comes from — tested live, with the folder confirmed to exist, before moving on.</td></tr>
-    <tr><td>Destination details</td><td>Where the file needs to go — tested the same way.</td></tr>
-    <tr><td>File &amp; trigger</td><td>What the file looks like, and when the transfer should run.</td></tr>
-    <tr><td>Summary &amp; submit</td><td>A plain-English recap of everything entered, then one click to submit into the queue.</td></tr>
-  </table>
-
-  <h3>MFT Admin — review to production</h3>
-  <div class="journey">
-    <div class="step"><span class="num">STEP 1</span>Log in</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 2</span>Open the queue</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 3</span>Approve or deny</div>
-    <span class="arr">→</span>
-    <div class="step"><span class="num">STEP 4</span>Interface goes live</div>
-  </div>
-  <table>
-    <tr><th>Step</th><th>What happens</th></tr>
-    <tr><td>Log in</td><td>The admin signs in to a queue of everything awaiting a decision.</td></tr>
-    <tr><td>Open the queue</td><td>Every request already carries its connection-test results and duplicate-check outcome — no chasing for information.</td></tr>
-    <tr><td>Approve or deny</td><td>One decision, with a comment if it's a denial. The requester is notified immediately either way.</td></tr>
-    <tr><td>Interface goes live</td><td>An approval is all it takes — Boomi provisions and deploys the MFT interface automatically, with no manual build.</td></tr>
-  </table>
-</section>
-
-<section id="technical">
-  <div class="section-kicker">Section 7</div>
-  <h2>How it works — technical approach</h2>
-  <p class="lead">Intelligrator's automation is built on two complementary Boomi capabilities.</p>
-
-  <div class="grid2">
-    <div class="tech-card">
-      <h4>Boomi Integration (iPaaS)</h4>
-      <p>A single, reusable process on Boomi's runtime performs the transfer itself: it picks up the file from the source, validates it, delivers it to the destination, and carries out any follow-up action such as archiving the original. Every approved request becomes a configuration entry for this one process, rather than a new process being built each time — which is what makes "no manual build" possible.</p>
+  <h2><span class="epic-tag">2</span> Personas</h2>
+  <div class="cards">
+  
+    <div class="card">
+      <h4>Standard User (Requester)</h4>
+      <p class="lbl">Who</p><p>Delivery lead, developer or business analyst in a service line who needs a file transfer or an API published/consumed.</p>
+      <p class="lbl">Goal</p><p>Get an interface onboarded without needing to know Boomi, without raising tickets, and without waiting on the platform team.</p>
+      <p class="lbl">Pain today</p><p>Today: email threads, spreadsheets, unclear standards, long lead times, no visibility of where a request sits.</p>
     </div>
-    <div class="tech-card">
-      <h4>Boomi Managed File Transfer</h4>
-      <p>For interfaces that call for it, Boomi's own native Managed File Transfer product provides a governed, secure channel for the transfer — with built-in retry, guaranteed delivery, and encryption at every stage.</p>
+    <div class="card">
+      <h4>MFT Admin (Approver)</h4>
+      <p class="lbl">Who</p><p>Integration platform gatekeeper. Owns the standards, the config store and the operational risk of what goes live.</p>
+      <p class="lbl">Goal</p><p>Review submissions quickly against policy, approve the safe ones, reject or return the rest, with a defensible audit trail.</p>
+      <p class="lbl">Pain today</p><p>Today: incomplete requests, no automated pre-checks, no segregation of duties, no SLA visibility.</p>
+    </div>
+    <div class="card">
+      <h4>Platform Engineer</h4>
+      <p class="lbl">Who</p><p>Owns the generic Boomi MFT engine process, the API gateway policies and the config schema behind them.</p>
+      <p class="lbl">Goal</p><p>Never build a new component per interface. Extend the config schema, not the code.</p>
+      <p class="lbl">Pain today</p><p>Component sprawl, per-interface bespoke processes, drift between environments.</p>
     </div>
   </div>
-
-  <h3>Boomi MFT's two applications</h3>
-  <table>
-    <tr><th>Application</th><th>What it's for</th></tr>
-    <tr><td><strong>Automated File Transfer (AFT)</strong></td><td>System-to-system, scheduled file transfer — this is the application Intelligrator's MFT interfaces use.</td></tr>
-    <tr><td><strong>File Sharing (FS)</strong></td><td>Person-to-person file sharing and collaboration — a different use case, not part of this capability.</td></tr>
-  </table>
-
-  <h3>Connecting Boomi Integration to Boomi MFT</h3>
-  <p>A Boomi process interacts with Boomi MFT through a dedicated connector, using two operations:</p>
-  <table>
-    <tr><th>Operation</th><th>What it does</th></tr>
-    <tr><td><strong>Get</strong></td><td>Picks up a file that's waiting to be collected.</td></tr>
-    <tr><td><strong>Create</strong></td><td>Drops a file off for delivery.</td></tr>
-  </table>
-  <div class="callout good"><strong>The result</strong> A requester never sees any of this — they see a wizard, a queue, and a live interface. Everything above happens automatically, the moment a request is approved.</div>
 </section>
 
-<section id="stories">
-  <div class="section-kicker">Section 8</div>
-  <h2>User stories</h2>
+<section id="principles">
+  <h2><span class="epic-tag">3</span> Design principles the stories must not break</h2>
+  <div class="cards">
+  <div class="card"><h4>Config over construction</h4><p>An approved request becomes a <strong>row in the config store</strong>, consumed by one generic MFT engine process (and one generic API gateway policy set). It does <strong>not</strong> generate a new Boomi component per interface. Every story below must preserve this.</p></div><div class="card"><h4>Contract-first, not sync-by-default</h4><p>"API-First" means the contract comes first — OpenAPI for synchronous, AsyncAPI for event-driven. Consumer count is <em>not</em> the axis for choosing sync vs async. Availability, response-time budget, reliability and NFRs are.</p></div><div class="card"><h4>No async disguised as sync</h4><p>The guided selection wizard (REQ-02) must actively detect and flag the anti-pattern where a long-running or unreliable back-end is exposed behind a blocking synchronous call.</p></div><div class="card"><h4>Segregation of duties</h4><p>A requester can never approve their own request. This is a hard platform rule, not a policy hope (DEC-06).</p></div><div class="card"><h4>The portal is a front door, not a runtime</h4><p>Intelligrator provisions and governs. It does not sit in the data path. File payloads and API traffic never traverse the portal.</p></div>
+  </div>
+</section>
 
-  <h3>Standard User</h3>
-  <div class="story"><span class="sid">US-01</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> standard user, <strong>I want</strong> to log in and see my own requests <strong>so that</strong> I always know where things stand without asking anyone.</p></div>
-  <div class="story"><span class="sid">US-02</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> standard user, <strong>I want</strong> to describe the purpose and business value of my request <strong>so that</strong> the admin has the context to approve it quickly.</p></div>
-  <div class="story"><span class="sid">US-03</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> standard user, <strong>I want</strong> to test my source and destination connections before submitting <strong>so that</strong> I know the interface will work before anyone builds it.</p></div>
-  <div class="story"><span class="sid">US-04</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> standard user, <strong>I want</strong> to be warned if a similar interface already exists <strong>so that</strong> I don't accidentally request a duplicate.</p></div>
-  <div class="story"><span class="sid">US-05</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> standard user, <strong>I want</strong> a plain-English summary before I submit <strong>so that</strong> I can catch mistakes before they go to review.</p></div>
-  <div class="story"><span class="sid">US-06</span><span class="badge b-must">MUST</span>
-    <p><strong>As a</strong> standard user, <strong>I want</strong> to track my request through every stage <strong>so that</strong> I know the moment it's approved and live.</p></div>
 
-  <h3>MFT Admin</h3>
-  <div class="story"><span class="sid">US-07</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> MFT admin, <strong>I want</strong> a single queue of everything awaiting my decision <strong>so that</strong> nothing gets missed.</p></div>
-  <div class="story"><span class="sid">US-08</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> MFT admin, <strong>I want</strong> connection-test results and duplicate checks already attached to each request <strong>so that</strong> I can decide without chasing anyone for information.</p></div>
-  <div class="story"><span class="sid">US-09</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> MFT admin, <strong>I want</strong> to approve or deny with a comment <strong>so that</strong> the requester understands the outcome.</p></div>
-  <div class="story"><span class="sid">US-10</span><span class="badge b-must">MUST</span>
-    <p><strong>As an</strong> MFT admin, <strong>I want</strong> approval to trigger automatic provisioning <strong>so that</strong> I never have to ask engineering to build anything by hand.</p></div>
+<section id="E1">
+  <h2><span class="epic-tag">E1</span> Portal Access &amp; Identity</h2>
+  <p class="epic-desc">Get the right person into the right view, securely. <span class="epic-meta">5 stories &middot; 16 points &middot; P1 / P2</span></p>
+  
+  <article class="story" id="ACC-01">
+    <header class="story-head">
+      <span class="sid">ACC-01</span>
+      <h3>Discover the portal and understand what it is for</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want a landing page that explains what Intelligrator onboards and what it does not, so that I do not waste time submitting a request the portal cannot service.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am an unauthenticated visitor, when I open the portal URL, then I see a landing page stating that Intelligrator onboards Managed File Transfer interfaces and APIs.</li><li>And I see an explicit "not in scope" statement (no runtime data flows through the portal; no bespoke Boomi process build requests).</li><li>And I see a single, prominent "Sign in" action.</li><li>And I see links to the Integration Pattern Catalogue so I can self-assess which pattern applies before signing in.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ACC-02">
+    <header class="story-head">
+      <span class="sid">ACC-02</span>
+      <h3>Sign in with departmental single sign-on</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to sign in using my existing departmental identity via SSO, so that I do not need another credential and my access reflects my organisational role.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I hold a valid departmental identity, when I select "Sign in", then I am redirected to the corporate IdP (OIDC/SAML) and returned authenticated.</li><li>Given authentication succeeds, when I land in the portal, then my display name, email and organisational unit are populated from IdP claims without me typing them.</li><li>Given my IdP group entitles me only to the requester role, when I land, then no administrative navigation is rendered anywhere in the UI (not merely hidden by CSS).</li><li>Given authentication fails, when I am returned, then I see a clear, non-technical error and a route to service support.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ACC-03">
+    <header class="story-head">
+      <span class="sid">ACC-03</span>
+      <h3>Role-based landing dashboard</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want a dashboard on sign-in showing my requests and a clear call to action to raise a new one, so that I can pick up where I left off in one click.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I sign in as a requester, when the dashboard loads, then I see counts for Draft, Submitted, Awaiting Info, Approved and Rejected.</li><li>And I see a primary "New request" button.</li><li>And I see my five most recently updated requests with status and last-updated timestamp.</li><li>Given I have no requests, when the dashboard loads, then I see an empty state that explains the next step rather than a blank panel.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ACC-04">
+    <header class="story-head">
+      <span class="sid">ACC-04</span>
+      <h3>Organisation and service-line context</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want my requests automatically associated with my organisation and service line, so that approval routing and ownership are correct without manual entry.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given my IdP claims include an organisational unit, when I create a request, then the owning organisation is pre-populated and read-only.</li><li>Given I belong to more than one service line, when I create a request, then I am asked to select which one this request belongs to.</li><li>Given the service line drives the approver group, when I submit, then the request is routed to that group's queue.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ACC-05">
+    <header class="story-head">
+      <span class="sid">ACC-05</span>
+      <h3>Secure session handling and sign-out</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">2 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want my session to expire on inactivity and to be able to sign out explicitly, so that an unattended machine cannot be used to submit or approve requests.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I have been inactive for the configured idle timeout, when the timeout elapses, then my session is terminated and I am returned to the landing page.</li><li>Given I am two minutes from timeout, when the warning threshold is reached, then I am prompted and offered the option to extend.</li><li>Given I have unsaved form input, when a timeout occurs, then that input is preserved as a draft rather than lost.</li><li>Given I select "Sign out", when the action completes, then the session token is invalidated server-side, not just cleared client-side.</li></ol>
+    </div>
+  </article>
+</section>
 
-  <h3>Platform Engineer</h3>
-  <div class="story"><span class="sid">US-11</span><span class="badge b-should">SHOULD</span>
-    <p><strong>As a</strong> platform engineer, <strong>I want</strong> to be alerted only when automatic provisioning fails <strong>so that</strong> my time goes to genuine exceptions, not routine builds.</p></div>
-  <div class="story"><span class="sid">US-12</span><span class="badge b-should">SHOULD</span>
-    <p><strong>As a</strong> platform engineer, <strong>I want</strong> clear diagnostics on any failed provisioning <strong>so that</strong> I can resolve it quickly and keep the queue moving.</p></div>
+<section id="E2">
+  <h2><span class="epic-tag">E2</span> Request Initiation &amp; Guidance</h2>
+  <p class="epic-desc">Route the user to the correct request type and warn them off anti-patterns before they fill anything in. <span class="epic-meta">3 stories &middot; 16 points &middot; P1</span></p>
+  
+  <article class="story" id="REQ-01">
+    <header class="story-head">
+      <span class="sid">REQ-01</span>
+      <h3>Choose the request type: MFT or API</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to choose whether I am requesting a file transfer or an API, so that I am shown only the fields relevant to my interface.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I select "New request", when the type picker loads, then I am offered "Managed File Transfer (MFT)" and "API" with a one-line description of each.</li><li>And each option shows the governing catalogue pattern reference (for example P-116 for MFT) so the choice is anchored to the standard.</li><li>Given I choose a type, when I continue, then the correct submission form is loaded and the type is fixed for the life of the request.</li><li>Given I am unsure, when I select "Help me choose", then I am taken to the guided selection wizard (REQ-02).</li></ol>
+    </div>
+  </article>
+  <article class="story" id="REQ-02">
+    <header class="story-head">
+      <span class="sid">REQ-02</span>
+      <h3>Guided pattern selection with anti-pattern detection</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want the portal to ask me about my non-functional needs and recommend the right interaction style, so that I do not accidentally request an async workload disguised as a synchronous API.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I enter the wizard, when it runs, then it asks about response-time budget, back-end availability, expected volume, payload size and reliability/delivery guarantee — not about the number of consumers.</li><li>Given my back-end response time exceeds the synchronous budget or my payload exceeds the size threshold, when the wizard evaluates my answers, then it flags the synchronous option as an anti-pattern and recommends an asynchronous or file-based pattern with the reason stated in plain English.</li><li>Given my answers indicate a bulk, scheduled or large-payload movement, when the wizard evaluates, then it recommends MFT and offers to start an MFT request pre-populated with my answers.</li><li>Given the wizard makes a recommendation, when I disagree, then I may override it, but the override and my stated justification are recorded on the request and surfaced to the approver.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="REQ-03">
+    <header class="story-head">
+      <span class="sid">REQ-03</span>
+      <h3>Save a draft and resume later</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to save a partially completed request and come back to it, so that I can go and find information I do not have to hand without losing my work.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am part-way through a form, when I select "Save draft", then the request is persisted with status Draft and no validation is enforced.</li><li>And drafts auto-save at a defined interval without me taking any action.</li><li>Given I return to a draft, when I open it, then every previously entered value is restored and I resume at the section I left.</li><li>Given a draft has not been touched for the configured retention period, when the retention job runs, then I am notified before it is archived.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E3">
+  <h2><span class="epic-tag">E3</span> MFT Request Submission</h2>
+  <p class="epic-desc">Capture everything the generic MFT engine needs as a config row. <span class="epic-meta">10 stories &middot; 52 points &middot; P1</span></p>
+  
+  <article class="story" id="MFT-01">
+    <header class="story-head">
+      <span class="sid">MFT-01</span>
+      <h3>Capture MFT interface identity and ownership</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to name my file transfer interface and record who owns it, so that it can be uniquely identified, supported and charged correctly for its whole life.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I start an MFT request, when I complete the identity section, then I must supply an interface name, business purpose, owning service, technical contact and business owner.</li><li>Given the naming standard is enforced by the platform, when I enter a name that does not conform, then I am shown the required convention inline and cannot proceed until it conforms.</li><li>Given an interface with the same name already exists, when I attempt to proceed, then I am warned of the collision and offered a link to the existing interface.</li><li>Given all mandatory identity fields are complete, when I continue, then the section is marked complete in the progress indicator.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-02">
+    <header class="story-head">
+      <span class="sid">MFT-02</span>
+      <h3>Define source and target endpoints and transfer direction</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to declare where the file comes from and where it goes, and by what protocol, so that the generic MFT engine can be configured without any bespoke build.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the endpoints section, when it loads, then I declare direction (inbound to the department, outbound to a partner, or internal) and select a protocol from the supported set (SFTP, AS2, HTTPS, FTPS).</li><li>Given I select a protocol, when the form updates, then only the connection fields valid for that protocol are shown (for example, host/port/path/known-host key for SFTP; AS2 identifier and MDN settings for AS2).</li><li>Given the platform distinguishes Accelerated File Transfer from standard File Streaming, when I declare a payload size above the AFT threshold or a cross-region route, then the portal recommends AFT and explains why.</li><li>Given I complete the endpoint definition, when I continue, then the values map to named columns in the MFT config schema — no free-text blob is created.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-03">
+    <header class="story-head">
+      <span class="sid">MFT-03</span>
+      <h3>Specify file characteristics and volumetrics</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to describe the files themselves, so that the platform can validate what arrives and capacity-plan for it.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the file section, when I complete it, then I supply the filename pattern (glob or regex), file format, expected average and peak file size, and expected files per day and per peak hour.</li><li>Given I enter a filename pattern, when I select "Test pattern", then I can paste a sample filename and immediately see whether it matches.</li><li>Given my declared peak volumetrics exceed the platform capacity threshold, when I continue, then the request is automatically flagged for capacity review by the approver.</li><li>Given files must be archived or purged after transfer, when I complete the section, then I declare the retention period and post-transfer action (archive, delete, leave in place).</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-04">
+    <header class="story-head">
+      <span class="sid">MFT-04</span>
+      <h3>Specify the trigger: event-driven, polled or scheduled</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to declare how the transfer is initiated, so that the engine either watches, polls or schedules it correctly.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the trigger section, when it loads, then I choose between event/arrival-driven, polled at an interval, or scheduled on a cron expression.</li><li>Given I choose polled, when I set the interval, then the portal enforces the minimum permitted polling interval and explains the reason for the floor.</li><li>Given I choose scheduled, when I enter a cron expression, then the portal shows the next five run times in plain English so I can confirm my intent.</li><li>Given the transfer has a business deadline, when I complete the section, then I declare the "must complete by" time so that SLA breach alerting can be configured.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-05">
+    <header class="story-head">
+      <span class="sid">MFT-05</span>
+      <h3>Declare security: keys, certificates, encryption and allow-listing</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to supply or request the credentials and encryption my transfer needs, so that the interface is secure by default and no secret is ever emailed.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the security section, when it loads, then I declare authentication method (SSH key, certificate, mutual TLS, username/password where permitted) for each endpoint.</li><li>Given I hold a public key or certificate, when I upload it, then the portal validates its format, algorithm strength and expiry date and rejects a weak or expired credential with a clear reason.</li><li>Given I do not hold a key, when I select "Request platform-generated key", then the request is marked for key issuance on approval and no secret is ever entered into a free-text field.</li><li>Given payload encryption is required, when I complete the section, then I declare whether PGP encryption is applied and supply or request the relevant key.</li><li>Given the platform enforces network controls, when I complete the section, then I supply the source IP ranges to be allow-listed.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-06">
+    <header class="story-head">
+      <span class="sid">MFT-06</span>
+      <h3>Declare data classification and residency</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to classify the data in the files and state where it may reside, so that the approver can assess risk and the platform can route the transfer to a compliant region.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the data section, when it loads, then I select a data classification from the departmental scheme and declare whether the payload contains personal data.</li><li>Given I declare personal data, when I continue, then I must supply the lawful basis and the retention period, and the request is automatically flagged for enhanced review.</li><li>Given I declare a residency constraint, when I continue, then the portal restricts the selectable target regions to those that satisfy the constraint.</li><li>Given the classification exceeds the threshold for the selected protocol, when I attempt to continue, then I am blocked with an explanation of the required protocol or additional control.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-07">
+    <header class="story-head">
+      <span class="sid">MFT-07</span>
+      <h3>Configure error handling, retries and alert routing</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to say what should happen when a transfer fails and who should be told, so that failures are handled predictably and reach the right team.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the resilience section, when I complete it, then I declare the retry count, retry interval and back-off strategy from the permitted options.</li><li>Given retries are exhausted, when I complete the section, then I declare the failure action (quarantine, alert only, alert and page).</li><li>Given an alert must reach a team, when I complete the section, then I supply an alert distribution address and, where paging is selected, an on-call rota reference.</li><li>Given the alert address does not resolve, when I attempt to submit, then validation fails with a clear message.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-08">
+    <header class="story-head">
+      <span class="sid">MFT-08</span>
+      <h3>Select environments and promotion path</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to request the interface in a specific environment and understand the path to production, so that expectations about go-live are clear from the outset.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the environment section, when it loads, then I select the target environment (Development, Test, Pre-production, Production).</li><li>Given I select Production, when I continue, then the portal shows the prerequisite environments that must already hold an approved, tested instance of this interface.</li><li>Given a prerequisite is not met, when I attempt to submit for Production, then submission is blocked with a link to raise the prerequisite request.</li><li>Given the same interface is promoted between environments, when I raise the promotion request, then all previously supplied values are carried forward and only environment-specific values (hosts, keys, IPs) are re-entered.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-09">
+    <header class="story-head">
+      <span class="sid">MFT-09</span>
+      <h3>Review the generated config row before submitting</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to see exactly what configuration my answers will produce, so that I can confirm it is right before it goes for approval — and so I can see that no bespoke build is being requested on my behalf.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given every mandatory section is complete, when I reach the review step, then I see a read-only, human-readable rendering of the full config row that would be created.</li><li>And I see a statement confirming that approval creates a configuration entry consumed by the shared MFT engine process, and does not create a new Boomi component.</li><li>Given I spot an error, when I select the edit link beside any section, then I return to that section with my values intact and can return directly to review.</li><li>Given a mandatory field is missing, when I reach review, then the incomplete sections are listed and the submit action is disabled.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="MFT-10">
+    <header class="story-head">
+      <span class="sid">MFT-10</span>
+      <h3>Submit the MFT request for approval</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to submit my completed MFT request, so that it enters the approval queue and I get a reference I can quote.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given the request passes all validation, when I select "Submit", then the status changes from Draft to Submitted and the request becomes read-only to me.</li><li>And a unique, human-quotable request reference is generated and displayed.</li><li>And a confirmation is sent to me and to the nominated business owner.</li><li>And the request appears in the approval queue of the approver group derived from my service line.</li><li>Given submission fails for a technical reason, when the error occurs, then my request is retained as a Draft with all data intact and I am told plainly what to do next.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E4">
+  <h2><span class="epic-tag">E4</span> API Request Submission</h2>
+  <p class="epic-desc">Capture everything the gateway needs, contract-first. <span class="epic-meta">7 stories &middot; 39 points &middot; P1</span></p>
+  
+  <article class="story" id="API-01">
+    <header class="story-head">
+      <span class="sid">API-01</span>
+      <h3>Capture API identity, ownership and consumer intent</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to record what API I am publishing or consuming and who owns it, so that it can be governed, discovered and supported.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I start an API request, when I complete the identity section, then I declare whether I am publishing an API or requesting access to an existing one.</li><li>And I supply API name, business purpose, owning service, technical contact and business owner.</li><li>Given I am requesting access to an existing API, when I search the catalogue, then I can select the published API and my request is linked to it rather than duplicating its definition.</li><li>Given the naming standard is enforced, when I enter a non-conforming name, then I am blocked inline with the required convention shown.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="API-02">
+    <header class="story-head">
+      <span class="sid">API-02</span>
+      <h3>Provide the contract first — OpenAPI or AsyncAPI</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to upload or link my API contract as the primary artefact of the request, so that the design is agreed before anything is provisioned.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am publishing a synchronous API, when I reach the contract step, then I must supply an OpenAPI (3.x) document by upload or by URL.</li><li>Given I am publishing an event-driven or asynchronous interface, when I reach the contract step, then I must supply an AsyncAPI document instead.</li><li>Given I supply a contract, when it is received, then it is linted against the departmental API standards ruleset and every error and warning is displayed against the offending line.</li><li>Given the contract has linting errors of severity "error", when I attempt to submit, then submission is blocked until they are resolved.</li><li>Given I have no contract yet, when I reach this step, then I can download a conforming starter template rather than being left stuck.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="API-03">
+    <header class="story-head">
+      <span class="sid">API-03</span>
+      <h3>Declare the interaction style with NFR-driven justification</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to declare whether my API is synchronous request/response, asynchronous, or publish/subscribe, and justify it against NFRs, so that the platform is not asked to expose an unsuitable back-end behind a blocking call.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the interaction step, when it loads, then I select from synchronous request/response, asynchronous (request/callback or polling), or publish/subscribe.</li><li>And I supply the back-end response-time profile (p50, p95, p99), the back-end availability target, and the delivery guarantee required (at-most-once, at-least-once, exactly-once).</li><li>Given my declared p99 exceeds the synchronous threshold, when I nonetheless select synchronous, then the anti-pattern is flagged, I must record a justification, and the flag is carried through to the approver.</li><li>Given I select publish/subscribe, when I continue, then I declare the topic, the event schema reference and the expected subscriber growth.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="API-04">
+    <header class="story-head">
+      <span class="sid">API-04</span>
+      <h3>Define the authentication and authorisation model</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to declare how consumers of my API will authenticate, so that the correct gateway policy is applied and no unprotected endpoint is ever published.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the security step, when it loads, then I select an authorisation model from the permitted set (OAuth 2.0 client credentials, OAuth 2.0 authorization code, mutual TLS, API key where permitted).</li><li>Given the platform forbids unauthenticated APIs, when no model is selected, then I cannot proceed.</li><li>Given I select OAuth 2.0, when I continue, then I declare the required scopes and the mapping of each scope to each operation in the contract.</li><li>Given I select mutual TLS, when I continue, then I upload or request the client certificate and the portal validates its algorithm strength and expiry.</li><li>Given credentials must be issued, when the request is approved, then they are issued by the platform and delivered by a secure one-time mechanism — never rendered in the portal UI or in an email body.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="API-05">
+    <header class="story-head">
+      <span class="sid">API-05</span>
+      <h3>Declare traffic profile, rate limits and service levels</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to declare my expected load and required service level, so that gateway throttling is set correctly and the platform can capacity-plan.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the traffic step, when I complete it, then I declare expected average TPS, peak TPS, peak window, average and maximum payload size, and required availability SLO.</li><li>Given I declare a peak TPS above the standard tier, when I continue, then the request is automatically flagged for capacity review.</li><li>Given rate limiting is mandatory, when I complete the step, then a default rate limit and burst allowance are proposed and I may request a different value with a justification.</li><li>Given I request an availability SLO above the platform standard, when I continue, then I am shown the cost and architectural implication before I can proceed.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="API-06">
+    <header class="story-head">
+      <span class="sid">API-06</span>
+      <h3>Select environment, routing and gateway policy set</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to declare the environment and back-end routing for my API, so that the gateway can be configured from my request without a bespoke build.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I reach the routing step, when I complete it, then I supply the back-end base URL per environment and the public-facing base path.</li><li>Given the base path collides with an existing published API, when I attempt to continue, then I am blocked and shown the conflicting API.</li><li>Given policy sets are standardised, when I complete the step, then I select from named, pre-approved gateway policy bundles (for example: standard, high-security, partner-facing) rather than composing policies myself.</li><li>Given I need a policy that no bundle provides, when I select "Request non-standard policy", then the request is routed for enhanced review with my justification attached.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="API-07">
+    <header class="story-head">
+      <span class="sid">API-07</span>
+      <h3>Review and submit the API request</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to review the full API request and submit it, so that it enters the approval queue with a reference I can quote.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given every mandatory section is complete and the contract lints clean, when I reach review, then I see the full request including the resolved contract summary (operations, schemas, scopes).</li><li>And I see a statement confirming that approval creates gateway configuration from my declared values and does not create a bespoke integration component.</li><li>Given I submit, when submission succeeds, then the status changes to Submitted, a unique reference is generated, confirmations are sent, and the request enters the correct approval queue.</li><li>Given any anti-pattern flag or non-standard request is present, when the request enters the queue, then it is visibly badged as requiring enhanced review.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E5">
+  <h2><span class="epic-tag">E5</span> Track, Amend &amp; Withdraw</h2>
+  <p class="epic-desc">Visibility and control after submission. <span class="epic-meta">6 stories &middot; 23 points &middot; P1</span></p>
+  
+  <article class="story" id="TRK-01">
+    <header class="story-head">
+      <span class="sid">TRK-01</span>
+      <h3>Track the status of my requests</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to see where each of my requests is in the approval process, so that I do not have to chase anyone to find out.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I open "My requests", when the list loads, then each request shows its reference, type, environment, current status, current owner and the age in working days.</li><li>Given I open a request, when the detail loads, then I see a full timeline of every state transition with actor and timestamp.</li><li>Given a request is awaiting approval, when I view it, then I see the target SLA date for the decision.</li><li>Given I want to find one request among many, when I use the filters, then I can filter by type, status, environment and date range.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="TRK-02">
+    <header class="story-head">
+      <span class="sid">TRK-02</span>
+      <h3>Be notified when a decision or query is raised</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to be notified when my request is approved, rejected or queried, so that I can act without watching the portal.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given my request changes status, when the transition is committed, then I receive a notification containing the reference, the new status and the reason where one was given.</li><li>And the notification contains a deep link to the request in the portal.</li><li>And the notification never contains a secret, key or credential.</li><li>Given the business owner is nominated on the request, when a terminal decision is made, then they are copied.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="TRK-03">
+    <header class="story-head">
+      <span class="sid">TRK-03</span>
+      <h3>Respond to a request for more information</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to answer an approver's query and resubmit, so that a query does not force me to start again.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given the approver has set my request to "Awaiting Information", when I open it, then it becomes editable again and their question is displayed prominently against the section it concerns.</li><li>Given I have answered, when I resubmit, then the request returns to the same approver (not to the back of a generic queue) with my answer attached to the thread.</li><li>Given the request is Awaiting Information, when the SLA clock is evaluated, then the time spent waiting on me is excluded from the approver's SLA.</li><li>Given I do not respond within the configured period, when the period elapses, then I am reminded, and after a second period the request is auto-withdrawn with notification.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="TRK-04">
+    <header class="story-head">
+      <span class="sid">TRK-04</span>
+      <h3>Amend a rejected request and resubmit</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to clone a rejected request, fix the issue and resubmit, so that I retain the effort I already invested.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given my request was rejected, when I select "Amend and resubmit", then a new request is created pre-populated with every value from the rejected one.</li><li>And the new request retains a link to its predecessor and to the rejection reason.</li><li>Given I resubmit, when the approver opens it, then they see a field-level difference against the rejected version so they can review only what changed.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="TRK-05">
+    <header class="story-head">
+      <span class="sid">TRK-05</span>
+      <h3>Withdraw a request</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">2 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to withdraw a request that is no longer needed, so that I do not consume approver time on work that has been cancelled.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given my request is in Draft or Submitted, when I select "Withdraw" and confirm, then its status becomes Withdrawn and it is removed from the approval queue.</li><li>Given a request has been approved, when I view it, then "Withdraw" is not offered; I must instead raise a decommission request (TRK-06).</li><li>And the withdrawal, with actor and timestamp, is written to the audit trail.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="TRK-06">
+    <header class="story-head">
+      <span class="sid">TRK-06</span>
+      <h3>Request a change or decommission of a live interface</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want to change or retire an interface that is already live, so that the config store stays accurate and dead interfaces do not linger.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given an interface of mine is live, when I select "Request change", then a new request is opened pre-populated with the current live configuration.</li><li>And the approver sees a field-level difference between the live config and the proposed config.</li><li>Given I select "Request decommission", when the request is approved, then the config row is disabled (not deleted) and retained for the audit retention period.</li><li>Given the interface has been inactive for the configured dormancy period, when the dormancy job runs, then I am prompted to confirm whether it is still required.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E6">
+  <h2><span class="epic-tag">E6</span> Admin Access &amp; Approval Queue</h2>
+  <p class="epic-desc">Get the approver to the work, prioritised and pre-checked. <span class="epic-meta">4 stories &middot; 26 points &middot; P2</span></p>
+  
+  <article class="story" id="ADM-01">
+    <header class="story-head">
+      <span class="sid">ADM-01</span>
+      <h3>Sign in as an administrator with step-up authentication</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to sign in with my elevated role and complete a step-up authentication challenge, so that approval authority cannot be exercised from a merely-authenticated session.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given my IdP group grants the approver role, when I sign in, then the administrative navigation and approval queue are available to me.</li><li>Given I attempt a decision action (approve, reject, conditionally approve), when the action is invoked, then I am challenged for multi-factor step-up authentication before the decision is committed.</li><li>Given I fail the step-up challenge, when the decision is attempted, then no state change occurs and the failed attempt is written to the audit trail.</li><li>Given I do not hold the approver role, when I attempt to reach an administrative URL directly, then the server rejects the request — access is enforced at the API, not only in the UI.</li><li>Given administrative sessions carry higher risk, when I am idle, then a shorter idle timeout applies to me than to a standard user.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ADM-02">
+    <header class="story-head">
+      <span class="sid">ADM-02</span>
+      <h3>Work an approval queue prioritised by risk and SLA</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want a single queue of everything awaiting my decision, ordered so the urgent and risky surface first, so that I spend my attention where it matters.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I open the approval queue, when it loads, then I see every request awaiting decision in my approver group with reference, type (MFT/API), requester, service line, environment, age in working days and SLA status.</li><li>And requests are badged where they carry an anti-pattern flag, an enhanced-review flag (personal data, non-standard policy, capacity), or a Production target.</li><li>And I can sort and filter by any of those attributes.</li><li>Given a request is approaching or has breached its decision SLA, when the queue renders, then it is visually distinguished.</li><li>Given the queue is empty, when it loads, then I see an explicit empty state rather than an ambiguous blank list.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ADM-03">
+    <header class="story-head">
+      <span class="sid">ADM-03</span>
+      <h3>Open a request and see the complete submission</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to see everything the requester submitted on one screen, so that I can make a decision without hunting through attachments or emailing for context.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I open a request from the queue, when the detail loads, then every submitted section is rendered read-only in a single scrollable view with a section index.</li><li>And for an MFT request I see the exact config row that would be written on approval.</li><li>And for an API request I see the parsed contract summary — operations, schemas, scopes, and the linting result.</li><li>Given the request is an amendment or a change to a live interface, when I open it, then I see a field-level difference highlighting only what changed.</li><li>Given I need to see the history, when I open the timeline, then every prior state transition, comment and prior decision on the lineage is visible.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="ADM-04">
+    <header class="story-head">
+      <span class="sid">ADM-04</span>
+      <h3>See the automated pre-check results before deciding</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want the platform to have already checked the mechanical things, so that my review is spent on judgement rather than on validation a machine could do.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given a request enters the queue, when I open it, then a pre-check panel shows a pass/warn/fail result for each automated check.</li><li>And the checks include at minimum: naming-standard conformance, duplicate/collision detection, credential strength and expiry, contract linting (API), data-classification-versus-protocol compatibility, capacity threshold, IP allow-list validity, and anti-pattern flags.</li><li>Given any check has failed, when I view the panel, then the failure is stated in one line with a link to the offending field.</li><li>Given every check has passed and the request carries no enhanced-review flag, when I view the request, then it is eligible for the low-risk fast path (DEC-07).</li><li>Given a pre-check fails, when I attempt to approve, then I am not blocked, but I must record an explicit override justification which is retained in the audit trail.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E7">
+  <h2><span class="epic-tag">E7</span> Decision: Accept / Reject</h2>
+  <p class="epic-desc">The decision itself, with rationale and defensibility. <span class="epic-meta">7 stories &middot; 31 points &middot; P2</span></p>
+  
+  <article class="story" id="DEC-01">
+    <header class="story-head">
+      <span class="sid">DEC-01</span>
+      <h3>Approve a request</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to approve a request with a recorded rationale, so that the interface can be provisioned and the decision is defensible after the fact.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am reviewing a request, when I select "Approve", then I am required to complete step-up authentication (ADM-01).</li><li>And I may record an approval rationale, which is mandatory where any pre-check warned or failed, or where an anti-pattern flag is present.</li><li>Given I confirm, when the decision commits, then the status becomes Approved, the request becomes immutable, and provisioning is triggered (PRV-01).</li><li>And the requester and the business owner are notified.</li><li>And the decision, the actor, the timestamp, the rationale and the state of every pre-check at the moment of decision are written to the immutable audit trail.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="DEC-02">
+    <header class="story-head">
+      <span class="sid">DEC-02</span>
+      <h3>Reject a request with a reason the requester can act on</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to reject a request with a structured reason, so that the requester understands precisely what to fix and does not simply resubmit the same thing.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am reviewing a request, when I select "Reject", then I must choose at least one reason code from a governed list (for example: fails security policy, fails naming standard, unsuitable pattern, incomplete information, duplicate interface, capacity not available, data classification not permitted).</li><li>And I must supply free-text detail; a reason code alone is not sufficient.</li><li>And I may attach the rejection to one or more specific fields so the requester sees it in context.</li><li>Given I confirm after step-up authentication, when the decision commits, then the status becomes Rejected, the requester and business owner are notified with the reason, and no provisioning occurs.</li><li>Given the request is rejected, when the requester views it, then "Amend and resubmit" is offered (TRK-04).</li></ol>
+    </div>
+  </article>
+  <article class="story" id="DEC-03">
+    <header class="story-head">
+      <span class="sid">DEC-03</span>
+      <h3>Return a request for more information</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to ask the requester a question without rejecting the request outright, so that a single missing detail does not cost the requester a full resubmission.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am reviewing a request, when I select "Request information", then I must supply a question and may anchor it to one or more specific fields.</li><li>Given I confirm, when the action commits, then the status becomes Awaiting Information, the request becomes editable by the requester, and it leaves my active queue.</li><li>And my decision SLA clock is paused for the duration the request is with the requester.</li><li>Given the requester responds, when they resubmit, then the request returns to me specifically, with their answer threaded against my question.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="DEC-04">
+    <header class="story-head">
+      <span class="sid">DEC-04</span>
+      <h3>Approve conditionally, with binding conditions</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to approve a request subject to stated conditions, so that a low-risk interface is not held up while a non-blocking issue is resolved.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I am reviewing a request, when I select "Approve with conditions", then I must state each condition and a due date for it.</li><li>Given I confirm, when the decision commits, then provisioning proceeds, and the interface is flagged as conditionally approved in the config store.</li><li>Given a condition passes its due date unmet, when the condition-monitoring job runs, then the requester and I are alerted and the interface is escalated for review.</li><li>Given all conditions are marked met, when the last one is closed, then the conditional flag is cleared and the audit trail records who closed it.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="DEC-05">
+    <header class="story-head">
+      <span class="sid">DEC-05</span>
+      <h3>Reassign or delegate a request to another approver</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to hand a request to a colleague, so that absence or a specialist question does not stall the queue.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I hold a request, when I select "Reassign", then I can select another approver within an eligible approver group and must supply a reason.</li><li>Given I reassign, when the action commits, then the request moves to their queue, the SLA clock continues unbroken, and the requester sees the new owner.</li><li>Given I will be absent, when I set a delegation period, then requests routed to me during that period are automatically routed to my nominated delegate.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="DEC-06">
+    <header class="story-head">
+      <span class="sid">DEC-06</span>
+      <h3>Enforce segregation of duties</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want the platform to make it impossible for anyone to approve their own request, so that the control is guaranteed by the system rather than by good behaviour.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I raised a request and I also hold the approver role, when that request reaches the queue, then it is not presented to me and the decision actions are not available to me on it.</li><li>And the rule is enforced server-side: a direct API call to approve my own request is rejected.</li><li>Given I am the only approver in the group, when I raise a request, then it is automatically routed to the escalation approver group rather than being blocked indefinitely.</li><li>Given any attempt to bypass the rule occurs, when it is rejected, then the attempt is written to the audit trail.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="DEC-07">
+    <header class="story-head">
+      <span class="sid">DEC-07</span>
+      <h3>Fast-path approval for low-risk requests</h3>
+      <span class="badges">
+        <span class="badge pri-could">Could</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to approve a batch of requests that passed every pre-check and carry no risk flags, so that routine non-production work does not consume the same effort as a production change.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given multiple requests have passed every automated pre-check, carry no enhanced-review flag and target a non-production environment, when I open the fast path, then I may select and approve them together.</li><li>Given I fast-path approve, when the decision commits, then step-up authentication is still required once for the batch, and each request receives its own individual audit entry.</li><li>Given any request in my selection is not fast-path eligible, when I attempt to include it, then it is excluded from the batch with the reason shown.</li><li>Given a request targets Production, when I attempt to fast-path it, then it is never eligible, regardless of pre-check results.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E8">
+  <h2><span class="epic-tag">E8</span> Provisioning on Approval</h2>
+  <p class="epic-desc">Turn an approval into a live config row, safely. <span class="epic-meta">3 stories &middot; 21 points &middot; P2 / P3</span></p>
+  
+  <article class="story" id="PRV-01">
+    <header class="story-head">
+      <span class="sid">PRV-01</span>
+      <h3>Approval writes a configuration row — not a new component</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Platform Engineer</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Platform Engineer, I want an approved request to become a row in the config store consumed by the existing generic engine, so that the estate does not accumulate one Boomi component per interface.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given a request is approved, when provisioning runs, then a single configuration record is written to the MFT config store (or the gateway policy store, for an API) keyed by the request reference.</li><li>And no new Boomi process, connection or component is created for that interface.</li><li>And the generic engine picks up the new configuration without redeployment.</li><li>Given the config schema does not have a column for something a requester needs, when that gap is identified, then it is handled by a schema extension, never by a bespoke per-interface process.</li><li>Given provisioning completes, when I inspect the config store, then the row is traceable to the approved request, the approver and the timestamp.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="PRV-02">
+    <header class="story-head">
+      <span class="sid">PRV-02</span>
+      <h3>Issue credentials securely on approval</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">8 pts</span>
+        <span class="badge persona">Standard User</span>
+      </span>
+    </header>
+    <blockquote class="us">As a Standard User, I want any keys or credentials my interface needs to be issued and delivered securely, so that no secret is ever sent by email or displayed in a page I might screenshot.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given my approved request asked for platform-generated credentials, when provisioning runs, then they are generated in the secrets store and never written to the portal database in plaintext.</li><li>And I am notified that credentials are ready via a link that requires me to re-authenticate.</li><li>And the secret is revealed once, is time-limited, and cannot be retrieved a second time through the portal.</li><li>Given the credential has an expiry, when the expiry approaches, then I and the technical contact are notified in advance with instructions to rotate.</li><li>Given a credential must be rotated, when I request rotation, then it follows the same secure issuance path without requiring a new onboarding request.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="PRV-03">
+    <header class="story-head">
+      <span class="sid">PRV-03</span>
+      <h3>See provisioning succeed or fail, and roll back cleanly</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to know whether the approval actually resulted in a working interface, so that an approved-but-broken interface does not sit undetected.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given a request is approved, when provisioning runs, then its status moves through Provisioning to either Live or Provisioning Failed.</li><li>Given provisioning fails, when the failure occurs, then any partial configuration is rolled back, the approver and requester are notified, and the failure reason is displayed.</li><li>Given provisioning succeeds, when the status becomes Live, then a connectivity smoke test result is recorded against the interface.</li><li>Given the smoke test fails, when the result is recorded, then the interface is flagged as Live (Unverified) rather than being silently marked healthy.</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="E9">
+  <h2><span class="epic-tag">E9</span> Audit, Reporting &amp; NFRs</h2>
+  <p class="epic-desc">Prove what happened, and hold the service to a standard. <span class="epic-meta">4 stories &middot; 18 points &middot; All</span></p>
+  
+  <article class="story" id="AUD-01">
+    <header class="story-head">
+      <span class="sid">AUD-01</span>
+      <h3>Maintain an immutable audit trail</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want every action on every request permanently recorded, so that I can demonstrate to an auditor exactly who approved what, when and on what basis.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given any state transition, decision, override, reassignment or credential issuance occurs, when it commits, then an audit record is written capturing actor, role, action, timestamp, request reference and rationale.</li><li>And audit records are append-only; no user, including an administrator, can edit or delete one through any interface.</li><li>And the audit trail records failed authorisation attempts as well as successful actions.</li><li>Given an auditor needs evidence, when they export the trail for a request or a date range, then a complete, tamper-evident export is produced.</li><li>Given the retention policy applies, when the retention period elapses, then records are archived, not destroyed, unless destruction is explicitly mandated.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="AUD-02">
+    <header class="story-head">
+      <span class="sid">AUD-02</span>
+      <h3>Report on throughput, SLA and rejection reasons</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">MFT Admin</span>
+      </span>
+    </header>
+    <blockquote class="us">As an MFT Admin, I want to see how the onboarding service is actually performing, so that I can fix the causes of rejection rather than just processing the symptoms.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given I open reporting, when it loads, then I see requests submitted, approved, rejected and withdrawn over a selectable period, split by MFT and API.</li><li>And I see median and 90th-percentile time-to-decision against SLA, with time spent Awaiting Information excluded.</li><li>And I see rejection reason codes ranked by frequency, so that the commonest causes can be designed out of the form.</li><li>And I see the proportion of requests requiring enhanced review and the proportion carrying anti-pattern overrides.</li><li>Given I need the underlying data, when I select export, then I can download the dataset.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="NFR-01">
+    <header class="story-head">
+      <span class="sid">NFR-01</span>
+      <h3>Meet accessibility standards</h3>
+      <span class="badges">
+        <span class="badge pri-must">Must</span>
+        <span class="badge pts">5 pts</span>
+        <span class="badge persona">All</span>
+      </span>
+    </header>
+    <blockquote class="us">As any user, I want the portal to be usable with assistive technology, so that the service is available to every colleague and meets the department's legal obligation.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given the portal is assessed, when it is tested, then it conforms to WCAG 2.2 Level AA.</li><li>And every function, including the full request forms, review screens and decision actions, is completable by keyboard alone.</li><li>And every form error is announced by a screen reader and associated programmatically with the field it concerns.</li><li>And no meaning is conveyed by colour alone — risk badges and SLA warnings carry a text or icon equivalent.</li></ol>
+    </div>
+  </article>
+  <article class="story" id="NFR-02">
+    <header class="story-head">
+      <span class="sid">NFR-02</span>
+      <h3>Meet performance and availability targets</h3>
+      <span class="badges">
+        <span class="badge pri-should">Should</span>
+        <span class="badge pts">3 pts</span>
+        <span class="badge persona">All</span>
+      </span>
+    </header>
+    <blockquote class="us">As any user, I want the portal to be responsive and available, so that it is faster to self-serve than to raise a ticket — otherwise nobody will use it.</blockquote>
+    <div class="ac">
+      <h4>Acceptance criteria</h4>
+      <ol><li>Given normal load, when I load any page, then it renders within the agreed response-time budget at the 95th percentile.</li><li>Given the approval queue contains a large number of requests, when it loads, then it pages and filters server-side rather than degrading.</li><li>Given the portal is unavailable, when the outage occurs, then no in-flight request data is lost and drafts survive.</li><li>Given the service level is defined, when availability is measured, then it is reported against the agreed SLO in the reporting view (AUD-02).</li></ol>
+    </div>
+  </article>
+</section>
+
+<section id="states">
+  <h2><span class="epic-tag">10</span> Request lifecycle</h2>
+  <p class="epic-desc">Every request, MFT or API, moves through this state machine. The draw.io file in the download bar renders it as a diagram.</p>
+  <table>
+    <thead><tr><th style="width:190px">State</th><th style="width:110px">Held by</th><th>Meaning</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Draft</strong></td><td>Requester</td><td>Being completed. Not visible to approvers. Auto-saved. Subject to retention.</td></tr>
+    <tr><td><strong>Submitted</strong></td><td>Approver</td><td>In the approval queue. Read-only to the requester. Decision SLA clock running.</td></tr>
+    <tr><td><strong>Awaiting Information</strong></td><td>Requester</td><td>Returned with a question. Editable by requester. Approver SLA clock paused.</td></tr>
+    <tr><td><strong>Approved</strong></td><td>Platform</td><td>Decision committed and immutable. Provisioning triggered.</td></tr>
+    <tr><td><strong>Approved (Conditional)</strong></td><td>Platform</td><td>Provisioning proceeds; conditions tracked to a due date and escalated if unmet.</td></tr>
+    <tr><td><strong>Rejected</strong></td><td>Requester</td><td>Terminal. Reason code and detail attached. May be amended and resubmitted as a new request.</td></tr>
+    <tr><td><strong>Withdrawn</strong></td><td>—</td><td>Terminal. Cancelled by the requester or auto-withdrawn after non-response.</td></tr>
+    <tr><td><strong>Provisioning</strong></td><td>Platform</td><td>Config row / gateway config being written. Transient.</td></tr>
+    <tr><td><strong>Provisioning Failed</strong></td><td>Approver</td><td>Partial config rolled back. Approver and requester notified.</td></tr>
+    <tr><td><strong>Live</strong></td><td>Requester</td><td>Config active and smoke-tested. Change and decommission requests available.</td></tr>
+    <tr><td><strong>Live (Unverified)</strong></td><td>Approver</td><td>Config active but smoke test failed or was not run. Flagged, not silently healthy.</td></tr>
+    <tr><td><strong>Decommissioned</strong></td><td>—</td><td>Config row disabled, not deleted. Retained for the audit retention period.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="challenges">
+  <h2><span class="epic-tag">11</span> Challenges &amp; responses</h2>
+  <p class="epic-desc">Deliberate challenges to the assumptions behind this backlog, with a recommended position on each. These are decisions to take <em>before</em> Sprint 1.</p>
+  <div class="chal"><h4>Intelligrator was scoped as MFT-only. This request adds API onboarding. Is that right?</h4><p>It is defensible, but it is a genuine scope change and must be recognised as one. The two journeys share a great deal — identity, drafting, queue, decision, audit, provisioning-as-config — and duplicating that machinery for a separate API portal would be waste. The divergence is entirely in Epic 3 versus Epic 4. <strong>Recommendation:</strong> build the shared spine once, treat MFT and API as two request types over it, and deliver MFT first. Do not, however, quietly re-label the existing MFT-only product overview — the client signed off on a narrower scope and should be shown the delta explicitly.</p></div><div class="chal"><h4>Should the API journey really go through the same approval gate as MFT?</h4><p>Not necessarily the same approvers. An MFT Admin is not automatically qualified to assess an OpenAPI contract, an OAuth scope model or a rate-limit profile. The queue and decision machinery should be shared; the <em>approver group</em> should be routed by request type and service line. The stories above are deliberately written so that ADM-02 routes by approver group rather than assuming one pool of humans.</p></div><div class="chal"><h4>Does adding API onboarding break the "config over construction" principle?</h4><p>No, provided the discipline holds. For MFT, an approved request is a config row consumed by the generic engine. For API, an approved request is a gateway configuration derived from the contract plus a <em>named, pre-approved policy bundle</em> (API-06). The moment someone is allowed to compose arbitrary policies per interface, the principle is broken and component sprawl returns in a new costume. API-06 exists precisely to hold that line.</p></div><div class="chal"><h4>Is the anti-pattern check (REQ-02, API-03) going to be resented as the portal telling people what to do?</h4><p>Probably, at first. Which is why it is designed as an <em>override with recorded justification</em>, not a hard block. The requester keeps agency; the approver gets visibility; the reporting view (AUD-02) makes the pattern of overrides visible over time. If a particular flag is being overridden nine times out of ten, the threshold is wrong and should be tuned — the data will tell you.</p></div><div class="chal"><h4>Why is step-up authentication on the decision action rather than at admin sign-in?</h4><p>Both, in fact — but the decision action is the one that matters. Session-level MFA proves who opened the browser hours ago. Action-level step-up proves who is exercising approval authority at the moment authority is exercised. For a control that an auditor will test, that distinction is the whole point.</p></div>
 </section>
 
 </main>
 </div>
 
-<footer>Intelligrator — Managed File Transfer on Boomi · Product Overview · July 2026</footer>
-
 <script>
-  const links=document.querySelectorAll('#toc a');
-  const map=new Map();
-  links.forEach(l=>{const id=l.getAttribute('href').slice(1);const s=document.getElementById(id);if(s)map.set(s,l);});
-  const obs=new IntersectionObserver(es=>{es.forEach(e=>{const l=map.get(e.target);if(!l)return;if(e.isIntersecting){links.forEach(x=>x.classList.remove('active'));l.classList.add('active');}});},{rootMargin:'-20% 0px -70% 0px'});
-  map.forEach((_,s)=>obs.observe(s));
+const links=[...document.querySelectorAll('nav.toc a')];
+const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    const a=map.get(e.target.id);
+    if(!a)return;
+    if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));a.classList.add('active');}
+  });
+},{rootMargin:'-25% 0px -65% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
 </script>
 </body>
 </html>
