@@ -3,909 +3,466 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Intelligrator — Phased Productionisation Plan | Integration Catalogue</title>
+<title>Intelligrator — UI Screens (Standard User) | Integration Catalogue</title>
 <style>
-  :root{--ink:#12161c;--ink-2:#3d4653;--line:#dfe4ea;--line-2:#eef1f4;--bg:#f7f8fa;--card:#fff;
-    --accent:#0b5fff;--accent-dk:#003d9e;--must:#b3261e;--should:#8a5a00;--could:#3a6b35;--bar:#0f1723}
+  :root{
+    --ink:#12161c;--ink-2:#3d4653;--muted:#7a8493;--line:#dfe4ea;--line-2:#eef1f4;
+    --bg:#f7f8fa;--card:#fff;--accent:#0b5fff;--accent-dk:#003d9e;--bar:#0f1723;
+    --ok:#2e7d32;--warn:#7a5c00;--warn-bg:#fff8e6;--warn-bd:#e6c65c;
+    --info-bg:#eaf1ff;--info-bd:#8fb4ff;--bad:#b3261e;
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  .dlbar{position:sticky;top:0;z-index:200;width:100%;background:var(--bar);padding:8px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;box-shadow:0 1px 0 rgba(255,255,255,.08)}
-  .dlbar .dl-label{color:#93a1b5;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-right:6px}
-  .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#1e2a3a;color:#fff;text-decoration:none;font-size:13px;font-weight:600;padding:7px 13px;border-radius:6px;border:1px solid #2f3f54;transition:.15s}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-dk)}
+
+  /* ---- sticky download bar ---- */
+  .dlbar{position:sticky;top:0;z-index:200;width:100%;background:var(--bar);padding:8px 16px;
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;box-shadow:0 1px 0 rgba(255,255,255,.08)}
+  .dlbar .dl-label{color:#93a1b5;font-size:12px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;margin-right:6px}
+  .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#1e2a3a;color:#fff;
+    text-decoration:none;font-size:13px;font-weight:600;padding:7px 13px;border-radius:6px;
+    border:1px solid #2f3f54;transition:.15s}
   .dlbar a:hover{background:var(--accent);border-color:var(--accent)}
-  .dlbar a.zip{background:#0b5fff;border-color:#0b5fff}
-  .dlbar a.zip:hover{background:#003d9e;border-color:#003d9e}
+  .dlbar a.zip{background:var(--accent);border-color:var(--accent)}
+  .dlbar a.zip:hover{background:var(--accent-dk);border-color:var(--accent-dk)}
+
   header.site{position:sticky;top:45px;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:22px 24px}
   header.site h1{margin:0;font-size:24px;letter-spacing:-.02em}
   header.site .sub{margin:4px 0 0;color:var(--ink-2);font-size:14px}
-  header.site .plat{margin:8px 0 0;font-size:12px;color:#6b7583}
-  .wrap{max-width:1340px;margin:0 auto;padding:28px 24px 80px;display:grid;grid-template-columns:240px 1fr;gap:36px}
-  nav.toc{position:sticky;top:150px;align-self:start;max-height:calc(100vh - 180px);overflow:auto}
-  nav.toc h5{margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:#7a8493}
-  nav.toc a{display:block;padding:5px 8px;font-size:13px;color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;border-radius:0 4px 4px 0}
-  nav.toc a:hover{background:#eef2f7;color:var(--ink)}
-  nav.toc a.active{border-left-color:var(--accent);background:#eaf1ff;color:var(--accent-dk);font-weight:600}
-  main{min-width:0}
-  section{margin-bottom:46px;scroll-margin-top:170px}
-  h2{font-size:20px;margin:0 0 6px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  .epic-tag{background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:.05em}
-  .epic-desc{margin:0 0 16px;color:var(--ink-2);font-size:14px}
-  .epic-meta{display:inline-block;margin-left:8px;font-size:12px;color:#7a8493;border-left:1px solid var(--line);padding-left:8px}
-  blockquote.us{margin:0 0 16px;padding:12px 14px;background:#f4f7fc;border-left:3px solid var(--accent);border-radius:0 7px 7px 0;font-size:15px;color:#1c2430}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:14px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-  .card.auto{border-color:#0f1723;background:#0f1723}
-  .card.auto .lbl{color:#7fb2ff}
-  .card.auto li{color:#c3ccd8}
-  .card.exit{border-left:3px solid var(--could)}
-  .card h4{margin:0 0 6px;font-size:15px}
-  .card p{margin:0 0 6px;font-size:13.5px;color:var(--ink-2)}
-  .card .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8b94a1;font-weight:700;margin-bottom:8px}
-  ul.tight{margin:0;padding-left:17px}
-  ul.tight li{font-size:13.5px;color:var(--ink-2);margin-bottom:6px}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#5a6472;word-break:break-word}
-  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:14px}
-  th{background:#eef2f7;text-align:left;padding:9px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#5a6472;border-bottom:1px solid var(--line)}
-  td{padding:9px 12px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
-  tr:last-child td{border-bottom:0}
-  .usmini{font-size:12.5px;color:#7a8493;margin-top:3px;font-style:italic}
-  .badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid var(--line);color:var(--ink-2);background:#f4f6f8;white-space:nowrap}
-  .pri-must{color:#fff;background:var(--must);border-color:var(--must)}
-  .pri-should{color:#fff;background:var(--should);border-color:var(--should)}
-  .pri-could{color:#fff;background:var(--could);border-color:var(--could)}
-  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
-  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 18px;flex:1 1 115px}
-  .stat b{display:block;font-size:24px;letter-spacing:-.02em}
-  .stat span{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#8b94a1;font-weight:700}
-  .chal{background:#fff;border:1px solid var(--line);border-left:3px solid #b3261e;border-radius:0 10px 10px 0;padding:16px 18px;margin-bottom:12px}
-  .chal h4{margin:0 0 8px;font-size:15px;color:#8f1d17}
-  .chal p{margin:0;font-size:14px;color:var(--ink-2)}
-  .howto{background:#0f1723;color:#dde4ec;border-radius:12px;padding:22px 24px;margin-bottom:34px}
-  .howto h2{color:#fff}
-  .howto .epic-tag{background:var(--accent)}
-  .howto ol{margin:0 0 12px;padding-left:20px}
-  .howto li{margin-bottom:8px;font-size:14px;color:#c3ccd8}
-  .howto strong{color:#fff}
-  .howto code{background:#1e2a3a;padding:2px 6px;border-radius:4px;font-size:13px;color:#9fd0ff}
-  .howto a{color:#7fb2ff}
-  .popbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto}
-  .popbox svg{min-width:1040px;width:100%;height:auto;display:block}
-  @media(max-width:900px){.wrap{grid-template-columns:1fr;padding:20px 16px 60px}nav.toc{display:none}header.site{position:static}}
+  header.site .plat{margin:8px 0 0;font-size:12px;color:var(--muted)}
+
+  .wrap{max-width:1240px;margin:0 auto;padding:28px 24px 90px}
+  section{margin-bottom:44px;scroll-margin-top:150px}
+  h2{font-size:20px;margin:0 0 4px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  h2 .num{background:var(--ink);color:#fff;font-size:12px;font-weight:700;width:24px;height:24px;
+    border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .lead{color:var(--ink-2);font-size:14.5px;margin:0 0 16px;max-width:820px}
+
+  .callout{background:#fff;border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:0 10px 10px 0;padding:14px 18px;margin:0 0 20px}
+  .callout h3{margin:0 0 8px;font-size:14px}
+  .callout ol,.callout ul{margin:0;padding-left:18px}
+  .callout li{font-size:13.5px;color:var(--ink-2);margin-bottom:5px}
+  .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#eef2f7;
+    border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:#3d4653}
+
+  /* ---- device frame ---- */
+  .device{border:1px solid #c7cfd9;border-radius:10px;overflow:hidden;background:#fff;
+    box-shadow:0 6px 22px rgba(15,23,35,.09);max-width:960px}
+  .device .bar{background:var(--bar);color:#fff;padding:11px 16px;font-size:13.5px;font-weight:600;
+    display:flex;align-items:center;gap:9px}
+  .device .bar .dots{display:flex;gap:6px}
+  .device .bar .dots i{width:10px;height:10px;border-radius:50%;background:#41506a;display:block}
+  .device .body{padding:20px}
+  .annot{font-size:12.5px;color:var(--muted);font-style:italic;margin:8px 0 0;max-width:960px}
+
+  /* ---- generic mock form bits ---- */
+  .tile{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:0;overflow:hidden;margin-bottom:16px}
+  .tile>.thd{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
+    font-weight:700;font-size:13.5px;cursor:pointer;user-select:none}
+  .tile>.thd .chev{color:var(--accent);transition:.2s;font-size:12px}
+  .tile.collapsed>.thd .chev{transform:rotate(-90deg)}
+  .tile .tbody{padding:0 14px 14px}
+  .tile.collapsed .tbody{display:none}
+
+  table.mock{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  table.mock th{background:#eef2f7;text-align:left;padding:8px 10px;font-size:11px;text-transform:uppercase;
+    letter-spacing:.04em;color:#5a6472;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.mock td{padding:8px 10px;border-bottom:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap}
+  table.mock tr:last-child td{border-bottom:0}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px}
+  .pill.review{background:var(--warn-bg);color:var(--warn)}
+  .pill.appr{background:var(--info-bg);color:var(--accent-dk)}
+  .pill.prov{background:#e9f7ec;color:var(--ok)}
+
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .act{border-radius:10px;padding:18px;min-height:104px;display:flex;flex-direction:column;gap:6px}
+  .act.primary{background:var(--accent);color:#fff}
+  .act.secondary{background:#fff;border:1px solid var(--accent);color:var(--accent-dk)}
+  .act .t{font-size:15px;font-weight:700}
+  .act.primary .d{color:#dbe7ff;font-size:12.5px}
+  .act.secondary .d{color:var(--ink-2);font-size:12.5px}
+
+  .sect-lbl{background:#eef2f7;border:1px solid var(--line);border-radius:5px;padding:6px 10px;
+    font-size:11px;font-weight:700;letter-spacing:.05em;color:#5a6472;text-transform:uppercase;margin:18px 0 12px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  .fld{display:flex;flex-direction:column;gap:4px}
+  .fld label{font-size:11px;font-weight:700;color:#5a6472}
+  .fld .inp{border:1px solid #c7cfd9;border-radius:7px;padding:7px 9px;font-size:12.5px;
+    background:#fff;color:var(--muted)}
+  .fld .inp.filled{color:var(--ink)}
+  .fld .inp.combo{display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
+  .fld .inp.combo::after{content:"▾";color:#5a6472;font-size:11px}
+  .row2{display:grid;grid-template-columns:1.6fr 1fr;gap:10px}
+  .panel{border:1px solid var(--line);border-radius:9px;padding:14px}
+  .panel h4{margin:0 0 10px;font-size:13px}
+  .btn{display:inline-flex;align-items:center;gap:6px;border-radius:8px;font-size:12px;font-weight:700;
+    padding:7px 13px;cursor:pointer;border:1px solid transparent}
+  .btn.ghost{background:#eef2f7;border-color:#c7cfd9;color:#3d4653}
+  .btn.ghost:hover{background:#e2e8f0}
+  .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent-dk)}
+  .btn.primary:hover{background:var(--accent-dk)}
+  .btn.outline{background:#fff;border-color:var(--accent);color:var(--accent-dk)}
+  .btn[disabled]{opacity:.45;cursor:not-allowed}
+  .teststatus{font-size:13px;font-weight:700;margin-left:8px}
+  .teststatus.ok{color:var(--ok)}
+  .fieldhint{font-size:11px;color:var(--muted);margin-top:5px}
+
+  .banner{border-radius:9px;padding:11px 14px;font-size:12.5px;margin:16px 0;display:flex;gap:9px;align-items:flex-start}
+  .banner.info{background:var(--info-bg);border:1px solid var(--info-bd);color:var(--accent-dk)}
+  .banner.warn{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn)}
+  .banner b{font-weight:800}
+
+  .segment{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .segment button{border:0;background:#fff;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;color:#5a6472}
+  .segment button.on{background:var(--accent);color:#fff}
+
+  .summary{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:14px}
+  .summary .srow{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px dashed var(--line)}
+  .summary .srow:last-child{border-bottom:0}
+  .summary .srow span:first-child{color:var(--muted);font-weight:700}
+  .submitrow{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:16px}
+  .submitrow .note{font-size:11.5px;color:var(--muted);font-style:italic;margin-right:auto}
+
+  .runbtn{border:1px solid var(--accent-dk);background:var(--accent);color:#fff;border-radius:7px;
+    padding:5px 11px;font-size:11.5px;font-weight:700;cursor:pointer;display:inline-flex;gap:5px;align-items:center}
+  .runbtn:hover{background:var(--accent-dk)}
+  .runbtn.disabled{background:#eef2f7;border-color:#e5e9ef;color:#b3c0d0;cursor:not-allowed}
+  .trg{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:#eef2f7;color:#5a6472}
+  .trg.adhoc{background:var(--info-bg);color:var(--accent-dk)}
+
+  .scroll-x{overflow-x:auto}
+  .fieldref{margin-top:14px}
+  .fieldref table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .fieldref th{background:#eef2f7;text-align:left;padding:8px 11px;font-size:11px;text-transform:uppercase;color:#5a6472;border-bottom:1px solid var(--line)}
+  .fieldref td{padding:8px 11px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
+  .fieldref tr:last-child td{border-bottom:0}
+  .fieldref td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+
+  details.trace{background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px 16px;margin-top:10px}
+  details.trace summary{cursor:pointer;font-weight:700;font-size:14px;padding:10px 0}
+  footer{border-top:1px solid var(--line);padding:22px 24px;color:var(--muted);font-size:12px;text-align:center}
+
+  @media (max-width:760px){
+    .actions{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}
+    .device .body{padding:14px}.submitrow{flex-wrap:wrap}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
+<!-- ================= DOWNLOAD BAR ================= -->
 <div class="dlbar">
-  <span class="dl-label">Download</span>
-  <a class="" href="assets/intelligrator-phased-plan.docx" download>&#11015; Phased Plan (Word)</a>
-  <a class="" href="assets/intelligrator-plan-on-a-page.drawio" download>&#11015; Plan on a Page (draw.io)</a>
-  <a class="" href="assets/intelligrator-phased-backlog.xlsx" download>&#11015; Phased Backlog (Excel)</a>
-  <a class="" href="assets/intelligrator-user-stories.docx" download>&#11015; User Stories (Word)</a>
-  <a class="" href="assets/intelligrator-request-lifecycle.drawio" download>&#11015; Lifecycle (draw.io)</a>
-  <a class="zip" href="assets/docs.zip" download>&#11015; All Deliverables (ZIP)</a>
+  <span class="dl-label">Downloads</span>
+  <a href="assets/intelligrator-ui-screens.drawio" download>⬇ UI Screens — draw.io / Visio</a>
+  <a href="assets/intelligrator-ui-screens-spec.docx" download>⬇ UI Screen Spec — Word</a>
+  <a class="zip" href="assets/docs.zip" download>⬇ All deliverables — docs.zip</a>
 </div>
 
 <header class="site">
-  <h1>Intelligrator — Phased Productionisation Plan</h1>
-  <p class="sub">Weekly schedule from Mon 13 Jul 2026 · MVP file transfer &rarr; API build &rarr; mashup &rarr; SSO &amp; governance &rarr; event streaming &rarr; legacy migration</p>
-  <p class="plat">Version 2.1 &middot; 15 July 2026 &middot; 30 weeks · 7 phases · week 1 began Monday 13 Jul 2026 · MVP live at week 5 &middot; Boomi iPaaS · Boomi native MFT (Thru) · Boomi API Management</p>
+  <h1>Intelligrator — UI Screens (Standard User)</h1>
+  <p class="sub">Interactive mockups of the three Standard-User screens, reproduced from the hand-drawn wireframes.</p>
+  <p class="plat">Boomi iPaaS · native MFT · config-driven provisioning — one MFT engine process, each approved interface becomes one config row (never a new component).</p>
 </header>
 
 <div class="wrap">
-<nav class="toc">
-  <h5>Start here</h5>
-  <a href="#howto">How to use this</a>
-  <a href="#pop">Plan on a page</a>
-  <a href="#shape">Shape of the plan</a>
-  <h5>Phases</h5>
-  <a href="#P0">P0 &middot; Foundations</a>
-  <a href="#P1">P1 &middot; MVP · MFT + 2FA</a>
-  <a href="#P2">P2 &middot; API build (simple)</a>
-  <a href="#P3">P3 &middot; API mashup</a>
-  <a href="#P4">P4 &middot; SSO &amp; governance</a>
-  <a href="#P5">P5 &middot; Event-driven</a>
-  <a href="#P6">P6 &middot; Optimise &amp; retire</a>
-  <h5>Reference</h5>
-  <a href="#milestones">Milestones</a>
-  <a href="#principles">Principles</a>
-  <h5>Backlog by phase</h5>
-  <a href="#bl-P1">P1 backlog</a>
-  <a href="#bl-P2">P2 backlog</a>
-  <a href="#bl-P3">P3 backlog</a>
-  <a href="#bl-P4">P4 backlog</a>
-  <a href="#bl-P5">P5 backlog</a>
-  <a href="#bl-P6">P6 backlog</a>
-  <h5>Decisions</h5>
-  <a href="#states">Request lifecycle</a>
-  <a href="#challenges">Challenges &amp; responses</a>
-</nav>
 
-<main>
+  <!-- ===== how to use ===== -->
+  <section id="howto">
+    <div class="callout">
+      <h3>How to use this page</h3>
+      <ol>
+        <li><b>Review the mockups below.</b> Screens ①–③ are live HTML — the tiles, buttons and status indicators behave as they would in the product, so you can click through the interactions.</li>
+        <li><b>Edit the source.</b> Use the top bar to download <span class="kbd">intelligrator-ui-screens.drawio</span>. Open it at <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a> or draw.io Desktop. To hand it to a Visio user, open the file in draw.io and choose <span class="kbd">Extras → Export as → Visio (.vsdx)</span>.</li>
+        <li><b>Read the field-level spec.</b> The Word document lists every field, its behaviour and validation, screen by screen — the build reference for the development team.</li>
+        <li><b>Grab everything.</b> <span class="kbd">docs.zip</span> bundles the draw.io file and the Word spec in one download.</li>
+      </ol>
+    </div>
+    <p class="lead">Three screens make up the Standard-User journey: a <b>Dashboard</b> to see submitted requests and launch actions, a guided <b>Configure New File Transfer</b> wizard to raise a request, and a <b>Catalogue / History</b> view to browse provisioned transfers and trigger ad-hoc runs. Sample data is illustrative only.</p>
+  </section>
 
-<section id="howto" class="howto">
-  <h2><span class="epic-tag">USE</span> How to use this page</h2>
-  <ol>
-    <li><strong>The plan-on-a-page is now weekly and date-anchored.</strong> Week 1 began Monday 13 July 2026. Every phase bar shows its week span, its dates and its story count; the month band across the top ties weeks to calendar months, and each milestone carries the Friday it falls on.</li>
-    <li><strong>Each phase card carries four things:</strong> what is in, what is <em>explicitly</em> out, <strong>the automation that builds it</strong>, and the exit criteria. The dark automation panel is the one that matters — a portal that captures a request and hands a spreadsheet to the platform team is a prettier ticket queue, not a product.</li>
-    <li><strong>The Excel backlog</strong> is phase-tagged. Filter by phase for a sprintable list. Story IDs are stable: <code>ACC-</code> access, <code>REQ-</code> initiation, <code>MFT-</code> file transfer, <code>API-</code> API and mashup, <code>EVT-</code> events, <code>TRK-</code> tracking, <code>ADM-</code> admin, <code>DEC-</code> decision, <code>PRV-</code> provisioning, <code>AUD-</code> audit, <code>OPS-</code> operate and retire. Do not renumber.</li>
-    <li><strong>The draw.io plan-on-a-page</strong> is the editable version for your own pack. Open at <a href="https://app.diagrams.net">app.diagrams.net</a> via <em>File &rarr; Open from &rarr; Device</em>.</li>
-    <li><strong>Note the one deliberate overlap.</strong> Phase 4 (SSO &amp; governance) starts at week 14 and runs partly in parallel with the tail of the Phase 3 mashup build — an identity-and-governance track that begins around the three-month mark. The exposure that creates is the third challenge at the bottom of this page; it needs a named owner.</li>
-  </ol>
-  <p style="margin:14px 0 0;font-size:14px;color:#c3ccd8"><strong>The rule that holds across all seven phases:</strong> an approved request becomes a <em>configuration row</em> executed by one generic engine. MFT, API, mashup or event — it never generates a new Boomi component per interface. If a phase appears to breach that, it has been misread. Challenge it.</p>
-</section>
+  <!-- ============================================================ SCREEN 1 -->
+  <section id="s1">
+    <h2><span class="num">1</span> Dashboard View — Standard User</h2>
+    <p class="lead">Landing screen. A collapsible <b>Submitted Requests</b> tile at the top, then two primary actions.</p>
 
-<section id="pop">
-  <h2><span class="epic-tag">1</span> Plan on a page</h2>
-  <div class="popbox"><svg viewBox="0 0 1300 650" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif" role="img" aria-label="Intelligrator weekly roadmap: 7 phases over 30 weeks from 13 July 2026, MVP live at week 5">
-<rect width="1300" height="650" fill="#ffffff"/>
-<text x="0" y="26" font-size="19" font-weight="700" fill="#0F1723">Intelligrator — Plan on a Page</text>
-<text x="0" y="46" font-size="12" fill="#7A8493">7 phases · 30 weeks · week 1 began Mon 13 Jul 2026 · MVP live week 5 (14 Aug) · 66 stories · 389 points</text><rect x="208.0" y="88" width="105.8" height="18" fill="#F5F7F9"/><text x="260.9" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Jul</text><rect x="313.8" y="88" width="176.3" height="18" fill="#EEF2F7"/><text x="402.0" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Aug</text><rect x="490.1" y="88" width="141.1" height="18" fill="#F5F7F9"/><text x="560.7" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Sep</text><rect x="631.2" y="88" width="141.1" height="18" fill="#EEF2F7"/><text x="701.7" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Oct</text><rect x="772.3" y="88" width="176.3" height="18" fill="#F5F7F9"/><text x="860.4" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Nov</text><rect x="948.6" y="88" width="141.1" height="18" fill="#EEF2F7"/><text x="1019.1" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Dec</text><rect x="1089.7" y="88" width="141.1" height="18" fill="#F5F7F9"/><text x="1160.2" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Jan '27</text><rect x="1230.7" y="88" width="35.3" height="18" fill="#EEF2F7"/><text x="1248.4" y="101" font-size="10.5" font-weight="700" fill="#5A6472" text-anchor="middle">Feb '27</text><line x1="208.0" y1="106" x2="208.0" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="225.6" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">1</text><line x1="243.3" y1="106" x2="243.3" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="260.9" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">2</text><line x1="278.5" y1="106" x2="278.5" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="296.2" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">3</text><line x1="313.8" y1="106" x2="313.8" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="331.4" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">4</text><line x1="349.1" y1="106" x2="349.1" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="366.7" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">5</text><line x1="384.3" y1="106" x2="384.3" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="402.0" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">6</text><line x1="419.6" y1="106" x2="419.6" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="437.2" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">7</text><line x1="454.9" y1="106" x2="454.9" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="472.5" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">8</text><line x1="490.1" y1="106" x2="490.1" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="507.8" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">9</text><line x1="525.4" y1="106" x2="525.4" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="543.0" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">10</text><line x1="560.7" y1="106" x2="560.7" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="578.3" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">11</text><line x1="595.9" y1="106" x2="595.9" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="613.6" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">12</text><line x1="631.2" y1="106" x2="631.2" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="648.8" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">13</text><line x1="666.5" y1="106" x2="666.5" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="684.1" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">14</text><line x1="701.7" y1="106" x2="701.7" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="719.4" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">15</text><line x1="737.0" y1="106" x2="737.0" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="754.6" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">16</text><line x1="772.3" y1="106" x2="772.3" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="789.9" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">17</text><line x1="807.5" y1="106" x2="807.5" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="825.2" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">18</text><line x1="842.8" y1="106" x2="842.8" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="860.4" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">19</text><line x1="878.1" y1="106" x2="878.1" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="895.7" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">20</text><line x1="913.3" y1="106" x2="913.3" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="931.0" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">21</text><line x1="948.6" y1="106" x2="948.6" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="966.2" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">22</text><line x1="983.9" y1="106" x2="983.9" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1001.5" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">23</text><line x1="1019.1" y1="106" x2="1019.1" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1036.8" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">24</text><line x1="1054.4" y1="106" x2="1054.4" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1072.0" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">25</text><line x1="1089.7" y1="106" x2="1089.7" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1107.3" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">26</text><line x1="1124.9" y1="106" x2="1124.9" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1142.6" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">27</text><line x1="1160.2" y1="106" x2="1160.2" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1177.8" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">28</text><line x1="1195.5" y1="106" x2="1195.5" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1213.1" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">29</text><line x1="1230.7" y1="106" x2="1230.7" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="1248.4" y="120" font-size="9" fill="#9AA4B0" text-anchor="middle">30</text><line x1="1266.0" y1="106" x2="1266.0" y2="484" stroke="#F0F2F5" stroke-width="1"/><text x="200" y="120" font-size="9" font-weight="700" fill="#9AA4B0" text-anchor="end">Week</text><text x="0" y="149" font-size="12.5" font-weight="700" fill="#12161C">P0 · Foundations</text><text x="0" y="164" font-size="9.5" fill="#8B94A1">13 Jul – 24 Jul</text><rect x="208" y="134" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="208.0" y="134" width="70.5" height="30" rx="5" fill="#5A6472"/><text x="217.0" y="153" font-size="10.5" font-weight="600" fill="#ffffff">W1–W2 · 2w · platform enablers</text><text x="0" y="199" font-size="12.5" font-weight="700" fill="#12161C">P1 · MVP · MFT + 2FA</text><text x="0" y="214" font-size="9.5" fill="#8B94A1">27 Jul – 14 Aug</text><rect x="208" y="184" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="278.5" y="184" width="105.8" height="30" rx="5" fill="#0B5FFF"/><text x="287.5" y="203" font-size="10.5" font-weight="600" fill="#ffffff">W3–W5 · 3w · 33 stories · 161 pts</text><text x="0" y="249" font-size="12.5" font-weight="700" fill="#12161C">P2 · API build (simple)</text><text x="0" y="264" font-size="9.5" fill="#8B94A1">17 Aug – 11 Sep</text><rect x="208" y="234" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="384.3" y="234" width="141.1" height="30" rx="5" fill="#0F7A5A"/><text x="393.3" y="253" font-size="10.5" font-weight="600" fill="#ffffff">W6–W9 · 4w · 11 stories · 76 pts</text><text x="0" y="299" font-size="12.5" font-weight="700" fill="#12161C">P3 · API mashup</text><text x="0" y="314" font-size="9.5" fill="#8B94A1">14 Sep – 23 Oct</text><rect x="208" y="284" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="525.4" y="284" width="211.6" height="30" rx="5" fill="#7A3DB8"/><text x="534.4" y="303" font-size="10.5" font-weight="600" fill="#ffffff">W10–W15 · 6w · 3 stories · 29 pts</text><text x="0" y="349" font-size="12.5" font-weight="700" fill="#12161C">P4 · SSO &amp; governance</text><text x="0" y="364" font-size="9.5" fill="#8B94A1">12 Oct – 20 Nov</text><rect x="208" y="334" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="666.5" y="334" width="211.6" height="30" rx="5" fill="#B5761B"/><text x="675.5" y="353" font-size="10.5" font-weight="600" fill="#ffffff">W14–W19 · 6w · 9 stories · 44 pts</text><text x="0" y="399" font-size="12.5" font-weight="700" fill="#12161C">P5 · Event-driven</text><text x="0" y="414" font-size="9.5" fill="#8B94A1">23 Nov – 25 Dec</text><rect x="208" y="384" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="878.1" y="384" width="176.3" height="30" rx="5" fill="#C2410C"/><text x="887.1" y="403" font-size="10.5" font-weight="600" fill="#ffffff">W20–W24 · 5w · 4 stories · 34 pts</text><text x="0" y="449" font-size="12.5" font-weight="700" fill="#12161C">P6 · Optimise &amp; retire</text><text x="0" y="464" font-size="9.5" fill="#8B94A1">28 Dec – 5 Feb 2027</text><rect x="208" y="434" width="1058" height="30" rx="5" fill="#F7F8FA"/><rect x="1054.4" y="434" width="211.6" height="30" rx="5" fill="#B3261E"/><text x="1063.4" y="453" font-size="10.5" font-weight="600" fill="#ffffff">W25–W30 · 6w · 6 stories · 45 pts</text><line x1="208" y1="510" x2="1266" y2="510" stroke="#DFE4EA" stroke-width="1"/><text x="0" y="514" font-size="11.5" font-weight="700" fill="#12161C">Milestones</text><line x1="278.5" y1="498.0" x2="278.5" y2="510.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="278.5,504 284.5,510 278.5,516 272.5,510" fill="#0F1723"/><text x="278.5" y="480" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M0 · W2</text><text x="278.5" y="469" font-size="9.5" fill="#5A6472" text-anchor="middle">Foundations ready (24 Jul)</text><line x1="384.3" y1="510.0" x2="384.3" y2="522.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="384.3,504 390.3,510 384.3,516 378.3,510" fill="#0F1723"/><text x="384.3" y="532" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M1 · W5</text><text x="384.3" y="544" font-size="9.5" fill="#5A6472" text-anchor="middle">MVP live — MFT + 2FA (14 Aug)</text><line x1="525.4" y1="498.0" x2="525.4" y2="510.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="525.4,504 531.4,510 525.4,516 519.4,510" fill="#0F1723"/><text x="525.4" y="480" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M2 · W9</text><text x="525.4" y="469" font-size="9.5" fill="#5A6472" text-anchor="middle">Simple API build live (11 Sep)</text><line x1="737.0" y1="510.0" x2="737.0" y2="522.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="737.0,504 743.0,510 737.0,516 731.0,510" fill="#0F1723"/><text x="737.0" y="532" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M3 · W15</text><text x="737.0" y="544" font-size="9.5" fill="#5A6472" text-anchor="middle">First mashup in production (23 Oct)</text><line x1="878.1" y1="498.0" x2="878.1" y2="510.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="878.1,504 884.1,510 878.1,516 872.1,510" fill="#0F1723"/><text x="878.1" y="480" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M4 · W19</text><text x="878.1" y="469" font-size="9.5" fill="#5A6472" text-anchor="middle">SSO cutover · governance live (20 Nov)</text><line x1="1054.4" y1="510.0" x2="1054.4" y2="522.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="1054.4,504 1060.4,510 1054.4,516 1048.4,510" fill="#0F1723"/><text x="1054.4" y="532" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M5 · W24</text><text x="1054.4" y="544" font-size="9.5" fill="#5A6472" text-anchor="middle">Event-driven onboarding (25 Dec)</text><line x1="1266.0" y1="498.0" x2="1266.0" y2="510.0" stroke="#B9C4D0" stroke-width="1"/><polygon points="1266.0,504 1272.0,510 1266.0,516 1260.0,510" fill="#0F1723"/><text x="1266.0" y="480" font-size="10.5" font-weight="700" fill="#0F1723" text-anchor="middle">M6 · W30</text><text x="1266.0" y="469" font-size="9.5" fill="#5A6472" text-anchor="middle">Migration engine live (5 Feb 2027)</text><rect x="0" y="602" width="1300" height="44" fill="#0F1723" rx="6"/><text x="16" y="620" font-size="11.5" font-weight="700" fill="#ffffff">The rule that holds across every phase</text><text x="16" y="636" font-size="11" fill="#B9C4D0">An approved request becomes a configuration row executed by ONE generic engine. MFT, API, mashup or event — it never generates a new Boomi component per interface.</text></svg></div>
-</section>
+    <div class="device">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span> Intelligrator · Standard User Dashboard</div>
+      <div class="body">
 
-<section id="shape">
-  <h2><span class="epic-tag">2</span> The shape of the plan</h2>
-  <div class="stats">
-    <div class="stat"><b>7</b><span>Phases</span></div>
-    <div class="stat"><b>30</b><span>Weeks</span></div>
-    <div class="stat"><b>W5</b><span>MVP live (14 Aug)</span></div>
-    <div class="stat"><b>66</b><span>Stories</span></div>
-    <div class="stat"><b>389</b><span>Points</span></div>
-    <div class="stat"><b>287</b><span>Acceptance criteria</span></div>
-  </div>
-  <p class="epic-desc">Phase 0 is a two-week platform lane that ships nothing user-facing — deliberately. Phase 1 proves the hypothesis the product exists to test: a user with no Boomi knowledge signs in with a username, password and second factor, submits a file transfer, and the approval <strong>builds it automatically</strong>. Phase 2 does the same for a simple API — an uploaded OpenAPI contract becomes a live, secured endpoint. Phase 3 adds mashup composition: several published APIs combined into one, executed by a single generic orchestration engine. Phase 4 replaces the MVP's local login with enterprise SSO and stands up the controls an auditor will test, starting around the three-month mark. Phase 5 extends the front door to event streaming. Phase 6 turns the portal on the legacy estate.</p>
-  <table>
-    <thead><tr><th style="width:56px">Phase</th><th>Name</th><th style="width:90px">Weeks</th><th style="width:150px">Dates</th><th style="width:60px">Stories</th><th style="width:55px">Pts</th></tr></thead>
-    <tbody>
-    <tr><td><strong style="color:#5A6472">P0</strong></td>
-        <td><a href="#P0" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Foundations</a><br><span style="font-size:12.5px;color:#7a8493">Platform enablement · 2 weeks</span></td>
-        <td>W1–W2 <span style="color:#9aa4b0">(2w)</span></td><td style="font-size:13px">13 Jul – 24 Jul</td>
-        <td style="text-align:center">—</td><td style="text-align:center">—</td></tr>
-    <tr><td><strong style="color:#0B5FFF">P1</strong></td>
-        <td><a href="#P1" style="color:var(--accent-dk);text-decoration:none;font-weight:600">MVP — MFT Self-Service + 2FA Access</a><br><span style="font-size:12.5px;color:#7a8493">The one that proves it · 3 weeks</span></td>
-        <td>W3–W5 <span style="color:#9aa4b0">(3w)</span></td><td style="font-size:13px">27 Jul – 14 Aug</td>
-        <td style="text-align:center">33</td><td style="text-align:center">161</td></tr>
-    <tr><td><strong style="color:#0F7A5A">P2</strong></td>
-        <td><a href="#P2" style="color:var(--accent-dk);text-decoration:none;font-weight:600">API Onboarding &amp; Build (Simple)</a><br><span style="font-size:12.5px;color:#7a8493">Contract in, API out · 4 weeks</span></td>
-        <td>W6–W9 <span style="color:#9aa4b0">(4w)</span></td><td style="font-size:13px">17 Aug – 11 Sep</td>
-        <td style="text-align:center">11</td><td style="text-align:center">76</td></tr>
-    <tr><td><strong style="color:#7A3DB8">P3</strong></td>
-        <td><a href="#P3" style="color:var(--accent-dk);text-decoration:none;font-weight:600">API Mashup &amp; Composition</a><br><span style="font-size:12.5px;color:#7a8493">Where the principle is tested · 6 weeks</span></td>
-        <td>W10–W15 <span style="color:#9aa4b0">(6w)</span></td><td style="font-size:13px">14 Sep – 23 Oct</td>
-        <td style="text-align:center">3</td><td style="text-align:center">29</td></tr>
-    <tr><td><strong style="color:#B5761B">P4</strong></td>
-        <td><a href="#P4" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Enterprise SSO, Governance &amp; Scale</a><br><span style="font-size:12.5px;color:#7a8493">Production-grade · starts ~3 months out</span></td>
-        <td>W14–W19 <span style="color:#9aa4b0">(6w)</span></td><td style="font-size:13px">12 Oct – 20 Nov</td>
-        <td style="text-align:center">9</td><td style="text-align:center">44</td></tr>
-    <tr><td><strong style="color:#C2410C">P5</strong></td>
-        <td><a href="#P5" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Event-Driven Onboarding</a><br><span style="font-size:12.5px;color:#7a8493">The third pattern family · 5 weeks</span></td>
-        <td>W20–W24 <span style="color:#9aa4b0">(5w)</span></td><td style="font-size:13px">23 Nov – 25 Dec</td>
-        <td style="text-align:center">4</td><td style="text-align:center">34</td></tr>
-    <tr><td><strong style="color:#B3261E">P6</strong></td>
-        <td><a href="#P6" style="color:var(--accent-dk);text-decoration:none;font-weight:600">Optimise, Automate &amp; Retire</a><br><span style="font-size:12.5px;color:#7a8493">Retire the legacy tail · 6 weeks</span></td>
-        <td>W25–W30 <span style="color:#9aa4b0">(6w)</span></td><td style="font-size:13px">28 Dec – 5 Feb 2027</td>
-        <td style="text-align:center">6</td><td style="text-align:center">45</td></tr>
-    </tbody>
-  </table>
-</section>
+        <div class="tile" id="reqTile">
+          <div class="thd" onclick="document.getElementById('reqTile').classList.toggle('collapsed')">
+            <span>Submitted Requests</span>
+            <span class="chev">▾ &nbsp;<span style="font-weight:400;font-style:italic;color:#7a8493;font-size:11px">click to minimise tile</span></span>
+          </div>
+          <div class="tbody">
+            <table class="mock">
+              <thead><tr><th>Submitted On</th><th>Domain</th><th>Name</th><th>Current Status</th></tr></thead>
+              <tbody>
+                <tr><td>14 Jul 2026</td><td>Customs</td><td>CDS-Nightly-Extract</td><td><span class="pill review">In Review</span></td></tr>
+                <tr><td>12 Jul 2026</td><td>PAYE</td><td>RTI-Inbound-Feed</td><td><span class="pill appr">Approved</span></td></tr>
+                <tr><td>09 Jul 2026</td><td>VAT</td><td>VAT-Returns-Archive</td><td><span class="pill prov">Provisioned</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
+        <div class="actions">
+          <div class="act primary">
+            <div class="t">＋ Configure New File Transfer</div>
+            <div class="d">Launch the guided wizard to submit a new file-transfer request for approval.</div>
+          </div>
+          <div class="act secondary">
+            <div class="t">📋 View File Transfer Catalogue / History</div>
+            <div class="d">Browse provisioned transfers, run history and trigger ad-hoc runs.</div>
+          </div>
+        </div>
 
-<section id="P0">
-  <h2><span class="epic-tag" style="background:#5A6472">P0</span> Foundations</h2>
-  <p class="epic-desc"><strong>W1–W2</strong> &middot; 13 Jul – 24 Jul &middot; Platform enablement · 2 weeks <span class="epic-meta">technical enablers only</span></p>
-  <blockquote class="us" style="border-left-color:#5A6472"><strong>Goal.</strong> Build the spine that every later phase sits on. Nothing user-facing ships in this phase — and that is the point. Two weeks, the platform lane only.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>MFT configuration schema designed and versioned — and designed for all three pattern families (file, API, event), even though only file is implemented now.</li><li>The single generic Boomi MFT engine process hardened, parameterised and deployed to every environment.</li><li>Secrets store (vault) integrated — no credential ever lands in the portal database.</li><li>Append-only audit store stood up.</li><li>Environments (DEV / TEST / PRE-PROD / PROD) and the CI/CD pipeline that promotes configuration, not code.</li><li>Pluggable authentication abstraction — so that swapping local login + 2FA for enterprise SSO in Phase 4 is a configuration change, not a rebuild.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Any portal UI. Any request form. Any approval workflow.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">—  platform enabler work, tracked separately</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>Pipeline that promotes a config row between environments with approval gates.</li><li>Automated deployment of the generic engine to every Atom / environment.</li><li>Schema-migration tooling so the config table can be extended without downtime.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>A config row inserted by hand causes the generic engine to run a file transfer end-to-end, with no Boomi component created.</li><li>A secret written to the vault is retrievable by the engine and by nothing else.</li><li>The audit store rejects an update or a delete.</li><li>Authentication can be switched between two providers by configuration alone.</li></ul></div>
-  </div>
-</section>
+      </div>
+    </div>
+    <p class="annot">Wireframe → the “click to minimise tile” toggle collapses the request table; the two boxes below map to the Configure and Catalogue screens.</p>
 
-<section id="P1">
-  <h2><span class="epic-tag" style="background:#0B5FFF">P1</span> MVP — MFT Self-Service + 2FA Access</h2>
-  <p class="epic-desc"><strong>W3–W5</strong> &middot; 27 Jul – 14 Aug &middot; The one that proves it · 3 weeks <span class="epic-meta">33 stories &middot; 161 points</span></p>
-  <blockquote class="us" style="border-left-color:#0B5FFF"><strong>Goal.</strong> A user signs in with a username, password and a second factor, submits a Managed File Transfer request, an admin accepts or rejects it, and an approved request is provisioned automatically with no human touching Boomi.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>Local username-and-password authentication with self-registration and admin account approval.</li><li>Two-factor authentication (TOTP) stood up on every sign-in, with recovery codes.</li><li>The full MFT request form: identity, endpoints, file characteristics, trigger, security, classification, resilience, environment.</li><li>Draft, submit, track, withdraw. Respond to a request for information.</li><li>Admin approval queue with basic pre-checks (naming standard, duplicate detection, credential validity).</li><li>Accept, reject with reason code, or return for more information. Segregation of duties enforced server-side.</li><li>The build automation: approval writes ONE config row, the generic engine picks it up, the endpoint is provisioned, credentials are issued into the vault, and a smoke test runs.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Enterprise SSO and step-up-at-decision MFA — Phase 4.</li><li>Anything API. Anything event-driven.</li><li>Conditional approval, delegation, fast-path, reporting dashboards.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">ACC-01, ACC-03, ACC-04, ACC-05, REQ-01, REQ-03, MFT-01, MFT-02, MFT-03, MFT-04, MFT-05, MFT-06, MFT-07, MFT-08, MFT-09, MFT-10, TRK-01, TRK-02, TRK-03, TRK-05, ADM-02, ADM-03, DEC-01, DEC-02, DEC-03, DEC-06, PRV-01, PRV-02, PRV-03, AUD-01, ACC-06, ACC-07, ACC-08</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>Approve → config row written, keyed to the request reference.</li><li>Partner endpoint / virtual user created via the Boomi MFT (Thru) management API.</li><li>SSH keys or certificates generated in the vault and delivered by a one-time, re-authenticated reveal.</li><li>Connectivity smoke test executed; result recorded against the interface.</li><li>Rollback of partial configuration on any provisioning failure.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>A requester who has never used Boomi onboards a working SFTP interface without raising a ticket.</li><li>Two-factor authentication is enforced on every sign-in; a password alone does not admit anyone.</li><li>End-to-end lead time from submission to Live is under the agreed target, measured, not asserted.</li><li>Zero new Boomi components created per interface, verified by component count across ten onboardings.</li><li>No requester can approve their own request, proven by a direct API call that is rejected.</li></ul></div>
-  </div>
-</section>
+    <div class="fieldref">
+      <table>
+        <thead><tr><th>Element</th><th>Behaviour</th></tr></thead>
+        <tbody>
+          <tr><td>Submitted Requests</td><td>Collapsible tile. Lists the signed-in user's own requests. Chevron toggles visibility.</td></tr>
+          <tr><td>Columns</td><td>Submitted On · Domain · Name · Current Status (In Review → Approved → Provisioned / Rejected).</td></tr>
+          <tr><td>Configure New File Transfer</td><td>Primary action → opens Screen 2 wizard.</td></tr>
+          <tr><td>View Catalogue / History</td><td>Secondary action → opens Screen 3.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-<section id="P2">
-  <h2><span class="epic-tag" style="background:#0F7A5A">P2</span> API Onboarding &amp; Build (Simple)</h2>
-  <p class="epic-desc"><strong>W6–W9</strong> &middot; 17 Aug – 11 Sep &middot; Contract in, API out · 4 weeks <span class="epic-meta">11 stories &middot; 76 points</span></p>
-  <blockquote class="us" style="border-left-color:#0F7A5A"><strong>Goal.</strong> A user uploads an OpenAPI specification, the platform validates it, and builds and deploys a live, secured, rate-limited API automatically — with no developer writing a Boomi process. Composition comes next, in Phase 3.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>API request form: identity, contract-first upload (OpenAPI 3.x), interaction style, auth model, traffic profile, routing.</li><li>Contract linting against the departmental API standards ruleset, errors anchored to the offending line.</li><li>Automated build: the API proxy, its operations and its gateway policies are generated from the contract and deployed.</li><li>Sandbox: a mock generated from the contract so the requester can test before submitting.</li><li>Consumer self-service: browse the catalogue, subscribe to a published API, request credentials.</li><li>The guided pattern-selection wizard, including detection of async-disguised-as-sync.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Mashup / composite APIs — Phase 3.</li><li>AsyncAPI and event-driven onboarding — Phase 5.</li><li>Enterprise SSO — Phase 4.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">REQ-02, API-01, API-02, API-03, API-04, API-05, API-06, API-07, API-08, API-09, API-13</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>OpenAPI document → API proxy definition → gateway deployment, per environment, from one named policy bundle.</li><li>Mock service generated from the same contract for the sandbox.</li><li>Contract diff on republish: a breaking change blocks the deploy.</li><li>Consumer credentials issued into the vault and delivered by one-time reveal.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>An OpenAPI file uploaded by a non-developer becomes a live, secured, rate-limited API in the sandbox with no manual Boomi work.</li><li>A breaking change to a published contract is detected and blocked before deployment.</li><li>No per-API bespoke component is created — the build is contract plus named policy bundle.</li></ul></div>
-  </div>
-</section>
+  <!-- ============================================================ SCREEN 2 -->
+  <section id="s2">
+    <h2><span class="num">2</span> Configure New File Transfer — Wizard</h2>
+    <p class="lead">“Submit a new file-transfer request.” Requirement detail → connection details (source + destination, each with a connection test) → route check → file &amp; trigger detail → summary → submit.</p>
 
-<section id="P3">
-  <h2><span class="epic-tag" style="background:#7A3DB8">P3</span> API Mashup &amp; Composition</h2>
-  <p class="epic-desc"><strong>W10–W15</strong> &middot; 14 Sep – 23 Oct &middot; Where the principle is tested · 6 weeks <span class="epic-meta">3 stories &middot; 29 points</span></p>
-  <blockquote class="us" style="border-left-color:#7A3DB8"><strong>Goal.</strong> A user composes several published APIs into a single composite API — sequence, parallel fan-out/fan-in, field mapping and response shaping — executed by one generic orchestration engine, with no bespoke Boomi process per mashup.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>Mashup / composite composer: select two or more published APIs the user is entitled to consume.</li><li>Declarative composition: arrange calls in sequence, in parallel (fan-out / fan-in), or conditionally — no code.</li><li>Field binding: pass a field from an earlier response into a later call.</li><li>Per-step failure behaviour: fail the composite, return a documented degraded response, or apply a fallback.</li><li>Response mapping and shaping from a governed transformation library — no arbitrary scripting.</li><li>The composite OpenAPI contract generated automatically and linted like any other.</li><li>API versioning, deprecation and retirement without breaking existing consumers.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Event-driven onboarding — Phase 5.</li><li>Enterprise SSO — Phase 4.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">API-10, API-11, API-12</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>Composition specification (a declarative document, not code) executed by ONE generic orchestration engine — the same discipline as the MFT engine.</li><li>Composite OpenAPI generated from the composition and linted automatically.</li><li>Version diff and breaking-change detection on every republish.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>A mashup of three published APIs is composed, tested and published — and inspection of Boomi shows no new per-mashup process.</li><li>A request for an arbitrary script inside a mashup is refused and routed to extend the governed transform library instead.</li><li>A breaking change to a published contract forces a new major version rather than an overwrite.</li></ul></div>
-  </div>
-</section>
+    <div class="device">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span> Configure New File Transfer — Submit a New File Transfer Request</div>
+      <div class="body">
 
-<section id="P4">
-  <h2><span class="epic-tag" style="background:#B5761B">P4</span> Enterprise SSO, Governance &amp; Scale</h2>
-  <p class="epic-desc"><strong>W14–W19</strong> &middot; 12 Oct – 20 Nov &middot; Production-grade · starts ~3 months out <span class="epic-meta">9 stories &middot; 44 points</span></p>
-  <blockquote class="us" style="border-left-color:#B5761B"><strong>Goal.</strong> Replace the MVP's local login with enterprise SSO, add step-up MFA at the moment of decision, and stand up the controls an auditor will actually test — running as a parallel identity-and-governance track from around the three-month mark, overlapping the tail of the mashup build.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>Enterprise SSO (OIDC / SAML) via the pluggable auth layer built in Phase 0. Local accounts migrated and retired.</li><li>Step-up multi-factor authentication at the moment of decision — beyond the MVP's sign-in 2FA.</li><li>The full automated pre-check engine: credential strength and expiry, classification-versus-protocol, capacity thresholds, IP allow-list validity, contract lint, anti-pattern flags.</li><li>Conditional approval with tracked conditions, delegation and reassignment, and fast-path batch approval for low-risk non-production requests.</li><li>Reporting: throughput, time-to-decision against SLA, rejection reason codes ranked by frequency.</li><li>Accessibility to WCAG 2.2 AA. Performance and availability against the agreed SLO.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Event-driven onboarding — Phase 5.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">ACC-02, ADM-01, ADM-04, DEC-04, DEC-05, DEC-07, AUD-02, NFR-01, NFR-02</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>Automated migration of local accounts to SSO identities with no re-registration.</li><li>Pre-check engine runs on submission; the approver sees a pass/warn/fail panel before opening the request.</li><li>Condition-monitoring job escalates a conditional approval whose condition passes its due date unmet.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>Local username-and-password authentication is switched off entirely.</li><li>An auditor can be shown, for any live interface, who approved it, when, on what basis, and the state of every pre-check at that moment.</li><li>The service passes an independent WCAG 2.2 AA assessment.</li></ul></div>
-  </div>
-</section>
+        <div class="sect-lbl">1 · Requirement detail</div>
+        <div class="grid2">
+          <div class="fld"><label>Purpose</label><div class="inp">e.g. Nightly customs declaration extract</div></div>
+          <div class="fld"><label>Business Value</label><div class="inp">e.g. Meets departmental SLA for CDS reporting</div></div>
+          <div class="fld"><label>Business Domain</label><div class="inp combo">Customs</div></div>
+          <div class="fld"><label>Point of Contact (PoC)</label><div class="inp filled">j.smith@dept.gov.uk&nbsp; <span style="color:#7a8493">(auto-populated from signed-in user)</span></div></div>
+        </div>
 
-<section id="P5">
-  <h2><span class="epic-tag" style="background:#C2410C">P5</span> Event-Driven Onboarding</h2>
-  <p class="epic-desc"><strong>W20–W24</strong> &middot; 23 Nov – 25 Dec &middot; The third pattern family · 5 weeks <span class="epic-meta">4 stories &middot; 34 points</span></p>
-  <blockquote class="us" style="border-left-color:#C2410C"><strong>Goal.</strong> Extend the same front door to event streaming: AsyncAPI contracts, a browsable event catalogue, and a schema registry that refuses an incompatible change.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>AsyncAPI contract upload, linting and publication.</li><li>Publisher onboarding: declare a topic, its event schema and its retention.</li><li>Subscriber onboarding: browse the event catalogue, subscribe to a topic, receive credentials.</li><li>Schema registry with forward and backward compatibility enforcement.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Stream processing / transformation logic — that remains a build activity, not a self-service one.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">EVT-01, EVT-02, EVT-03, EVT-04</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>Topic, ACL and consumer group provisioned from the approved request as configuration.</li><li>Schema registered and compatibility-checked automatically; an incompatible change is rejected at submission, not at runtime.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>A publisher and a subscriber are onboarded to a new topic entirely through the portal.</li><li>An incompatible schema change is rejected before it can reach an environment.</li></ul></div>
-  </div>
-</section>
+        <div class="sect-lbl">2 · Connection detail</div>
+        <div class="grid2">
+          <div class="panel">
+            <h4>Source details</h4>
+            <div class="fld" style="margin-bottom:10px"><label>Type</label><div class="inp combo">SFTP</div></div>
+            <div class="row2" style="margin-bottom:10px">
+              <div class="fld"><label>Server</label><div class="inp">sftp.dept.gov.uk</div></div>
+              <div class="fld"><label>Port</label><div class="inp">22</div></div>
+            </div>
+            <div class="fld" style="margin-bottom:8px"><label>Credential · Username</label><div class="inp">svc-mft-user</div></div>
+            <div class="fld" style="margin-bottom:8px"><label>Credential · Password</label><div class="inp">••••••••••••</div></div>
+            <div class="fld" style="margin-bottom:12px"><label>Directory</label><div class="inp">/outbound/cds/</div></div>
+            <button class="btn ghost" onclick="testConn(this)">🔌 Test connection</button>
+            <span class="teststatus"></span>
+            <div class="fieldhint">Green tick = OK · red cross = Not OK</div>
+          </div>
+          <div class="panel">
+            <h4>Destination details</h4>
+            <div class="fld" style="margin-bottom:10px"><label>Type</label><div class="inp combo">Azure Blob</div></div>
+            <div class="row2" style="margin-bottom:10px">
+              <div class="fld"><label>Server / Account</label><div class="inp">cdsstore.blob.core</div></div>
+              <div class="fld"><label>Port</label><div class="inp">443</div></div>
+            </div>
+            <div class="fld" style="margin-bottom:8px"><label>Credential · Username</label><div class="inp">cds-writer</div></div>
+            <div class="fld" style="margin-bottom:8px"><label>Credential · Password</label><div class="inp">••••••••••••</div></div>
+            <div class="fld" style="margin-bottom:12px"><label>Directory</label><div class="inp">/cds/inbound/</div></div>
+            <button class="btn ghost" onclick="testConn(this)">🔌 Test connection</button>
+            <span class="teststatus"></span>
+            <div class="fieldhint">User clicks → OK / ✕ → Not OK</div>
+          </div>
+        </div>
 
-<section id="P6">
-  <h2><span class="epic-tag" style="background:#B3261E">P6</span> Optimise, Automate &amp; Retire</h2>
-  <p class="epic-desc"><strong>W25–W30</strong> &middot; 28 Dec – 5 Feb 2027 &middot; Retire the legacy tail · 6 weeks <span class="epic-meta">6 stories &middot; 45 points</span></p>
-  <blockquote class="us" style="border-left-color:#B3261E"><strong>Goal.</strong> Make the estate self-maintaining, make its cost visible, and use the portal to industrialise the migration off the legacy integration estate.</blockquote>
-  <div class="cards">
-    <div class="card"><p class="lbl">In scope</p><ul class="tight"><li>Interface health and usage dashboards for owners — not just for the platform team.</li><li>Cost transparency and chargeback by service line, so that volume has an owner.</li><li>Dormancy detection and automated recertification: an interface nobody uses and nobody will vouch for is retired.</li><li>Bulk onboarding: import a legacy interface inventory and generate config rows in batch.</li><li>Change and decommission requests against live interfaces, with field-level diff for the approver.</li></ul></div>
-    <div class="card"><p class="lbl">Explicitly not in this phase</p><ul class="tight"><li>Retirement of the legacy platform itself — a programme activity this phase enables but does not own.</li></ul>
-      <p class="lbl" style="margin-top:14px">Stories</p><p class="mono">TRK-04, TRK-06, OPS-01, OPS-02, OPS-03, OPS-04</p></div>
-    <div class="card auto"><p class="lbl">The automation that builds it</p><ul class="tight"><li>Dormancy job flags an unused interface, prompts the owner, and retires it on non-response — config row disabled, never deleted.</li><li>Bulk import validates a legacy inventory and generates config rows for approval in batch rather than one at a time.</li><li>Chargeback report generated automatically from actual transfer and call volumes.</li></ul></div>
-    <div class="card exit"><p class="lbl">Exit criteria — how you know it is done</p><ul class="tight"><li>Every live interface has a named, currently-verified owner.</li><li>A legacy inventory can be migrated in batch through the same approval controls as a single request.</li><li>The dormant tail of the estate is measurably shrinking, not growing.</li></ul></div>
-  </div>
-</section>
+        <div class="banner info">
+          <span>ⓘ</span>
+          <div><b>Route check.</b> On proceeding, the wizard checks whether a route / interface already points to this directory. If <b>none exists → proceed</b>. If <b>one exists → a warning is shown</b> before continuing, to prevent duplicate provisioning.</div>
+        </div>
 
-<section id="milestones">
-  <h2><span class="epic-tag">9</span> Milestones — written as tests, not deliverables</h2>
-  <p class="epic-desc">A milestone you cannot fail is not a milestone. Each is phrased so a steering group can watch it pass or fail in a demo, and dated to the Friday of its week.</p>
-  <table>
-    <thead><tr><th style="width:52px">ID</th><th style="width:60px">Week</th><th style="width:110px">Date</th><th style="width:250px">Milestone</th><th>The test it must pass</th></tr></thead>
-    <tbody><tr><td><strong>M0</strong></td><td>W2</td><td>24 Jul</td><td><strong>Foundations ready</strong></td><td>A hand-inserted config row moves a file end-to-end. No Boomi component created.</td></tr><tr><td><strong>M1</strong></td><td>W5</td><td>14 Aug</td><td><strong>MVP live — MFT + 2FA</strong></td><td>A non-Boomi user self-serves a live SFTP interface, behind a two-factor login. Approval provisions it automatically.</td></tr><tr><td><strong>M2</strong></td><td>W9</td><td>11 Sep</td><td><strong>Simple API build live</strong></td><td>An uploaded OpenAPI file becomes a live, secured, rate-limited API with no manual Boomi work.</td></tr><tr><td><strong>M3</strong></td><td>W15</td><td>23 Oct</td><td><strong>First mashup in production</strong></td><td>Three published APIs composed into one composite. Boomi component count unchanged.</td></tr><tr><td><strong>M4</strong></td><td>W19</td><td>20 Nov</td><td><strong>SSO cutover · governance live</strong></td><td>Local login switched off. Full pre-check engine and step-up MFA live. WCAG 2.2 AA passed.</td></tr><tr><td><strong>M5</strong></td><td>W24</td><td>25 Dec</td><td><strong>Event-driven onboarding</strong></td><td>Publisher and subscriber onboarded through the portal. Incompatible schema rejected at submission.</td></tr><tr><td><strong>M6</strong></td><td>W30</td><td>5 Feb 2027</td><td><strong>Migration engine live</strong></td><td>A legacy inventory bulk-onboarded through the same controls. Dormant tail shrinking.</td></tr></tbody>
-  </table>
-</section>
+        <div class="sect-lbl">3 · File &amp; trigger detail</div>
+        <div class="grid2">
+          <div class="fld"><label>File Pattern</label><div class="inp">*.xml</div></div>
+          <div class="fld"><label>Schedule</label><div class="inp combo">Weekly</div></div>
+          <div class="fld"><label>Frequency</label><div class="inp combo">Every Mon 02:00</div></div>
+          <div class="fld">
+            <label>Error Notification</label>
+            <div class="segment" role="group" aria-label="Error notification">
+              <button class="on" onclick="seg(this)">Opt-in</button>
+              <button onclick="seg(this)">Opt-out</button>
+            </div>
+          </div>
+        </div>
+        <div class="fieldhint">Schedule options: <b>Weekly</b> · <b>Daily</b> · <b>Ad hoc</b> → each reveals its own frequency control.</div>
 
-<section id="principles">
-  <h2><span class="epic-tag">10</span> Principles no phase may break</h2>
-  <div class="cards">
-  <div class="card"><h4>Config over construction</h4><p>An approved request becomes a <strong>row in the config store</strong>, consumed by one generic MFT engine process (and one generic API gateway policy set). It does <strong>not</strong> generate a new Boomi component per interface. Every story below must preserve this.</p></div><div class="card"><h4>Contract-first, not sync-by-default</h4><p>"API-First" means the contract comes first — OpenAPI for synchronous, AsyncAPI for event-driven. Consumer count is <em>not</em> the axis for choosing sync vs async. Availability, response-time budget, reliability and NFRs are.</p></div><div class="card"><h4>No async disguised as sync</h4><p>The guided selection wizard (REQ-02) must actively detect and flag the anti-pattern where a long-running or unreliable back-end is exposed behind a blocking synchronous call.</p></div><div class="card"><h4>Segregation of duties</h4><p>A requester can never approve their own request. This is a hard platform rule, not a policy hope (DEC-06).</p></div><div class="card"><h4>The portal is a front door, not a runtime</h4><p>Intelligrator provisions and governs. It does not sit in the data path. File payloads and API traffic never traverse the portal.</p></div>
-  </div>
-</section>
+        <div class="sect-lbl">4 · Summary</div>
+        <div class="summary">
+          <div class="srow"><span>Purpose</span><span>Nightly customs declaration extract</span></div>
+          <div class="srow"><span>Domain</span><span>Customs</span></div>
+          <div class="srow"><span>Source → Destination</span><span>SFTP /outbound/cds/ → Azure Blob /cds/inbound/</span></div>
+          <div class="srow"><span>Pattern · Schedule</span><span>*.xml · Weekly, Mon 02:00</span></div>
+          <div class="srow"><span>Error notification</span><span>Opt-in</span></div>
+        </div>
 
+        <div class="submitrow">
+          <span class="note">User clicks Submit to raise the request.</span>
+          <button class="btn primary" onclick="this.textContent='✓ Request raised';this.disabled=true">Submit — raise request</button>
+        </div>
 
-<section id="bl-P1">
-  <h2><span class="epic-tag" style="background:#0B5FFF">P1</span> Backlog — MVP — MFT Self-Service + 2FA Access</h2>
-  <p class="epic-desc">33 stories &middot; 161 points &middot; W3–W5 &middot; 27 Jul – 14 Aug</p>
-  <table>
-    <thead><tr><th style="width:78px">ID</th><th>Story</th><th style="width:125px">Persona</th><th style="width:85px">Priority</th><th style="width:50px">Pts</th><th style="width:45px">AC</th></tr></thead>
-    <tbody>
-  <tr>
-    <td class="mono"><strong>ACC-01</strong></td>
-    <td>Discover the portal and understand what it is for<div class="usmini">As a Standard User, I want a landing page that explains what Intelligrator onboards and what it does not, so that I do not waste time submitting a request the portal cannot service.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ACC-03</strong></td>
-    <td>Role-based landing dashboard<div class="usmini">As a Standard User, I want a dashboard on sign-in showing my requests and a clear call to action to raise a new one, so that I can pick up where I left off in one click.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ACC-04</strong></td>
-    <td>Organisation and service-line context<div class="usmini">As a Standard User, I want my requests automatically associated with my organisation and service line, so that approval routing and ownership are correct without manual entry.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">3</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ACC-05</strong></td>
-    <td>Secure session handling and sign-out<div class="usmini">As a Standard User, I want my session to expire on inactivity and to be able to sign out explicitly, so that an unattended machine cannot be used to submit or approve requests.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">2</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>REQ-01</strong></td>
-    <td>Choose the request type: MFT or API<div class="usmini">As a Standard User, I want to choose whether I am requesting a file transfer or an API, so that I am shown only the fields relevant to my interface.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>REQ-03</strong></td>
-    <td>Save a draft and resume later<div class="usmini">As a Standard User, I want to save a partially completed request and come back to it, so that I can go and find information I do not have to hand without losing my work.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-01</strong></td>
-    <td>Capture MFT interface identity and ownership<div class="usmini">As a Standard User, I want to name my file transfer interface and record who owns it, so that it can be uniquely identified, supported and charged correctly for its whole life.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-02</strong></td>
-    <td>Define source and target endpoints and transfer direction<div class="usmini">As a Standard User, I want to declare where the file comes from and where it goes, and by what protocol, so that the generic MFT engine can be configured without any bespoke build.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-03</strong></td>
-    <td>Specify file characteristics and volumetrics<div class="usmini">As a Standard User, I want to describe the files themselves, so that the platform can validate what arrives and capacity-plan for it.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-04</strong></td>
-    <td>Specify the trigger: event-driven, polled or scheduled<div class="usmini">As a Standard User, I want to declare how the transfer is initiated, so that the engine either watches, polls or schedules it correctly.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-05</strong></td>
-    <td>Declare security: keys, certificates, encryption and allow-listing<div class="usmini">As a Standard User, I want to supply or request the credentials and encryption my transfer needs, so that the interface is secure by default and no secret is ever emailed.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-06</strong></td>
-    <td>Declare data classification and residency<div class="usmini">As a Standard User, I want to classify the data in the files and state where it may reside, so that the approver can assess risk and the platform can route the transfer to a compliant region.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-07</strong></td>
-    <td>Configure error handling, retries and alert routing<div class="usmini">As a Standard User, I want to say what should happen when a transfer fails and who should be told, so that failures are handled predictably and reach the right team.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-08</strong></td>
-    <td>Select environments and promotion path<div class="usmini">As a Standard User, I want to request the interface in a specific environment and understand the path to production, so that expectations about go-live are clear from the outset.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-09</strong></td>
-    <td>Review the generated config row before submitting<div class="usmini">As a Standard User, I want to see exactly what configuration my answers will produce, so that I can confirm it is right before it goes for approval — and so I can see that no bespoke build is being requested on my behalf.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>MFT-10</strong></td>
-    <td>Submit the MFT request for approval<div class="usmini">As a Standard User, I want to submit my completed MFT request, so that it enters the approval queue and I get a reference I can quote.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>TRK-01</strong></td>
-    <td>Track the status of my requests<div class="usmini">As a Standard User, I want to see where each of my requests is in the approval process, so that I do not have to chase anyone to find out.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>TRK-02</strong></td>
-    <td>Be notified when a decision or query is raised<div class="usmini">As a Standard User, I want to be notified when my request is approved, rejected or queried, so that I can act without watching the portal.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>TRK-03</strong></td>
-    <td>Respond to a request for more information<div class="usmini">As a Standard User, I want to answer an approver's query and resubmit, so that a query does not force me to start again.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>TRK-05</strong></td>
-    <td>Withdraw a request<div class="usmini">As a Standard User, I want to withdraw a request that is no longer needed, so that I do not consume approver time on work that has been cancelled.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">2</td>
-    <td style="text-align:center">3</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ADM-02</strong></td>
-    <td>Work an approval queue prioritised by risk and SLA<div class="usmini">As an MFT Admin, I want a single queue of everything awaiting my decision, ordered so the urgent and risky surface first, so that I spend my attention where it matters.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ADM-03</strong></td>
-    <td>Open a request and see the complete submission<div class="usmini">As an MFT Admin, I want to see everything the requester submitted on one screen, so that I can make a decision without hunting through attachments or emailing for context.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-01</strong></td>
-    <td>Approve a request<div class="usmini">As an MFT Admin, I want to approve a request with a recorded rationale, so that the interface can be provisioned and the decision is defensible after the fact.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-02</strong></td>
-    <td>Reject a request with a reason the requester can act on<div class="usmini">As an MFT Admin, I want to reject a request with a structured reason, so that the requester understands precisely what to fix and does not simply resubmit the same thing.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-03</strong></td>
-    <td>Return a request for more information<div class="usmini">As an MFT Admin, I want to ask the requester a question without rejecting the request outright, so that a single missing detail does not cost the requester a full resubmission.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-06</strong></td>
-    <td>Enforce segregation of duties<div class="usmini">As an MFT Admin, I want the platform to make it impossible for anyone to approve their own request, so that the control is guaranteed by the system rather than by good behaviour.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>PRV-01</strong></td>
-    <td>Approval writes a configuration row — not a new component<div class="usmini">As a Platform Engineer, I want an approved request to become a row in the config store consumed by the existing generic engine, so that the estate does not accumulate one Boomi component per interface.</div></td>
-    <td>Platform Engineer</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>PRV-02</strong></td>
-    <td>Issue credentials securely on approval<div class="usmini">As a Standard User, I want any keys or credentials my interface needs to be issued and delivered securely, so that no secret is ever sent by email or displayed in a page I might screenshot.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>PRV-03</strong></td>
-    <td>See provisioning succeed or fail, and roll back cleanly<div class="usmini">As an MFT Admin, I want to know whether the approval actually resulted in a working interface, so that an approved-but-broken interface does not sit undetected.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>AUD-01</strong></td>
-    <td>Maintain an immutable audit trail<div class="usmini">As an MFT Admin, I want every action on every request permanently recorded, so that I can demonstrate to an auditor exactly who approved what, when and on what basis.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ACC-06</strong></td>
-    <td>Sign in with a username and password (MVP authentication)<div class="usmini">As a Standard User, I want to sign in with a username and password, so that I can use the portal in the MVP before enterprise single sign-on is available.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">6</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ACC-07</strong></td>
-    <td>Register an account and have it approved by an administrator<div class="usmini">As an MFT Admin, I want new accounts to require my approval before they become active, so that the MVP's local login does not become an open door.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ACC-08</strong></td>
-    <td>Complete two-factor authentication at sign-in<div class="usmini">As a Standard User, I want to confirm a second factor when I sign in, so that a stolen password alone cannot get into the portal in the MVP before enterprise SSO arrives.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr></tbody>
-  </table>
-</section>
+      </div>
+    </div>
+    <p class="annot">Wireframe → each connection panel carries its own “Test Connect” with a tick/cross result; the route-exists check sits between the connection and file/trigger sections; Submit raises the request.</p>
 
-<section id="bl-P2">
-  <h2><span class="epic-tag" style="background:#0F7A5A">P2</span> Backlog — API Onboarding &amp; Build (Simple)</h2>
-  <p class="epic-desc">11 stories &middot; 76 points &middot; W6–W9 &middot; 17 Aug – 11 Sep</p>
-  <table>
-    <thead><tr><th style="width:78px">ID</th><th>Story</th><th style="width:125px">Persona</th><th style="width:85px">Priority</th><th style="width:50px">Pts</th><th style="width:45px">AC</th></tr></thead>
-    <tbody>
-  <tr>
-    <td class="mono"><strong>REQ-02</strong></td>
-    <td>Guided pattern selection with anti-pattern detection<div class="usmini">As a Standard User, I want the portal to ask me about my non-functional needs and recommend the right interaction style, so that I do not accidentally request an async workload disguised as a synchronous API.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-01</strong></td>
-    <td>Capture API identity, ownership and consumer intent<div class="usmini">As a Standard User, I want to record what API I am publishing or consuming and who owns it, so that it can be governed, discovered and supported.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-02</strong></td>
-    <td>Provide the contract first — OpenAPI or AsyncAPI<div class="usmini">As a Standard User, I want to upload or link my API contract as the primary artefact of the request, so that the design is agreed before anything is provisioned.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-03</strong></td>
-    <td>Declare the interaction style with NFR-driven justification<div class="usmini">As a Standard User, I want to declare whether my API is synchronous request/response, asynchronous, or publish/subscribe, and justify it against NFRs, so that the platform is not asked to expose an unsuitable back-end behind a blocking call.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-04</strong></td>
-    <td>Define the authentication and authorisation model<div class="usmini">As a Standard User, I want to declare how consumers of my API will authenticate, so that the correct gateway policy is applied and no unprotected endpoint is ever published.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-05</strong></td>
-    <td>Declare traffic profile, rate limits and service levels<div class="usmini">As a Standard User, I want to declare my expected load and required service level, so that gateway throttling is set correctly and the platform can capacity-plan.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-06</strong></td>
-    <td>Select environment, routing and gateway policy set<div class="usmini">As a Standard User, I want to declare the environment and back-end routing for my API, so that the gateway can be configured from my request without a bespoke build.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-07</strong></td>
-    <td>Review and submit the API request<div class="usmini">As a Standard User, I want to review the full API request and submit it, so that it enters the approval queue with a reference I can quote.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-08</strong></td>
-    <td>Build and deploy my API automatically from the uploaded contract<div class="usmini">As a Standard User, I want the platform to build and deploy my API directly from the OpenAPI specification I uploaded, so that I get a working, secured endpoint without a developer writing a single Boomi process.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">13</td>
-    <td style="text-align:center">6</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-09</strong></td>
-    <td>Test my API in a sandbox before I submit it<div class="usmini">As a Standard User, I want a working mock of my API generated from my contract, so that I can prove the design works before I ask anyone to approve it.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-13</strong></td>
-    <td>Discover and subscribe to a published API as a consumer<div class="usmini">As a Standard User, I want to find an existing API in the catalogue and request access to it, so that I do not build a duplicate of something the department already has.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr></tbody>
-  </table>
-</section>
+    <div class="fieldref">
+      <table>
+        <thead><tr><th>Field</th><th>Notes / validation</th></tr></thead>
+        <tbody>
+          <tr><td>Purpose · Business Value</td><td>Free text. Required. Captures why the transfer exists and the benefit delivered.</td></tr>
+          <tr><td>Business Domain</td><td>Dropdown (Customs, VAT, PAYE, SA …). Drives approval routing.</td></tr>
+          <tr><td>PoC</td><td>Auto-populated from the signed-in user; read-only.</td></tr>
+          <tr><td>Source / Destination · Type</td><td>Dropdown (SFTP, FTPS, Azure Blob, S3, local FS …).</td></tr>
+          <tr><td>Server · Port · Directory</td><td>Endpoint coordinates. Port defaults by type (SFTP 22, FTPS 21, HTTPS 443).</td></tr>
+          <tr><td>Credential (Username / Password)</td><td>Stored as a secret reference, never in plain text. Password masked.</td></tr>
+          <tr><td>Test connection</td><td>Validates reachability + auth. Green tick = OK, red cross = Not OK. Submit is intended to require both sides green.</td></tr>
+          <tr><td>Route check</td><td>Duplicate-route guard. No existing route → proceed; existing route → warn.</td></tr>
+          <tr><td>File Pattern</td><td>Glob (e.g. <span class="kbd">*.xml</span>) selecting files to move.</td></tr>
+          <tr><td>Schedule / Frequency</td><td>Weekly / Daily / Ad hoc. Each reveals a frequency control (Ad hoc = manual “Run Now”).</td></tr>
+          <tr><td>Error Notification</td><td>Opt-in / Opt-out for failure alerts.</td></tr>
+          <tr><td>Submit</td><td>Raises the request → appears under Submitted Requests as “In Review”.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-<section id="bl-P3">
-  <h2><span class="epic-tag" style="background:#7A3DB8">P3</span> Backlog — API Mashup &amp; Composition</h2>
-  <p class="epic-desc">3 stories &middot; 29 points &middot; W10–W15 &middot; 14 Sep – 23 Oct</p>
-  <table>
-    <thead><tr><th style="width:78px">ID</th><th>Story</th><th style="width:125px">Persona</th><th style="width:85px">Priority</th><th style="width:50px">Pts</th><th style="width:45px">AC</th></tr></thead>
-    <tbody>
-  <tr>
-    <td class="mono"><strong>API-10</strong></td>
-    <td>Compose a mashup of published APIs<div class="usmini">As a Standard User, I want to compose several published APIs into a single composite API, so that my consumer makes one call instead of orchestrating four — and so that I do not have to ask for a bespoke integration to be built.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">13</td>
-    <td style="text-align:center">7</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-11</strong></td>
-    <td>Map and shape the composite response<div class="usmini">As a Standard User, I want to define how the responses from my mashup's sources are combined into one response, so that my consumer gets the shape they asked for rather than a bag of nested payloads.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>API-12</strong></td>
-    <td>Version, deprecate and retire a published API<div class="usmini">As a Standard User, I want to publish a new version of my API without breaking my existing consumers, so that change does not become an outage.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr></tbody>
-  </table>
-</section>
+  <!-- ============================================================ SCREEN 3 -->
+  <section id="s3">
+    <h2><span class="num">3</span> View File Transfer Catalogue / History</h2>
+    <p class="lead">A register of provisioned transfers with run history. Each row carries a <b>Run Now</b> action — enabled only when the trigger is <b>Ad hoc</b>.</p>
 
-<section id="bl-P4">
-  <h2><span class="epic-tag" style="background:#B5761B">P4</span> Backlog — Enterprise SSO, Governance &amp; Scale</h2>
-  <p class="epic-desc">9 stories &middot; 44 points &middot; W14–W19 &middot; 12 Oct – 20 Nov</p>
-  <table>
-    <thead><tr><th style="width:78px">ID</th><th>Story</th><th style="width:125px">Persona</th><th style="width:85px">Priority</th><th style="width:50px">Pts</th><th style="width:45px">AC</th></tr></thead>
-    <tbody>
-  <tr>
-    <td class="mono"><strong>ACC-02</strong></td>
-    <td>Sign in with departmental single sign-on<div class="usmini">As a Standard User, I want to sign in using my existing departmental identity via SSO, so that I do not need another credential and my access reflects my organisational role.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ADM-01</strong></td>
-    <td>Sign in as an administrator with step-up authentication<div class="usmini">As an MFT Admin, I want to sign in with my elevated role and complete a step-up authentication challenge, so that approval authority cannot be exercised from a merely-authenticated session.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>ADM-04</strong></td>
-    <td>See the automated pre-check results before deciding<div class="usmini">As an MFT Admin, I want the platform to have already checked the mechanical things, so that my review is spent on judgement rather than on validation a machine could do.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-04</strong></td>
-    <td>Approve conditionally, with binding conditions<div class="usmini">As an MFT Admin, I want to approve a request subject to stated conditions, so that a low-risk interface is not held up while a non-blocking issue is resolved.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-05</strong></td>
-    <td>Reassign or delegate a request to another approver<div class="usmini">As an MFT Admin, I want to hand a request to a colleague, so that absence or a specialist question does not stall the queue.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">3</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>DEC-07</strong></td>
-    <td>Fast-path approval for low-risk requests<div class="usmini">As an MFT Admin, I want to approve a batch of requests that passed every pre-check and carry no risk flags, so that routine non-production work does not consume the same effort as a production change.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-could">Could</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>AUD-02</strong></td>
-    <td>Report on throughput, SLA and rejection reasons<div class="usmini">As an MFT Admin, I want to see how the onboarding service is actually performing, so that I can fix the causes of rejection rather than just processing the symptoms.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">5</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>NFR-01</strong></td>
-    <td>Meet accessibility standards<div class="usmini">As any user, I want the portal to be usable with assistive technology, so that the service is available to every colleague and meets the department's legal obligation.</div></td>
-    <td>All</td>
-    <td><span class="badge pri-must">Must</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>NFR-02</strong></td>
-    <td>Meet performance and availability targets<div class="usmini">As any user, I want the portal to be responsive and available, so that it is faster to self-serve than to raise a ticket — otherwise nobody will use it.</div></td>
-    <td>All</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">4</td>
-  </tr></tbody>
-  </table>
-</section>
+    <div class="device">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span> View File Transfer Catalogue / History</div>
+      <div class="body">
+        <div class="scroll-x">
+        <table class="mock">
+          <thead><tr>
+            <th>Name</th><th>Description</th><th>Domain</th><th>Source</th><th>Destination</th>
+            <th>Trigger</th><th>Last Run</th><th>Created On</th><th>Created By</th><th>Action</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>CDS-Nightly-Extract</td><td>Customs decl. extract</td><td>Customs</td>
+              <td>sftp.dept</td><td>az-blob://cds</td><td><span class="trg">Daily</span></td>
+              <td>15 Jul 06:00</td><td>01 Jun 2026</td><td>a.khan</td>
+              <td><button class="runbtn disabled" disabled title="Scheduled trigger">Run Now</button></td>
+            </tr>
+            <tr>
+              <td>VAT-Returns-Archive</td><td>Monthly VAT archive</td><td>VAT</td>
+              <td>s3://vat-in</td><td>sftp.archive</td><td><span class="trg adhoc">Ad hoc</span></td>
+              <td>12 Jul 21:14</td><td>20 May 2026</td><td>r.patel</td>
+              <td><button class="runbtn" onclick="runNow(this)">▶ Run Now</button></td>
+            </tr>
+            <tr>
+              <td>RTI-Inbound-Feed</td><td>PAYE RTI inbound</td><td>PAYE</td>
+              <td>sftp.rti</td><td>boomi-mft://p</td><td><span class="trg">Weekly</span></td>
+              <td>14 Jul 02:00</td><td>03 Jun 2026</td><td>j.smith</td>
+              <td><button class="runbtn disabled" disabled title="Scheduled trigger">Run Now</button></td>
+            </tr>
+            <tr>
+              <td>SA-Bulk-Load</td><td>Self-assessment bulk</td><td>SA</td>
+              <td>nas://sa/out</td><td>sftp.dept</td><td><span class="trg adhoc">Ad hoc</span></td>
+              <td>08 Jul 18:40</td><td>11 Jun 2026</td><td>m.olu</td>
+              <td><button class="runbtn" onclick="runNow(this)">▶ Run Now</button></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="banner warn" style="margin-bottom:0">
+          <span>⚠</span>
+          <div><b>Run Now</b> is available only when <b>Trigger = Ad hoc</b>. Clicking it triggers the transfer and refreshes the row / status. Scheduled rows show the control disabled.</div>
+        </div>
+      </div>
+    </div>
+    <p class="annot">Wireframe → columns Name · Description · Domain · Source · Destn · Trigger · Last Run · Created On · Created by, with a conditional “Run Now” button for ad-hoc triggers.</p>
 
-<section id="bl-P5">
-  <h2><span class="epic-tag" style="background:#C2410C">P5</span> Backlog — Event-Driven Onboarding</h2>
-  <p class="epic-desc">4 stories &middot; 34 points &middot; W20–W24 &middot; 23 Nov – 25 Dec</p>
-  <table>
-    <thead><tr><th style="width:78px">ID</th><th>Story</th><th style="width:125px">Persona</th><th style="width:85px">Priority</th><th style="width:50px">Pts</th><th style="width:45px">AC</th></tr></thead>
-    <tbody>
-  <tr>
-    <td class="mono"><strong>EVT-01</strong></td>
-    <td>Onboard an event-driven interface with an AsyncAPI contract<div class="usmini">As a Standard User, I want to onboard a publisher or subscriber using an AsyncAPI contract, so that event streaming goes through the same front door and the same governance as everything else.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">13</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>EVT-02</strong></td>
-    <td>Browse the event catalogue<div class="usmini">As a Standard User, I want to see what events the department already publishes, so that I consume an existing stream instead of asking a team to build me a point-to-point feed.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>EVT-03</strong></td>
-    <td>Enforce schema compatibility through a registry<div class="usmini">As a Platform Engineer, I want an incompatible schema change to be rejected at submission, so that a producer cannot break every subscriber at runtime.</div></td>
-    <td>Platform Engineer</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>EVT-04</strong></td>
-    <td>Approve event interfaces with event-specific pre-checks<div class="usmini">As an MFT Admin, I want event requests to arrive with event-specific pre-checks already performed, so that I am not asked to eyeball a schema by hand.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-could">Could</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">3</td>
-  </tr></tbody>
-  </table>
-</section>
+    <div class="fieldref">
+      <table>
+        <thead><tr><th>Column</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Name / Description</td><td>Human-readable identifier and one-line purpose.</td></tr>
+          <tr><td>Domain</td><td>Owning business domain.</td></tr>
+          <tr><td>Source / Destination</td><td>Endpoint summary for each side of the transfer.</td></tr>
+          <tr><td>Trigger</td><td>Weekly · Daily · Ad hoc. Governs whether Run Now is enabled.</td></tr>
+          <tr><td>Last Run · Created On · Created By</td><td>Audit / history metadata.</td></tr>
+          <tr><td>Run Now</td><td>Enabled for Ad-hoc rows only. Fires the transfer and refreshes status in place.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-<section id="bl-P6">
-  <h2><span class="epic-tag" style="background:#B3261E">P6</span> Backlog — Optimise, Automate &amp; Retire</h2>
-  <p class="epic-desc">6 stories &middot; 45 points &middot; W25–W30 &middot; 28 Dec – 5 Feb 2027</p>
-  <table>
-    <thead><tr><th style="width:78px">ID</th><th>Story</th><th style="width:125px">Persona</th><th style="width:85px">Priority</th><th style="width:50px">Pts</th><th style="width:45px">AC</th></tr></thead>
-    <tbody>
-  <tr>
-    <td class="mono"><strong>TRK-04</strong></td>
-    <td>Amend a rejected request and resubmit<div class="usmini">As a Standard User, I want to clone a rejected request, fix the issue and resubmit, so that I retain the effort I already invested.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">3</td>
-    <td style="text-align:center">3</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>TRK-06</strong></td>
-    <td>Request a change or decommission of a live interface<div class="usmini">As a Standard User, I want to change or retire an interface that is already live, so that the config store stays accurate and dead interfaces do not linger.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">5</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>OPS-01</strong></td>
-    <td>See the health and usage of the interfaces I own<div class="usmini">As a Standard User, I want a dashboard for the interfaces I own, so that I find out my transfer is failing before the business does.</div></td>
-    <td>Standard User</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>OPS-02</strong></td>
-    <td>Make the cost of the estate visible by service line<div class="usmini">As an MFT Admin, I want consumption attributed to the service line that caused it, so that volume has an owner and growth has a conversation attached to it.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-could">Could</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>OPS-03</strong></td>
-    <td>Detect dormancy and force recertification<div class="usmini">As an MFT Admin, I want interfaces nobody uses and nobody will vouch for to be retired automatically, so that the estate stops accumulating a dead tail that we still pay to secure.</div></td>
-    <td>MFT Admin</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">8</td>
-    <td style="text-align:center">4</td>
-  </tr>
-  <tr>
-    <td class="mono"><strong>OPS-04</strong></td>
-    <td>Bulk-onboard a legacy interface inventory<div class="usmini">As a Platform Engineer, I want to import a validated inventory of legacy interfaces and generate their config rows in batch, so that migrating hundreds of interfaces off the legacy estate does not mean typing hundreds of forms.</div></td>
-    <td>Platform Engineer</td>
-    <td><span class="badge pri-should">Should</span></td>
-    <td style="text-align:center">13</td>
-    <td style="text-align:center">5</td>
-  </tr></tbody>
-  </table>
-</section>
+  <!-- ===== traceability + edit ===== -->
+  <section id="trace">
+    <h2>Wireframe traceability &amp; editing</h2>
+    <details class="trace">
+      <summary>How each hand-drawn sheet maps to these screens</summary>
+      <table style="width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0 14px">
+        <tr><td style="padding:7px 10px;border-bottom:1px solid #eef1f4;font-weight:700;width:34%">Sheet 1 — “Dashboard View (Standard User)”</td><td style="padding:7px 10px;border-bottom:1px solid #eef1f4;color:#3d4653">→ Screen 1. Submitted Requests tile (minimise chevron), Configure + Catalogue boxes.</td></tr>
+        <tr><td style="padding:7px 10px;border-bottom:1px solid #eef1f4;font-weight:700">Sheet 2 — “Configure New File Transfer Wizard”</td><td style="padding:7px 10px;border-bottom:1px solid #eef1f4;color:#3d4653">→ Screen 2. Requirement / Source / Destination / route check / file &amp; trigger / summary / submit.</td></tr>
+        <tr><td style="padding:7px 10px;font-weight:700">Sheet 3 — “View File Transfer Catalogue / History”</td><td style="padding:7px 10px;color:#3d4653">→ Screen 3. Full column set with conditional Run Now.</td></tr>
+      </table>
+    </details>
+    <div class="callout" style="margin-top:16px">
+      <h3>Editing in draw.io / Visio</h3>
+      <ul>
+        <li>The <span class="kbd">.drawio</span> file holds all three screens on a <b>single canvas</b> (grid layout) — download it from the top bar.</li>
+        <li>Open at <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a> or draw.io Desktop. Every element is a native shape you can move, restyle or extend.</li>
+        <li>For Microsoft Visio: in draw.io use <span class="kbd">Extras → Export as → Visio (.vsdx)</span>, then open the exported file in Visio.</li>
+      </ul>
+    </div>
+  </section>
 
-<section id="states">
-  <h2><span class="epic-tag">11</span> Request lifecycle</h2>
-  <p class="epic-desc">One state machine serves MFT, API, mashup and event requests. It is delivered in Phase 1 and extended thereafter — never replaced.</p>
-  <table>
-    <thead><tr><th style="width:190px">State</th><th style="width:110px">Held by</th><th>Meaning</th></tr></thead>
-    <tbody><tr><td><strong>Draft</strong></td><td>Requester</td><td>Being completed. Not visible to approvers. Auto-saved. Subject to retention.</td></tr><tr><td><strong>Submitted</strong></td><td>Approver</td><td>In the approval queue. Read-only to the requester. Decision SLA clock running.</td></tr><tr><td><strong>Awaiting Information</strong></td><td>Requester</td><td>Returned with a question. Editable by requester. Approver SLA clock paused.</td></tr><tr><td><strong>Approved</strong></td><td>Platform</td><td>Decision committed and immutable. Provisioning triggered.</td></tr><tr><td><strong>Approved (Conditional)</strong></td><td>Platform</td><td>Provisioning proceeds; conditions tracked to a due date and escalated if unmet.</td></tr><tr><td><strong>Rejected</strong></td><td>Requester</td><td>Terminal. Reason code and detail attached. May be amended and resubmitted as a new request.</td></tr><tr><td><strong>Withdrawn</strong></td><td>—</td><td>Terminal. Cancelled by the requester or auto-withdrawn after non-response.</td></tr><tr><td><strong>Provisioning</strong></td><td>Platform</td><td>Config row / gateway config being written. Transient.</td></tr><tr><td><strong>Provisioning Failed</strong></td><td>Approver</td><td>Partial config rolled back. Approver and requester notified.</td></tr><tr><td><strong>Live</strong></td><td>Requester</td><td>Config active and smoke-tested. Change and decommission requests available.</td></tr><tr><td><strong>Live (Unverified)</strong></td><td>Approver</td><td>Config active but smoke test failed or was not run. Flagged, not silently healthy.</td></tr><tr><td><strong>Decommissioned</strong></td><td>—</td><td>Config row disabled, not deleted. Retained for the audit retention period.</td></tr></tbody>
-  </table>
-</section>
-
-<section id="challenges">
-  <h2><span class="epic-tag">12</span> Challenges &amp; responses</h2>
-  <p class="epic-desc">Deliberate challenges to this plan, with a recommended position on each. These need a named owner <em>before</em> Phase 0 starts, not at a gate review.</p>
-  <div class="chal"><h4>Username, password and 2FA in the MVP, for a tax authority. Is that acceptable?</h4><p>For an internal, invitation-only pilot onboarding <em>non-production</em> interfaces — yes, and adding TOTP 2FA at sign-in (ACC-08) closes the biggest hole a password-only login would leave. Two things keep it safe rather than merely fast. First, <strong>Phase 0 builds a pluggable authentication abstraction</strong>, so Phase 4 swaps in enterprise SSO by configuration, not by rebuild; drop that abstraction to save time and the whole argument collapses. Second, <strong>local accounts are admin-approved, domain-restricted and never long-lived</strong> (ACC-07). <strong>Recommendation:</strong> gate the MVP so it cannot provision a <em>Production</em> interface until SSO and the full pre-check engine land in Phase 4. If the programme will not accept that gate, pull SSO forward and accept the schedule hit — do not simply hope.</p></div><div class="chal"><h4>Phase 3 (mashup) is where "config over construction" goes to die. What stops it?</h4><p>Nothing, unless it is designed in. A mashup is an orchestration, and the instinctive Boomi answer is a new process per mashup — at which point you have rebuilt the sprawl you are migrating away from, in a newer product. <strong>API-10 AC6 is the line:</strong> the composition is a <em>declarative specification</em> executed by ONE generic orchestration engine, exactly as an MFT config row is executed by one generic MFT engine. <strong>API-11 AC2 is the second line:</strong> transformations come from a governed library, not arbitrary scripting. Expect the first request for a script step in the back half of Phase 3, and decide the answer now.</p></div><div class="chal"><h4>SSO and governance (Phase 4) start around the three-month mark and overlap the mashup build. Is running the API estate on MVP-grade controls for that long acceptable?</h4><p>It is the real risk in this schedule. Phases 2 and 3 stand up an API and mashup estate that, until Phase 4 lands at week 19, is governed only by the MVP controls: admin-approved 2FA accounts, segregation of duties, the audit trail and <em>basic</em> pre-checks — not the full pre-check engine, not step-up MFA at the decision, not SSO. Running SSO as a parallel identity track from week 14 is realistic (identity is a different squad from API build), but the exposure is weeks 6–19. <strong>Recommendation:</strong> keep everything built in Phases 2 and 3 in non-production until Phase 4 completes, or pull the pre-check engine (ADM-04) forward into Phase 2. This is an SRO decision, taken now, not discovered at a gate review.</p></div><div class="chal"><h4>Should the MVP really include the build automation, or just the request form?</h4><p>It must include the automation. A portal that captures a request and then hands a spreadsheet to the platform team is a nicer-looking ticket queue — and the business case for Intelligrator is not "prettier tickets", it is lead time and the removal of per-interface build. If Phase 1 ships without PRV-01, the MVP has not tested the hypothesis the product exists to test. Cut scope from the <em>form</em> (SFTP only, fewer options) before you cut it from the <em>automation</em>.</p></div><div class="chal"><h4>What is the single thing most likely to derail this?</h4><p>The config schema in Phase 0. Every later phase reads from it. If it is designed narrowly around SFTP because that is what the MVP needs, then Phase 2 bolts an API table onto the side, Phase 5 bolts an event table onto the side, and by Phase 6 you have three products sharing a login page. <strong>Design the schema for all three pattern families in Phase 0, even though only file transfer is implemented.</strong> Two weeks is tight for that; protect the thinking time.</p></div>
-  <h3 style="margin:30px 0 12px;font-size:16px;color:var(--ink)">Carried forward from the backlog</h3>
-  <div class="chal" style="border-left-color:#8b94a1"><h4 style="color:#5a6472">Intelligrator was scoped as MFT-only. This request adds API onboarding. Is that right?</h4><p>It is defensible, but it is a genuine scope change and must be recognised as one. The two journeys share a great deal — identity, drafting, queue, decision, audit, provisioning-as-config — and duplicating that machinery for a separate API portal would be waste. The divergence is entirely in Epic 3 versus Epic 4. <strong>Recommendation:</strong> build the shared spine once, treat MFT and API as two request types over it, and deliver MFT first. Do not, however, quietly re-label the existing MFT-only product overview — the client signed off on a narrower scope and should be shown the delta explicitly.</p></div><div class="chal" style="border-left-color:#8b94a1"><h4 style="color:#5a6472">Should the API journey really go through the same approval gate as MFT?</h4><p>Not necessarily the same approvers. An MFT Admin is not automatically qualified to assess an OpenAPI contract, an OAuth scope model or a rate-limit profile. The queue and decision machinery should be shared; the <em>approver group</em> should be routed by request type and service line. The stories above are deliberately written so that ADM-02 routes by approver group rather than assuming one pool of humans.</p></div><div class="chal" style="border-left-color:#8b94a1"><h4 style="color:#5a6472">Does adding API onboarding break the "config over construction" principle?</h4><p>No, provided the discipline holds. For MFT, an approved request is a config row consumed by the generic engine. For API, an approved request is a gateway configuration derived from the contract plus a <em>named, pre-approved policy bundle</em> (API-06). The moment someone is allowed to compose arbitrary policies per interface, the principle is broken and component sprawl returns in a new costume. API-06 exists precisely to hold that line.</p></div><div class="chal" style="border-left-color:#8b94a1"><h4 style="color:#5a6472">Is the anti-pattern check (REQ-02, API-03) going to be resented as the portal telling people what to do?</h4><p>Probably, at first. Which is why it is designed as an <em>override with recorded justification</em>, not a hard block. The requester keeps agency; the approver gets visibility; the reporting view (AUD-02) makes the pattern of overrides visible over time. If a particular flag is being overridden nine times out of ten, the threshold is wrong and should be tuned — the data will tell you.</p></div><div class="chal" style="border-left-color:#8b94a1"><h4 style="color:#5a6472">Why is step-up authentication on the decision action rather than at admin sign-in?</h4><p>Both, in fact — but the decision action is the one that matters. Session-level MFA proves who opened the browser hours ago. Action-level step-up proves who is exercising approval authority at the moment authority is exercised. For a control that an auditor will test, that distinction is the whole point.</p></div>
-</section>
-
-</main>
 </div>
 
+<footer>
+  Intelligrator · Self-Service MFT Provisioning on Boomi iPaaS — Standard-User UI screens ·
+  <a href="https://odiyo-vimo.github.io/fp/">Integration Catalogue</a>
+</footer>
+
 <script>
-const links=[...document.querySelectorAll('nav.toc a')];
-const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{const a=map.get(e.target.id);if(!a)return;
- if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));a.classList.add('active');}});},
- {rootMargin:'-25% 0px -65% 0px'});
-document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
+  function testConn(btn){
+    var s = btn.nextElementSibling;
+    s.textContent = "✓ OK"; s.className = "teststatus ok";
+    btn.textContent = "🔌 Re-test";
+  }
+  function seg(btn){
+    var kids = btn.parentElement.querySelectorAll('button');
+    kids.forEach(function(k){k.classList.remove('on')});
+    btn.classList.add('on');
+  }
+  function runNow(btn){
+    var orig = btn.textContent;
+    btn.textContent = "…running";
+    btn.disabled = true;
+    setTimeout(function(){
+      btn.textContent = "✓ Triggered";
+      var lastrun = btn.closest('tr').children[6];
+      lastrun.textContent = "just now";
+      lastrun.style.color = "#2e7d32";
+      lastrun.style.fontWeight = "700";
+    }, 700);
+  }
 </script>
 </body>
 </html>
