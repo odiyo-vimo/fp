@@ -244,10 +244,50 @@
       <p>The <b>March 2026</b> release added TAR archive support, PGP ASCII-armor, continued (deprecated) SFTP DSA host-key support for legacy partners, automated data retention (schedule history 3 months, audit logs 12 months), and runtime performance/health-telemetry improvements.</p>
       <p>The <b>Q2 2026 roadmap</b> focuses on scaling the distributed hybrid MFT architecture and extending the trading-partner framework and file-flow extensibility — confirm the exact GA feature set at build time.</p>
     </div>
-  </section>
 
-  <section id="s7">
-    <h2><span class="num">7</span>Solution architecture</h2>
+    <h3>6.2 Antivirus / malware scanning</h3>
+    <p>Boomi MFT performs <b>real-time antivirus scanning</b> on files as they move through the managed service; infected files are <b>automatically quarantined</b> so they are never delivered. Scanning sits alongside file-level encryption and a full audit trail as controls built into every layer, underpinning the platform's zero-trust, SOC 2-aligned posture.</p>
+    <ul class="tick">
+      <li>Real-time scan of every file in flight — malware/viruses detected before delivery, not after.</li>
+      <li>Automatic quarantine of infected files: the transfer is stopped and flagged rather than passed on.</li>
+      <li>On the multi-tenant automated service the scan applies to files up to ~250 MB; dedicated single-tenant deployments can be configured for larger files.</li>
+      <li>Complements, rather than replaces, enterprise endpoint AV and any ICAP/DLP controls already in the estate — defence in depth.</li>
+    </ul>
+    <div class="callout risk">
+      <h4>Design consideration — AV scan size limit</h4>
+      <p>The ~250 MB default scan ceiling on the multi-tenant service is a real constraint for large tax/customs payloads. Confirm the maximum in-scope file size and whether a dedicated/single-tenant configuration, chunking, or an external ICAP/AV integration is required for oversize files. Raise as a decision with a named owner (§14).</p>
+    </div>
+
+    <h3>6.3 Automated File Transfer (AFT)</h3>
+    <p>AFT is the scheduled and event-driven, system-to-system mode — the mode this solution is built on. Files move automatically between endpoints with no human in the loop, and each transfer is expressed as configuration (endpoint + flow + schedule) consumed by the generic engine, consistent with config over construction.</p>
+    <ul class="tick">
+      <li>Scheduled and event-triggered transfers; a single flow handles many-to-many endpoints with routing, renaming, encryption and compression.</li>
+      <li>Guaranteed delivery &amp; persistence: files stored securely until delivered, with retry, auto-resume, exception handling and notifications.</li>
+      <li>Reusable endpoints and automated partner onboarding; file transfer separated from business logic and invoked from integration processes via the MFT Connector.</li>
+      <li>Distributed hybrid execution: cloud-orchestrated, with on-prem MFT runtimes performing internal transfers in the trusted zone.</li>
+    </ul>
+
+    <h3>6.4 Ad-hoc file sharing (person-to-person / EFSS)</h3>
+    <p>Alongside automated transfer, the platform (from Thru's heritage) provides <b>ad-hoc, user-centric file sharing</b> — secure person-to-person exchange of large files carrying the same governance, AV scanning, encryption and audit trail as automated flows, so it is governed rather than shadow IT.</p>
+    <ul class="tick">
+      <li>Web-based interface to send/receive large files securely, with permissions per user or per user group.</li>
+      <li>Plugins for Microsoft Outlook (send large files without leaving the mailbox), Salesforce and SharePoint; a "drop-box"-style inbound capability lets external parties upload to account holders without their own subscription.</li>
+      <li>Same security envelope as AFT: AV scanning, encryption in transit and at rest, and a full audit trail on every share.</li>
+    </ul>
+    <p>Whether ad-hoc file sharing is in scope for this programme is a scoping decision; if enabled it needs its own governance (external-recipient policy, DLP, retention, link-expiry). Flagged for the Design Authority (§14).</p>
+
+    <h3>6.5 Other native platform capabilities</h3>
+    <table>
+      <tr><th style="width:26%">Area</th><th>Capability</th></tr>
+      <tr><td><b>Security &amp; compliance</b></td><td>File-level (end-to-end) encryption in addition to encrypted protocols in transit and encryption at rest; zero-trust architecture; SOC 2 and comparable compliance alignment; IP whitelisting.</td></tr>
+      <tr><td><b>Authentication</b></td><td>Password and PKI (public-key) auth for SFTP/FTPS; API secret key for runtime-to-cloud; SSL certificates; renewal notifications for PGP and SSH keys.</td></tr>
+      <tr><td><b>Access control</b></td><td>Role-based access control under least-privilege (POLP); users managed by enterprise administrators; granular permissions for automated operations and user sharing.</td></tr>
+      <tr><td><b>Availability &amp; isolation</b></td><td>High availability and DR across multiple cloud zones/regions; per-instance traffic isolation so tenants/business units do not affect one another.</td></tr>
+      <tr><td><b>Visibility</b></td><td>Granular audit and end-to-end tracking of every transfer; delivery confirmation; notifications; OpenTelemetry export to enterprise monitoring.</td></tr>
+      <tr><td><b>Performance &amp; scale</b></td><td>Elastic cloud for high-volume, many-to-many exchange and large/accelerated file transfer without extra infrastructure or bottlenecks.</td></tr>
+      <tr><td><b>Integration</b></td><td>MFT Connector for Boomi embeds persistence and guaranteed delivery directly into integration processes, separating file movement from business logic (§7.5).</td></tr>
+    </table>
+  </section>
     <p>A clean logical view: the external estate (3rd-party consumers/OGDs, MDTP, and the native-iPaaS SaaS systems — ETMP/S4H, CRM CF/MSD, Workflow Pega, B&amp;T CDS) exchanges files with the <b>Boomi iPaaS Platform</b>; across the external/internal trust boundary the <b>Boomi Internal Runtime</b> hosts the config-driven MFT engine and delivers to / collects from the HoD applications on AWS, Azure, Crown Hosting and Fujitsu. §7.1 details each layer; Figure 2 (§7.5) shows how MFT is driven by the integration platform.</p>
     <div class="diagram">
       <svg xmlns="http://www.w3.org/2000/svg" width="100%" style="height:auto;max-width:1100px;display:block;margin:0 auto" viewBox="0 0 1520 1120" font-family="Segoe UI,-apple-system,Roboto,Helvetica,Arial,sans-serif">
