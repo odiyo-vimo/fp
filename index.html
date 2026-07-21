@@ -248,205 +248,205 @@
 
   <section id="s7">
     <h2><span class="num">7</span>Solution architecture</h2>
-    <p>Aligned to the estate's logical view, and showing MFT integrated with the Integration &amp; API-management platform. The external tier (consumers/OGDs, MDTP, native-iPaaS SaaS) flows through the Boomi iPaaS Platform — which hosts both the Integration &amp; API-management components (API Control Plane, Developer Portal, Integration Flow Designer, Cloud API Management, external API gateway) and the MFT cloud components — across the trust boundary into the Boomi internal runtime (Integration Flow Runtime, the Boomi MFT Connector, the generic config-driven MFT engine, and internal API gateways), and out to the HoD applications on AWS, Azure, Crown Hosting and Fujitsu. Blue = API executions, red = configurations/deployments, green = MFT data channel.</p>
+    <p>Presented as four horizontal tiers, top to bottom: <b>Tier 1 Consumers</b> → <b>Tier 2 Cloud integration layer</b> (Boomi iPaaS, includes MFT cloud) → trust boundary → <b>Tier 3 Runtime integration layer</b> (includes the config-driven MFT engine) → <b>Tier 4 backend systems</b> (HoD applications). MFT sits in both integration layers, so file transfer is delivered and governed by the same platform as the wider integration &amp; API estate. Blue = API executions, red = configurations/deployments, green = MFT data channel.</p>
     <div class="diagram">
-      <svg xmlns="http://www.w3.org/2000/svg" width="100%" style="height:auto;max-width:1100px;display:block;margin:0 auto" viewBox="0 0 1360 1020" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
-<rect x="0" y="0" width="1360" height="1020" fill="#ffffff"/>
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" style="height:auto;max-width:1100px;display:block;margin:0 auto" viewBox="0 0 1280 1040" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+<rect x="0" y="0" width="1280" height="1040" fill="#ffffff"/>
 <defs><marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5a6472"/></marker><marker id="arwB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2f6fdb"/></marker><marker id="arwR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#c0392b"/></marker><marker id="arwG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2e7d32"/></marker><marker id="arwo" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9" fill="none" stroke="#5a6472"/></marker></defs>
-<rect x="40" y="10" width="1280" height="34" rx="8" fill="#0f1723" stroke="#0f1723" stroke-width="1.4"/>
-<text x="680" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Managed File Transfer on Boomi — integrated with the Integration &amp; API-management platform (estate logical view)</text>
-<rect x="40" y="58" width="1030" height="150" rx="8" fill="#fdf6ec" stroke="#e0b877" stroke-width="1.4"/>
-<text x="52" y="78" font-size="12.5" font-weight="700" fill="#8a5a0a">EXTERNAL ESTATE — cross-government, digital &amp; SaaS (native iPaaS)</text>
-<rect x="56" y="90" width="200" height="104" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="68" y="110" font-size="10.5" font-weight="700" fill="#8a5a0a">External Consumers</text>
-<rect x="72" y="120" width="168" height="58" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="156.0" y="142.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">3rd-party consumers</text>
-<text x="156.0" y="155.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">/ OGDs</text>
-<rect x="272" y="90" width="168" height="104" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="284" y="110" font-size="10.5" font-weight="700" fill="#8a5a0a">Digital services</text>
-<rect x="288" y="120" width="136" height="58" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="356.0" y="149.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">MDTP</text>
-<rect x="456" y="90" width="598" height="104" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="468" y="110" font-size="10.5" font-weight="700" fill="#8a5a0a">SaaS systems — native iPaaS</text>
-<rect x="470" y="120" width="138" height="58" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="539.0" y="142.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Tax System</text>
-<text x="539.0" y="155.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">S4H</text>
-<rect x="618" y="120" width="142" height="58" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="689.0" y="142.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CRM System</text>
-<text x="689.0" y="155.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CF / MSD</text>
-<rect x="770" y="120" width="138" height="58" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="839.0" y="142.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Workflow</text>
-<text x="839.0" y="155.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Pega</text>
-<rect x="918" y="120" width="126" height="58" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="981.0" y="142.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">B&amp;amp;T System</text>
-<text x="981.0" y="155.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CDS</text>
-<rect x="40" y="230" width="1030" height="250" rx="14" fill="#eaf1ff" stroke="#3f74d6" stroke-width="1.8"/>
-<text x="60" y="256" font-size="13" font-weight="800" fill="#0b3fae">iPaaS Platform · Boomi  (control plane / external-facing runtime)</text>
-<rect x="56" y="266" width="640" height="204" rx="8" fill="#fbeeee" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="68" y="286" font-size="11" font-weight="700" fill="#8a3b3b">Integration &amp; API management</text>
-<rect x="72" y="300" width="180" height="52" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="162.0" y="326.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">API Control Plane</text>
-<rect x="268" y="300" width="170" height="52" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="353.0" y="326.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Developer Portal(s)</text>
-<rect x="454" y="300" width="226" height="52" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="567.0" y="326.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Integration Flow Designer</text>
-<rect x="72" y="364" width="200" height="52" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="172.0" y="383.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Cloud API Management</text>
-<text x="172.0" y="396.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">(CAM)</text>
-<rect x="288" y="364" width="392" height="52" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="484.0" y="390.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">CAM Runtime — External API Gateway</text>
-<rect x="712" y="266" width="342" height="204" rx="8" fill="#dbe8ff" stroke="#3f74d6" stroke-width="1.4"/>
-<text x="724" y="286" font-size="11" font-weight="700" fill="#0b3fae">MFT (cloud)</text>
-<rect x="728" y="300" width="312" height="50" rx="8" fill="#ffffff" stroke="#3f74d6" stroke-width="1.4"/>
-<text x="884.0" y="318.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">MFT cloud components</text>
-<text x="884.0" y="331.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">SFTP/FTPS/AS2 · partner endpoints</text>
-<rect x="728" y="356" width="312" height="44" rx="8" fill="#ffffff" stroke="#3f74d6" stroke-width="1.4"/>
-<text x="884.0" y="378.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Landing zones · tracking · audit · delivery confirmation</text>
-<rect x="728" y="406" width="312" height="44" rx="8" fill="#ffffff" stroke="#3f74d6" stroke-width="1.4"/>
-<text x="884.0" y="428.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Keys (SSH·PGP·TLS) · scheduling · OTel · RBAC</text>
-<path d="M40,506 L1070,506" stroke="#8a94a6" stroke-width="1.4" stroke-dasharray="7 5"/>
-<text x="1070" y="502" text-anchor="end" font-size="10.5" font-weight="700" fill="#5a6472">External &#8660; Internal trust boundary</text>
-<rect x="40" y="520" width="1030" height="484" rx="8" fill="#f4f7fb" stroke="#b6bfcc" stroke-width="1.4"/>
-<text x="52" y="540" font-size="12.5" font-weight="700" fill="#3d4653">INTERNAL ESTATE — hosted · trusted zone · HA</text>
-<rect x="56" y="556" width="176" height="74" rx="8" fill="#fff8e6" stroke="#b9770e" stroke-width="1.4" stroke-dasharray="4 3"/>
-<text x="144.0" y="580.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="600" fill="#12161c">WebMethods</text>
-<text x="144.0" y="593.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="600" fill="#12161c">(coexistence /</text>
-<text x="144.0" y="606.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="600" fill="#12161c">decommission)</text>
-<rect x="300" y="552" width="600" height="202" rx="10" fill="#eef4ee" stroke="#9cbfa0" stroke-width="1.4"/>
-<text x="312" y="572" font-size="11" font-weight="700" fill="#2e6b34">Boomi Internal Runtime  (deployed per host — e.g. AWS · Azure)</text>
-<rect x="316" y="588" width="180" height="50" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="406.0" y="606.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Integration Flow</text>
-<text x="406.0" y="619.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Runtime</text>
-<rect x="506" y="588" width="206" height="50" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
-<text x="609.0" y="606.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">CAM Runtime —</text>
-<text x="609.0" y="619.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Internal API Gateway</text>
-<rect x="722" y="588" width="162" height="50" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="803.0" y="606.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Kong API</text>
-<text x="803.0" y="619.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Gateway</text>
-<rect x="316" y="648" width="180" height="46" rx="8" fill="#fde3c2" stroke="#d1791b" stroke-width="1.4"/>
-<text x="406.0" y="671.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Boomi MFT Connector</text>
-<rect x="506" y="648" width="206" height="46" rx="8" fill="#d6f0dd" stroke="#2e7d32" stroke-width="1.4"/>
-<text x="609.0" y="664.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Generic MFT engine</text>
-<text x="609.0" y="677.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">(config-driven)</text>
-<rect x="722" y="648" width="162" height="46" rx="8" fill="#eaf7ee" stroke="#2e7d32" stroke-width="1.4"/>
-<text x="803.0" y="664.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="700" fill="#12161c">Config / routing DB</text>
-<text x="803.0" y="677.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="700" fill="#12161c">TTL · PGP refs</text>
-<rect x="316" y="706" width="568" height="32" rx="8" fill="#f2fbf4" stroke="#2e7d32" stroke-width="1.4"/>
-<text x="600.0" y="722.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">Applied by config: PGP decrypt/encrypt · TAR (de)archive · validate · rename · route · post-action</text>
-<rect x="56" y="772" width="236" height="224" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="68" y="792" font-size="10.5" font-weight="700" fill="#8a5a0a">AWS</text>
-<rect x="86" y="832" width="176" height="84" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="174.0" y="867.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
-<text x="174.0" y="881.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
-<rect x="300" y="772" width="236" height="224" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="312" y="792" font-size="10.5" font-weight="700" fill="#8a5a0a">Azure</text>
-<rect x="330" y="832" width="176" height="84" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="418.0" y="867.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
-<text x="418.0" y="881.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
-<rect x="544" y="772" width="236" height="224" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="556" y="792" font-size="10.5" font-weight="700" fill="#8a5a0a">Crown Hosting</text>
-<rect x="574" y="832" width="176" height="84" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="662.0" y="867.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
-<text x="662.0" y="881.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
-<rect x="788" y="772" width="236" height="224" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
-<text x="800" y="792" font-size="10.5" font-weight="700" fill="#8a5a0a">Fujitsu</text>
-<rect x="818" y="832" width="176" height="84" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="906.0" y="867.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
-<text x="906.0" y="881.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
-<rect x="1090" y="58" width="250" height="946" rx="8" fill="#f4f0fb" stroke="#b9a4de" stroke-width="1.4"/>
-<text x="1102" y="78" font-size="11" font-weight="700" fill="#5b3ba0">MFT PLATFORM SERVICES &amp; GAPS</text>
-<rect x="1104" y="104" width="222" height="80" rx="8" fill="#fde7e7" stroke="#c0392b" stroke-width="1.4"/>
-<text x="1215.0" y="121.0" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">EXTERNAL CI/CD PIPELINE (GAP)</text>
-<text x="1215.0" y="132.5" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">No native MFT config pipeline —</text>
-<text x="1215.0" y="144.0" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">promotion dev→test→prod is UI/admin</text>
-<text x="1215.0" y="155.5" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">driven; needs AtomSphere API +</text>
-<text x="1215.0" y="167.0" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">external DevOps tooling.</text>
-<rect x="1104" y="192" width="222" height="72" rx="8" fill="#fde7e7" stroke="#c0392b" stroke-width="1.4"/>
-<text x="1215.0" y="210.8" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">SECRETS / PASSWORD MGR (GAP)</text>
-<text x="1215.0" y="222.2" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">e.g. CyberArk PAM / Azure Key Vault —</text>
-<text x="1215.0" y="233.8" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">no native path to source MFT</text>
-<text x="1215.0" y="245.2" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">endpoint / partner credentials.</text>
-<rect x="1104" y="272" width="222" height="44" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
-<text x="1215.0" y="294.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">SIEM / Splunk (OTel export)</text>
-<rect x="1104" y="324" width="222" height="44" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
-<text x="1215.0" y="346.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Enterprise HSM / KMS (confirm)</text>
-<rect x="1104" y="376" width="222" height="44" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
-<text x="1215.0" y="398.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">IdP / SSO (operator access)</text>
-<rect x="1104" y="428" width="222" height="60" rx="8" fill="#fff8e6" stroke="#b9770e" stroke-width="1.4"/>
-<text x="1215.0" y="452.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">Long-term audit archive</text>
-<text x="1215.0" y="464.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">audit 12mo · history 3mo → export</text>
-<rect x="1104" y="498" width="222" height="52" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
-<text x="1215.0" y="517.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">MFT design standards &amp;</text>
-<text x="1215.0" y="530.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">approval gate</text>
-<rect x="1104" y="560" width="222" height="430" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
-<text x="1215.0" y="675.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">LEGEND</text>
-<text x="1215.0" y="687.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c"></text>
-<text x="1215.0" y="700.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">FLOWS</text>
-<text x="1215.0" y="712.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">blue = API executions (runtime)</text>
-<text x="1215.0" y="725.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">red = configurations / deployments</text>
-<text x="1215.0" y="737.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">green = MFT data channel (file)</text>
-<text x="1215.0" y="750.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">dashed = coexistence / to-validate</text>
-<text x="1215.0" y="762.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c"></text>
-<text x="1215.0" y="775.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">COMPONENTS</text>
-<text x="1215.0" y="787.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Tan = estate systems / hosts</text>
-<text x="1215.0" y="800.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Pink = integration &amp; API mgmt</text>
-<text x="1215.0" y="812.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Blue = Boomi iPaaS / MFT cloud</text>
-<text x="1215.0" y="825.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Green = config-driven MFT engine</text>
-<text x="1215.0" y="837.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Orange = Boomi MFT Connector</text>
-<text x="1215.0" y="850.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Purple/Red = services / gaps</text>
-<text x="1215.0" y="862.5" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c"></text>
-<text x="1215.0" y="875.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">In-transit: TLS/SSH · At-rest: PGP</text>
-<path d="M156.0,178 L156.0,230" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<text x="156.0" y="200.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">API exec</text>
-<path d="M356.0,178 L356.0,230" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<path d="M539.0,178 L539.0,230" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<path d="M689.0,178 L484.0,230" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<path d="M839.0,178 L839.0,230" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<path d="M981.0,178 L981.0,230" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<path d="M252,326.0 L268,326.0" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
-<text x="260.0" y="322.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">publish</text>
-<path d="M567.0,352 L484.0,364" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
-<text x="525.5" y="354.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">deploy</text>
-<path d="M172.0,416 L288,390.0" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
-<path d="M162.0,470 L356,588" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
-<text x="259.0" y="525.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">config / deploy</text>
-<path d="M484.0,470 L609.0,588" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<text x="546.5" y="525.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">API exec</text>
-<path d="M406.0,638 L406.0,648" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
-<text x="406.0" y="639.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">invoke</text>
-<path d="M496,671.0 L506,671.0" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
-<text x="501.0" y="667.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">Boomi MFT Connector:</text>
-<text x="501.0" y="678.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">flows invoke MFT</text>
-<path d="M712,671.0 L722,671.0" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwo)"/>
-<text x="717.0" y="667.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">reads row</text>
-<path d="M609.0,738 L174.0,832" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
-<path d="M609.0,738 L418.0,832" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
-<text x="513.5" y="781.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">deliver / collect (MFT)</text>
-<path d="M609.0,738 L662.0,832" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
-<path d="M609.0,738 L906.0,832" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
-<path d="M609.0,650 L662.0,832" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<text x="635.5" y="737.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">API exec</text>
-<path d="M803.0,638 L204.0,832" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
-<path d="M144.0,556 L506,686" fill="none" stroke="#5a6472" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
-<text x="325.0" y="617.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">coexistence</text>
-<path d="M1040,428.0 L1104,340.0" fill="none" stroke="#5a6472" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
-<text x="1072.0" y="380.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">OTel/keys</text>
-<path d="M1104,144.0 L864,648" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
-<text x="984.0" y="392.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">promote config</text>
-<text x="984.0" y="403.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">(external)</text>
-<path d="M1104,232.0 L692,648" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
-<text x="898.0" y="436.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">creds (validate)</text>
+<rect x="40" y="10" width="1200" height="34" rx="8" fill="#0f1723" stroke="#0f1723" stroke-width="1.4"/>
+<text x="640" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">Managed File Transfer on Boomi — tiered solution architecture (consumers → cloud → runtime → systems)</text>
+<rect x="40" y="58" width="960" height="150" rx="8" fill="#fdf6ec" stroke="#e0b877" stroke-width="1.4"/>
+<text x="54" y="80" font-size="13" font-weight="800" fill="#8a5a0a">TIER 1 · CONSUMERS</text>
+<text x="240" y="74" font-size="10.5" font-weight="600" fill="#8a5a0a">external · cross-government · digital &amp; SaaS (native iPaaS)</text>
+<rect x="56" y="90" width="180" height="104" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="68" y="108" font-size="10" font-weight="700" fill="#8a5a0a">External Consumers</text>
+<rect x="70" y="118" width="152" height="60" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="146.0" y="141.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">3rd-party consumers</text>
+<text x="146.0" y="154.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">/ OGDs</text>
+<rect x="248" y="90" width="150" height="104" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="260" y="108" font-size="10" font-weight="700" fill="#8a5a0a">Digital services</text>
+<rect x="262" y="118" width="122" height="60" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="323.0" y="148.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">MDTP</text>
+<rect x="410" y="90" width="574" height="104" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="422" y="108" font-size="10" font-weight="700" fill="#8a5a0a">SaaS systems — native iPaaS</text>
+<rect x="424" y="118" width="132" height="60" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="490.0" y="141.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Tax System</text>
+<text x="490.0" y="154.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">S4H</text>
+<rect x="566" y="118" width="136" height="60" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="634.0" y="141.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CRM System</text>
+<text x="634.0" y="154.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CF / MSD</text>
+<rect x="712" y="118" width="132" height="60" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="778.0" y="141.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Workflow</text>
+<text x="778.0" y="154.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Pega</text>
+<rect x="854" y="118" width="120" height="60" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="914.0" y="141.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">B&amp;T System</text>
+<text x="914.0" y="154.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CDS</text>
+<rect x="40" y="224" width="960" height="230" rx="14" fill="#eaf1ff" stroke="#3f74d6" stroke-width="1.8"/>
+<text x="54" y="246" font-size="13" font-weight="800" fill="#0b3fae">TIER 2 · CLOUD INTEGRATION LAYER</text>
+<text x="392" y="240" font-size="10.5" font-weight="600" fill="#0b3fae">Boomi iPaaS · SaaS control plane · includes MFT (cloud)</text>
+<rect x="56" y="260" width="580" height="180" rx="8" fill="#fbeeee" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="68" y="278" font-size="10.5" font-weight="700" fill="#8a3b3b">Integration &amp; API management</text>
+<rect x="72" y="292" width="166" height="48" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="155.0" y="316.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">API Control Plane</text>
+<rect x="252" y="292" width="150" height="48" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="327.0" y="316.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Developer Portal(s)</text>
+<rect x="416" y="292" width="204" height="48" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="518.0" y="316.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Integration Flow Designer</text>
+<rect x="72" y="352" width="180" height="48" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="162.0" y="376.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="700" fill="#12161c">Cloud API Management (CAM)</text>
+<rect x="268" y="352" width="352" height="48" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="444.0" y="376.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CAM Runtime — External API Gateway</text>
+<rect x="652" y="260" width="332" height="180" rx="8" fill="#dbe8ff" stroke="#3f74d6" stroke-width="1.4"/>
+<text x="664" y="278" font-size="10.5" font-weight="700" fill="#0b3fae">MFT (cloud)</text>
+<rect x="668" y="292" width="300" height="48" rx="8" fill="#ffffff" stroke="#3f74d6" stroke-width="1.4"/>
+<text x="818.0" y="309.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="700" fill="#12161c">MFT cloud components</text>
+<text x="818.0" y="322.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="700" fill="#12161c">SFTP/FTPS/AS2 · partner endpoints</text>
+<rect x="668" y="346" width="300" height="42" rx="8" fill="#ffffff" stroke="#3f74d6" stroke-width="1.4"/>
+<text x="818.0" y="367.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Landing zones · tracking · audit</text>
+<rect x="668" y="392" width="300" height="42" rx="8" fill="#ffffff" stroke="#3f74d6" stroke-width="1.4"/>
+<text x="818.0" y="413.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">Keys (SSH·PGP·TLS) · scheduling · OTel · RBAC</text>
+<path d="M40,470 L1000,470" stroke="#8a94a6" stroke-width="1.4" stroke-dasharray="7 5"/>
+<text x="1000" y="466" text-anchor="end" font-size="10.5" font-weight="700" fill="#5a6472">External &#8660; Internal trust boundary  (cloud &#8660; runtime)</text>
+<rect x="40" y="486" width="960" height="214" rx="10" fill="#f4f7fb" stroke="#b6bfcc" stroke-width="1.4"/>
+<text x="54" y="508" font-size="13" font-weight="800" fill="#2e6b34">TIER 3 · RUNTIME INTEGRATION LAYER</text>
+<text x="404" y="502" font-size="10.5" font-weight="600" fill="#2e6b34">Boomi internal runtime · trusted zone · HA · includes the config-driven MFT engine</text>
+<rect x="56" y="522" width="160" height="72" rx="8" fill="#fff8e6" stroke="#b9770e" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="136.0" y="545.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="600" fill="#12161c">WebMethods</text>
+<text x="136.0" y="558.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="600" fill="#12161c">(coexistence /</text>
+<text x="136.0" y="571.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="600" fill="#12161c">decommission)</text>
+<rect x="240" y="522" width="180" height="50" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="330.0" y="540.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Integration Flow</text>
+<text x="330.0" y="553.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Runtime</text>
+<rect x="432" y="522" width="206" height="50" rx="8" fill="#f7dede" stroke="#c56d6d" stroke-width="1.4"/>
+<text x="535.0" y="540.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">CAM Runtime —</text>
+<text x="535.0" y="553.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Internal API Gateway</text>
+<rect x="650" y="522" width="150" height="50" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="725.0" y="540.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Kong API</text>
+<text x="725.0" y="553.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Gateway</text>
+<rect x="240" y="584" width="180" height="46" rx="8" fill="#fde3c2" stroke="#d1791b" stroke-width="1.4"/>
+<text x="330.0" y="607.0" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Boomi MFT Connector</text>
+<rect x="432" y="584" width="206" height="46" rx="8" fill="#d6f0dd" stroke="#2e7d32" stroke-width="1.4"/>
+<text x="535.0" y="600.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">Generic MFT engine</text>
+<text x="535.0" y="613.5" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="700" fill="#12161c">(config-driven)</text>
+<rect x="650" y="584" width="150" height="46" rx="8" fill="#eaf7ee" stroke="#2e7d32" stroke-width="1.4"/>
+<text x="725.0" y="601.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="700" fill="#12161c">Config / routing DB</text>
+<text x="725.0" y="613.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="700" fill="#12161c">TTL · PGP refs</text>
+<rect x="240" y="638" width="560" height="30" rx="8" fill="#f2fbf4" stroke="#2e7d32" stroke-width="1.4"/>
+<text x="520.0" y="653.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">Applied by config: PGP · TAR (de)archive · validate · rename · route · post-action</text>
+<rect x="40" y="716" width="960" height="284" rx="8" fill="#fdf6ec" stroke="#e0b877" stroke-width="1.4"/>
+<text x="54" y="738" font-size="13" font-weight="800" fill="#8a5a0a">TIER 4 · BUSINESS / BACKEND SYSTEMS</text>
+<text x="420" y="732" font-size="10.5" font-weight="600" fill="#8a5a0a">Heads-of-Duty (HoD) applications · hosted estate</text>
+<rect x="56" y="752" width="220" height="230" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="68" y="770" font-size="10.5" font-weight="700" fill="#8a5a0a">AWS</text>
+<rect x="84" y="812" width="164" height="86" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="166.0" y="848.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
+<text x="166.0" y="862.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
+<rect x="292" y="752" width="220" height="230" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="304" y="770" font-size="10.5" font-weight="700" fill="#8a5a0a">Azure</text>
+<rect x="320" y="812" width="164" height="86" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="402.0" y="848.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
+<text x="402.0" y="862.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
+<rect x="528" y="752" width="220" height="230" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="540" y="770" font-size="10.5" font-weight="700" fill="#8a5a0a">Crown Hosting</text>
+<rect x="556" y="812" width="164" height="86" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="638.0" y="848.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
+<text x="638.0" y="862.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
+<rect x="764" y="752" width="220" height="230" rx="6" fill="#fdf3e5" stroke="#e0b877" stroke-width="1.4"/>
+<text x="776" y="770" font-size="10.5" font-weight="700" fill="#8a5a0a">Fujitsu</text>
+<rect x="792" y="812" width="164" height="86" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
+<text x="874.0" y="848.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">HoD</text>
+<text x="874.0" y="862.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Application</text>
+<rect x="1020" y="58" width="240" height="942" rx="8" fill="#f4f0fb" stroke="#b9a4de" stroke-width="1.4"/>
+<text x="1032" y="76" font-size="10.5" font-weight="700" fill="#5b3ba0">MFT PLATFORM SERVICES &amp; GAPS</text>
+<rect x="1034" y="100" width="212" height="84" rx="8" fill="#fde7e7" stroke="#c0392b" stroke-width="1.4"/>
+<text x="1140.0" y="119.0" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">EXTERNAL CI/CD PIPELINE (GAP)</text>
+<text x="1140.0" y="130.5" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">No native MFT config pipeline —</text>
+<text x="1140.0" y="142.0" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">promotion dev→test→prod is UI/admin</text>
+<text x="1140.0" y="153.5" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">driven; needs AtomSphere API +</text>
+<text x="1140.0" y="165.0" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">external DevOps tooling.</text>
+<rect x="1034" y="192" width="212" height="74" rx="8" fill="#fde7e7" stroke="#c0392b" stroke-width="1.4"/>
+<text x="1140.0" y="211.8" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">SECRETS / PASSWORD MGR (GAP)</text>
+<text x="1140.0" y="223.2" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">CyberArk PAM / Azure Key Vault —</text>
+<text x="1140.0" y="234.8" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">no native path to source MFT</text>
+<text x="1140.0" y="246.2" text-anchor="middle" dominant-baseline="middle" font-size="8.5" font-weight="700" fill="#12161c">endpoint / partner credentials.</text>
+<rect x="1034" y="274" width="212" height="42" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
+<text x="1140.0" y="295.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">SIEM / Splunk (OTel export)</text>
+<rect x="1034" y="324" width="212" height="42" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
+<text x="1140.0" y="345.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Enterprise HSM / KMS (confirm)</text>
+<rect x="1034" y="374" width="212" height="42" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
+<text x="1140.0" y="395.0" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">IdP / SSO (operator access)</text>
+<rect x="1034" y="424" width="212" height="58" rx="8" fill="#fff8e6" stroke="#b9770e" stroke-width="1.4"/>
+<text x="1140.0" y="447.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">Long-term audit archive</text>
+<text x="1140.0" y="459.0" text-anchor="middle" dominant-baseline="middle" font-size="9" font-weight="600" fill="#12161c">audit 12mo · history 3mo → export</text>
+<rect x="1034" y="492" width="212" height="50" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
+<text x="1140.0" y="510.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">MFT design standards &amp;</text>
+<text x="1140.0" y="523.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">approval gate</text>
+<rect x="1034" y="552" width="212" height="436" rx="8" fill="#ffffff" stroke="#7a4fce" stroke-width="1.4"/>
+<text x="1140.0" y="676.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">LEGEND</text>
+<text x="1140.0" y="688.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c"></text>
+<text x="1140.0" y="701.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">FLOWS</text>
+<text x="1140.0" y="713.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">blue = API executions (runtime)</text>
+<text x="1140.0" y="726.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">red = configurations / deployments</text>
+<text x="1140.0" y="738.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">green = MFT data channel (file)</text>
+<text x="1140.0" y="751.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">dashed = coexistence / to-validate</text>
+<text x="1140.0" y="763.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c"></text>
+<text x="1140.0" y="776.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">TIERS / COMPONENTS</text>
+<text x="1140.0" y="788.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">1 Consumers (tan)</text>
+<text x="1140.0" y="801.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">2 Cloud integration — iPaaS + MFT</text>
+<text x="1140.0" y="813.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">3 Runtime integration + MFT engine</text>
+<text x="1140.0" y="826.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">4 Backend systems (HoD)</text>
+<text x="1140.0" y="838.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">Orange = Boomi MFT Connector</text>
+<text x="1140.0" y="851.2" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c"></text>
+<text x="1140.0" y="863.8" text-anchor="middle" dominant-baseline="middle" font-size="9.5" font-weight="600" fill="#12161c">In-transit: TLS/SSH · At-rest: PGP</text>
+<path d="M146.0,178 L146.0,224" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<text x="146.0" y="197.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">API exec</text>
+<path d="M323.0,178 L323.0,224" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<path d="M490.0,178 L490.0,224" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<path d="M634.0,178 L444.0,224" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<path d="M778.0,178 L818.0,224" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<path d="M914.0,178 L818.0,224" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<path d="M155.0,440 L280,522" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
+<text x="217.5" y="477.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">config / deploy</text>
+<path d="M444.0,440 L535.0,522" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<text x="489.5" y="477.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">API exec</text>
+<path d="M818.0,440 L535.0,584" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
+<text x="676.5" y="508.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">file-arrival</text>
+<text x="676.5" y="519.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">events</text>
+<path d="M330.0,572 L330.0,584" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwR)"/>
+<text x="330.0" y="574.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">invoke</text>
+<path d="M420,607.0 L432,607.0" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
+<text x="426.0" y="603.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">MFT Connector:</text>
+<text x="426.0" y="614.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">flows invoke MFT</text>
+<path d="M638,607.0 L650,607.0" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwo)"/>
+<text x="644.0" y="603.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">reads row</text>
+<path d="M535.0,668 L166.0,812" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
+<path d="M535.0,668 L402.0,812" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
+<text x="468.5" y="736.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">deliver / collect (MFT)</text>
+<path d="M535.0,668 L638.0,812" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
+<path d="M535.0,668 L874.0,812" fill="none" stroke="#2e7d32" stroke-width="1.6" marker-end="url(#arwG)"/>
+<path d="M535.0,580 L638.0,812" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<text x="586.5" y="692.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">API exec</text>
+<path d="M725.0,572 L874.0,812" fill="none" stroke="#2f6fdb" stroke-width="1.6" marker-end="url(#arwB)"/>
+<path d="M136.0,594 L432,592" fill="none" stroke="#5a6472" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
+<text x="284.0" y="589.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">coexistence</text>
+<path d="M968,413.0 L1034,341.0" fill="none" stroke="#5a6472" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
+<text x="1001.0" y="373.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">OTel/keys</text>
+<path d="M1034,142.0 L780,584" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
+<text x="907.0" y="359.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">promote config</text>
+<text x="907.0" y="370.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">(external)</text>
+<path d="M1034,233.0 L618,584" fill="none" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arwo)" stroke-dasharray="4 3"/>
+<text x="826.0" y="404.5" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">creds (validate)</text>
 </svg>
-      <div class="cap">Figure 1 — MFT on Boomi, integrated with the Integration &amp; API-management platform</div>
+      <div class="cap">Figure 1 — MFT on Boomi: tiered architecture (consumers → cloud → runtime → systems)</div>
     </div>
     <h3>7.1 Tiers</h3>
     <table>
       <tr><th style="width:26%">Tier</th><th>Contents &amp; purpose</th></tr>
-      <tr><td><b>External estate</b></td><td>Cross-government consumers / OGDs (3rd-party consumers), the digital tax platform (MDTP), and the SaaS systems on native iPaaS: Tax (S4H), CRM (CF/MSD), Workflow (Pega), B&amp;T (CDS). Untrusted / edge-facing.</td></tr>
-      <tr><td><b>Boomi iPaaS Platform</b></td><td>External-facing runtime / control plane: MFT cloud components (SFTP/FTPS/AS2 listeners, partner endpoints), managed landing zones, tracking/audit, scheduling, key/cert store, observability (OTel), RBAC. Confirm UK region for OFFICIAL.</td></tr>
-      <tr><td><b>Trust boundary</b></td><td>External/internal separation. Payloads stay within the trusted boundary; only control/tracking metadata surfaces to the platform.</td></tr>
-      <tr><td><b>Boomi internal runtime</b></td><td>Customer-managed runtime in the trusted zone: the generic config-driven MFT engine, Molecule HA cluster, the MFT Connector, and the config/routing DB.</td></tr>
-      <tr><td><b>Internal hosted estate</b></td><td>HoD applications hosted across AWS, Azure, Crown Hosting and Fujitsu, plus WebMethods during coexistence.</td></tr>
+      <tr><td><b>Tier 1 — Consumers</b></td><td>External, cross-government, digital &amp; SaaS systems that consume/produce transfers: 3rd-party consumers/OGDs, MDTP, and native-iPaaS SaaS — Tax (S4H), CRM (CF/MSD), Workflow (Pega), B&amp;T (CDS).</td></tr>
+      <tr><td><b>Tier 2 — Cloud integration layer (incl. MFT)</b></td><td>Boomi iPaaS SaaS control plane: Integration &amp; API management (API Control Plane, Developer Portal, Integration Flow Designer, Cloud API Management, external API gateway) plus MFT cloud components (SFTP/FTPS/AS2, landing zones, tracking/audit, keys, OTel, RBAC). Confirm UK region for OFFICIAL.</td></tr>
+      <tr><td><b>Trust boundary</b></td><td>External/internal (cloud/runtime) separation. Payloads stay within the trusted boundary; only control/tracking metadata surfaces to the cloud layer.</td></tr>
+      <tr><td><b>Tier 3 — Runtime integration layer (incl. MFT)</b></td><td>Customer-managed runtime in the trusted zone: Integration Flow Runtime, internal API gateways (CAM Runtime, Kong), the Boomi MFT Connector, and the generic config-driven MFT engine + config/routing DB.</td></tr>
+      <tr><td><b>Tier 4 — Backend systems</b></td><td>Heads-of-Duty (HoD) applications hosted across AWS, Azure, Crown Hosting and Fujitsu, plus WebMethods during coexistence.</td></tr>
     </table>
     <h3>7.2 Config over construction — the generic engine</h3>
     <p>A single generic MFT engine process is the only file-moving component. Each approved interface is a configuration row: source/target endpoints, protocol, PGP key references, schedule, filename pattern, post-actions. Onboarding adds a row; it never adds a component.</p>
