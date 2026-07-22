@@ -1,685 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Solution Design Document — Managed File Transfer on Boomi (Thru)</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Managed File Transfer (MFT) on Boomi — Capabilities &amp; Architecture</title>
 <style>
-  :root{
-    --ink:#12161c;--ink-2:#3d4653;--muted:#7a8493;--line:#dfe4ea;--line-2:#eef1f4;
-    --bg:#f7f8fa;--card:#fff;--accent:#0b5fff;--accent-dk:#003d9e;--bar:#0f1723;
-    --ok:#2e7d32;--warn:#8a5a0a;--warn-bg:#fff8e6;--warn-bd:#e6c65c;
-    --info-bg:#eaf1ff;--info-bd:#8fb4ff;--bad:#b3261e;--bad-bg:#fdecea;
-    --green-bg:#e9f7ec;
-  }
+  :root{--navy:#1f3a5f;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;--bg:#f6f8fb;}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:var(--accent-dk)}
-
-  .dlbar{position:sticky;top:0;z-index:200;width:100%;background:var(--bar);padding:8px 16px;
-    display:flex;flex-wrap:wrap;gap:8px;align-items:center;box-shadow:0 1px 0 rgba(255,255,255,.08)}
-  .dlbar .dl-label{color:#93a1b5;font-size:12px;font-weight:700;letter-spacing:.08em;
-    text-transform:uppercase;margin-right:6px}
-  .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#1e2a3a;color:#fff;
-    text-decoration:none;font-size:13px;font-weight:600;padding:7px 13px;border-radius:6px;
-    border:1px solid #2f3f54;transition:.15s}
-  .dlbar a:hover{background:var(--accent);border-color:var(--accent)}
-  .dlbar a.zip{background:var(--accent);border-color:var(--accent)}
-  .dlbar a.zip:hover{background:var(--accent-dk);border-color:var(--accent-dk)}
-
-  header.site{position:sticky;top:45px;z-index:100;background:#fff;border-bottom:1px solid var(--line);padding:22px 24px}
-  header.site .tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  header.site h1{margin:4px 0 0;font-size:25px;letter-spacing:-.02em}
-  header.site .sub{margin:4px 0 0;color:var(--ink-2);font-size:14.5px}
-  header.site .plat{margin:8px 0 0;font-size:12px;color:var(--muted)}
-  header.site .status{display:inline-block;margin-top:8px;font-size:11.5px;font-weight:700;
-    background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-bd);border-radius:20px;padding:3px 11px}
-
-  .wrap{max-width:1120px;margin:0 auto;padding:26px 24px 90px}
-  section{margin-bottom:40px;scroll-margin-top:150px}
-  h2{font-size:20px;margin:0 0 6px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-  h2 .num{background:var(--ink);color:#fff;font-size:12px;font-weight:700;min-width:24px;height:24px;padding:0 6px;
-    border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex:none}
-  h3{font-size:15.5px;margin:18px 0 6px;color:var(--ink)}
-  .lead{color:var(--ink-2);font-size:14.5px;margin:0 0 16px;max-width:880px}
-  p{margin:0 0 12px}
-
-  nav.toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:26px}
-  nav.toc b{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-  nav.toc ol{margin:8px 0 0;padding-left:20px;columns:2;column-gap:28px}
-  nav.toc li{font-size:13.5px;margin-bottom:4px}
-
-  .callout{background:#fff;border:1px solid var(--line);border-left:4px solid var(--accent);
-    border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0}
-  .callout.rec{border-left-color:var(--accent-dk);background:var(--info-bg)}
-  .callout.warn{border-left-color:var(--warn-bd);background:var(--warn-bg)}
-  .callout.risk{border-left-color:var(--bad);background:var(--bad-bg)}
-  .callout.good{border-left-color:var(--ok);background:var(--green-bg)}
-  .callout h4{margin:0 0 6px;font-size:14px}
-  .callout p{margin:0 0 6px;font-size:13.5px;color:var(--ink-2)}
-  .callout p:last-child{margin:0}
-
-  .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#eef2f7;
-    border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:#3d4653}
-  ul.tick{list-style:none;padding-left:0;margin:8px 0}
-  ul.tick li{position:relative;padding-left:24px;margin-bottom:7px;font-size:14px;color:var(--ink-2)}
-  ul.tick li::before{content:"";position:absolute;left:4px;top:9px;width:8px;height:8px;border-radius:2px;background:var(--accent)}
-
-  table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid var(--line);
-    border-radius:8px;overflow:hidden;margin:10px 0 4px}
-  th{background:var(--accent-dk);color:#fff;text-align:left;padding:9px 11px;font-size:11.5px;
-    text-transform:uppercase;letter-spacing:.03em;font-weight:700;vertical-align:top}
-  td{padding:9px 11px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:top}
-  tr:last-child td{border-bottom:0}
-  tr:nth-child(even) td{background:#f4f7fb}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
-  .b-ga{color:var(--ok);font-weight:700}.b-cf{color:var(--warn);font-weight:700}.b-vl{color:var(--bad);font-weight:700}
-  .sev-h{color:var(--bad);font-weight:700}.sev-m{color:var(--warn);font-weight:700}.sev-l{color:var(--ok);font-weight:700}
-
-  .diagram{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0}
-  .diagram .cap{font-size:12.5px;color:var(--muted);font-style:italic;text-align:center;margin-top:8px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:760px){.grid2{grid-template-columns:1fr}nav.toc ol{columns:1}}
-  .zonekey{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
-  .zonekey span{font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid}
-  footer{border-top:1px solid var(--line);padding:20px 24px;text-align:center;color:var(--muted);font-size:12px}
+  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
+  a{color:var(--accent)}
+  /* Sticky download bar ABOVE header */
+  .dlbar{position:sticky;top:0;z-index:200;background:var(--navy);color:#fff;display:flex;flex-wrap:wrap;
+         gap:10px;align-items:center;padding:12px 22px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .dlbar .lbl{font-weight:700;letter-spacing:.3px;margin-right:6px;font-size:14px}
+  .dlbar a{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--navy);text-decoration:none;
+           font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:7px;border:1px solid #dfe7f1;transition:.15s}
+  .dlbar a:hover{background:var(--light);transform:translateY(-1px)}
+  .dlbar a.alt{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+  .dlbar a.alt:hover{background:rgba(255,255,255,.12)}
+  header{position:sticky;top:54px;z-index:150;background:linear-gradient(120deg,var(--navy),var(--accent));color:#fff;padding:30px 26px;border-bottom:3px solid #17314f}
+  header h1{margin:0 0 6px;font-size:26px}
+  header p{margin:0;opacity:.92;font-size:15px}
+  .meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+  .meta span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:3px 10px;border-radius:20px;font-size:12.5px}
+  main{max-width:1080px;margin:0 auto;padding:26px 20px 80px}
+  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin:18px 0;box-shadow:0 1px 3px rgba(20,40,70,.05)}
+  h2{color:var(--navy);border-left:5px solid var(--accent);padding-left:12px;margin:.2em 0 .7em;font-size:20px}
+  h3{color:var(--navy);margin:.2em 0 .3em;font-size:16px}
+  h4{color:var(--accent);margin:.2em 0 .3em;font-size:15px}
+  p{margin:.4em 0}
+  ul{margin:.4em 0 .4em 0;padding-left:22px}
+  li{margin:.28em 0}
+  table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  th{background:var(--navy);color:#fff;font-weight:600}
+  tr:nth-child(even) td{background:#f3f7fc}
+  td.k{font-weight:600;color:var(--navy);white-space:nowrap}
+  .callout{background:var(--light);border:1px solid #cddcf0;border-left:5px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0}
+  .cap{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+  .cap:last-child{border-bottom:none}
+  .cap-n{flex:0 0 44px;height:44px;border-radius:9px;background:var(--navy);color:#fff;font-weight:700;
+         display:flex;align-items:center;justify-content:center;font-size:14px}
+  .flow{border:1px solid var(--line);border-radius:9px;padding:12px 16px;margin:10px 0;background:#fbfcfe}
+  .diagram{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;padding:8px}
+  .cap{align-items:flex-start}
+  .instr li{margin:.4em 0}
+  .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+  code{background:#eef3f9;padding:1px 6px;border-radius:5px;font-size:13px}
+  @media(max-width:600px){header{top:98px}.dlbar{padding:10px 14px}}
 </style>
 </head>
 <body>
 
 <div class="dlbar">
-  <span class="dl-label">Download deliverables</span>
-  <a href="assets/boomi-mft-solution-design-document.docx" download>📄 SDD (Word)</a>
-  <a href="assets/boomi-mft-sdd-capability-gap-register.xlsx" download>📊 Capability &amp; Gap Register (Excel)</a>
-  <a href="assets/boomi-mft-sdd-architecture.drawio" download>🗺️ Architecture (draw.io)</a>
-  <a href="assets/boomi-mft-integration-platform.drawio" download>🔗 MFT ↔ Integration Platform (draw.io)</a>
-  <a class="zip" href="assets/docs.zip" download>⬇︎ All documents (.zip)</a>
+  <span class="lbl">⬇ Downloads</span>
+  <a href="assets/mft-capabilities-and-architecture.docx" download>📄 MFT Capabilities &amp; Architecture (Word)</a>
+  <a href="assets/mft-architecture.drawio" download class="alt">📐 Architecture (draw.io)</a>
+  <a href="assets/mft-architecture.svg" download class="alt">🖼 Architecture (SVG)</a>
+  <a href="assets/docs.zip" download class="alt">🗜 All deliverables (zip)</a>
 </div>
 
-<header class="site">
-  <div class="tag">OFFICIAL · Solution Design Document · v0.1 DRAFT</div>
-  <h1>Managed File Transfer on Boomi <span style="color:var(--muted);font-weight:500">(powered by Thru)</span></h1>
-  <div class="sub">Capabilities · Architecture · Integration with the estate · Features &amp; Gaps</div>
-  <div class="plat">Integration Platform (Boomi iPaaS) Programme · Generated 20 July 2026</div>
-  <span class="status">DRAFT — for Design Authority review</span>
+<header>
+  <h1>Managed File Transfer (MFT) on Boomi — Capabilities &amp; Architecture</h1>
+  <p>Reference explanation of Managed File Transfer as delivered on the Boomi iPaaS platform.</p>
+  <div class="meta">
+    <span>v1.0</span><span>22 July 2026</span><span>Integration Architecture</span><span>OFFICIAL — Programme Working Document</span>
+  </div>
 </header>
 
-<div class="wrap">
+<main>
+  <section class="instr">
+    <h2>How to use this page</h2>
+    <ul>
+      <li>This page is the single-source explanation of <strong>MFT and its capabilities</strong> for the target integration estate. It mirrors the Word document exactly — both are generated from one shared content file so they never drift.</li>
+      <li>Use the <strong>sticky download bar</strong> at the very top to pull the deliverables: the formal <strong>Word document</strong>, the <strong>editable draw.io</strong> architecture, the <strong>SVG</strong> render, or the full <strong>zip bundle</strong>.</li>
+      <li>The Word document is the governance-grade version (cover, contents, page numbering) and is the artefact to circulate for review or sign-off.</li>
+      <li>To edit the diagram, open the <code>.drawio</code> file at <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a> (File → Open) — it is a single-canvas source.</li>
+      <li>Read top to bottom for the full picture, or jump to <a href="#caps">§6 Core Capabilities</a> for the capability detail, or <a href="#matrix">§9 Capability Matrix</a> for the at-a-glance summary.</li>
+    </ul>
+  </section>
 
-  <div class="callout rec">
-    <h4>How to use this page</h4>
-    <p>This page is the single-source, readable version of the Solution Design Document (SDD) for Managed File Transfer (MFT) on the Boomi Enterprise Platform. Read it top to bottom for the full design.</p>
-    <p><b>Downloads:</b> use the black bar at the very top of the page. It carries one button per deliverable — the <b>Word SDD</b> (the governance-grade document for sign-off), the <b>Excel capability &amp; gap register</b> (the filterable companion to Sections 9 and 11), the editable <b>draw.io architecture</b>, and a <b>zip</b> of everything.</p>
-    <p><b>Editing the diagram:</b> open the <span class="kbd">.drawio</span> file at <a href="https://app.diagrams.net/">app.diagrams.net</a>, or view it live via the viewer against the published asset. The inline diagram below is a static render of the same source.</p>
-    <p><b>Status:</b> this is a v0.1 draft. Section 14 lists seven open questions that each need a named owner before build.</p>
+  <section>
+    <h2>1. Purpose &amp; Scope</h2>
+    <p>This document explains Managed File Transfer (MFT) as delivered on the Boomi iPaaS platform, and sets out its capabilities in the context of the target integration estate shown in the reference architecture. It is written for solution architects, platform engineers, onboarding leads and delivery governance. It describes what MFT is, how the runtime is distributed across cloud and hosting zones, the transfer and trigger models it supports, and the security, reliability and operational capabilities that make it fit for a government tax authority estate. The architecture is deliberately config-driven: one generic MFT engine services every approved interface as a configuration record, rather than a new build per interface.</p>
+  </section>
+
+  <section>
+    <h2>2. Executive Summary</h2>
+    <ul><li>MFT is the governed, secure, auditable movement of files between the department's systems, its SaaS platforms, its internal Heads-of-Duty (HoD) applications, and external consumers — orchestrated centrally on Boomi and executed by distributed MFT runtime nodes placed close to the data in each zone (AWS, Azure, Fujitsu, Crown Hosting and the iPaaS platform).</li><li>The platform separates a control plane (design, registration, deployment and platform management, delivered through Boomi Flow) from a data plane (the MFT runtime nodes that actually move bytes), so that onboarding a new transfer is a configuration exercise, not a development one.</li><li>Three interaction styles are supported and shown in the reference architecture: straight file transfer, API-triggered file transfer via the Cloud API Management (CAM) gateways, and scheduled / batch execution — all served by the same engine.</li><li>Because every interface is a configuration row against a single generic engine, the estate scales by data (more rows) rather than by components (more builds), which is the core 'config over construction' principle that must be protected as the catalogue of transfers grows.</li></ul>
+  </section>
+
+  <section>
+    <h2>3. What Managed File Transfer Is</h2>
+    <p>Managed File Transfer is the disciplined alternative to ad-hoc scripts, scheduled FTP jobs and point-to-point batch interfaces. Where legacy file movement is typically bespoke per interface — its own script, its own credentials, its own error handling and its own (often absent) audit trail — MFT provides a single managed capability with consistent security, monitoring, delivery guarantees and governance applied uniformly to every transfer.</p>
+    <table><thead><tr><th>Dimension</th><th>What it means in this estate</th></tr></thead><tbody><tr><td class="k">Managed</td><td>Every transfer is defined, approved and registered before it runs. There is a system of record for who sends what, to whom, when, over which protocol, and under which security controls.</td></tr><tr><td class="k">Secure</td><td>Encryption in transit (and, where required, at rest), strong authentication, and message-level protection (e.g. PGP) are applied by the platform rather than reinvented per interface.</td></tr><tr><td class="k">Reliable</td><td>Transfers are tracked end to end with retry, checkpoint/restart and delivery confirmation, so a partial or failed transfer is detected and recovered rather than silently lost.</td></tr><tr><td class="k">Auditable</td><td>A complete, tamper-evident record of every transfer supports operational triage, non-repudiation and the evidentiary needs of a tax authority.</td></tr><tr><td class="k">Governed</td><td>Onboarding, change and decommissioning follow a controlled lifecycle, with the transfer catalogue as the authoritative inventory of live interfaces.</td></tr></tbody></table>
+  </section>
+
+  <section>
+    <h2>4. Architecture Overview</h2>
+    <p>The reference architecture places MFT across three zones. The control plane and a central runtime sit on the Boomi iPaaS platform; the data plane extends into the internal hosting estate so files are handled close to source and target.</p>
+    <ul><li><strong>External Zone</strong> — External-facing systems and consumers: third-party / Other Government Department (OGD) consumers, the department's digital tax platform (MDTP), and the SaaS line-of-business systems (ETMP S4H, the CRM/Case system, the Pega workflow platform and the B&amp;T/CDS system). Several of these run their own native iPaaS.</li><li><strong>iPaaS Platform (Boomi)</strong> — The integration control plane and the central data-plane runtime. It hosts the MFT control-plane services (Deployment Channel, MFT Register, MFT Flow Designer, MFT Platform), a central MFT runtime node, the Boomi Integration processes, and the external Cloud API Management (CAM) gateway.</li><li><strong>Internal Zone</strong> — The department's internal hosting estate — AWS, Azure, Fujitsu and Crown Hosting — where the Heads-of-Duty (HoD) applications live. AWS and Azure each host their own MFT runtime node and an internal CAM gateway so that files are processed close to the data.</li></ul>
+    <img class="diagram" src="assets/mft-architecture.svg" alt="MFT deployment and topology reference architecture"/>
+    <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:8px"><em>Figure 1 — MFT deployment / topology reference architecture. Editable source: <a href="assets/mft-architecture.drawio" download>mft-architecture.drawio</a>.</em></p>
+  </section>
+
+  <section>
+    <h2>5. Component Reference</h2>
+    <p>Each element of the reference architecture and the role it plays in the MFT capability:</p>
+    <table><thead><tr><th>Component</th><th>Plane</th><th>Role</th></tr></thead><tbody><tr><td class="k">MFT Platform</td><td>Control plane</td><td>The management surface for the MFT capability: it governs configuration, publishes runtime artefacts to the nodes, and is the anchor for platform administration, environments and access. It is the point from which the generic engine and its configuration are deployed to each node.</td></tr><tr><td class="k">MFT Flow Designer</td><td>Control plane</td><td>The design-time tool where transfer flows are modelled — source and destination endpoints, protocol, scheduling, transformation and routing — as configuration rather than hand-written integration components.</td></tr><tr><td class="k">MFT Register (Boomi Flow)</td><td>Control plane</td><td>The registration / onboarding surface. Each approved interface is captured here as a configuration record (the 'row') that the generic engine consumes. This is the authoritative catalogue of live transfers.</td></tr><tr><td class="k">Deployment Channel (Boomi Flow)</td><td>Control plane</td><td>The controlled path by which registered configuration and runtime artefacts are promoted and deployed out to the MFT runtime nodes across zones.</td></tr><tr><td class="k">MFT Node (Runtime)</td><td>Data plane</td><td>The execution engine. One or more runtime nodes actually move the files. A central node sits on the iPaaS platform; additional nodes sit inside AWS and Azure so that data is handled close to source/target. Every node runs the same generic engine and is driven by configuration.</td></tr><tr><td class="k">Boomi Integration</td><td>Data plane</td><td>The Boomi integration processes that mediate, transform and route where a transfer needs enrichment, format change or orchestration beyond a straight move — including the bridge from an API trigger to a file transfer.</td></tr><tr><td class="k">CAM Runtime — External API Gateway</td><td>API plane</td><td>The external Cloud API Management gateway. It exposes and secures the APIs that external consumers and SaaS systems call, including the API calls that trigger a file transfer.</td></tr><tr><td class="k">CAM Runtime — Internal API Gateway</td><td>API plane</td><td>The internal CAM gateways (in AWS and Azure) that expose and secure APIs to internal HoD applications, including API-triggered transfers originating inside the estate.</td></tr><tr><td class="k">Cloud API Management (CAM)</td><td>API plane</td><td>The API management capability that governs, secures and monitors the API estate that fronts and triggers transfers (policies, keys, throttling, observability).</td></tr><tr><td class="k">HoD Application</td><td>Endpoint</td><td>A Head-of-Duty business application (e.g. hosted in AWS, Azure, Fujitsu or Crown Hosting) that is a source or destination of files. It exchanges files with its local MFT node and can trigger or receive API-driven transfers via the internal gateway.</td></tr><tr><td class="k">ETMP / CRM / Pega / B&amp;T (CDS)</td><td>Endpoint (SaaS)</td><td>External SaaS line-of-business systems that exchange files with the central MFT node and, in several cases, run their own native iPaaS. They are sources and destinations in the transfer catalogue.</td></tr><tr><td class="k">MDTP</td><td>Endpoint (Digital)</td><td>The department's digital tax platform, exchanging files with the central MFT node.</td></tr><tr><td class="k">3rd Party Consumers (OGDs)</td><td>Endpoint (External)</td><td>External consumers and Other Government Departments that receive files or trigger transfers through the external CAM gateway.</td></tr></tbody></table>
+  </section>
+
+  <section id="caps">
+    <h2>6. Core MFT Capabilities</h2>
+    
+  <div class="cap">
+    <div class="cap-n">6.1</div>
+    <div><h3>Secure transport &amp; protocol coverage</h3><p>A single engine terminates and originates the file-transfer protocols the estate needs — typically SFTP, FTPS and HTTPS, with partner-facing options such as AS2 where non-repudiation of receipt is required. Transport is encrypted by default. Rather than each interface implementing its own protocol handling and key management, the node provides these as platform services, configured per interface. This removes a large class of bespoke, hard-to-audit connection code from the estate.</p></div>
   </div>
-
-  <nav class="toc">
-    <b>Contents</b>
-    <ol>
-      <li><a href="#s2">Executive summary</a></li>
-      <li><a href="#s3">Purpose &amp; scope</a></li>
-      <li><a href="#s4">Background &amp; context</a></li>
-      <li><a href="#s5">Requirements</a></li>
-      <li><a href="#s6">Boomi MFT capabilities (Thru)</a></li>
-      <li><a href="#s7">Solution architecture</a></li>
-      <li><a href="#s8">Integration with the estate</a></li>
-      <li><a href="#s9">Feature &amp; capability matrix</a></li>
-      <li><a href="#s10">Non-functional design</a></li>
-      <li><a href="#s11">Gaps &amp; limitations</a></li>
-      <li><a href="#s12">Design decisions</a></li>
-      <li><a href="#s13">RAID</a></li>
-      <li><a href="#s14">Open questions</a></li>
-    </ol>
-  </nav>
-
-  <section id="s2">
-    <h2><span class="num">2</span>Executive summary</h2>
-    <p class="lead">Boomi acquired Thru, Inc. in May 2025 to embed enterprise-grade Managed File Transfer natively within the Boomi Enterprise Platform, unifying API-, application- and file-based data movement under a single control plane.</p>
-    <p>This SDD sets out how Boomi native MFT delivers governed, secure, auditable and config-driven file transfer for the estate, coexisting with and progressively replacing legacy WebMethods and bespoke file-mover jobs. The design is anchored to a single recommended platform principle — <b>“config over construction”</b>: a single generic MFT engine process handles every transfer, and each approved interface becomes a configuration row in a routing table, never a new Boomi component. This keeps the estate small, uniform, testable and cheap to govern as the number of onboarded transfers grows. It is candid about the platform's <b>gaps and drawbacks</b> — most notably the absence of a native CI/CD pipeline for MFT configuration and of a native path to the enterprise password/secrets manager.</p>
-    <div class="callout rec">
-      <h4>Recommendation to the Design Authority</h4>
-      <p>Adopt Boomi native MFT (Thru) as the strategic MFT capability, deployed as a <b>hybrid topology</b> — Boomi-hosted control plane plus customer-managed MFT runtimes so OFFICIAL payloads remain within the trusted boundary.</p>
-      <p>Proceed on the basis that the design decisions (§12) are accepted and the open questions (§14) are assigned named owners before build — most materially: <b>data residency/assurance for OFFICIAL</b>, <b>long-term audit retention</b> beyond native defaults, the <b>missing native CI/CD pipeline</b> for MFT configuration, and <b>sourcing MFT credentials from the enterprise password/secrets manager</b>.</p>
-    </div>
+  <div class="cap">
+    <div class="cap-n">6.2</div>
+    <div><h3>Managed &amp; governed transfers (control plane)</h3><p>The control plane (MFT Platform, Flow Designer, Register and Deployment Channel) enforces that a transfer is designed, registered and deployed through a controlled path before it can run. The MFT Register is the authoritative inventory of live interfaces, giving governance a single place to see every transfer, its owner, its endpoints and its controls, and a controlled lifecycle for onboarding, change and decommissioning.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.3</div>
+    <div><h3>Config over construction (one generic engine)</h3><p>The defining capability of this design: there is one generic MFT engine process, and each approved interface is a configuration record consumed by that engine — never a new Boomi component per interface. Adding a transfer means adding a row, not writing and deploying a new build. This keeps the component footprint flat as the catalogue grows, collapses the test and release surface, and makes the estate auditable by inspecting configuration rather than reverse-engineering code. It is treated as an inviolable architectural constraint and must be actively defended against features that would tempt a per-interface build.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.4</div>
+    <div><h3>Distributed, multi-cloud runtime topology</h3><p>Runtime nodes are placed where the data is: a central node on the iPaaS platform for hub traffic, and dedicated nodes inside AWS and Azure for the internal estate, with Fujitsu and Crown Hosting endpoints served across the internal fabric. This keeps large file movements close to source and target, reduces unnecessary data egress, respects data-residency and network-zone boundaries, and allows each zone to scale independently. All nodes run the same engine and configuration, so the behaviour is uniform wherever a transfer executes.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.5</div>
+    <div><h3>Trigger &amp; orchestration models</h3><p>The same engine supports multiple ways to initiate a transfer, shown in the architecture as 'Scheduled / API triggered / Batch': time-based schedules for recurring batch windows; API-triggered transfers where a consumer calls an API through a CAM gateway and the platform initiates the corresponding file movement; event/arrival-driven pickup where a file landing in a watched location starts the flow; and on-demand batch. This lets a single catalogue serve real-time, near-real-time and bulk file exchange without separate tooling.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.6</div>
+    <div><h3>API-triggered file transfer (CAM integration)</h3><p>Files and APIs are not separate worlds here. External consumers and SaaS systems call APIs published on the external CAM gateway; internal HoD applications call APIs on the internal CAM gateways. Boomi Integration bridges an API call to a governed file transfer on the MFT node. This gives consumers a modern, secured, throttled API entry point while the heavy lifting of moving the file is still done by the managed engine — combining API governance (keys, policy, observability) with MFT delivery assurance.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.7</div>
+    <div><h3>Reliability &amp; delivery assurance</h3><p>Transfers are tracked as first-class objects with automatic retry, checkpoint/restart for large files, and explicit delivery confirmation. A failed or partial transfer is detected and recoverable rather than silently lost, and duplicate protection prevents re-processing. This turns 'the file didn't arrive' from an untraceable incident into a diagnosable, recoverable event.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.8</div>
+    <div><h3>Security &amp; compliance</h3><p>Security is applied by the platform, not per script: encryption in transit (and at rest where required), strong endpoint authentication (keys, certificates, credentials held in managed stores), optional message-level protection such as PGP, and network-zone segregation between external, iPaaS and internal fabrics. Combined with the complete audit trail, this supports the confidentiality, integrity and non-repudiation expectations of a tax authority and its OFFICIAL data.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.9</div>
+    <div><h3>Self-service onboarding &amp; registration</h3><p>New interfaces are onboarded through the MFT Register as configuration, which is the foundation for self-service provisioning: an approved request becomes a catalogue row and is deployed via the Deployment Channel to the relevant node(s). This is the capability the Intelligrator provisioning portal builds on — turning onboarding from an engineering ticket into a governed, config-driven request.</p></div>
+  </div>
+  <div class="cap">
+    <div class="cap-n">6.10</div>
+    <div><h3>Observability, audit &amp; operations</h3><p>Every transfer emits a consistent operational record — status, timings, volumes, endpoints, outcome — feeding monitoring, alerting and the audit inventory. Because all nodes and interfaces behave identically, operations teams have one operating model across the whole estate rather than a patchwork of bespoke jobs, which shortens triage and makes SLAs measurable.</p></div>
+  </div>
   </section>
 
-  <section id="s3">
-    <h2><span class="num">3</span>Purpose &amp; scope</h2>
-    <p>To provide the design baseline for MFT on Boomi sufficient for Design Authority sign-off: the capabilities relied upon, the target architecture, how it integrates with the estate, the non-functional posture, and an honest assessment of gaps and the actions they drive.</p>
-    <div class="grid2">
-      <div>
-        <h3>In scope</h3>
-        <ul class="tick">
-          <li>Boomi native MFT (Thru) capabilities relied upon.</li>
-          <li>Logical &amp; deployment architecture, including the config-driven generic engine.</li>
-          <li>Integration with MDTP, the SaaS systems (S4H, CF/MSD, Pega, CDS) and the HoD applications across AWS/Azure/Crown Hosting/Fujitsu; WebMethods coexistence.</li>
-          <li>Security, non-functional design and operability.</li>
-          <li>Capability/feature inventory and gap analysis with mitigations.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Out of scope</h3>
-        <ul class="tick">
-          <li>Per-interface onboarding detail (each transfer is delivered as configuration, not design).</li>
-          <li>API Management and event-streaming capabilities (separate Boomi platform designs).</li>
-          <li>Any bespoke self-service onboarding portal.</li>
-          <li>Commercial, licensing and contractual terms.</li>
-          <li>Low-level network/firewall design (referenced as a dependency).</li>
-        </ul>
-      </div>
-    </div>
+  <section>
+    <h2>7. Flow Walkthroughs</h2>
+    <p>The legend distinguishes three interaction styles. Each is traced through the reference architecture below.</p>
+    <div class="flow"><h4>File Transfer (blue)</h4><p>A straight, governed move of a file with no API trigger. Example: a SaaS system (e.g. ETMP) or MDTP exchanges a file with the central MFT node; the central node relays to the appropriate internal node (AWS/Azure), which delivers to the target HoD application. The same path serves internal-to-internal and internal-to-external moves. The engine applies protocol, security, retry and audit uniformly.</p></div><div class="flow"><h4>API Trigger File Transfer (red)</h4><p>A consumer initiates a transfer by calling an API. An external consumer or SaaS system calls the external CAM gateway (or an internal HoD calls an internal CAM gateway); Boomi Integration receives the trigger and instructs the MFT node to run the corresponding file movement. This is how real-time or on-demand file exchange is exposed as a secured, managed API while delivery is still handled by the MFT engine.</p></div><div class="flow"><h4>Configuration / Deployment (black)</h4><p>The control-plane path. The MFT Platform, Flow Designer and Register define and register a transfer as configuration; the Deployment Channel promotes that configuration and the runtime artefacts out to the MFT nodes across the iPaaS platform, AWS and Azure. No business file moves on this path — it is how the generic engine is configured and kept consistent across zones.</p></div>
   </section>
 
-  <section id="s4">
-    <h2><span class="num">4</span>Background &amp; context</h2>
-    <p>The estate moves files between external consumers/OGDs, the digital tax platform (MDTP) and the SaaS systems (S4H, CF/MSD, Pega, CDS), and the Heads-of-Duty (HoD) applications hosted across AWS, Azure, Crown Hosting and Fujitsu — historically through a mix of WebMethods flows and bespoke scheduled SFTP scripts. This fragmentation produces inconsistent security controls, weak central audit, and a per-interface bespoke build cost that does not scale.</p>
-    <h3>Drivers</h3>
-    <ul class="tick">
-      <li>Consolidate file movement onto Boomi iPaaS as the strategic platform.</li>
-      <li>Replace bespoke code with configuration, cutting build and assurance cost.</li>
-      <li>Provide a single source of truth for monitoring, tracking and audit.</li>
-      <li>Standardise onboarding so each new transfer is a governed configuration change, not a build.</li>
-      <li>Provide a controlled path to decommission WebMethods.</li>
-    </ul>
-    <table>
-      <tr><th style="width:24%">Legacy system</th><th>Relationship to MFT</th></tr>
-      <tr><td>WebMethods IS</td><td>Incumbent broker/flows and drop-zones; source and target during coexistence; decommission target.</td></tr>
-      <tr><td>MDTP</td><td>Digital tax platform; consumer/producer of managed transfers.</td></tr>
-      <tr><td>SaaS systems (native iPaaS)</td><td>Tax (S4H), CRM (CF/MSD), Workflow (Pega), B&amp;T (CDS); exchange files via the iPaaS platform.</td></tr>
-      <tr><td>HoD applications</td><td>Hosted across AWS, Azure, Crown Hosting and Fujitsu; reached from the internal runtime.</td></tr>
-      <tr><td>HoD services</td><td>Head-of-Duty services participating in file-based flows.</td></tr>
-      <tr><td>External parties</td><td>OGDs, suppliers, agents and banks exchanging files over SFTP/FTPS/AS2.</td></tr>
-    </table>
+  <section>
+    <h2>8. Mapping Capabilities to “Config over Construction”</h2>
+    <div class="callout">The single most important property of this design is that the estate grows by <strong>configuration</strong>, not by new components. One generic engine services every approved interface as a configuration record.</div>
+    <table><thead><tr><th>Activity</th><th>How it is handled</th></tr></thead><tbody><tr><td class="k">Add a new interface</td><td>Insert a configuration row in the MFT Register and deploy — no new component, no release of engine code.</td></tr><tr><td class="k">Change an endpoint or schedule</td><td>Edit the configuration record; the generic engine picks up the change through the Deployment Channel.</td></tr><tr><td class="k">Scale to a new zone</td><td>Stand up another MFT node running the same engine and push the same configuration set to it.</td></tr><tr><td class="k">Audit the estate</td><td>Read the transfer catalogue (configuration), not the code — the inventory is the source of truth.</td></tr><tr><td class="k">Decommission</td><td>Retire the configuration row through the governed lifecycle; nothing bespoke is left behind to clean up.</td></tr></tbody></table>
   </section>
 
-  <section id="s5">
-    <h2><span class="num">5</span>Requirements</h2>
-    <h3>Functional</h3>
-    <table>
-      <tr><th style="width:10%">Ref</th><th>Requirement</th><th style="width:26%">Met by</th></tr>
-      <tr><td class="mono">FR-01</td><td>Secure inbound/outbound over multiple protocols (SFTP, FTPS, AS2).</td><td>Native MFT endpoints</td></tr>
-      <tr><td class="mono">FR-02</td><td>Onboard trading partners/endpoints without new build.</td><td>Orgs/Endpoints + config</td></tr>
-      <tr><td class="mono">FR-03</td><td>Trigger downstream processing on file arrival (event-driven).</td><td>MFT → process trigger</td></tr>
-      <tr><td class="mono">FR-04</td><td>End-to-end tracking with unique ID + delivery confirmation.</td><td>Tracking &amp; audit log</td></tr>
-      <tr><td class="mono">FR-05</td><td>Guaranteed delivery with automatic retry.</td><td>Persistence + retry</td></tr>
-      <tr><td class="mono">FR-06</td><td>Handle large files &amp; archives.</td><td>Streaming + TAR</td></tr>
-      <tr><td class="mono">FR-07</td><td>PGP encrypt/decrypt (incl. ASCII-armor) + secure in transit.</td><td>PGP + TLS/SSH</td></tr>
-      <tr><td class="mono">FR-08</td><td>Filename-pattern routing, filtering, post-actions.</td><td>Flow endpoints + config</td></tr>
-      <tr><td class="mono">FR-09</td><td>Time-based scheduling &amp; polling.</td><td>Scheduling engine</td></tr>
-      <tr><td class="mono">FR-10</td><td>Alert on failure/SLA breach; expose telemetry.</td><td>Health telemetry + OTel</td></tr>
-    </table>
-    <h3>Non-functional</h3>
-    <table>
-      <tr><th style="width:12%">Ref</th><th>Requirement</th><th>Design response</th></tr>
-      <tr><td class="mono">NFR-01</td><td>High availability</td><td>Clustered Molecule + resilient edge</td></tr>
-      <tr><td class="mono">NFR-02</td><td>Disaster recovery (RTO/RPO TBC)</td><td>Secondary runtime + config replication</td></tr>
-      <tr><td class="mono">NFR-03</td><td>Scalability under peak batch</td><td>Elastic cloud components + horizontal Atoms</td></tr>
-      <tr><td class="mono">NFR-04</td><td>Security &amp; data protection (OFFICIAL)</td><td>Encryption, RBAC, segregation, key custody</td></tr>
-      <tr><td class="mono">NFR-05</td><td>Auditability &amp; retention</td><td>Immutable log + long-term archive</td></tr>
-      <tr><td class="mono">NFR-06</td><td>Observability</td><td>OpenTelemetry export to SIEM</td></tr>
-      <tr><td class="mono">NFR-07</td><td>Data residency (UK) for OFFICIAL</td><td>Hybrid: payload on-prem; confirm control-plane region</td></tr>
-    </table>
+  <section id="matrix">
+    <h2>9. Capability Summary Matrix</h2>
+    <table><thead><tr><th>Capability</th><th>What the platform provides</th><th>Why it matters</th></tr></thead><tbody><tr><td class="k">Secure transport</td><td>SFTP / FTPS / HTTPS / AS2, encrypted by default, platform-managed keys</td><td>Removes bespoke connection &amp; key code</td></tr><tr><td class="k">Generic engine</td><td>One process, interfaces as configuration rows</td><td>Flat component footprint; auditable by config</td></tr><tr><td class="k">Distributed nodes</td><td>Central + AWS + Azure runtime nodes, uniform engine</td><td>Data-local processing; zone segregation; independent scaling</td></tr><tr><td class="k">Trigger models</td><td>Scheduled, API-triggered, event/arrival, batch</td><td>One catalogue for real-time and bulk</td></tr><tr><td class="k">API bridge (CAM)</td><td>External &amp; internal gateways trigger MFT via Boomi Integration</td><td>API governance + MFT delivery assurance</td></tr><tr><td class="k">Delivery assurance</td><td>Retry, checkpoint/restart, confirmation, de-dup</td><td>Failures are detected and recoverable</td></tr><tr><td class="k">Security &amp; compliance</td><td>Encryption, strong auth, PGP, zone segregation, full audit</td><td>Meets confidentiality/integrity/non-repudiation needs</td></tr><tr><td class="k">Onboarding</td><td>Register-driven, self-service ready (Intelligrator)</td><td>Config request, not an engineering build</td></tr><tr><td class="k">Observability</td><td>Uniform per-transfer record; one operating model</td><td>Faster triage; measurable SLAs</td></tr></tbody></table>
   </section>
 
-  <section id="s6">
-    <h2><span class="num">6</span>Boomi MFT capabilities (Thru)</h2>
-    <p class="lead">Boomi MFT is a storage-based, cloud-native service (from the Thru acquisition) providing persistence, scheduling, fault tolerance, monitoring, audit logging and security, integrated directly with Boomi Integration processes so file flows and processing flows are managed together.</p>
-    <ul class="tick">
-      <li><b>Protocols &amp; endpoints:</b> SFTP, FTPS and AS2 under Organizations → Endpoints → Flows; MFT SFTP server on port 22 with full SSH authentication.</li>
-      <li><b>Trading-partner connectivity:</b> partner/community model; Boomi is extending its unified trading-partner framework to MFT.</li>
-      <li><b>Persistence &amp; guaranteed delivery:</b> files persisted with automatic retry and fault tolerance.</li>
-      <li><b>Event-driven integration:</b> file arrival triggers a Boomi process; the MFT Connector bridges file and processing flows.</li>
-      <li><b>Security:</b> PGP encrypt/decrypt incl. ASCII-armor (.asc); TLS/SSH in transit; platform RBAC.</li>
-      <li><b>In-flight handling:</b> TAR archive/extract (optional compression) in Flow Endpoints; filename-pattern matching and post-actions.</li>
-      <li><b>Tracking &amp; audit:</b> end-to-end visibility with delivery confirmation — a single source of truth for all transfers.</li>
-      <li><b>Scheduling &amp; automation:</b> time-based automated transfer with schedule history.</li>
-      <li><b>Observability:</b> OpenTelemetry export of metrics, logs and traces; runtime heartbeat/health telemetry.</li>
-      <li><b>Hybrid runtime:</b> MFT cloud components + on-prem MFT runtimes + MFT Connector inside processes.</li>
-    </ul>
-    <div class="callout warn">
-      <h4>Recent platform movement — validate against the live release</h4>
-      <p>The <b>March 2026</b> release added TAR archive support, PGP ASCII-armor, continued (deprecated) SFTP DSA host-key support for legacy partners, automated data retention (schedule history 3 months, audit logs 12 months), and runtime performance/health-telemetry improvements.</p>
-      <p>The <b>Q2 2026 roadmap</b> focuses on scaling the distributed hybrid MFT architecture and extending the trading-partner framework and file-flow extensibility — confirm the exact GA feature set at build time.</p>
-    </div>
-
-    <h3>6.2 Antivirus / malware scanning</h3>
-    <p>Boomi MFT performs <b>real-time antivirus scanning</b> on files as they move through the managed service; infected files are <b>automatically quarantined</b> so they are never delivered. Scanning sits alongside file-level encryption and a full audit trail as controls built into every layer, underpinning the platform's zero-trust, SOC 2-aligned posture.</p>
-    <ul class="tick">
-      <li>Real-time scan of every file in flight — malware/viruses detected before delivery, not after.</li>
-      <li>Automatic quarantine of infected files: the transfer is stopped and flagged rather than passed on.</li>
-      <li>On the multi-tenant automated service the scan applies to files up to ~250 MB; dedicated single-tenant deployments can be configured for larger files.</li>
-      <li>Complements, rather than replaces, enterprise endpoint AV and any ICAP/DLP controls already in the estate — defence in depth.</li>
-    </ul>
-    <div class="callout risk">
-      <h4>Design consideration — AV scan size limit</h4>
-      <p>The ~250 MB default scan ceiling on the multi-tenant service is a real constraint for large tax/customs payloads. Confirm the maximum in-scope file size and whether a dedicated/single-tenant configuration, chunking, or an external ICAP/AV integration is required for oversize files. Raise as a decision with a named owner (§14).</p>
-    </div>
-
-    <h3>6.3 Automated File Transfer (AFT)</h3>
-    <p>AFT is the scheduled and event-driven, system-to-system mode — the mode this solution is built on. Files move automatically between endpoints with no human in the loop, and each transfer is expressed as configuration (endpoint + flow + schedule) consumed by the generic engine, consistent with config over construction.</p>
-    <ul class="tick">
-      <li>Scheduled and event-triggered transfers; a single flow handles many-to-many endpoints with routing, renaming, encryption and compression.</li>
-      <li>Guaranteed delivery &amp; persistence: files stored securely until delivered, with retry, auto-resume, exception handling and notifications.</li>
-      <li>Reusable endpoints and automated partner onboarding; file transfer separated from business logic and invoked from integration processes via the MFT Connector.</li>
-      <li>Distributed hybrid execution: cloud-orchestrated, with on-prem MFT runtimes performing internal transfers in the trusted zone.</li>
-    </ul>
-
-    <h3>6.4 Ad-hoc file sharing (person-to-person / EFSS)</h3>
-    <p>Alongside automated transfer, the platform (from Thru's heritage) provides <b>ad-hoc, user-centric file sharing</b> — secure person-to-person exchange of large files carrying the same governance, AV scanning, encryption and audit trail as automated flows, so it is governed rather than shadow IT.</p>
-    <ul class="tick">
-      <li>Web-based interface to send/receive large files securely, with permissions per user or per user group.</li>
-      <li>Plugins for Microsoft Outlook (send large files without leaving the mailbox), Salesforce and SharePoint; a "drop-box"-style inbound capability lets external parties upload to account holders without their own subscription.</li>
-      <li>Same security envelope as AFT: AV scanning, encryption in transit and at rest, and a full audit trail on every share.</li>
-    </ul>
-    <p>Whether ad-hoc file sharing is in scope for this programme is a scoping decision; if enabled it needs its own governance (external-recipient policy, DLP, retention, link-expiry). Flagged for the Design Authority (§14).</p>
-
-    <h3>6.5 Other native platform capabilities</h3>
-    <table>
-      <tr><th style="width:26%">Area</th><th>Capability</th></tr>
-      <tr><td><b>Security &amp; compliance</b></td><td>File-level (end-to-end) encryption in addition to encrypted protocols in transit and encryption at rest; zero-trust architecture; SOC 2 and comparable compliance alignment; IP whitelisting.</td></tr>
-      <tr><td><b>Authentication</b></td><td>Password and PKI (public-key) auth for SFTP/FTPS; API secret key for runtime-to-cloud; SSL certificates; renewal notifications for PGP and SSH keys.</td></tr>
-      <tr><td><b>Access control</b></td><td>Role-based access control under least-privilege (POLP); users managed by enterprise administrators; granular permissions for automated operations and user sharing.</td></tr>
-      <tr><td><b>Availability &amp; isolation</b></td><td>High availability and DR across multiple cloud zones/regions; per-instance traffic isolation so tenants/business units do not affect one another.</td></tr>
-      <tr><td><b>Visibility</b></td><td>Granular audit and end-to-end tracking of every transfer; delivery confirmation; notifications; OpenTelemetry export to enterprise monitoring.</td></tr>
-      <tr><td><b>Performance &amp; scale</b></td><td>Elastic cloud for high-volume, many-to-many exchange and large/accelerated file transfer without extra infrastructure or bottlenecks.</td></tr>
-      <tr><td><b>Integration</b></td><td>MFT Connector for Boomi embeds persistence and guaranteed delivery directly into integration processes, separating file movement from business logic (§7.5).</td></tr>
-    </table>
-  </section>
-    <p>A clean logical view: the external estate (3rd-party consumers/OGDs, MDTP, and the native-iPaaS SaaS systems — ETMP/S4H, CRM CF/MSD, Workflow Pega, B&amp;T CDS) exchanges files with the <b>Boomi iPaaS Platform</b>; across the external/internal trust boundary the <b>Boomi Internal Runtime</b> hosts the config-driven MFT engine and delivers to / collects from the HoD applications on AWS, Azure, Crown Hosting and Fujitsu. §7.1 details each layer; Figure 2 (§7.5) shows how MFT is driven by the integration platform.</p>
-    <div class="diagram">
-      <svg xmlns="http://www.w3.org/2000/svg" width="100%" style="height:auto;max-width:1100px;display:block;margin:0 auto" viewBox="0 0 1520 1120" font-family="Segoe UI,-apple-system,Roboto,Helvetica,Arial,sans-serif">
-<rect x="0" y="0" width="1520" height="1120" fill="#ffffff"/>
-<defs><marker id="be" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#3f6fc4"/></marker><marker id="bs" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto"><path d="M9,0 L0,5 L9,10 z" fill="#3f6fc4"/></marker><marker id="pe" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#8073a8"/></marker><marker id="ps" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto"><path d="M9,0 L0,5 L9,10 z" fill="#8073a8"/></marker></defs>
-<rect x="150" y="170" width="1240" height="470" rx="2" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3"/>
-<text x="172" y="208" font-size="15" font-weight="700" fill="#33373b">External estate</text>
-<rect x="150" y="740" width="1240" height="330" rx="2" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3"/>
-<text x="172" y="778" font-size="15" font-weight="700" fill="#33373b">Internal estate</text>
-<path d="M92,690 L1428,690" stroke="#9a9a9a" stroke-width="1.4" stroke-dasharray="3 5"/>
-<rect x="235" y="235" width="200" height="170" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="250" y="262" font-size="13" font-weight="700" fill="#33373b">External Consumers</text>
-<rect x="262" y="290" width="146" height="96" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="386" y="298" width="16" height="13" rx="1"/><rect x="382" y="300" width="7" height="3.4"/><rect x="382" y="305.5" width="7" height="3.4"/></g>
-<text x="335.0" y="330.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">3rd Party Consumers</text>
-<text x="335.0" y="346.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">/ OGDs</text>
-<rect x="470" y="235" width="210" height="170" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="485" y="262" font-size="13" font-weight="700" fill="#33373b">Digital services</text>
-<rect x="505" y="292" width="140" height="92" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="623" y="300" width="16" height="13" rx="1"/><rect x="619" y="302" width="7" height="3.4"/><rect x="619" y="307.5" width="7" height="3.4"/></g>
-<text x="575.0" y="338.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">MDTP</text>
-<rect x="715" y="235" width="610" height="170" rx="2" fill="#f2ddbf" stroke="#cca06a" stroke-width="1.3"/>
-<text x="730" y="262" font-size="13" font-weight="700" fill="#33373b">SaaS systems (native iPaaS)</text>
-<rect x="730" y="282" width="138" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="846" y="290" width="16" height="13" rx="1"/><rect x="842" y="292" width="7" height="3.4"/><rect x="842" y="297.5" width="7" height="3.4"/></g>
-<text x="799.0" y="318.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">ETMP</text>
-<text x="799.0" y="334.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">S4H</text>
-<text x="799.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#5a6472" font-style="italic">Native iPaaS</text>
-<rect x="882" y="282" width="148" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1008" y="290" width="16" height="13" rx="1"/><rect x="1004" y="292" width="7" height="3.4"/><rect x="1004" y="297.5" width="7" height="3.4"/></g>
-<text x="956.0" y="318.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">CRM System</text>
-<text x="956.0" y="334.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">CF / MSD</text>
-<text x="956.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#5a6472" font-style="italic">Native iPaaS</text>
-<rect x="1044" y="282" width="138" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1160" y="290" width="16" height="13" rx="1"/><rect x="1156" y="292" width="7" height="3.4"/><rect x="1156" y="297.5" width="7" height="3.4"/></g>
-<text x="1113.0" y="318.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Workflow</text>
-<text x="1113.0" y="334.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Pega</text>
-<text x="1113.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#5a6472" font-style="italic">Native iPaaS</text>
-<rect x="1196" y="282" width="118" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1292" y="290" width="16" height="13" rx="1"/><rect x="1288" y="292" width="7" height="3.4"/><rect x="1288" y="297.5" width="7" height="3.4"/></g>
-<text x="1255.0" y="326.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">B&amp;amp;T System</text>
-<text x="1255.0" y="342.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">CDS</text>
-<rect x="420" y="460" width="470" height="150" rx="16" fill="#ffffff" stroke="#4a72c4" stroke-width="2.2"/>
-<g transform="translate(432,478) scale(1.0)" fill="#ffffff" stroke="#6f7d93" stroke-width="1.6"><path d="M6,17 a7,7 0 0,1 1,-13 a9,9 0 0,1 16,2 a6,6 0 0,1 -1,11 z"/></g>
-<text x="470" y="500" font-size="15" font-weight="700" fill="#33373b">iPaaS Platform</text>
-<g fill="none" stroke="#2f9e91" stroke-width="2"><ellipse cx="444" cy="556" rx="15" ry="6.0"/><ellipse cx="444" cy="556" rx="15" ry="6.0" transform="rotate(60 444 556)"/><ellipse cx="444" cy="556" rx="15" ry="6.0" transform="rotate(120 444 556)"/></g><circle cx="444" cy="556" r="3.2" fill="#2f9e91"/>
-<text x="468" y="562" font-size="17" font-weight="600" fill="#3a4048">Boomi</text>
-<rect x="600" y="790" width="380" height="95" rx="16" fill="#ffffff" stroke="#4a72c4" stroke-width="2.2"/>
-<g fill="none" stroke="#2f9e91" stroke-width="2"><ellipse cx="650" cy="838" rx="15" ry="6.0"/><ellipse cx="650" cy="838" rx="15" ry="6.0" transform="rotate(60 650 838)"/><ellipse cx="650" cy="838" rx="15" ry="6.0" transform="rotate(120 650 838)"/></g><circle cx="650" cy="838" r="3.2" fill="#2f9e91"/>
-<text x="676" y="846" font-size="17" font-weight="600" fill="#3a4048">Boomi</text>
-<text x="772" y="846" font-size="15" font-weight="700" fill="#33373b">Internal Runtime</text>
-<rect x="235" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="250" y="947" font-size="13" font-weight="700" fill="#33373b">AWS</text>
-<rect x="263" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="391" y="973" width="16" height="13" rx="1"/><rect x="387" y="975" width="7" height="3.4"/><rect x="387" y="980.5" width="7" height="3.4"/></g>
-<text x="338.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="338.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<rect x="475" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="490" y="947" font-size="13" font-weight="700" fill="#33373b">Azure</text>
-<rect x="503" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="631" y="973" width="16" height="13" rx="1"/><rect x="627" y="975" width="7" height="3.4"/><rect x="627" y="980.5" width="7" height="3.4"/></g>
-<text x="578.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="578.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<rect x="715" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="730" y="947" font-size="13" font-weight="700" fill="#33373b">Crown Hosting</text>
-<rect x="743" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="871" y="973" width="16" height="13" rx="1"/><rect x="867" y="975" width="7" height="3.4"/><rect x="867" y="980.5" width="7" height="3.4"/></g>
-<text x="818.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="818.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<rect x="955" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="970" y="947" font-size="13" font-weight="700" fill="#33373b">Fujitsu</text>
-<rect x="983" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1111" y="973" width="16" height="13" rx="1"/><rect x="1107" y="975" width="7" height="3.4"/><rect x="1107" y="980.5" width="7" height="3.4"/></g>
-<text x="1058.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="1058.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<path d="M335.0,386 L335.0,414 L470,455 L470,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M575.0,384 L575.0,412 L540,455 L540,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M799.0,386 L799.0,414 L610,455 L610,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M956.0,386 L956.0,414 L680,455 L680,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M1113.0,386 L1113.0,414 L750,455 L750,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M1255.0,386 L1255.0,414 L820,455 L820,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M655,610 L655,660 L790,660 L790,790" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L338.0,905 L338.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L578.0,905 L578.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L818.0,905 L818.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L1058.0,905 L1058.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M500,610 L500,700 L337,700 L337,965" fill="none" stroke="#8073a8" stroke-width="1.5" marker-start="url(#ps)" marker-end="url(#pe)"/>
-<path d="M840,610 L840,700 L1057,700 L1057,965" fill="none" stroke="#8073a8" stroke-width="1.5" marker-start="url(#ps)" marker-end="url(#pe)"/>
-</svg>
-      <div class="cap">Figure 1 — MFT on Boomi: logical architecture (external estate ↔ Boomi iPaaS ↔ internal runtime ↔ HoD systems)</div>
-    </div>
-    <h3>7.1 Tiers</h3>
-    <table>
-      <tr><th style="width:26%">Tier</th><th>Contents &amp; purpose</th></tr>
-      <tr><td><b>Tier 1 — Consumers</b></td><td>External, cross-government, digital &amp; SaaS systems that consume/produce transfers: 3rd-party consumers/OGDs, MDTP, and native-iPaaS SaaS — Tax (S4H), CRM (CF/MSD), Workflow (Pega), B&amp;T (CDS).</td></tr>
-      <tr><td><b>Tier 2 — Cloud integration layer (incl. MFT)</b></td><td>Boomi iPaaS SaaS control plane: Integration &amp; API management (API Control Plane, Developer Portal, Integration Flow Designer, Cloud API Management, external API gateway) plus MFT cloud components (SFTP/FTPS/AS2, landing zones, tracking/audit, keys, OTel, RBAC). Confirm UK region for OFFICIAL.</td></tr>
-      <tr><td><b>Trust boundary</b></td><td>External/internal (cloud/runtime) separation. Payloads stay within the trusted boundary; only control/tracking metadata surfaces to the cloud layer.</td></tr>
-      <tr><td><b>Tier 3 — Runtime integration layer (incl. MFT)</b></td><td>Customer-managed runtime in the trusted zone: Integration Flow Runtime, internal API gateways (CAM Runtime, Kong), the Boomi MFT Connector, and the generic config-driven MFT engine + config/routing DB.</td></tr>
-      <tr><td><b>Tier 4 — Backend systems</b></td><td>Heads-of-Duty (HoD) applications hosted across AWS, Azure, Crown Hosting and Fujitsu, plus WebMethods during coexistence.</td></tr>
-    </table>
-    <h3>7.2 Config over construction — the generic engine</h3>
-    <p>A single generic MFT engine process is the only file-moving component. Each approved interface is a configuration row: source/target endpoints, protocol, PGP key references, schedule, filename pattern, post-actions. Onboarding adds a row; it never adds a component.</p>
-    <div class="callout risk">
-      <h4>Design guardrail</h4>
-      <p>Any requirement that cannot be expressed as configuration (e.g. bespoke content-based routing or complex per-file transformation) must be raised as a deviation to the Design Authority, with a named owner, before it is built — it is the point at which “construction” risks creeping back in.</p>
-    </div>
-    <div class="grid2">
-      <div>
-        <h3>Inbound (partner → estate)</h3>
-        <ul class="tick">
-          <li>Partner pushes to / engine pulls from an MFT endpoint; partner authenticated by SSH key / certificate.</li>
-          <li>File lands in a transient encrypted landing zone; a file-arrival event triggers the engine.</li>
-          <li>Engine reads the config row, decrypts (PGP), validates, de-archives, routes/transforms, delivers via connector.</li>
-          <li>Delivery confirmed; transfer, receipt and audit written to the tracking log.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Outbound (estate → partner)</h3>
-        <ul class="tick">
-          <li>Source drops a file / engine polls on schedule; engine picks up the config row.</li>
-          <li>Engine encrypts (PGP/ASCII-armor), optionally archives (TAR), delivers to partner endpoint.</li>
-          <li>Delivery receipt captured, audit written; failures retried and alerted.</li>
-        </ul>
-      </div>
-    </div>
-    <h3>7.4 Key &amp; certificate management</h3>
-    <p>SSH keys, PGP keypairs and TLS certificates are held in the platform key/certificate store and referenced by configuration. Custody, rotation and enterprise HSM/KMS integration are a security dependency (§14).</p>
-    <h3>7.5 Integrating MFT with the Integration Platform</h3>
-    <p>MFT is not a silo: it runs inside the same Boomi platform as the Integration and API-management capabilities, and is driven by them. The two are wired together by the <b>Boomi MFT Connector</b>, which lets an integration process invoke MFT file-transfer flows — so a transfer can be <b>triggered and orchestrated</b> by business logic (an event or schedule) while MFT moves the bytes over SFTP/FTPS and records the audit trail. One platform, one governance model, one audit history.</p>
-    <div class="diagram">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 800" font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
-<rect x="0" y="0" width="1240" height="800" fill="#ffffff"/>
-<defs><marker id="mP" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#6b2fb3"/></marker><marker id="mR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#c0392b"/></marker><marker id="mB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#2f6fdb"/></marker><marker id="mK" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#333"/></marker></defs>
-<rect x="40" y="10" width="1160" height="34" rx="8" fill="#0f1723" stroke="#0f1723" stroke-width="1.4"/>
-<text x="620" y="27.0" text-anchor="middle" dominant-baseline="middle" font-size="13.5" font-weight="700" fill="#ffffff">MFT ↔ Integration Platform — the Boomi MFT Connector (event-driven file transfer · control &amp; data channels)</text>
-<rect x="40" y="60" width="250" height="620" rx="8" fill="#eef2f7" stroke="#9fb0c6" stroke-width="1.4"/>
-<text x="54" y="84" font-size="12" font-weight="700" fill="#2b3a55" text-anchor="start">EXTERNAL CONNECTIONS</text>
-<rect x="56" y="100" width="218" height="66" rx="8" fill="#ffffff" stroke="#6b2fb3" stroke-width="1.4"/>
-<text x="165.0" y="126.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Partner / OGD servers</text>
-<text x="165.0" y="139.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">(SFTP / FTPS / FTP)</text>
-<rect x="56" y="182" width="218" height="66" rx="8" fill="#ffffff" stroke="#6b2fb3" stroke-width="1.4"/>
-<text x="165.0" y="208.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Cloud storage</text>
-<text x="165.0" y="221.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">(S3 · Azure Blob)</text>
-<text x="54" y="300" font-size="12" font-weight="700" fill="#2b3a55" text-anchor="start">REMOTE LOCATIONS</text>
-<rect x="56" y="316" width="218" height="66" rx="8" fill="#ffffff" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="165.0" y="349.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Sites · agents · offices</text>
-<rect x="320" y="60" width="560" height="620" rx="12" fill="#fbeef1" stroke="#e0a9bd" stroke-width="1.4"/>
-<text x="600" y="86" font-size="14" font-weight="700" fill="#8a2b4a" text-anchor="middle">Boomi Enterprise Platform (iPaaS)</text>
-<rect x="336" y="104" width="250" height="380" rx="10" fill="#f6e4ea" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="350" y="128" font-size="11" font-weight="700" fill="#8a2b4a" text-anchor="start">MANAGED FILE TRANSFER</text>
-<rect x="352" y="140" width="218" height="52" rx="8" fill="#ffffff" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="461.0" y="166.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">MFT API</text>
-<rect x="352" y="204" width="218" height="60" rx="8" fill="#ffffff" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="461.0" y="234.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">File Transfer Flows</text>
-<rect x="352" y="276" width="218" height="56" rx="8" fill="#ffffff" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="461.0" y="304.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">File Transfers</text>
-<rect x="352" y="344" width="218" height="60" rx="8" fill="#f6e4ea" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="461.0" y="367.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">MFT Runtime</text>
-<text x="461.0" y="380.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">(optional on-prem)</text>
-<rect x="600" y="104" width="264" height="380" rx="10" fill="#f6e4ea" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="614" y="128" font-size="11" font-weight="700" fill="#8a2b4a" text-anchor="start">INTEGRATION PLATFORM</text>
-<rect x="616" y="140" width="232" height="56" rx="8" fill="#ffffff" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="732.0" y="161.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Event Trigger</text>
-<text x="732.0" y="174.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">(schedule · event)</text>
-<rect x="616" y="212" width="232" height="60" rx="8" fill="#ffffff" stroke="#cf6d8c" stroke-width="1.4"/>
-<text x="732.0" y="242.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Boomi Process</text>
-<rect x="616" y="300" width="232" height="64" rx="8" fill="#fde3c2" stroke="#d1791b" stroke-width="1.4"/>
-<text x="732.0" y="325.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">Boomi MFT Connector</text>
-<text x="732.0" y="339.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#12161c">(MFT)</text>
-<text x="616" y="404" font-size="9" font-weight="600" fill="#8a2b4a" text-anchor="start">Boomi Process orchestrates &amp;</text>
-<text x="616" y="418" font-size="9" font-weight="600" fill="#8a2b4a" text-anchor="start">reports on transfers (REST API)</text>
-<rect x="910" y="60" width="290" height="620" rx="8" fill="#eef2f7" stroke="#9fb0c6" stroke-width="1.4"/>
-<text x="924" y="84" font-size="12" font-weight="700" fill="#2b3a55" text-anchor="start">ENTERPRISE / INTERNAL ESTATE</text>
-<rect x="926" y="100" width="258" height="72" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="1055.0" y="129.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">HoD Applications</text>
-<text x="1055.0" y="142.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">(AWS · Azure · Crown · Fujitsu)</text>
-<rect x="926" y="190" width="258" height="72" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="1055.0" y="219.2" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">Business apps</text>
-<text x="1055.0" y="232.8" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">(CRM · ERP · BI)</text>
-<rect x="926" y="280" width="258" height="66" rx="8" fill="#dfe8fb" stroke="#8fa9dd" stroke-width="1.4"/>
-<text x="1055.0" y="313.0" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="#12161c">File repositories</text>
-<path d="M274,133.0 L352,296.0" fill="none" stroke="#6b2fb3" stroke-width="1.8" marker-end="url(#mP)"/>
-<text x="313.0" y="210.5" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">source data channel</text>
-<path d="M352,314.0 L274,215.0" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#mR)"/>
-<text x="313.0" y="260.5" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">target data channel</text>
-<path d="M616,168.0 L570,166.0" fill="none" stroke="#333" stroke-width="1.8" marker-end="url(#mK)" stroke-dasharray="6 4"/>
-<text x="593.0" y="163.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">control channel</text>
-<path d="M732.0,272 L732.0,300" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#mR)"/>
-<text x="732.0" y="282.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">invoke</text>
-<path d="M616,332.0 L570,234.0" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#mR)"/>
-<text x="593.0" y="279.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">Boomi MFT Connector:</text>
-<text x="593.0" y="290.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">process invokes MFT flows</text>
-<path d="M461.0,404 L461.0,604 L1010,604 L1010,346" fill="none" stroke="#6b2fb3" stroke-width="1.8" marker-end="url(#mP)"/>
-<text x="1010" y="598" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">direct file exchange</text>
-<path d="M848,236.0 L926,226.0" fill="none" stroke="#c0392b" stroke-width="1.8" marker-end="url(#mR)"/>
-<text x="887.0" y="227.0" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">integrate</text>
-<path d="M732.0,364 L732.0,634 L1120,634 L1120,346" fill="none" stroke="#2f6fdb" stroke-width="1.8" marker-end="url(#mB)"/>
-<text x="1120" y="628" text-anchor="middle" font-size="9.5" fill="#3d4653" style="paint-order:stroke;stroke:#ffffff;stroke-width:3px">orchestration &amp; reporting (REST API)</text>
-<path d="M274,349.0 L352,318.0" fill="none" stroke="#6b2fb3" stroke-width="1.8" marker-end="url(#mP)"/>
-<rect x="40" y="690" width="1160" height="96" rx="8" fill="#ffffff" stroke="#c9ccd2" stroke-width="1.4"/>
-<text x="54" y="712" font-size="11" font-weight="700" fill="#33475b" text-anchor="start">LEGEND</text>
-<path d="M64,736 L98,736" stroke="#6b2fb3" stroke-width="2.4"/>
-<text x="106" y="740" font-size="10" font-weight="600" fill="#3d4653" text-anchor="start">Source data channel (inbound file)</text>
-<path d="M64,762 L98,762" stroke="#c0392b" stroke-width="2.4"/>
-<text x="106" y="766" font-size="10" font-weight="600" fill="#3d4653" text-anchor="start">Target data channel (outbound file)</text>
-<path d="M360,736 L394,736" stroke="#333" stroke-width="2.4" stroke-dasharray="6 4"/>
-<text x="402" y="740" font-size="10" font-weight="600" fill="#3d4653" text-anchor="start">MFT control channel (event / schedule)</text>
-<path d="M360,762 L394,762" stroke="#2f6fdb" stroke-width="2.4"/>
-<text x="402" y="766" font-size="10" font-weight="600" fill="#3d4653" text-anchor="start">Programmatic control &amp; reporting over REST API</text>
-<text x="700" y="730" font-size="10" font-weight="700" fill="#8a2b4a" text-anchor="start">Key point: MFT is not a silo. The Integration Platform triggers &amp;</text>
-<text x="700" y="746" font-size="10" font-weight="600" fill="#8a2b4a" text-anchor="start">orchestrates transfers via the Boomi MFT Connector; MFT moves the</text>
-<text x="700" y="762" font-size="10" font-weight="600" fill="#8a2b4a" text-anchor="start">bytes over SFTP/FTPS and exposes status/reporting APIs.</text>
-<text x="700" y="778" font-size="10" font-weight="600" fill="#8a2b4a" text-anchor="start">Same platform · same governance · one audit trail.</text>
-</svg>
-      <div class="cap">Figure 2 — MFT ↔ Integration Platform: the Boomi MFT Connector (event-driven transfer, control &amp; data channels)</div>
-    </div>
-    <p>The integration keeps two channels separate:</p>
-    <ul class="tick">
-      <li><b>Control channel</b> — an event/schedule in an integration process starts the transfer; MFT exposes APIs the platform uses for status and reporting (orchestration &amp; reporting over REST).</li>
-      <li><b>Data channels</b> — MFT performs the file movement over SFTP/FTPS/AS2 to/from partner servers and cloud storage (source &amp; target data channels), and can exchange files directly with internal file repositories (direct file exchange).</li>
-    </ul>
-    <p>The same API-management layer (Cloud API Management, external/internal API gateways) can front the MFT and integration APIs, so consumers and internal HoD applications reach them through governed gateways rather than point-to-point. The architecture distinguishes two flow types: <b>API executions</b> (runtime request/transfer) and <b>configurations/deployments</b> (control-plane definitions pushed to the runtimes).</p>
-    <div class="callout risk">
-      <h4>Design guardrail — integration must not become construction</h4>
-      <p>Invoking MFT from an integration process stays consistent with config over construction only while each transfer remains a configuration row consumed by the generic engine. Bespoke per-interface integration processes that embed transfer logic would re-introduce build cost and must be raised to the Design Authority with a named owner (§14).</p>
-    </div>
+  <section>
+    <h2>10. Design Considerations &amp; Open Decisions</h2>
+    <p>Recorded as decisions with a named owner rather than deferred:</p>
+    <table><thead><tr><th>Consideration</th><th>Detail</th><th>Suggested owner</th></tr></thead><tbody><tr><td class="k">Config-over-construction must be defended, not assumed</td><td>Any feature request that implies a per-interface Boomi component (bespoke transformation, one-off routing) is a challenge to the core principle. Route such cases through a generic, configurable mechanism or explicitly record the exception with a named owner.</td><td>Integration Architecture</td></tr><tr><td class="k">Node topology vs. HA cache assumptions</td><td>Distributed nodes are correct for data-locality, but any shared state (e.g. dedupe or lookup) must not rely on node-local caching in a clustered/HA node — a DB-backed store with TTL and event-driven invalidation is preferred. Confirm which node functions require shared state.</td><td>Platform Engineering</td></tr><tr><td class="k">API-trigger boundary</td><td>The line between 'API that triggers a transfer' and 'API that moves the payload' must stay crisp so that large payloads always land on the MFT engine, not through the API tier. Confirm payload-size thresholds and routing rules with a named owner.</td><td>Integration Architecture</td></tr><tr><td class="k">Onboarding self-service scope</td><td>Register-driven onboarding is the foundation for Intelligrator; confirm which transfer types are safe for full self-service in early phases versus requiring architectural review.</td><td>Product / Governance</td></tr></tbody></table>
   </section>
 
-  <section id="s8">
-    <h2><span class="num">8</span>Integration with the estate</h2>
-    <h3>8.1 Connectivity to estate systems</h3>
-    <p>The Boomi internal runtime reaches the HoD applications (AWS, Azure, Crown Hosting, Fujitsu) and integrates with MDTP and the SaaS systems (S4H, CF/MSD, Pega, CDS) through Boomi connectors (SFTP, database, JMS/queue, HTTP) from the trusted zone. Payloads stay within the boundary; only control/tracking metadata surfaces to the iPaaS platform.</p>
-    <h3>8.2 WebMethods coexistence &amp; decommission</h3>
-    <ul class="tick">
-      <li>Boomi MFT can consume from and deliver to WebMethods drop-zones, migrating interfaces one config row at a time.</li>
-      <li>Each migrated interface is proven in parallel, then WebMethods is retired for that flow — controlled, low-risk, no big-bang.</li>
-      <li>No automated WebMethods→Boomi converter exists; migration is deliberate re-configuration (gap G-12).</li>
-    </ul>
-    <h3>8.3 Onboarding model (configuration, not build)</h3>
-    <p>A new transfer is onboarded by adding a configuration row to the routing table consumed by the generic engine, via a governed change with an approval gate and standards check (endpoints, protocol, key references, schedule, filename pattern, post-actions, ownership). No new Boomi component is created — preserving config-over-construction end to end. Onboarding is performed through Boomi's native MFT administration; a bespoke self-service onboarding portal is out of scope for this platform design.</p>
-    <h3>8.4 Identity, monitoring &amp; key custody</h3>
-    <ul class="tick">
-      <li>Operator access via enterprise IdP/SSO (to confirm); partner authentication by SSH key / certificate.</li>
-      <li>Operational telemetry exported via OpenTelemetry to the enterprise SIEM (e.g. Splunk).</li>
-      <li>Key custody integrates with the enterprise HSM/KMS (to be confirmed).</li>
-    </ul>
+  <section>
+    <h2>11. Glossary</h2>
+    <table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody><tr><td class="k">MFT</td><td>Managed File Transfer — governed, secure, auditable file movement as a platform capability.</td></tr><tr><td class="k">iPaaS</td><td>Integration Platform as a Service — here, Boomi, hosting both control and runtime.</td></tr><tr><td class="k">Node (Runtime)</td><td>A Boomi runtime that executes the generic MFT engine and moves files in a given zone.</td></tr><tr><td class="k">CAM</td><td>Cloud API Management — the API gateway/management capability (external and internal runtimes).</td></tr><tr><td class="k">HoD</td><td>Head-of-Duty application — a departmental business system that is a source/target of files.</td></tr><tr><td class="k">Boomi Flow</td><td>Boomi's workflow/app capability used here for control-plane surfaces (Register, Deployment Channel).</td></tr><tr><td class="k">Config over construction</td><td>Adding interfaces as configuration rows against one generic engine, never new per-interface builds.</td></tr><tr><td class="k">OGD</td><td>Other Government Department — an external consumer of files/APIs.</td></tr><tr><td class="k">ETMP / CRM / Pega / B&amp;T (CDS) / MDTP</td><td>SaaS and digital line-of-business systems in the external zone.</td></tr></tbody></table>
   </section>
 
-  <section id="s9">
-    <h2><span class="num">9</span>Feature &amp; capability matrix</h2>
-    <p>Fuller filterable version in the Excel register. Maturity: <span class="b-ga">● GA / relied-upon</span> · <span class="b-cf">◐ available, confirm fit</span> · <span class="b-vl">○ roadmap / validate</span>.</p>
-    <table>
-      <tr><th style="width:28%">Capability</th><th>How used in the estate</th><th style="width:20%">Maturity</th></tr>
-      <tr><td>SFTP / FTPS / AS2 endpoints</td><td>Inbound/outbound with OGDs, agents, banks</td><td class="b-ga">● GA</td></tr>
-      <tr><td>Trading-partner onboarding</td><td>Config-driven partner/endpoint records</td><td class="b-cf">◐ confirm</td></tr>
-      <tr><td>Event-driven trigger</td><td>File arrival kicks off engine/process</td><td class="b-ga">● GA</td></tr>
-      <tr><td>Guaranteed delivery + retry</td><td>Resilient transfers to systems of record</td><td class="b-ga">● GA</td></tr>
-      <tr><td>PGP (incl. ASCII-armor)</td><td>At-rest protection of OFFICIAL payloads</td><td class="b-ga">● GA</td></tr>
-      <tr><td>TAR archive / extract</td><td>Bundle/unbundle batch file sets</td><td class="b-ga">● GA</td></tr>
-      <tr><td>Tracking &amp; audit log</td><td>Single source of truth for all transfers</td><td class="b-ga">● GA</td></tr>
-      <tr><td>Scheduling &amp; polling</td><td>Batch windows and source polling</td><td class="b-ga">● GA</td></tr>
-      <tr><td>OpenTelemetry observability</td><td>Export to enterprise SIEM</td><td class="b-cf">◐ confirm</td></tr>
-      <tr><td>Hybrid on-prem runtime</td><td>Keep OFFICIAL payload in boundary</td><td class="b-cf">◐ confirm</td></tr>
-      <tr><td>OFTP2 / AS4 / PeSIT</td><td>Only if partners require them</td><td class="b-vl">○ validate</td></tr>
-      <tr><td>Long-term audit retention</td><td>Beyond 12-month native default</td><td class="b-vl">○ validate</td></tr>
-      <tr><td>CI/CD pipeline for MFT config</td><td>Promote transfer config dev→test→prod</td><td class="b-vl">○ gap</td></tr>
-      <tr><td>Enterprise secrets / password manager</td><td>Source MFT/partner credentials externally</td><td class="b-vl">○ gap</td></tr>
-    </table>
-  </section>
-
-  <section id="s10">
-    <h2><span class="num">10</span>Non-functional design</h2>
-    <div class="grid2">
-      <div>
-        <h3>Availability &amp; resilience</h3>
-        <p>Clustered Boomi Molecule runtime for HA and fault tolerance; load-balanced edge. Gateway HA topology to confirm (§14).</p>
-        <h3>Disaster recovery</h3>
-        <p>Secondary runtime with replicated configuration. RTO/RPO to be set; the config/routing table and key material are the critical state to protect.</p>
-        <h3>Scalability &amp; performance</h3>
-        <p>Cloud components scale elastically; Atoms scale horizontally. March 2026 runtime optimisations reduce retry cycles/latency. Benchmark vs WebMethods (G-05).</p>
-      </div>
-      <div>
-        <h3>Security &amp; data protection</h3>
-        <p>In transit TLS/SSH; at rest PGP; transient zones encrypted. RBAC and segregation of duties. Key custody via HSM/KMS (confirm). Hybrid runtime keeps payload in boundary.</p>
-        <h3>Auditability &amp; retention</h3>
-        <p>Immutable tracking/audit record per transfer. Native retention defaults (audit 12 mo, schedule history 3 mo) are likely below statutory needs — export to long-term archive (G-02b).</p>
-        <h3>Observability &amp; operations</h3>
-        <p>OpenTelemetry export to SIEM; heartbeat/health telemetry for proactive monitoring and SLA-breach alerting.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="s11">
-    <h2><span class="num">11</span>Gaps &amp; limitations</h2>
-    <p class="lead">Deliberately candid: each gap is stated with impact and a mitigation/action so the Design Authority can accept, mitigate or challenge it rather than discover it in build. <b>3 High · 9 Medium · 2 Low.</b></p>
-    <div class="callout bad">
-      <h4>Headline platform drawbacks (pain points)</h4>
-      <p><b>No native CI/CD pipeline for MFT (G-13).</b> There is no built-in, MFT-config-aware pipeline. Promotion of transfer configuration dev→test→prod is UI/admin-driven and environment-promotion is not fully API-automatable, so a repeatable pipeline must be built externally over the AtomSphere APIs and enterprise DevOps tooling.</p>
-      <p><b>No native enterprise password/secrets-manager integration for MFT credentials (G-14).</b> Boomi's Secrets Management Service is oriented to the Integration runtime and cloud vaults (e.g. Azure Key Vault); there is no documented native path to source MFT endpoint/trading-partner credentials (SFTP keys, partner passwords) from an enterprise password manager such as CyberArk PAM — they are held in the MFT store, weakening central rotation and privileged-access governance.</p>
-    </div>
-    <table>
-      <tr><th style="width:8%">Ref</th><th style="width:28%">Gap / limitation</th><th style="width:22%">Impact</th><th style="width:10%">Sev.</th><th>Mitigation / action</th></tr>
-      <tr><td class="mono">G-01</td><td>Native MFT post-acquisition (May 2025); still maturing.</td><td>Feature-parity / roadmap risk.</td><td class="sev-m">Med</td><td>Confirm live GA set at build; track roadmap; don't design on roadmap-only items.</td></tr>
-      <tr><td class="mono">G-02a</td><td>Control plane is SaaS; residency/assurance for OFFICIAL to confirm.</td><td>Assurance / compliance.</td><td class="sev-h">High</td><td>Confirm UK region; keep payload on-prem via hybrid; assurance review.</td></tr>
-      <tr><td class="mono">G-02b</td><td>Audit retention default 12 months (schedule history 3 months).</td><td>May breach statutory retention.</td><td class="sev-h">High</td><td>Export audit to long-term archive; set retention policy.</td></tr>
-      <tr><td class="mono">G-03</td><td>Native protocols centre on SFTP/FTPS/AS2 (+PEPPOL via EDI VAN); OFTP2/AS4/PeSIT not native.</td><td>Gap if partners mandate these.</td><td class="sev-m">Med</td><td>Survey partner protocols; bridge/third-party gateway where required.</td></tr>
-      <tr><td class="mono">G-04</td><td>Content-based routing/transform beyond filename needs Integration processes.</td><td>“Construction” creep vs principle.</td><td class="sev-m">Med</td><td>Keep logic in shared engine; DA deviation with named owner.</td></tr>
-      <tr><td class="mono">G-05</td><td>Batch throughput vs WebMethods unproven at estate volumes.</td><td>Performance risk at cutover.</td><td class="sev-m">Med</td><td>Benchmark peak batch before migrating high-volume flows.</td></tr>
-      <tr><td class="mono">G-06</td><td>Working-day/holiday-calendar scheduling depth to confirm.</td><td>Complex windows may need scheduler.</td><td class="sev-l">Low</td><td>Validate; integrate enterprise scheduler if needed.</td></tr>
-      <tr><td class="mono">G-07</td><td>Non-repudiation/signed-receipt depth vs dedicated MFT to confirm.</td><td>Compliance evidence risk.</td><td class="sev-m">Med</td><td>Confirm receipt/NR capability against requirements.</td></tr>
-      <tr><td class="mono">G-08</td><td>MFT gateway HA topology (vs Atom HA) to confirm.</td><td>Availability risk at edge.</td><td class="sev-m">Med</td><td>Confirm supported gateway clustering with vendor.</td></tr>
-      <tr><td class="mono">G-09</td><td>Enterprise HSM/KMS integration for keys to confirm.</td><td>Key-custody assurance.</td><td class="sev-m">Med</td><td>Confirm HSM/KMS integration pattern.</td></tr>
-      <tr><td class="mono">G-10</td><td>SIEM integration relies on OTel export — confirm coverage.</td><td>Monitoring completeness.</td><td class="sev-l">Low</td><td>Prove OTel → Splunk coverage of MFT events.</td></tr>
-      <tr><td class="mono">G-12</td><td>No automated WebMethods→Boomi migration tooling.</td><td>Migration effort / time.</td><td class="sev-m">Med</td><td>Deliberate re-configuration; sequence by risk.</td></tr>
-      <tr><td class="mono">G-13</td><td>No native CI/CD pipeline for MFT config; promotion dev→test→prod is UI/admin-driven and environment-promotion not fully API-automatable.</td><td>Manual promotion; weak traceability, review, rollback.</td><td class="sev-m">Med</td><td>Build external CI/CD over AtomSphere APIs + DevOps tooling; hold config/routing table in Git; gated, audited promotion.</td></tr>
-      <tr><td class="mono">G-14</td><td>No documented native path to source MFT endpoint/partner credentials from the enterprise password/secrets manager (e.g. CyberArk PAM); Secrets Mgmt Service targets the Integration runtime + cloud vaults, not MFT partner creds.</td><td>Credentials held in MFT store; weaker central rotation &amp; PAM governance.</td><td class="sev-h">High</td><td>Validate MFT credential sourcing with vendor; broker via Integration + secrets service or controlled vault sync; agree with Security.</td></tr>
-    </table>
-  </section>
-
-  <section id="s12">
-    <h2><span class="num">12</span>Design decisions</h2>
-    <table>
-      <tr><th style="width:10%">Ref</th><th style="width:38%">Decision</th><th>Rationale</th></tr>
-      <tr><td class="mono">DD-01</td><td>Adopt Boomi native MFT (Thru) as strategic MFT.</td><td>Single platform/control plane; unifies API/app/file movement; fewer vendors.</td></tr>
-      <tr><td class="mono">DD-02</td><td>Single generic, config-driven MFT engine.</td><td>“Config over construction”; governable, uniform, cheap to scale.</td></tr>
-      <tr><td class="mono">DD-03</td><td>DB-backed config/routing table as single source.</td><td>Consumed by engine, written through the governed onboarding change; auditable and Git-versionable.</td></tr>
-      <tr><td class="mono">DD-04</td><td>Hybrid topology; MFT runtimes on-prem.</td><td>Keeps OFFICIAL payload in the trusted boundary.</td></tr>
-      <tr><td class="mono">DD-05</td><td>Gateway in DMZ; Atoms in trusted zone.</td><td>Standard zoning; minimises attack surface.</td></tr>
-      <tr><td class="mono">DD-06</td><td>PGP mandatory for OFFICIAL(-SENSITIVE) payloads.</td><td>Data protection at rest end to end.</td></tr>
-      <tr><td class="mono">DD-07</td><td>Export audit to long-term archive.</td><td>Native 12-month retention insufficient for statutory needs.</td></tr>
-    </table>
-  </section>
-
-  <section id="s13">
-    <h2><span class="num">13</span>Risks, assumptions, issues, dependencies</h2>
-    <div class="grid2">
-      <div>
-        <h3>Risks</h3>
-        <ul class="tick">
-          <li>Product maturity/roadmap dependence (G-01) could delay relied-upon features.</li>
-          <li>Data residency/assurance for OFFICIAL unresolved could block go-live (G-02a).</li>
-          <li>Throughput at estate batch volumes unproven (G-05).</li>
-        </ul>
-        <h3>Issues</h3>
-        <ul class="tick">
-          <li>Native audit retention default (12 months) below likely statutory requirements — open until archive design agreed.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Assumptions</h3>
-        <ul class="tick">
-          <li>A UK-region/assured control-plane option exists for OFFICIAL.</li>
-          <li>Partners predominantly support SFTP/FTPS/AS2.</li>
-          <li>Enterprise SIEM can ingest OTel; HSM/KMS integration is feasible.</li>
-        </ul>
-        <h3>Dependencies</h3>
-        <ul class="tick">
-          <li>Network/firewall low-level design (DMZ ↔ trusted zone).</li>
-          <li>Enterprise IdP/SSO for operator access (to confirm).</li>
-          <li>Enterprise HSM/KMS for key custody.</li>
-          <li>Enterprise password/secrets manager (e.g. CyberArk) — MFT credential sourcing to validate (G-14).</li>
-          <li>External DevOps/CI-CD tooling + AtomSphere API entitlements for config promotion (G-13).</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="s14">
-    <h2><span class="num">14</span>Open questions for the Design Authority</h2>
-    <p>Each needs a named owner and a decision before build.</p>
-    <table>
-      <tr><th style="width:6%">#</th><th>Question</th><th style="width:14%">Owner</th></tr>
-      <tr><td>1</td><td>Confirmed GA feature set of native MFT at build time (vs roadmap)?</td><td>TBC</td></tr>
-      <tr><td>2</td><td>Control-plane region/assurance for OFFICIAL data residency?</td><td>TBC</td></tr>
-      <tr><td>3</td><td>How is audit exported and retained to meet statutory retention?</td><td>TBC</td></tr>
-      <tr><td>4</td><td>Which partner protocols beyond SFTP/FTPS/AS2 must be supported?</td><td>TBC</td></tr>
-      <tr><td>5</td><td>Supported MFT gateway HA topology?</td><td>TBC</td></tr>
-      <tr><td>6</td><td>HSM/KMS integration pattern for key custody?</td><td>TBC</td></tr>
-      <tr><td>7</td><td>How will MFT configuration be promoted dev→test→prod without a native pipeline — what CI/CD approach (AtomSphere API + DevOps) and who owns it?</td><td>TBC</td></tr>
-      <tr><td>8</td><td>Can MFT endpoint/partner credentials be sourced from the enterprise password/secrets manager (e.g. CyberArk), or must they live in the MFT store — and is that acceptable to Security?</td><td>TBC</td></tr>
-    </table>
-    <div class="callout good">
-      <h4>Sources</h4>
-      <p>Accessed Jul 2026: Boomi — Managed File Transfer product &amp; “What is MFT” pages; Boomi platform release notes (March 2026); Boomi product roadmap (Q2 2026); Boomi MFT documentation (MFT SFTP Server); Thru — MFT Connector for Boomi; Boomi acquisition of Thru announcement (May 2025). Product facts should be re-verified against the live release at build time.</p>
-    </div>
-  </section>
-
-</div>
-
-<footer>
-  OFFICIAL · Solution Design Document — MFT on Boomi (Thru) · v0.1 DRAFT · 20 July 2026 ·
-  <a href="https://odiyo-vimo.github.io/fp/">Integration Catalogue</a>
-</footer>
+  <p class="foot">Generated from a single shared content source · v1.0 · 22 July 2026 · HTML and Word are kept in sync.</p>
+</main>
 </body>
 </html>
