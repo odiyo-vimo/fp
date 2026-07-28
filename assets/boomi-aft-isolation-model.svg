@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="880" viewBox="0 0 1180 880" font-family="Segoe UI,Arial,sans-serif">
+<rect width="1180" height="880" fill="#FFFFFF"/>
+<defs><marker id="arrN" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#12123A"/></marker><marker id="arrNs" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M8,0 L0,3 L8,6 Z" fill="#12123A"/></marker><marker id="arrB" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#2F7DE1"/></marker><marker id="arrBs" markerWidth="10" markerHeight="10" refX="0" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M8,0 L0,3 L8,6 Z" fill="#2F7DE1"/></marker></defs>
+<path d="M 212.0 442.5 L 222.0 442.5 L 222.0 442.5 L 232.0 442.5" fill="none" stroke="#12123A" stroke-width="1.6" marker-end="url(#arrN)"/>
+<text x="48.0" y="34.0" font-family="Segoe UI,Arial,sans-serif" font-size="30" fill="#12123A" font-weight="700" text-anchor="start">boomi</text>
+<text x="48.0" y="68.0" font-family="Segoe UI,Arial,sans-serif" font-size="26" fill="#12123A" font-weight="700" text-anchor="start">Automated file transfer service — isolation model (HLD)</text>
+<rect x="44" y="96" width="150" height="5" rx="0" ry="0" fill="#E24A2E" stroke="#E24A2E" stroke-width="1.6" />
+
+<rect x="40" y="120" width="1120" height="560" rx="10" ry="10" fill="#FFFFFF" stroke="#12123A" stroke-width="2" />
+<text x="48.0" y="139.0" font-family="Segoe UI,Arial,sans-serif" font-size="15" fill="#12123A" font-weight="700" text-anchor="start">SITE  (one base URL, e.g. https://site-eu.example-transfer.com)</text>
+<text x="48.0" y="156.5" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#55607A" font-weight="400" text-anchor="start">Regional deployment — can host one or many instances</text>
+<rect x="70" y="205" width="760" height="440" rx="10" ry="10" fill="#FFFFFF" stroke="#E24A2E" stroke-width="2.2" />
+<text x="78.0" y="224.0" font-family="Segoe UI,Arial,sans-serif" font-size="15" fill="#E24A2E" font-weight="700" text-anchor="start">INSTANCE  (logically isolated tenant)</text>
+<text x="78.0" y="241.0" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#8a5a52" font-weight="400" text-anchor="start">Cannot see or touch another instance’s data</text>
+<rect x="92" y="270" width="120" height="345" rx="10" ry="10" fill="#F4F5F7" stroke="#8A94A6" stroke-width="1.4" stroke-dasharray="8 6" />
+<text x="152.0" y="286.5" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#4a5361" font-weight="700" text-anchor="middle">Org: Finance</text>
+<text x="152.0" y="303.5" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#5b6472" font-weight="400" text-anchor="middle">(collapsed)</text>
+<rect x="690" y="270" width="128" height="345" rx="10" ry="10" fill="#F4F5F7" stroke="#8A94A6" stroke-width="1.4" stroke-dasharray="8 6" />
+<text x="754.0" y="286.5" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#4a5361" font-weight="700" text-anchor="middle">Org: Logistics</text>
+<text x="754.0" y="303.5" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#5b6472" font-weight="400" text-anchor="middle">(collapsed)</text>
+<rect x="232" y="270" width="440" height="345" rx="10" ry="10" fill="#F3EEF8" stroke="#6B2C91" stroke-width="2" />
+<text x="240.0" y="287.5" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" fill="#6B2C91" font-weight="700" text-anchor="start">ORGANIZATION: Partner-X</text>
+<text x="240.0" y="304.0" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6a5a76" font-weight="400" text-anchor="start">Scoped access boundary within the instance</text>
+<rect x="252" y="352" width="124" height="180" rx="10" ry="10" fill="#FFFFFF" stroke="#6B2C91" stroke-width="1.4" />
+<text x="314.0" y="369.0" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#6B2C91" font-weight="700" text-anchor="middle">Endpoints</text>
+<text x="314.0" y="401.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">SFTP, HTTPS,</text>
+<text x="314.0" y="417.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">AWS S3</text>
+<text x="314.0" y="433.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">connection</text>
+<text x="314.0" y="449.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">points</text>
+<rect x="388" y="352" width="118" height="180" rx="10" ry="10" fill="#FFFFFF" stroke="#6B2C91" stroke-width="1.4" />
+<text x="447.0" y="369.0" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#6B2C91" font-weight="700" text-anchor="middle">Users</text>
+<text x="447.0" y="401.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">Human</text>
+<text x="447.0" y="417.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">accounts,</text>
+<text x="447.0" y="433.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">role-based</text>
+<text x="447.0" y="449.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">access</text>
+<rect x="518" y="352" width="124" height="180" rx="10" ry="10" fill="#FFFFFF" stroke="#6B2C91" stroke-width="1.4" />
+<text x="580.0" y="369.0" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#6B2C91" font-weight="700" text-anchor="middle">Machine users</text>
+<text x="580.0" y="401.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">Service / API</text>
+<text x="580.0" y="417.0" font-family="Segoe UI,Arial,sans-serif" font-size="11" fill="#1A1A2E" font-weight="400" text-anchor="middle">accounts</text>
+<text x="258.0" y="571.5" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6B2C91" font-weight="400" text-anchor="start">All scoped to exactly one organization</text>
+<text x="224.0" y="315.5" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#55607A" font-weight="400" text-anchor="end">source →</text>
+<text x="224.0" y="332.0" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#55607A" font-weight="400" text-anchor="end">target</text>
+<rect x="858" y="205" width="282" height="200" rx="10" ry="10" fill="#F4F5F7" stroke="#8A94A6" stroke-width="1.4" stroke-dasharray="8 6" />
+<text x="999.0" y="223.0" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#4a5361" font-weight="700" text-anchor="middle">Instance B</text>
+<text x="999.0" y="240.5" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#5b6472" font-weight="400" text-anchor="middle">(isolated, collapsed)</text>
+<rect x="858" y="430" width="282" height="215" rx="10" ry="10" fill="#F4F5F7" stroke="#8A94A6" stroke-width="1.4" stroke-dasharray="8 6" />
+<text x="999.0" y="448.0" font-family="Segoe UI,Arial,sans-serif" font-size="14" fill="#4a5361" font-weight="700" text-anchor="middle">Instance C</text>
+<text x="999.0" y="465.5" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#5b6472" font-weight="400" text-anchor="middle">(isolated, collapsed)</text>
+<text x="48.0" y="717.5" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" fill="#2b3444" font-weight="400" text-anchor="start">A single site can host one or many logically isolated instances, each fully walled off from the others.</text>
+<text x="48.0" y="736.0" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" fill="#2b3444" font-weight="400" text-anchor="start">Within an instance, organizations represent the businesses or partners exchanging files, and every</text>
+<text x="48.0" y="754.5" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" fill="#2b3444" font-weight="400" text-anchor="start">endpoint, user, and machine user is scoped to its own organization only.</text>
+<rect x="40" y="772" width="1120" height="2" rx="0" ry="0" fill="#8A94A6" stroke="#8A94A6" stroke-width="1.6" />
+
+<text x="48.0" y="800.8" font-family="Segoe UI,Arial,sans-serif" font-size="12.8" text-anchor="start"><tspan fill="#12123A" font-weight="700">Site:</tspan><tspan fill="#2b3444"> one regional deployment, addressed by a single base URL, that can host one or many instances.</tspan></text>
+<text x="48.0" y="822.8" font-family="Segoe UI,Arial,sans-serif" font-size="12.8" text-anchor="start"><tspan fill="#12123A" font-weight="700">Instance:</tspan><tspan fill="#2b3444"> a logically isolated tenant — cannot see or touch another instance’s data, configuration, or users.</tspan></text>
+<text x="48.0" y="844.8" font-family="Segoe UI,Arial,sans-serif" font-size="12.8" text-anchor="start"><tspan fill="#12123A" font-weight="700">Organization:</tspan><tspan fill="#2b3444"> an entity (business unit or trading partner) within an instance that owns its own connections, flows, and keys.</tspan></text>
+<text x="48.0" y="866.8" font-family="Segoe UI,Arial,sans-serif" font-size="12.8" text-anchor="start"><tspan fill="#12123A" font-weight="700">Endpoints / Users / Machine users:</tspan><tspan fill="#2b3444"> an org’s connection points, human accounts, and service accounts — each scoped to that organization only.</tspan></text>
+</svg>

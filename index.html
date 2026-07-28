@@ -3,69 +3,74 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Boomi MFT — Proof-of-Concept Connectivity Question Set</title>
+<title>Boomi File-Transfer & File-Sharing — HLD Diagrams (draw.io)</title>
 <style>
-  :root{--navy:#1f3a5f;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;--bg:#f6f8fb;--red:#b4232b;--amber:#8a5a00;}
+  :root{--navy:#12123A;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;--bg:#f6f8fb;--red:#E24A2E;--purple:#6B2C91;--amber:#8a5a00;}
   *{box-sizing:border-box}
   body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
   a{color:var(--accent)}
   .dlbar{position:sticky;top:0;z-index:200;background:var(--navy);color:#fff;display:flex;flex-wrap:wrap;
-         gap:10px;align-items:center;padding:12px 22px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-  .dlbar .lbl{font-weight:700;letter-spacing:.3px;margin-right:6px;font-size:14px}
-  .dlbar a{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--navy);text-decoration:none;
-           font-weight:600;font-size:13.5px;padding:8px 14px;border-radius:7px;border:1px solid #dfe7f1;transition:.15s}
+         gap:9px;align-items:center;padding:11px 20px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+  .dlbar .lbl{font-weight:700;letter-spacing:.3px;margin-right:4px;font-size:13.5px}
+  .dlbar .grp{font-size:11.5px;opacity:.7;text-transform:uppercase;letter-spacing:.5px;margin:0 2px 0 8px}
+  .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--navy);text-decoration:none;
+           font-weight:600;font-size:12.8px;padding:7px 12px;border-radius:7px;border:1px solid #dfe7f1;transition:.15s}
   .dlbar a:hover{background:var(--light);transform:translateY(-1px)}
   .dlbar a.alt{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
   .dlbar a.alt:hover{background:rgba(255,255,255,.12)}
-  header{position:sticky;top:54px;z-index:150;background:linear-gradient(120deg,var(--navy),var(--accent));color:#fff;padding:30px 26px;border-bottom:3px solid #17314f}
-  header h1{margin:0 0 6px;font-size:26px}
+  header{position:sticky;top:50px;z-index:150;background:linear-gradient(120deg,var(--navy),#2b2b6a);color:#fff;padding:28px 26px;border-bottom:3px solid #0c0c28}
+  header h1{margin:0 0 6px;font-size:25px}
   header p{margin:0;opacity:.92;font-size:15px}
   .meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
   .meta span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:3px 10px;border-radius:20px;font-size:12.5px}
-  main{max-width:1080px;margin:0 auto;padding:26px 20px 80px}
+  main{max-width:1180px;margin:0 auto;padding:26px 20px 80px}
   section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin:18px 0;box-shadow:0 1px 3px rgba(20,40,70,.05)}
   h2{color:var(--navy);border-left:5px solid var(--accent);padding-left:12px;margin:.2em 0 .7em;font-size:20px}
-  h3{color:var(--navy);margin:.6em 0 .3em;font-size:16px}
-  p{margin:.4em 0}
+  h3{color:var(--navy);margin:.7em 0 .3em;font-size:16px}
+  p{margin:.5em 0}
   ul{margin:.4em 0 .4em 0;padding-left:4px;list-style:none}
-  li{margin:.34em 0;padding-left:26px;position:relative}
-  li.q::before{content:"Q";position:absolute;left:0;top:0;color:var(--accent);font-weight:700;font-size:13px}
-  li.plain::before{content:"›";position:absolute;left:6px;top:0;color:var(--accent);font-weight:700}
-  table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:13.6px}
+  li{margin:.34em 0;padding-left:24px;position:relative}
+  li::before{content:"›";position:absolute;left:6px;top:0;color:var(--accent);font-weight:700}
+  .fig{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px;margin:12px 0;overflow:auto}
+  .fig img{display:block;width:100%;height:auto;min-width:760px}
+  .figcap{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+          font-size:13px;color:var(--muted);margin:6px 4px 2px}
+  .figcap a{font-weight:600}
+  .pill{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:20px;border:1px solid var(--line);color:var(--navy);background:var(--light);margin-right:4px}
+  .callout{background:var(--light);border:1px solid #cddcf0;border-left:5px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0}
+  .callout.amber{border-left-color:var(--amber);background:#fbf5e8}
+  .callout h4{margin:0 0 6px;font-size:14.5px;color:var(--navy)}
+  .callout.amber h4{color:var(--amber)}
+  table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:13.4px}
   th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
   th{background:var(--navy);color:#fff;font-weight:600}
   tr:nth-child(even) td{background:#f3f7fc}
   td.k{font-weight:600;color:var(--navy)}
-  .callout{background:var(--light);border:1px solid #cddcf0;border-left:5px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0}
-  .callout.red{border-left-color:var(--red);background:#fbeeef}
-  .callout.amber{border-left-color:var(--amber);background:#fbf5e8}
-  .callout h4{margin:0 0 6px;font-size:14.5px}
-  .callout.red h4{color:var(--red)}
-  .callout.amber h4{color:var(--amber)}
-  .flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#fbfcfe;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:10px 0;font-size:14px}
-  .node{background:var(--navy);color:#fff;padding:6px 12px;border-radius:7px;font-weight:600;font-size:13px}
-  .node.saas{background:var(--accent)}
-  .node.zone{background:var(--red)}
-  .arr{color:var(--muted);font-weight:700}
-  .tag{display:inline-block;background:var(--light);border:1px solid #cddcf0;color:var(--navy);font-size:12px;padding:1px 8px;border-radius:20px;margin:0 3px 3px 0}
-  .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
   code{background:#eef3f9;padding:1px 6px;border-radius:5px;font-size:13px}
-  @media(max-width:600px){header{top:104px}.dlbar{padding:10px 14px}}
+  .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+  @media(max-width:640px){header{top:118px}.dlbar{padding:9px 12px}}
 </style>
 </head>
 <body>
 
 <div class="dlbar">
   <span class="lbl">⬇ Downloads</span>
-  <a href="assets/mft-poc-connectivity-question-set.docx" download>📄 POC Connectivity Question Set (Word)</a>
+  <span class="grp">Isolation model</span>
+  <a href="assets/boomi-aft-isolation-model.drawio" download>✎ draw.io</a>
+  <a href="assets/boomi-aft-isolation-model.svg" download>🖼 SVG</a>
+  <a href="assets/boomi-aft-isolation-model.png" download>🖼 PNG</a>
+  <span class="grp">Software architecture</span>
+  <a href="assets/boomi-file-sharing-architecture.drawio" download>✎ draw.io</a>
+  <a href="assets/boomi-file-sharing-architecture.svg" download>🖼 SVG</a>
+  <a href="assets/boomi-file-sharing-architecture.png" download>🖼 PNG</a>
   <a href="assets/docs.zip" download class="alt">🗜 All deliverables (zip)</a>
 </div>
 
 <header>
-  <h1>Boomi MFT — Proof-of-Concept Connectivity &amp; File-Transfer Question Set</h1>
-  <p>Discovery &amp; readiness checklist to run before building the two connectivity proofs of concept on Boomi native MFT.</p>
+  <h1>Boomi File-Transfer &amp; File-Sharing — HLD Diagrams (editable draw.io)</h1>
+  <p>Faithful, editable recreations of the two Boomi high-level design diagrams, published as vector draw.io sources with SVG/PNG renders.</p>
   <div class="meta">
-    <span>v1.0</span><span>28 July 2026</span><span>Integration Architecture</span><span>Boomi native MFT (Thru)</span><span>OFFICIAL — Programme Working Document</span>
+    <span>v1.0</span><span>28 July 2026</span><span>Integration Architecture</span><span>Boomi native MFT (Thru)</span><span>Reference / vendor HLD</span>
   </div>
 </header>
 
@@ -74,199 +79,88 @@
   <section>
     <h2>How to use this page</h2>
     <ul>
-      <li class="plain">This page is the discovery checklist to run <strong>before</strong> building either proof of concept. It mirrors the downloadable Word document exactly — use the <strong>sticky download bar</strong> at the very top to pull the Word version (the artefact to circulate for the kick-off) or the full zip bundle.</li>
-      <li class="plain">Items marked <strong>Q</strong> are questions to put to the platform, network or security owner. Items in the <strong>red / amber boxes</strong> are open <strong>decisions that need a named owner before build</strong> — raised proactively, not deferred. They are collected in the <a href="#reg">decisions register</a>.</li>
-      <li class="plain">Two flows are in scope and are assessed <strong>independently</strong>. The two pages to take into the kick-off are the <a href="#reg">decisions register (§10)</a> and the <a href="#grid">per-endpoint grid (§11)</a>.</li>
-      <li class="plain"><strong>The single biggest determinant of the second POC’s feasibility and timeline is runtime placement plus the inbound firewall change — start those conversations first.</strong></li>
+      <li>This page holds two <strong>editable draw.io recreations</strong> of the supplied Boomi HLD screenshots: the <strong>Automated File Transfer isolation model</strong> and the <strong>File Sharing software architecture</strong>. Each is rendered inline below and downloadable from the <strong>sticky bar at the very top</strong>.</li>
+      <li>For each diagram the bar offers three formats: <span class="pill">✎ draw.io</span> the editable source (open at <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a> → <em>File ▸ Open</em>, or drag the file in), <span class="pill">🖼 SVG</span> a crisp vector for docs/slides, and <span class="pill">🖼 PNG</span> a raster for quick paste.</li>
+      <li>To edit live from this site, use the <strong>“Open in editor”</strong> link under each figure — it loads the published <code>.drawio</code> straight into the diagrams.net viewer/editor.</li>
+      <li><strong>Single source of truth:</strong> the <code>.drawio</code>, <code>.svg</code> and <code>.png</code> for each diagram are all generated from one geometry model, so the editable source and the rendered images cannot drift apart. Geometry is validated programmatically (zero sibling-box overlaps, all connectors resolve) before publishing.</li>
+      <li>These are <strong>faithful transcriptions of the vendor HLDs</strong> — labels, tiers and groupings match the originals. They are reference artefacts; see the decision note in §3 before treating either as a target design.</li>
     </ul>
   </section>
 
   <section>
-    <h2>The two proof-of-concept flows</h2>
-    <div class="flow">
-      <span class="tag">POC-1 · SaaS → SaaS</span>
-      <span class="node saas">Quadient (SaaS)</span><span class="arr">──▶</span>
-      <span class="node">Boomi native MFT</span><span class="arr">──▶</span>
-      <span class="node saas">Toxus (SaaS)</span>
-      <span style="width:100%;color:var(--muted);font-size:13px">Most likely public-internet path; the lower-risk of the two.</span>
+    <h2>1 · Automated file transfer service — isolation model (HLD)</h2>
+    <p>The tenancy/isolation hierarchy for the automated file-transfer service: a <strong>Site</strong> (one regional base URL) hosts one or many logically isolated <strong>Instances</strong>; within an instance, <strong>Organizations</strong> form the scoped access boundary; and each organization owns its own <strong>Endpoints</strong>, <strong>Users</strong> and <strong>Machine users</strong>.</p>
+    <div class="fig">
+      <img src="assets/boomi-aft-isolation-model.svg" alt="Automated file transfer service isolation model — Site containing Instances, Organizations, and scoped Endpoints/Users/Machine users"/>
     </div>
-    <div class="flow">
-      <span class="tag">POC-2 · SaaS → internal</span>
-      <span class="node saas">Cloud SaaS source</span><span class="arr">──▶</span>
-      <span class="node">Boomi native MFT</span><span class="arr">──▶</span>
-      <span class="node zone">Internal landing zone</span>
-      <span style="width:100%;color:var(--muted);font-size:13px">Crosses the trust boundary into the internal network — materially harder; drives the critical-path decisions below.</span>
+    <div class="figcap">
+      <span>Faithful recreation · single-source draw.io/SVG/PNG</span>
+      <a href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-aft-isolation-model.drawio" target="_blank" rel="noopener">↗ Open in editor</a>
     </div>
-    <p style="color:var(--muted);font-size:13.5px;margin-top:8px">Endpoints to interrogate: <strong>Quadient</strong>, <strong>Toxus</strong>, the <strong>cloud SaaS source</strong>, and the <strong>internal landing zone</strong>.</p>
-  </section>
-
-  <section>
-    <h2>1 · POC scope &amp; success criteria</h2>
-    <p>Pin these down first — an undefined pass condition is the most common reason a POC “succeeds” but proves nothing usable.</p>
+    <h3>What the model asserts</h3>
     <ul>
-      <li class="q">What single sentence defines “POC passed” for each flow? (e.g. a synthetic file transfers end-to-end, integrity verified by checksum, and an audit record is produced.)</li>
-      <li class="q">Is the goal connectivity only, or must the POC also demonstrate pattern fit (config-over-construction), the security controls, and operational fit (logging, alerting, audit)?</li>
-      <li class="q">Are the two flows assessed separately, or must the second chain from the first? Confirm they are decoupled.</li>
-      <li class="q">Which environment does each endpoint expose — non-production or production only? Confirm both POCs run in non-prod.</li>
-      <li class="q">What is the time-box and hard exit date, and who owns the overall POC?</li>
-      <li class="q">What evidence pack do stakeholders need to declare a pass (logs, checksums, audit record, screenshots)? Agree the format up front — the evidence is itself a deliverable.</li>
+      <li><strong>Site</strong> — one regional deployment, addressed by a single base URL, that can host one or many instances.</li>
+      <li><strong>Instance</strong> — a logically isolated tenant: it cannot see or touch another instance’s data, configuration or users (shown by the collapsed Instances B and C).</li>
+      <li><strong>Organization</strong> — a business unit or trading partner within an instance that owns its own connections, flows and keys; the <em>source → target</em> path is scoped within it.</li>
+      <li><strong>Endpoints / Users / Machine users</strong> — an org’s connection points (SFTP, HTTPS, AWS S3), human accounts (role-based), and service/API accounts — each scoped to exactly one organization.</li>
     </ul>
   </section>
 
   <section>
-    <h2>2 · Endpoints &amp; protocols (ask per endpoint)</h2>
-    <p>Repeat for each of the four endpoints.</p>
-    <ul>
-      <li class="q">What transfer protocol does the endpoint support — SFTP, FTPS, AS2, HTTPS/REST, S3/blob, or a Boomi native MFT client?</li>
-      <li class="q">Does it act as a server (we connect to it) or a client (it connects to us)? i.e. who initiates the connection?</li>
-      <li class="q">Is the model push or pull — do we poll a directory, receive a webhook, or get pushed to?</li>
-      <li class="q">Is the host/port/URL a stable static value, or dynamically provisioned?</li>
-      <li class="q">Is there a Boomi-native / MFT connector, or do we use the generic SFTP / HTTP connector?</li>
-    </ul>
-    <h3>Platform-specific</h3>
-    <ul>
-      <li class="q"><strong>Quadient</strong> — which product and edition (Inspire / Impress / Cloud)? What does it expose for outbound — an SFTP drop, an output-management dispatch, or an API? Does it push, or must we pull?</li>
-      <li class="q"><strong>Toxus</strong> — what is the documented ingress mechanism, and are there payload/format constraints on inbound files?</li>
-      <li class="q"><strong>Cloud SaaS source</strong> — confirm the platform, its egress mechanism, and whether it can target a private endpoint or only a public one.</li>
-      <li class="q"><strong>Internal landing zone</strong> — is it an SFTP server, a file share, an object store (S3/blob), or a directory? Who technically owns it?</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>3 · Connectivity &amp; network path</h2>
-    <h3>POC-1 — SaaS → SaaS (Quadient → Toxus)</h3>
-    <ul>
-      <li class="q">Does traffic traverse the public internet, or is a private interconnect available/required?</li>
-      <li class="q">Does either platform enforce IP allow-listing? If so, we must supply our egress IPs and obtain theirs.</li>
-      <li class="q">What are the static egress IPs of the Boomi runtime (Atom Cloud region vs local Atom), and are they guaranteed stable?</li>
-      <li class="q">Any data-residency constraint that fixes the runtime region (e.g. UK)?</li>
-    </ul>
-    <h3>POC-2 — Cloud SaaS → internal landing zone (the hard path)</h3>
-    <div class="callout red">
-      <h4>★ Decision — runtime placement is the critical dependency</h4>
-      <p>To reach an internal landing zone you almost certainly need a <strong>local Atom/Molecule inside the network zone</strong>, OR a <strong>private circuit</strong> (VPN / ExpressRoute / Direct Connect / PrivateLink) from the Atom Cloud. Which one is decided here — and it drives feasibility, cost and timeline more than anything else in this document. <em>Owner: Network / Platform Engineering — resolve before any build.</em></p>
+    <h2>2 · File Sharing — software architecture (HLD)</h2>
+    <p>The layered software architecture for the file-sharing capability: client channels on the left cross a <strong>firewall</strong> into the entry layer (web portal, public APIs, SMTP, protocol servers), through the <strong>business object layer</strong> and <strong>data access layer</strong> to <strong>MS SQL</strong> (routing + multi-tenant site DBs), with supporting <strong>data</strong> and <strong>filesystem microservices</strong>, storage tiers, and cross-cutting security.</p>
+    <div class="fig">
+      <img src="assets/boomi-file-sharing-architecture.svg" alt="File sharing software architecture — clients, firewall, entry layer, business object layer, data access layer, MS SQL, microservices, storage and security"/>
     </div>
-    <ul>
-      <li class="q">Where does the Boomi runtime execute — local Atom in-zone, or Atom Cloud over a private circuit?</li>
-      <li class="q">Which trust zone is the landing zone in, and what perimeter controls sit in front (firewall, reverse proxy, WAF, ICAP/AV)?</li>
-      <li class="q">The flow is inbound to the zone — does the direction of connection initiation align with firewall policy? Inbound into the estate is typically restricted, so the internal side may need to pull, or a DMZ broker may be required.</li>
-      <li class="q">Is there an existing DMZ / landing-zone edge (e.g. an SFTP perimeter) we should target instead of the internal host directly?</li>
-      <li class="q">Firewall change: source IPs, destination host/port and protocol — who owns the rule, and what is the lead time? (Usually the critical-path item — start it now.)</li>
-      <li class="q">DNS — can the runtime resolve the landing-zone host? Is split-horizon DNS in play?</li>
-      <li class="q">Is there an egress proxy in the zone, and does it require authentication?</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>4 · Authentication &amp; credentials (ask per endpoint)</h2>
-    <ul>
-      <li class="q">What auth method — SSH key pair (SFTP), mTLS / client certificate, OAuth2 client-credentials, API key, AS2 certificates, or username/password?</li>
-      <li class="q">Whose keys/certs, and what is the exchange process and lead time (public-key swap, CA-signed vs self-signed, expiry dates)?</li>
-      <li class="q">For SFTP — do we have the server host-key fingerprint to pin, to prevent a man-in-the-middle?</li>
-      <li class="q">Where are secrets stored for the POC — Boomi secure vault, or CyberArk PAM? PAM is a flagged platform gap (G-14); confirm it is available, or agree a documented interim secret store with an exception.</li>
-      <li class="q">Who owns each credential, and what is the rotation/revocation plan (including revocation at teardown)?</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>5 · Security, data classification &amp; compliance</h2>
-    <div class="callout red">
-      <h4>★ Decision — synthetic data only, especially into the internal zone</h4>
-      <p>For a connectivity POC there is no reason to move real data. Insist on <strong>synthetic / anonymised</strong> files with no PII or taxpayer data — most critically for the flow into the internal zone. Get this stated and owned before a single file moves. <em>Owner: Data Protection / Information Assurance.</em></p>
+    <div class="figcap">
+      <span>Faithful recreation · single-source draw.io/SVG/PNG</span>
+      <a href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-file-sharing-architecture.drawio" target="_blank" rel="noopener">↗ Open in editor</a>
     </div>
+    <h3>Tiers captured</h3>
     <ul>
-      <li class="q">What data is in the sample file? Confirm it is synthetic / anonymised.</li>
-      <li class="q">What is the data classification (OFFICIAL / OFFICIAL-SENSITIVE), and is that classification permitted to traverse SaaS-to-SaaS over the public internet?</li>
-      <li class="q">Encryption in transit — what TLS version floor and cipher policy is mandated at each hop?</li>
-      <li class="q">Is file-level encryption (PGP/GPG) required on top of transport, and who holds the keys?</li>
-      <li class="q">Encryption at rest — required at each hop and in the landing zone?</li>
-      <li class="q">AV/malware scanning on ingress to the internal zone — via Windows MDE (~250 MB scan limit, flagged gap G-15) or an ICAP service? Is the sample file within the scan limit?</li>
-      <li class="q">Are DLP controls enforced on the landing zone that could quarantine the file?</li>
-      <li class="q">Is a DPIA, security assessment or formal risk acceptance required before any file (even synthetic) crosses into the internal zone, and who signs it?</li>
+      <li><strong>Client channels</strong> — user (web/mobile), apps &amp; add-ins (Office/Outlook, Salesforce, mobile), external enterprise applications, and external SFTP/FTPS protocol clients; secure email with file links.</li>
+      <li><strong>Firewall</strong> — trust boundary between external clients and the entry layer.</li>
+      <li><strong>Entry layer</strong> — Web Portal (SAML 2.0 SSO), Public APIs (SOAP/REST), SMTP, and the SFTP/FTPS protocol-server transport microservices.</li>
+      <li><strong>Business object layer</strong> — virtual file system, users/groups, email objects, policies, options.</li>
+      <li><strong>Data access layer → MS SQL</strong> — routing DB plus multi-tenant site DBs.</li>
+      <li><strong>Data microservices</strong> — notification/alert, CRM integration, file retention, user-account expiration; plus audit dashboards and billing.</li>
+      <li><strong>Storage &amp; filesystem microservices</strong> — virtual storage/DB schema and cloud storage, with file-purge and antivirus integration.</li>
+      <li><strong>Security</strong> — MFA (email/TOTP/SMS), password policies, brute-force protection, RBAC, file-system permissions.</li>
     </ul>
   </section>
 
   <section>
-    <h2>6 · File handling &amp; integrity</h2>
-    <ul>
-      <li class="q">What is the file format, size, encoding and naming convention?</li>
-      <li class="q">How is completeness detected so a partial file is never processed — trailing sentinel (<code>.done</code>), rename-on-complete, or size-stable polling?</li>
-      <li class="q">How is integrity verified — is a checksum/hash (SHA-256) captured at source and re-verified at target? Is a manifest provided?</li>
-      <li class="q">How are duplicates and re-sends handled (idempotency)?</li>
-      <li class="q">Is any character-set or line-ending transformation needed between the platforms?</li>
-      <li class="q">For the POC — a single file, or a small batch to also prove polling/looping?</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>7 · Boomi runtime &amp; MFT capability</h2>
+    <h2>3 · Architecture notes &amp; decisions to own</h2>
+    <p>Raised proactively so they are not carried silently into downstream design work.</p>
     <div class="callout amber">
-      <h4>★ Decision — is the POC disposable, or must it demonstrate config-over-construction?</h4>
-      <p>If each transfer is hand-built as a bespoke process, the POC proves connectivity but nothing about the target design. Agree up front whether the POC must map each transfer to a <strong>configuration row on the single generic MFT engine</strong> — otherwise it validates the wrong thing. <em>Owner: Integration Architecture.</em></p>
+      <h4>★ Decision — reference model vs target design</h4>
+      <p>Both diagrams are <strong>vendor HLDs</strong> describing how the Boomi file-transfer / file-sharing product is internally structured. Before either is cited in programme architecture, agree whether it is being used as a <strong>reference</strong> (explanatory) or a <strong>target</strong> (something we build/operate to). Only the former is safe to reuse as-is. <em>Owner: Integration Architecture.</em></p>
     </div>
-    <ul>
-      <li class="q">Which Boomi runtime and version, and is native MFT (Thru-powered) the capability under test, or generic SFTP/HTTP connectors? Be explicit — test the thing you will actually build on.</li>
-      <li class="q">Is native MFT licensed/entitled in the POC environment?</li>
-      <li class="q">Does each transfer map to a config row on the generic engine, or is it a throwaway build?</li>
-      <li class="q">Where is the Atom placed (cloud vs local), and does that match the network path in §3?</li>
-    </ul>
+    <div class="callout amber">
+      <h4>★ Decision — reconcile with config-over-construction</h4>
+      <p>The isolation model maps cleanly to the standing principle — each approved interface should be an <strong>Organization/endpoint configuration</strong>, not a bespoke build. Confirm the target provisioning approach expresses new transfers as <strong>config rows</strong> (org → endpoints/users/machine users), not new components, so the vendor model and our engine stay aligned. <em>Owner: Integration Architecture.</em></p>
+    </div>
+    <div class="callout">
+      <h4>Security controls to map to programme standards</h4>
+      <p>The file-sharing HLD names MFA (email/TOTP/SMS), RBAC and brute-force protection. These should be mapped to the programme’s auth/SSO position (note the deferred SSO/governance decision and the local-auth MVP risk) and to secret-store expectations (PAM gap G-14). <em>Owner: Platform Security.</em></p>
+    </div>
   </section>
 
   <section>
-    <h2>8 · Observability, error handling &amp; operations</h2>
+    <h2>4 · How these were produced</h2>
     <ul>
-      <li class="q">Where do success/failure events surface — is Dynatrace wired in for the POC, per the estate standard?</li>
-      <li class="q">Is failure alerting configured for the POC?</li>
-      <li class="q">What is the retry/resubmission behaviour on transient failure?</li>
-      <li class="q">Is a governance-grade audit trail produced (who/what/when for each transfer)? This is a required evidence artefact.</li>
+      <li>Each diagram is emitted from a single Python geometry model into three artefacts: <code>.drawio</code> (mxGraph XML, editable), <code>.svg</code> (vector), <code>.png</code> (raster) — guaranteeing the editable source and the images match.</li>
+      <li>Before publishing, geometry is validated automatically: no overlapping sibling boxes, correct containment, and every connector resolves to real nodes. The draw.io XML is checked for well-formedness.</li>
+      <li>Reference copies of every deliverable live in <code>docs/</code>; <code>assets/docs.zip</code> bundles them and is refreshed on each update.</li>
     </ul>
-  </section>
-
-  <section>
-    <h2>9 · Governance, approvals &amp; exit</h2>
-    <ul>
-      <li class="q">Is change approval (CAB) required for the firewall/network change into the internal zone, and what is the lead time?</li>
-      <li class="q">Who are the named approvers — security, network, data protection, and each platform owner?</li>
-      <li class="q">Who signs off the POC as passed, against the criteria agreed in §1?</li>
-      <li class="q">What is the teardown plan — revoke credentials, remove firewall rules, delete synthetic data — and who owns it?</li>
-    </ul>
-  </section>
-
-  <section id="reg">
-    <h2>10 · Decisions register — owners required before build</h2>
-    <p>Raise these proactively at kick-off. Each needs a named owner and a resolution date before the corresponding build task starts.</p>
     <table>
-      <tr><th style="width:32%">Decision</th><th style="width:44%">Why it matters</th><th style="width:24%">Owner (to confirm)</th></tr>
-      <tr><td class="k">D1 · POC-2 runtime placement (local Atom vs private circuit)</td><td>Determines whether the internal zone is reachable at all; drives cost and timeline more than any other item.</td><td>Network / Platform</td></tr>
-      <tr><td class="k">D2 · Synthetic data only into internal zone</td><td>Moving real/PII data in a connectivity POC is unnecessary risk and may block sign-off.</td><td>Data Protection</td></tr>
-      <tr><td class="k">D3 · Direction of connection into the zone</td><td>Inbound to the estate is usually blocked — may force internal-pull or a DMZ broker.</td><td>Network Security</td></tr>
-      <tr><td class="k">D4 · Disposable POC vs config-over-construction</td><td>If hand-built, the POC proves nothing about the target pattern.</td><td>Integration Architecture</td></tr>
-      <tr><td class="k">D5 · Firewall change lead time</td><td>Typically the critical path; must start immediately.</td><td>Network</td></tr>
-      <tr><td class="k">D6 · AV scan limit (G-15, ~250 MB) vs file size</td><td>Oversized files silently bypass or fail scanning at ingress.</td><td>Platform Security</td></tr>
-      <tr><td class="k">D7 · PAM availability for POC secrets (G-14)</td><td>If PAM is unavailable, an exception + interim vault must be agreed.</td><td>Platform Security</td></tr>
-      <tr><td class="k">D8 · Success criteria &amp; evidence pack</td><td>Without a defined pass condition the POC cannot be signed off.</td><td>POC Owner</td></tr>
+      <tr><th>Deliverable</th><th>Editable</th><th>Vector</th><th>Raster</th></tr>
+      <tr><td class="k">Automated file transfer — isolation model</td><td>boomi-aft-isolation-model.drawio</td><td>.svg</td><td>.png</td></tr>
+      <tr><td class="k">File Sharing — software architecture</td><td>boomi-file-sharing-architecture.drawio</td><td>.svg</td><td>.png</td></tr>
     </table>
   </section>
 
-  <section id="grid">
-    <h2>11 · Per-endpoint quick-reference grid</h2>
-    <p>Capture one column per endpoint at kick-off. Blank cells are the discovery gaps to close.</p>
-    <table>
-      <tr><th>Attribute</th><th>Quadient (src)</th><th>Toxus (tgt)</th><th>Cloud SaaS (src)</th><th>Landing zone (tgt)</th></tr>
-      <tr><td class="k">Protocol (SFTP/AS2/HTTPS/…)</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Server or client?</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Push or pull?</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Public or private path?</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Auth method</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Key/cert exchange owner</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">IP allow-list needed?</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Secret store (vault/PAM)</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Env (non-prod/prod)</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td class="k">Named owner</td><td></td><td></td><td></td><td></td></tr>
-    </table>
-  </section>
-
-  <p class="foot">Generated 28 July 2026 · Boomi native MFT (Thru) · OFFICIAL — Programme Working Document. This page mirrors the Word deliverable in the download bar and is the checklist to take into the POC kick-off.</p>
+  <p class="foot">Generated 28 July 2026 · Faithful draw.io recreations of Boomi HLD diagrams · single-source (drawio/svg/png) · Integration Architecture working artefacts. Use the sticky bar above to download the editable sources.</p>
 
 </main>
 </body>
