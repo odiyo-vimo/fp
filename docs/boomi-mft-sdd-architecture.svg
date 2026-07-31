@@ -1,87 +1,129 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 1120" font-family="Segoe UI,-apple-system,Roboto,Helvetica,Arial,sans-serif">
-<rect x="0" y="0" width="1520" height="1120" fill="#ffffff"/>
-<defs><marker id="be" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#3f6fc4"/></marker><marker id="bs" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto"><path d="M9,0 L0,5 L9,10 z" fill="#3f6fc4"/></marker><marker id="pe" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 z" fill="#8073a8"/></marker><marker id="ps" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto"><path d="M9,0 L0,5 L9,10 z" fill="#8073a8"/></marker></defs>
-<rect x="150" y="170" width="1240" height="470" rx="2" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3"/>
-<text x="172" y="208" font-size="15" font-weight="700" fill="#33373b">External estate</text>
-<rect x="150" y="740" width="1240" height="330" rx="2" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3"/>
-<text x="172" y="778" font-size="15" font-weight="700" fill="#33373b">Internal estate</text>
-<path d="M92,690 L1428,690" stroke="#9a9a9a" stroke-width="1.4" stroke-dasharray="3 5"/>
-<rect x="235" y="235" width="200" height="170" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="250" y="262" font-size="13" font-weight="700" fill="#33373b">External Consumers</text>
-<rect x="262" y="290" width="146" height="96" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="386" y="298" width="16" height="13" rx="1"/><rect x="382" y="300" width="7" height="3.4"/><rect x="382" y="305.5" width="7" height="3.4"/></g>
-<text x="335.0" y="330.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">3rd Party Consumers</text>
-<text x="335.0" y="346.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">/ OGDs</text>
-<rect x="470" y="235" width="210" height="170" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="485" y="262" font-size="13" font-weight="700" fill="#33373b">Digital services</text>
-<rect x="505" y="292" width="140" height="92" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="623" y="300" width="16" height="13" rx="1"/><rect x="619" y="302" width="7" height="3.4"/><rect x="619" y="307.5" width="7" height="3.4"/></g>
-<text x="575.0" y="338.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">MDTP</text>
-<rect x="715" y="235" width="610" height="170" rx="2" fill="#f2ddbf" stroke="#cca06a" stroke-width="1.3"/>
-<text x="730" y="262" font-size="13" font-weight="700" fill="#33373b">SaaS systems (native iPaaS)</text>
-<rect x="730" y="282" width="138" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="846" y="290" width="16" height="13" rx="1"/><rect x="842" y="292" width="7" height="3.4"/><rect x="842" y="297.5" width="7" height="3.4"/></g>
-<text x="799.0" y="318.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">ETMP</text>
-<text x="799.0" y="334.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">S4H</text>
-<text x="799.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#5a6472" font-style="italic">Native iPaaS</text>
-<rect x="882" y="282" width="148" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1008" y="290" width="16" height="13" rx="1"/><rect x="1004" y="292" width="7" height="3.4"/><rect x="1004" y="297.5" width="7" height="3.4"/></g>
-<text x="956.0" y="318.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">CRM System</text>
-<text x="956.0" y="334.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">CF / MSD</text>
-<text x="956.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#5a6472" font-style="italic">Native iPaaS</text>
-<rect x="1044" y="282" width="138" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1160" y="290" width="16" height="13" rx="1"/><rect x="1156" y="292" width="7" height="3.4"/><rect x="1156" y="297.5" width="7" height="3.4"/></g>
-<text x="1113.0" y="318.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Workflow</text>
-<text x="1113.0" y="334.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Pega</text>
-<text x="1113.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="600" fill="#5a6472" font-style="italic">Native iPaaS</text>
-<rect x="1196" y="282" width="118" height="104" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1292" y="290" width="16" height="13" rx="1"/><rect x="1288" y="292" width="7" height="3.4"/><rect x="1288" y="297.5" width="7" height="3.4"/></g>
-<text x="1255.0" y="326.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">B&amp;amp;T System</text>
-<text x="1255.0" y="342.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">CDS</text>
-<rect x="420" y="460" width="470" height="150" rx="16" fill="#ffffff" stroke="#4a72c4" stroke-width="2.2"/>
-<g transform="translate(432,478) scale(1.0)" fill="#ffffff" stroke="#6f7d93" stroke-width="1.6"><path d="M6,17 a7,7 0 0,1 1,-13 a9,9 0 0,1 16,2 a6,6 0 0,1 -1,11 z"/></g>
-<text x="470" y="500" font-size="15" font-weight="700" fill="#33373b">iPaaS Platform</text>
-<g fill="none" stroke="#2f9e91" stroke-width="2"><ellipse cx="444" cy="556" rx="15" ry="6.0"/><ellipse cx="444" cy="556" rx="15" ry="6.0" transform="rotate(60 444 556)"/><ellipse cx="444" cy="556" rx="15" ry="6.0" transform="rotate(120 444 556)"/></g><circle cx="444" cy="556" r="3.2" fill="#2f9e91"/>
-<text x="468" y="562" font-size="17" font-weight="600" fill="#3a4048">Boomi</text>
-<rect x="600" y="790" width="380" height="95" rx="16" fill="#ffffff" stroke="#4a72c4" stroke-width="2.2"/>
-<g fill="none" stroke="#2f9e91" stroke-width="2"><ellipse cx="650" cy="838" rx="15" ry="6.0"/><ellipse cx="650" cy="838" rx="15" ry="6.0" transform="rotate(60 650 838)"/><ellipse cx="650" cy="838" rx="15" ry="6.0" transform="rotate(120 650 838)"/></g><circle cx="650" cy="838" r="3.2" fill="#2f9e91"/>
-<text x="676" y="846" font-size="17" font-weight="600" fill="#3a4048">Boomi</text>
-<text x="772" y="846" font-size="15" font-weight="700" fill="#33373b">Internal Runtime</text>
-<rect x="235" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="250" y="947" font-size="13" font-weight="700" fill="#33373b">AWS</text>
-<rect x="263" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="391" y="973" width="16" height="13" rx="1"/><rect x="387" y="975" width="7" height="3.4"/><rect x="387" y="980.5" width="7" height="3.4"/></g>
-<text x="338.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="338.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<rect x="475" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="490" y="947" font-size="13" font-weight="700" fill="#33373b">Azure</text>
-<rect x="503" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="631" y="973" width="16" height="13" rx="1"/><rect x="627" y="975" width="7" height="3.4"/><rect x="627" y="980.5" width="7" height="3.4"/></g>
-<text x="578.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="578.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<rect x="715" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="730" y="947" font-size="13" font-weight="700" fill="#33373b">Crown Hosting</text>
-<rect x="743" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="871" y="973" width="16" height="13" rx="1"/><rect x="867" y="975" width="7" height="3.4"/><rect x="867" y="980.5" width="7" height="3.4"/></g>
-<text x="818.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="818.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<rect x="955" y="920" width="205" height="140" rx="2" fill="#f5e7d0" stroke="#cca06a" stroke-width="1.3"/>
-<text x="970" y="947" font-size="13" font-weight="700" fill="#33373b">Fujitsu</text>
-<rect x="983" y="965" width="150" height="80" rx="2" fill="#d9e3f2" stroke="#9fb0cc" stroke-width="1.3"/>
-<g stroke="#5b6b86" stroke-width="1.2" fill="#eef2f8"><rect x="1111" y="973" width="16" height="13" rx="1"/><rect x="1107" y="975" width="7" height="3.4"/><rect x="1107" y="980.5" width="7" height="3.4"/></g>
-<text x="1058.0" y="997.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">HoD</text>
-<text x="1058.0" y="1013.0" text-anchor="middle" dominant-baseline="middle" font-size="13" font-weight="600" fill="#20242a">Application</text>
-<path d="M335.0,386 L335.0,414 L470,455 L470,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M575.0,384 L575.0,412 L540,455 L540,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M799.0,386 L799.0,414 L610,455 L610,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M956.0,386 L956.0,414 L680,455 L680,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M1113.0,386 L1113.0,414 L750,455 L750,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M1255.0,386 L1255.0,414 L820,455 L820,460" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M655,610 L655,660 L790,660 L790,790" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L338.0,905 L338.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L578.0,905 L578.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L818.0,905 L818.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M790,885 L790,905 L1058.0,905 L1058.0,965" fill="none" stroke="#3f6fc4" stroke-width="1.5" marker-start="url(#bs)" marker-end="url(#be)"/>
-<path d="M500,610 L500,700 L337,700 L337,965" fill="none" stroke="#8073a8" stroke-width="1.5" marker-start="url(#ps)" marker-end="url(#pe)"/>
-<path d="M840,610 L840,700 L1057,700 L1057,965" fill="none" stroke="#8073a8" stroke-width="1.5" marker-start="url(#ps)" marker-end="url(#pe)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 880" font-family="Segoe UI,Arial,sans-serif">
+<rect width="1280" height="880" fill="#ffffff"/>
+<defs>
+<marker id="ah_a" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e6ca4"/></marker>
+<marker id="ah_r" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#E24A2E"/></marker>
+<marker id="ah_g" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1d7a4d"/></marker>
+<marker id="ah_p" markerWidth="11" markerHeight="11" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6B2C91"/></marker>
+</defs>
+<text x="640.0" y="42" text-anchor="middle" font-size="25" font-weight="700" fill="#12123A">MFT on Boomi — Solution architecture (v0.2)</text>
+<text x="640.0" y="68" text-anchor="middle" font-size="14" fill="#5b6b7d">Numbered file flows · trigger &amp; AV placement · config-driven generic engine · ESDES/SDS complemented, not replaced</text>
+<rect x="24" y="118" width="282" height="470" rx="12" fill="#f4f7fb" stroke="#cdd8e8" stroke-width="1.5"/>
+<text x="38" y="144" font-size="13.5" font-weight="700" fill="#12123A">External · partners &amp; consumers</text>
+<rect x="330" y="118" width="300" height="470" rx="12" fill="#eef4fb" stroke="#cdd8e8" stroke-width="1.5"/>
+<text x="344" y="144" font-size="13.5" font-weight="700" fill="#12123A">Boomi cloud service (SaaS)</text>
+<rect x="690" y="118" width="300" height="470" rx="12" fill="#eef7f1" stroke="#cdd8e8" stroke-width="1.5"/>
+<text x="704" y="144" font-size="13.5" font-weight="700" fill="#12123A">Trusted zone · customer-managed runtime</text>
+<rect x="1014" y="118" width="242" height="470" rx="12" fill="#fbf4ee" stroke="#cdd8e8" stroke-width="1.5"/>
+<text x="1028" y="144" font-size="13.5" font-weight="700" fill="#12123A">Backend estate (departmental systems)</text>
+<line x1="660" y1="128" x2="660" y2="580" stroke="#E24A2E" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="660" y="600" text-anchor="middle" font-size="11.5" fill="#E24A2E" font-weight="600">external / internal trust boundary — only tracking metadata crosses to cloud</text>
+<rect x="40" y="168" width="250" height="74" rx="9" fill="#ffffff" stroke="#2e6ca4" stroke-width="2"/>
+<text x="165.0" y="200.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Trading partners / OGDs</text>
+<text x="165.0" y="217.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">SFTP · FTPS · AS2</text>
+<rect x="40" y="262" width="250" height="60" rx="9" fill="#ffffff" stroke="#2e6ca4" stroke-width="2"/>
+<text x="165.0" y="287.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">MDTP</text>
+<text x="165.0" y="304.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">(digital tax platform)</text>
+<rect x="40" y="342" width="250" height="84" rx="9" fill="#ffffff" stroke="#2e6ca4" stroke-width="2"/>
+<text x="165.0" y="379.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">iPaaS SaaS systems</text>
+<text x="165.0" y="396.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">S4H · CF/MSD · Pega · CDS</text>
+<rect x="346" y="168" width="268" height="90" rx="9" fill="#ffffff" stroke="#2e6ca4" stroke-width="2"/>
+<text x="480.0" y="208.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Protocol listeners +</text>
+<text x="480.0" y="225.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">encrypted landing zone</text>
+<rect x="568" y="174" width="40" height="18" rx="9" fill="#8a5a00"/>
+<text x="588" y="187" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">AV</text>
+<rect x="346" y="278" width="268" height="64" rx="9" fill="#ffffff" stroke="#2e6ca4" stroke-width="2"/>
+<text x="480.0" y="305.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Tracking &amp; audit log</text>
+<text x="480.0" y="322.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">single source of truth</text>
+<rect x="346" y="362" width="268" height="66" rx="9" fill="#ffffff" stroke="#2e6ca4" stroke-width="2"/>
+<text x="480.0" y="390.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Scheduling · keys · RBAC</text>
+<text x="480.0" y="407.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">OTel export → SIEM</text>
+<rect x="706" y="168" width="268" height="90" rx="9" fill="#ffffff" stroke="#1d7a4d" stroke-width="2"/>
+<text x="840.0" y="208.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Runtime agent (broker)</text>
+<text x="840.0" y="225.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">generic config-driven MFT engine</text>
+<rect x="928" y="174" width="40" height="18" rx="9" fill="#8a5a00"/>
+<text x="948" y="187" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">AV</text>
+<rect x="706" y="278" width="268" height="58" rx="9" fill="#ffffff" stroke="#1d7a4d" stroke-width="2"/>
+<text x="840.0" y="302.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Config / routing catalogue (DB)</text>
+<text x="840.0" y="319.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">one row per interface</text>
+<rect x="706" y="352" width="131" height="64" rx="9" fill="#ffffff" stroke="#1d7a4d" stroke-width="2"/>
+<text x="771.5" y="379.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Internal</text>
+<text x="771.5" y="396.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">API gateway (Kong)</text>
+<rect x="845" y="352" width="129" height="64" rx="9" fill="#ffffff" stroke="#1d7a4d" stroke-width="2"/>
+<text x="909.5" y="379.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">MFT Connector →</text>
+<text x="909.5" y="396.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">integration processes</text>
+<rect x="1030" y="168" width="210" height="86" rx="9" fill="#ffffff" stroke="#E24A2E" stroke-width="2"/>
+<text x="1135.0" y="198.0" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Heads-of-Duty apps</text>
+<text x="1135.0" y="215.0" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">AWS · Azure</text>
+<text x="1135.0" y="232.0" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">Crown Hosting · Fujitsu</text>
+<rect x="1030" y="282" width="210" height="100" rx="9" fill="#ffffff" stroke="#E24A2E" stroke-width="2"/>
+<text x="1135.0" y="310.5" text-anchor="middle" font-size="13" font-weight="700" fill="#233">Incumbent file transfer</text>
+<text x="1135.0" y="327.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">ESDES (core · admin)</text>
+<text x="1135.0" y="344.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">SDS (large-volume engine)</text>
+<text x="1135.0" y="361.5" text-anchor="middle" font-size="11.6" font-weight="400" fill="#5b6b7d">complemented, not replaced</text>
+<line x1="290" y1="205.0" x2="346" y2="213.0" stroke="#2e6ca4" stroke-width="2.2" marker-end="url(#ah_a)"/>
+<circle cx="318.0" cy="201.0" r="12" fill="#2e6ca4"/>
+<text x="318.0" y="205.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">1</text>
+<line x1="614" y1="213.0" x2="706" y2="213.0" stroke="#6B2C91" stroke-width="2.2" marker-end="url(#ah_p)"/>
+<circle cx="660.0" cy="205.0" r="12" fill="#6B2C91"/>
+<text x="660.0" y="209.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">2</text>
+<text x="660.0" y="187.0" text-anchor="middle" font-size="15" fill="#6B2C91">⚡</text>
+<text x="660.0" y="235.0" text-anchor="middle" font-size="10.5" fill="#6B2C91" font-weight="600">trigger</text>
+<line x1="840.0" y1="258.0" x2="840.0" y2="278" stroke="#1d7a4d" stroke-width="2.2" marker-end="url(#ah_g)"/>
+<circle cx="850.0" cy="270.0" r="12" fill="#1d7a4d"/>
+<text x="850.0" y="274.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">3</text>
+<line x1="974" y1="182" x2="1030" y2="211.0" stroke="#E24A2E" stroke-width="2.2" marker-end="url(#ah_r)"/>
+<circle cx="1002.0" cy="186.5" r="12" fill="#E24A2E"/>
+<text x="1002.0" y="191.0" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">4</text>
+<line x1="974" y1="244" x2="1030" y2="332.0" stroke="#E24A2E" stroke-width="2.2" marker-end="url(#ah_r)"/>
+<circle cx="1002.0" cy="302.0" r="12" fill="#E24A2E"/>
+<text x="1002.0" y="306.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">5</text>
+<line x1="840.0" y1="168" x2="614" y2="310.0" stroke="#2e6ca4" stroke-width="2.2" stroke-dasharray="6 5" marker-end="url(#ah_a)"/>
+<circle cx="723.0" cy="233.0" r="12" fill="#2e6ca4"/>
+<text x="723.0" y="237.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">7</text>
+<path d="M 1060 254 C 1034 272, 1034 264, 1060 282" fill="none" stroke="#1d7a4d" stroke-width="2.2" marker-end="url(#ah_g)" marker-start="url(#ah_g)"/>
+<circle cx="1036" cy="268.0" r="12" fill="#1d7a4d"/>
+<text x="1036" y="272.5" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">6</text>
+<text x="1130" y="272.0" text-anchor="middle" font-size="10.5" fill="#1d7a4d" font-weight="600">east-west (internal)</text>
+<rect x="24" y="620" width="1232" height="238" rx="12" fill="#f8fafc" stroke="#cdd8e8"/>
+<text x="42" y="648" font-size="15" font-weight="700" fill="#12123A">Flow legend — numbered file movements</text>
+<circle cx="54" cy="672" r="11" fill="#2e6ca4"/>
+<text x="54" y="676" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+<text x="74" y="676" font-size="12" fill="#233">Inbound push: partner authenticates (SSH key / cert) and pushes to the listene</text>
+<text x="74" y="691" font-size="12" fill="#233">r; file lands in the encrypted zone.</text>
+<circle cx="54" cy="712" r="11" fill="#6B2C91"/>
+<text x="54" y="716" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+<text x="74" y="716" font-size="12" fill="#233">Event trigger: file-arrival event starts the generic engine (⚡). Scheduled pol</text>
+<text x="74" y="731" font-size="12" fill="#233">ling triggers it the same way.</text>
+<circle cx="54" cy="752" r="11" fill="#1d7a4d"/>
+<text x="54" y="756" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+<text x="74" y="756" font-size="12" fill="#233">Engine reads the matching config / routing catalogue row (source, target, PGP </text>
+<text x="74" y="771" font-size="12" fill="#233">keys, schedule, pattern, post-actions).</text>
+<circle cx="54" cy="792" r="11" fill="#E24A2E"/>
+<text x="54" y="796" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+<text x="74" y="796" font-size="12" fill="#233">Delivery to Heads-of-Duty applications via Boomi connector (north-south, into </text>
+<text x="74" y="811" font-size="12" fill="#233">the backend estate).</text>
+<circle cx="654" cy="672" r="11" fill="#E24A2E"/>
+<text x="654" y="676" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text>
+<text x="674" y="676" font-size="12" fill="#233">Coexistence: engine collects from / delivers to incumbent ESDES &amp; SDS — Boomi </text>
+<text x="674" y="691" font-size="12" fill="#233">MFT complements, it does not replace them.</text>
+<circle cx="654" cy="712" r="11" fill="#1d7a4d"/>
+<text x="654" y="716" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">6</text>
+<text x="674" y="716" font-size="12" fill="#233">East-west: runtime agent moves files between internal systems inside the trust</text>
+<text x="674" y="731" font-size="12" fill="#233">ed zone (runtime AV applies).</text>
+<circle cx="654" cy="752" r="11" fill="#2e6ca4"/>
+<text x="654" y="756" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7</text>
+<text x="674" y="756" font-size="12" fill="#233">Tracking &amp; audit: only control / tracking metadata crosses the boundary to the</text>
+<text x="674" y="771" font-size="12" fill="#233"> cloud log (single source of truth).</text>
+<circle cx="654" cy="792" r="11" fill="#2e6ca4"/>
+<text x="654" y="796" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">8</text>
+<text x="674" y="796" font-size="12" fill="#233">Outbound (estate → partner): reverse of 1 — engine encrypts (PGP / ASCII-armor</text>
+<text x="674" y="811" font-size="12" fill="#233">), optionally archives (TAR), delivers to partner endpoint.</text>
+<rect x="42" y="825" width="40" height="18" rx="9" fill="#8a5a00"/>
+<text x="62" y="838" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">AV</text>
+<text x="90" y="838" font-size="11.5" fill="#5b6b7d">AV placement (cloud scan ~250 MB · runtime scan planned patch)</text>
+<text x="500" y="838" font-size="15" fill="#6B2C91">⚡</text>
+<text x="515" y="838" font-size="11.5" fill="#5b6b7d">event / schedule trigger</text>
+<line x1="700" y1="834" x2="740" y2="834" stroke="#2e6ca4" stroke-width="2.2" stroke-dasharray="6 5"/>
+<text x="748" y="838" font-size="11.5" fill="#5b6b7d">metadata only (crosses trust boundary)</text>
 </svg>
