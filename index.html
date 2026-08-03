@@ -3,209 +3,174 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MFT on Boomi — Solution Design Document v0.2 (review update)</title>
+<title>Boomi MFT File Sharing (FS): citizen upload/download &amp; agent dynamic links</title>
 <style>
-  :root{--navy:#12123A;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;--bg:#f6f8fb;--red:#E24A2E;--green:#1d7a4d;--amber:#8a5a00;}
+  :root{--navy:#12123A;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;
+        --bg:#f6f8fb;--red:#E24A2E;--green:#1d7a4d;--amber:#8a5a00;}
   *{box-sizing:border-box}
   body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
   a{color:var(--accent)}
   .dlbar{position:sticky;top:0;z-index:200;background:var(--navy);color:#fff;display:flex;flex-wrap:wrap;
          gap:9px;align-items:center;padding:11px 20px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
   .dlbar .lbl{font-weight:700;letter-spacing:.3px;margin-right:4px;font-size:13.5px}
-  .dlbar .grp{font-size:11.5px;opacity:.7;text-transform:uppercase;letter-spacing:.5px;margin:0 2px 0 8px}
   .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--navy);text-decoration:none;
            font-weight:600;font-size:12.8px;padding:7px 12px;border-radius:7px;border:1px solid #dfe7f1;transition:.15s}
   .dlbar a:hover{background:var(--light);transform:translateY(-1px)}
   .dlbar a.alt{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
   .dlbar a.alt:hover{background:rgba(255,255,255,.12)}
-  header{position:sticky;top:50px;z-index:150;background:linear-gradient(120deg,var(--navy),#2b2b6a);color:#fff;padding:26px 26px;border-bottom:3px solid #0c0c28}
-  header h1{margin:0 0 6px;font-size:24px}
+  header{background:linear-gradient(120deg,var(--navy),#2b2b6a);color:#fff;padding:26px}
+  header h1{margin:0 0 6px;font-size:23px}
   header p{margin:0;opacity:.92;font-size:15px}
   .meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
   .meta span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:3px 10px;border-radius:20px;font-size:12.5px}
-  main{max-width:1180px;margin:0 auto;padding:26px 20px 80px}
-  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin:18px 0;box-shadow:0 1px 3px rgba(20,40,70,.05)}
-  h2{color:var(--navy);border-left:5px solid var(--accent);padding-left:12px;margin:.2em 0 .7em;font-size:20px}
-  h3{color:var(--navy);margin:1em 0 .3em;font-size:16px}
+  main{max-width:1180px;margin:0 auto;padding:24px 20px 80px}
+  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 26px;margin:16px 0;box-shadow:0 1px 3px rgba(20,40,70,.05)}
+  h2{color:var(--navy);border-left:5px solid var(--accent);padding-left:12px;margin:.2em 0 .7em;font-size:19px}
+  h3{color:var(--navy);margin:1em 0 .3em;font-size:15.5px}
   p{margin:.5em 0}
-  ul{margin:.4em 0 .4em 0;padding-left:4px;list-style:none}
-  li{margin:.34em 0;padding-left:24px;position:relative}
-  li::before{content:"›";position:absolute;left:6px;top:0;color:var(--accent);font-weight:700}
+  ul{margin:.4em 0;padding-left:2px;list-style:none}
+  li{margin:.34em 0;padding-left:22px;position:relative}
+  li::before{content:"›";position:absolute;left:5px;top:0;color:var(--accent);font-weight:700}
+  ol{padding-left:20px}
+  ol li{padding-left:6px}
+  ol li::before{content:none}
   .fig{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px;margin:12px 0;overflow:auto}
   .fig img{display:block;width:100%;height:auto;min-width:820px}
   .figcap{font-size:13px;color:var(--muted);margin:6px 4px 2px}
   .callout{background:var(--light);border:1px solid #cddcf0;border-left:5px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0}
   .callout.amber{border-left-color:var(--amber);background:#fbf5e8}
+  .callout.red{border-left-color:var(--red);background:#fbf1ee}
   .callout.green{border-left-color:var(--green);background:#eef7f1}
   .callout h4{margin:0 0 6px;font-size:14.5px;color:var(--navy)}
-  .callout.amber h4{color:var(--amber)}
+  .callout.amber h4{color:var(--amber)} .callout.red h4{color:var(--red)}
   table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:13.4px}
   th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
   th{background:var(--navy);color:#fff;font-weight:600}
   tr:nth-child(even) td{background:#f3f7fc}
   td.k{font-weight:600;color:var(--navy)}
-  code{background:#eef3f9;padding:1px 6px;border-radius:5px;font-size:13px}
+  code{background:#eef3f9;padding:1px 6px;border-radius:5px;font-size:12.8px}
+  .pill{display:inline-block;font-size:11px;padding:1px 9px;border-radius:20px;margin-left:6px}
+  .pill.fs{background:#eef7f1;border:1px solid #bfe0cd;color:var(--green)}
+  .pill.aft{background:#eef3f9;border:1px solid #cdd;color:var(--accent)}
   .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
-  .tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;background:var(--light);border:1px solid var(--line);color:var(--navy);margin-left:6px}
-  @media(max-width:640px){header{top:132px}.dlbar{padding:9px 12px}}
+  .own{font-size:12px;color:var(--red);font-weight:600}
 </style>
 </head>
 <body>
 
 <div class="dlbar">
-  <span class="lbl">⬇ Downloads</span>
-  <span class="grp">Solution Design Document</span>
-  <a href="assets/boomi-mft-solution-design-document.docx" download>📄 SDD v0.2 (Word)</a>
-  <span class="grp">Architecture figure</span>
-  <a href="assets/boomi-mft-sdd-architecture.drawio" download>✎ draw.io</a>
-  <a href="assets/boomi-mft-sdd-architecture.svg" download>🖼 SVG</a>
-  <a href="assets/boomi-mft-sdd-architecture.png" download>🖼 PNG</a>
-  <span class="grp">Catalogue</span>
-  <a href="assets/boomi-mft-sdd-capability-gap-catalogue.xlsx" download>📊 Capability &amp; gap catalogue</a>
-  <a href="assets/docs.zip" download class="alt">🗜 All deliverables (zip)</a>
+  <span class="lbl">⬇ Download the diagram</span>
+  <a href="assets/mft-file-share-flow.vsdx" download>▣ Visio (.vsdx)</a>
+  <a href="assets/mft-file-share-flow.drawio" download>✎ draw.io</a>
+  <a href="assets/mft-file-share-flow.svg" download>◨ SVG</a>
+  <a href="assets/mft-file-share-flow.png" download>▤ PNG</a>
+  <a class="alt" href="assets/docs.zip" download>⬇ All deliverables (.zip)</a>
 </div>
 
 <header>
-  <h1>Solution Design Document — Managed File Transfer on Boomi (Thru)</h1>
-  <p>Version 0.2, revised after the Design Authority review of 30 July 2026. This page carries the change log, the re-cut architecture, and the deliverables.</p>
+  <h1>Boomi MFT File Sharing (FS)</h1>
+  <p>Citizen upload / download and agent dynamic links. A solution-architect diagram plus the capability write-up behind it.</p>
   <div class="meta">
-    <span>v0.2</span><span>31 July 2026</span><span>Integration Architecture</span><span>OFFICIAL</span><span>Peer review → Design Authority</span><span>Revised version due Tue 4 Aug 2026</span>
+    <span>Capability: File Sharing (FS)</span>
+    <span>Distinct from: Automated File Transfer (AFT)</span>
+    <span>Platform: Boomi native MFT (ex-Thru)</span>
+    <span>Zone shown: SMIC (internal agents)</span>
   </div>
 </header>
 
 <main>
 
-  <section>
-    <h2>How to use this page</h2>
-    <ul>
-      <li><b>Download bar (top of page).</b> The buttons pull the Word SDD, the architecture figure (editable draw.io plus SVG/PNG), the capability &amp; gap catalogue, and a zip of every deliverable. The bar stays pinned as you scroll.</li>
-      <li><b>This page is the readable copy.</b> It reproduces the review response, the corrected architecture and the key content so it can be referenced without opening the Word file. The Word SDD is the governance artefact for sign-off.</li>
-      <li><b>Read order for a reviewer:</b> the change log (what was addressed) → the architecture figure and numbered flows → the configuration promotion strategy → the open decisions needing named owners.</li>
-      <li><b>The figure below is the SVG render.</b> The editable source is the draw.io download; SVG/PNG are the renders embedded in documents.</li>
-    </ul>
-  </section>
+<section>
+  <h2>How to use this page</h2>
+  <ul>
+    <li>The buttons at the very top download the same diagram in four formats. Use <strong>Visio (.vsdx)</strong> to drop straight into a Microsoft Visio solution-architecture pack, or <strong>draw.io</strong> if you want the fully editable source.</li>
+    <li>The diagram below is the live SVG render. It shows the two people who touch File Sharing (an external <strong>citizen/customer</strong> and an internal <strong>agent</strong> inside SMIC) and the four numbered steps that connect them.</li>
+    <li>The sections after the diagram explain what File Sharing actually is, how it differs from AFT, a naming trap to brief the team on, and the open design decisions that need a named owner before build.</li>
+    <li>Everything here is generated from one source model (<code>gen_fileshare.py</code>), so the SVG, draw.io and Visio files cannot drift apart.</li>
+  </ul>
+</section>
 
-  <section>
-    <h2>What changed in v0.2 — review response</h2>
-    <p>This version answers each comment from the 30 July review. The table maps every comment to the change made and where it lands, so the review can be checked rather than re-argued.</p>
-    <table>
-      <tr><th style="width:34%">Review comment</th><th>Change made</th><th style="width:14%">Where</th></tr>
-      <tr><td class="k">Core file-transfer platform is ESDES, not WebMethods; focus solely on ESDES and do not undermine it.</td><td>Incumbent estate rewritten around ESDES (core, administered, secure/robust/auditable) and SDS (large-volume engine). WebMethods removed from the file-transfer narrative.</td><td>§5, §10</td></tr>
-      <tr><td class="k">Boomi MFT complements, does not immediately replace, SDS and ESDES.</td><td>Positioning restated as complement; no assumption of replacement; any migration is a separate, evidence-led decision.</td><td>§3, §5, §10</td></tr>
-      <tr><td class="k">State the real drivers: end-to-end visibility, large-file support, low-code.</td><td>Drivers rewritten to those three, plus consolidated governance.</td><td>§5.1</td></tr>
-      <tr><td class="k">"Configure over development" is low-code, reusable configuration, not custom coding.</td><td>Principle restated in those terms and carried through the design.</td><td>§3, §8.2</td></tr>
-      <tr><td class="k">Show runtime agents as brokers, and external + internal (east-west) movement.</td><td>Added to capabilities, the figure and the flow table; new FR-10 for east-west.</td><td>§7.1, §8</td></tr>
-      <tr><td class="k">Show AV placement; note the current limit and the planned runtime AV scanning patch.</td><td>AV placement marked on the figure; §7.2 records the ~250&nbsp;MB cloud limit and the planned runtime-AV patch; new gap G-11.</td><td>§7.2, §8</td></tr>
-      <tr><td class="k">Clearer diagrams: numbered flows, triggers and AV placement.</td><td>Figure re-cut with numbered flows 1–8, trigger markers and AV badges, plus a numbered flow-step table.</td><td>§8</td></tr>
-      <tr><td class="k">Drop "control plane" / "data plane" terminology.</td><td>Replaced with plain MFT terms: Boomi cloud service, trigger &amp; status path, file-transfer path.</td><td>throughout</td></tr>
-      <tr><td class="k">Rename "register" to "catalogue".</td><td>Config/routing catalogue and capability &amp; gap catalogue adopted; file renamed; cell-content alignment logged as an action.</td><td>§8.2, §11</td></tr>
-      <tr><td class="k">Use "API gateway", not "CAM gateway".</td><td>All CAM references replaced with API gateway (Kong).</td><td>§8</td></tr>
-      <tr><td class="k">Add a dedicated code-promotion strategy section.</td><td>New section: how configuration is stored, versioned in Git and promoted dev→test→prod through approval workflows.</td><td>§9</td></tr>
-      <tr><td class="k">Qualify inconsistent security claims.</td><td>Vendor claims (zero-trust, SOC 2) marked vendor-stated and to validate.</td><td>§7.2</td></tr>
-      <tr><td class="k">Peer review before senior review; collaborate with Jatin, Patrick, Shijit, Sridhar.</td><td>Peer-review step and named collaborators added to document control; revised version due Tue 4 Aug.</td><td>§1</td></tr>
-    </table>
-  </section>
+<section>
+  <h2>The diagram</h2>
+  <div class="fig">
+    <img src="assets/mft-file-share-flow.svg" alt="Boomi MFT File Sharing flow: citizen uploads via Dropbox link, agent creates a dynamic link, citizen downloads via that link. Store is encrypted, AV scanned and audited."/>
+  </div>
+  <p class="figcap">Boomi MFT File Sharing (FS): external citizen, internal SMIC agent, and the ad-hoc upload / download flow driven by dynamic links.</p>
+</section>
 
-  <section>
-    <h2>Corrected architecture</h2>
-    <div class="fig">
-      <img src="assets/boomi-mft-sdd-architecture.svg" alt="MFT on Boomi architecture with numbered flows, triggers and AV placement"/>
-    </div>
-    <p class="figcap">Figure 1 — MFT on Boomi: numbered flows, trigger and AV placement, config-driven generic engine, incumbents complemented not replaced. Editable source: <a href="assets/boomi-mft-sdd-architecture.drawio" download>draw.io</a>.</p>
-    <h3>Numbered file flows</h3>
-    <table>
-      <tr><th style="width:5%">#</th><th>Flow</th></tr>
-      <tr><td class="k">1</td><td>Inbound push: partner authenticates (SSH key / certificate) and pushes to the listener; the file lands in the encrypted landing zone.</td></tr>
-      <tr><td class="k">2</td><td>Event trigger: a file-arrival event starts the generic engine. Scheduled polling triggers it the same way.</td></tr>
-      <tr><td class="k">3</td><td>The engine reads the matching config / routing catalogue row (source, target, PGP keys, schedule, pattern, post-actions).</td></tr>
-      <tr><td class="k">4</td><td>Delivery to backend applications via Boomi connector (north-south, into the estate).</td></tr>
-      <tr><td class="k">5</td><td>Coexistence: the engine collects from / delivers to the incumbent ESDES and SDS — Boomi MFT complements, it does not replace them.</td></tr>
-      <tr><td class="k">6</td><td>East-west: the runtime agent moves files between internal systems inside the trusted zone (runtime AV applies once the patch is GA).</td></tr>
-      <tr><td class="k">7</td><td>Tracking &amp; audit: only tracking metadata crosses the boundary to the cloud log (single source of truth).</td></tr>
-      <tr><td class="k">8</td><td>Outbound (estate → partner): reverse of flow 1 — the engine encrypts (PGP / ASCII-armor), optionally archives (TAR), delivers to the partner endpoint.</td></tr>
-    </table>
-  </section>
+<section>
+  <h2>What File Sharing (FS) is</h2>
+  <p>File Sharing is the <strong>ad-hoc, person-driven</strong> half of Boomi Managed File Transfer. It is the capability originally built by Thru (acquired by Boomi in 2025) for enterprise file sync and share, and it is designed for organisation-wide use across both internal and external collaboration. A person, not a scheduled system, decides to send or receive a file, and the platform handles security, storage and audit around that action.</p>
+  <p>Two building blocks do the work shown in the diagram:</p>
+  <ul>
+    <li><strong>MFT Dropbox</strong> (inbound): lets people who do <em>not</em> hold an MFT account securely upload large files to an account holder. The intake form can be embedded in a web page, portal login page, or email signature, and the receiving agent gets a notification when a file lands. This is how a citizen uploads a document without needing credentials.</li>
+    <li><strong>Dynamic share links</strong> (outbound): an agent who holds an MFT account selects a file and generates a link to hand to an external party. Links can be time-limited and, in protected / message-password modes, require a password. Vanity URLs are supported. This is how a citizen downloads a document the agent has prepared for them.</li>
+  </ul>
+  <p>Around both flows sit the platform controls: encryption in transit and at rest, antivirus scanning, a full audit trail, and retention policies for content lifecycle and data-protection obligations. Agents can also drive File Sharing from add-ins for Outlook, Salesforce, Office 365 and Windows Explorer rather than only the MFT web portal.</p>
+</section>
 
-  <section>
-    <h2>Incumbent estate and positioning</h2>
-    <p>Two incumbent systems carry file transfer today and remain in place:</p>
-    <ul>
-      <li><b>ESDES</b> — the core file-transfer solution, with administration capabilities. It is secure, robust and auditable, and is not undermined or displaced by this design.</li>
-      <li><b>SDS</b> — the custom-coded engine that handles large volumes of files.</li>
-    </ul>
-    <p>Boomi native MFT is introduced <b>alongside</b> ESDES and SDS and complements them. New and cloud/SaaS-facing movements are delivered on Boomi MFT as governed configuration; ESDES and SDS keep the flows they own. Any future migration of specific flows is a separate, evidence-led decision, not an assumption of this SDD.</p>
-    <div class="callout amber">
-      <h4>Review item — confirm incumbent naming</h4>
-      <p>The exact system names and acronym expansions for ESDES and SDS are used here as given in the 30 July review, and are to be confirmed with a named owner before sign-off.</p>
-    </div>
-    <div class="callout">
-      <h4>Cross-programme note — WebMethods reconciliation (decision needed)</h4>
-      <p>WebMethods has been removed from the <i>file-transfer</i> narrative of this SDD, since ESDES/SDS are the file-transfer incumbents. WebMethods stays valid as an <i>integration / orchestration</i> coexistence story, which belongs to the separate integration design. These two need to stay reconciled: the orchestration coexistence needs a named owner so the catalogue's WebMethods coexistence pattern and this SDD do not contradict each other.</p>
-    </div>
-  </section>
+<section>
+  <h2>File Sharing (FS) vs Automated File Transfer (AFT)</h2>
+  <p>Both are Boomi MFT, but they solve different problems. Getting a solution reviewer to see the split quickly usually settles most confusion.</p>
+  <table>
+    <tr><th>Dimension</th><th>File Sharing (FS) <span class="pill fs">this diagram</span></th><th>Automated File Transfer (AFT) <span class="pill aft">separate</span></th></tr>
+    <tr><td class="k">Who initiates</td><td>A person, manually and ad hoc</td><td>A system, on a schedule or event trigger</td></tr>
+    <tr><td class="k">Typical action</td><td>Citizen uploads a document; agent shares one back via a link</td><td>Files moved endpoint-to-endpoint by a configured flow</td></tr>
+    <tr><td class="k">Interface</td><td>Web portal, Dropbox link, share links, Outlook / Salesforce / O365 add-ins</td><td>Configured flows, MFT node/agent, connectors and endpoints</td></tr>
+    <tr><td class="k">External party</td><td>Needs no MFT account (Dropbox / link)</td><td>Machine endpoints (SFTP, FTPS, cloud storage, etc.)</td></tr>
+    <tr><td class="k">Fit for</td><td>Person-to-person citizen document exchange</td><td>Repeatable, unattended, high-volume transfers</td></tr>
+  </table>
+  <div class="callout green">
+    <h4>Rule of thumb</h4>
+    <p>If a human clicks a button to send or fetch a single document, it is File Sharing. If a job runs on its own to move files between systems, it is AFT.</p>
+  </div>
+</section>
 
-  <section>
-    <h2>Why Boomi MFT — the real drivers</h2>
-    <ul>
-      <li><b>End-to-end visibility:</b> a single, trackable audit record for every transfer across the estate.</li>
-      <li><b>Large-file support:</b> efficient handling of large tax/customs payloads and archives.</li>
-      <li><b>Low-code / configuration:</b> each interface is configuration, not bespoke code, cutting build and assurance cost.</li>
-      <li><b>Consolidated governance:</b> consistent security controls and one place to monitor and audit new file movement.</li>
-    </ul>
-    <h3>Runtime agents as brokers, and east-west movement</h3>
-    <p>Customer-managed runtime agents act as the brokers that perform the actual file movement — both external (north-south) transfers with partners and internal (east-west) transfers between systems inside the trusted zone. Only tracking metadata crosses the boundary to the Boomi cloud service.</p>
-    <h3>Antivirus placement</h3>
-    <ul>
-      <li><b>External:</b> the cloud service scans files in flight, up to ~250&nbsp;MB on the multi-tenant automated service.</li>
-      <li><b>Current limitation:</b> cloud AV does not automatically cover internal (east-west) runtime transfers, and the ~250&nbsp;MB ceiling is a real constraint for large payloads.</li>
-      <li><b>Planned enhancement:</b> a runtime AV scanning patch is planned so scanning can also run at the runtime agent, covering east-west transfers and larger files. Confirm GA date and coverage before relying on it.</li>
-    </ul>
-  </section>
+<section>
+  <h2>Naming trap to brief the team on</h2>
+  <div class="callout red">
+    <h4>“File Share” and “File Sharing” are not the same thing in Boomi MFT</h4>
+    <p><strong>File Sharing (FS)</strong> is the ad-hoc capability in this diagram. But AFT also has an endpoint type literally called <strong>“File Share”</strong>, which is something else entirely: a connector to a network share on a server, inside a LAN or between the LAN and the MFT cloud. It uses the operating system <code>Net Use</code> command to mount the shared resource and reads the path to decide whether it can connect. It has nothing to do with citizen-facing upload or download links.</p>
+    <p>Recommendation: standardise the wording in the solution architecture so reviewers never read “File Share” and picture citizen dropboxes. Suggest <em>File Sharing (FS) module</em> for this capability and <em>AFT File Share endpoint</em> for the network-share connector. <span class="own">Decision owner needed: solution/naming authority.</span></p>
+  </div>
+</section>
 
-  <section>
-    <h2>Configuration promotion strategy <span class="tag">new section §9</span></h2>
-    <p>Because each interface is configuration (a row in the routing catalogue) rather than a new component, promotion is about moving configuration safely from development to production, not shipping code.</p>
-    <ul>
-      <li><b>What is promoted:</b> the interface configuration — endpoints, protocol, key references, schedule, filename pattern, post-actions and ownership. The generic engine is built once and is not re-promoted per interface.</li>
-      <li><b>How it is stored:</b> the routing catalogue is the single source of truth and is held under version control (Git), so every change is diffable, reviewable and revertible.</li>
-      <li><b>Promotion &amp; approvals:</b> configuration moves dev → test → prod through Boomi's environment and deployment model, gated by an approval workflow with segregation of duties; each promotion is recorded for audit.</li>
-      <li><b>Native gap (G-13):</b> there is no native MFT-config-aware CI/CD pipeline, so a repeatable pipeline is built externally over the AtomSphere APIs and enterprise DevOps tooling, with the Git-held catalogue as its source.</li>
-    </ul>
-  </section>
+<section>
+  <h2>How the flow works (matches the numbers on the diagram)</h2>
+  <ol>
+    <li><strong>Citizen uploads.</strong> An external citizen opens the MFT Dropbox link (from a web page or email) and uploads a document over HTTPS/TLS. No MFT account is required. The file is antivirus scanned and stored encrypted, and the agent is notified.</li>
+    <li><strong>Agent creates a dynamic link.</strong> Inside SMIC, the agent (an MFT account holder) selects a document from the File Share store and generates a dynamic link. Where appropriate the link is time-limited and password protected.</li>
+    <li><strong>Link is delivered.</strong> The agent sends the link to the citizen by email or publishes it on a web page. The document itself is not emailed, only the controlled link to it.</li>
+    <li><strong>Citizen downloads.</strong> The citizen opens the link and downloads the document over HTTPS/TLS. The download is recorded in the audit trail alongside the original upload.</li>
+  </ol>
+  <p>Every step is captured in the audit log, which is what makes File Sharing suitable where a compliance and evidence trail is required rather than ordinary email attachments or consumer file-share tools.</p>
+</section>
 
-  <section>
-    <h2>Open decisions needing a named owner</h2>
-    <p>These are surfaced now, before build, rather than deferred:</p>
-    <table>
-      <tr><th style="width:5%">#</th><th>Question</th></tr>
-      <tr><td class="k">1</td><td>Confirm the exact system names and acronym expansions for ESDES and SDS, and their current roles.</td></tr>
-      <tr><td class="k">2</td><td>Reconcile WebMethods scope: out of the file-transfer SDD; who owns the orchestration coexistence in the integration design?</td></tr>
-      <tr><td class="k">3</td><td>Confirmed GA feature set of native MFT at build time, including the runtime AV scanning patch.</td></tr>
-      <tr><td class="k">4</td><td>Cloud-service region / assurance for OFFICIAL data residency.</td></tr>
-      <tr><td class="k">5</td><td>Audit export and retention to meet statutory retention.</td></tr>
-      <tr><td class="k">6</td><td>Partner protocols beyond SFTP/FTPS/AS2 (OFTP2/AS4/PeSIT).</td></tr>
-      <tr><td class="k">7</td><td>Supported MFT gateway HA topology.</td></tr>
-      <tr><td class="k">8</td><td>HSM/KMS integration pattern for key custody.</td></tr>
-      <tr><td class="k">9</td><td>Promotion dev→test→prod without a native pipeline — approach and owner.</td></tr>
-      <tr><td class="k">10</td><td>Sourcing MFT/partner credentials from the enterprise secrets manager (e.g. CyberArk) — and Security's acceptance.</td></tr>
-      <tr><td class="k">11</td><td>Align the capability &amp; gap catalogue cell content to the "catalogue" term (file already renamed).</td></tr>
-      <tr><td class="k">12</td><td>Is a vanity-URL section required? Raised in review; none is present in this SDD.</td></tr>
-    </table>
-  </section>
+<section>
+  <h2>Editing the diagram / getting a clean Visio file</h2>
+  <ul>
+    <li><strong>Visio, guaranteed route:</strong> open <code>mft-file-share-flow.drawio</code> in <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a>, then <em>File → Export as → VSDX</em>. This produces a perfectly Visio-native file with glued connectors.</li>
+    <li><strong>Visio, direct:</strong> <code>mft-file-share-flow.vsdx</code> opens straight in Microsoft Visio as editable shapes and connectors. It is a deliberately simple starting layout for you to restyle in your house template.</li>
+    <li><strong>Embedding:</strong> use <code>mft-file-share-flow.svg</code> for crisp scaling in documents and slides, or <code>mft-file-share-flow.png</code> where SVG is not accepted.</li>
+    <li><strong>Regenerating:</strong> the four files come from the same node/edge model, so edit the model once and all formats regenerate together with no manual reconciliation.</li>
+  </ul>
+</section>
 
-  <section>
-    <h2>Deliverables in this update</h2>
-    <table>
-      <tr><th>Deliverable</th><th>File</th><th>Notes</th></tr>
-      <tr><td class="k">Solution Design Document v0.2</td><td><a href="assets/boomi-mft-solution-design-document.docx" download>boomi-mft-solution-design-document.docx</a></td><td>Governance artefact; embeds the re-cut Figure 1.</td></tr>
-      <tr><td class="k">Architecture figure (editable)</td><td><a href="assets/boomi-mft-sdd-architecture.drawio" download>…-architecture.drawio</a></td><td>Editable source; keeps faithful zone labels.</td></tr>
-      <tr><td class="k">Architecture figure (renders)</td><td><a href="assets/boomi-mft-sdd-architecture.svg" download>SVG</a> · <a href="assets/boomi-mft-sdd-architecture.png" download>PNG</a></td><td>Renders embedded in documents and this page.</td></tr>
-      <tr><td class="k">Capability &amp; gap catalogue</td><td><a href="assets/boomi-mft-sdd-capability-gap-catalogue.xlsx" download>…-capability-gap-catalogue.xlsx</a></td><td>Renamed from "register"; cell content to align.</td></tr>
-      <tr><td class="k">All deliverables</td><td><a href="assets/docs.zip" download>docs.zip</a></td><td>Zip bundle of the reference copies.</td></tr>
-    </table>
-  </section>
+<section>
+  <h2>Design considerations needing a named owner</h2>
+  <p>Raising these now, before build, rather than deferring them. Each needs an owner and a recorded decision.</p>
+  <table>
+    <tr><th>#</th><th>Consideration</th><th>Why it matters</th><th>Owner</th></tr>
+    <tr><td>FS-1</td><td>Public Dropbox vs Protected Dropbox for citizen uploads</td><td>An open, unauthenticated intake is convenient but widens the inbound attack surface. Protected / message-password mode raises the bar. Pick the posture deliberately for a public-facing service.</td><td class="own">To assign</td></tr>
+    <tr><td>FS-2</td><td>Dynamic link policy: expiry, password, single-use, revocation</td><td>A live download link is a bearer credential. Default TTL, whether a password is mandatory, and how a link is revoked all need to be set, not left to the individual agent.</td><td class="own">To assign</td></tr>
+    <tr><td>FS-3</td><td>Antivirus scan size limit on large citizen uploads</td><td>File Sharing is sold on large-file upload, yet the endpoint AV control (Windows MDE) has a scan-size ceiling flagged previously (gap G-15). Large citizen files could pass unscanned unless this is resolved.</td><td class="own">To assign</td></tr>
+    <tr><td>FS-4</td><td>Content inspection / DLP on citizen document exchange</td><td>The product does not provide native data-loss prevention. Decide whether sensitive-data inspection is required on the citizen channel and, if so, where it sits.</td><td class="own">To assign</td></tr>
+    <tr><td>FS-5</td><td>Retention and data-protection lifecycle</td><td>Retention policy governs how long citizen documents and their links persist. Set the retention window and deletion behaviour against the governing data-protection requirements.</td><td class="own">To assign</td></tr>
+    <tr><td>FS-6</td><td>Terminology standardisation (see naming trap)</td><td>Prevents reviewers conflating the FS module with the AFT File Share endpoint across the architecture set.</td><td class="own">To assign</td></tr>
+  </table>
+</section>
 
-  <p class="foot">OFFICIAL — Revised for peer review then Design Authority — v0.2 — 31 July 2026. Generated from a single figure/data source so the page, the Word SDD and the renders cannot drift apart.</p>
+<p class="foot">Generated for the integration architecture programme. Diagram source of truth: gen_fileshare.py. Formats: .vsdx · .drawio · .svg · .png.</p>
 
 </main>
 </body>
