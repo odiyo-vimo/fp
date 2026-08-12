@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="940" viewBox="0 0 1500 940" font-family="Segoe UI,Arial,Helvetica,sans-serif">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2e6ca4"/></marker>
+<marker id="ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b6b7d"/></marker>
+</defs>
+<rect width="1500" height="940" fill="#ffffff"/>
+<text x="24" y="44" font-size="25" font-weight="700" fill="#12123A">Boomi MFT clustered deployment with load balancer</text>
+<text x="24" y="70" font-size="14" fill="#5b6b7d">The MFT runtime on Boomi MCS calls a load balancer, which distributes across clustered nodes on cloud compute instances, which then connect to the respective HOD endpoint.</text>
+<text x="24" y="92" font-size="12.5" fill="#5b6b7d">Solid lines carry the transfer. Dashed lines are supporting or control traffic. Numbered badges follow the request sequence set out below.</text>
+<rect x="24" y="116" width="280" height="420" rx="12" fill="#eef4fb" stroke="#cdd8e8" stroke-width="1.4"/>
+<text x="38" y="140" font-size="13" font-weight="700" fill="#12123A">Boomi Managed Cloud Services</text>
+<text x="38" y="157" font-size="11.2" fill="#5b6b7d">MCS, vendor operated SaaS runtime</text>
+<rect x="326" y="116" width="232" height="420" rx="12" fill="#f4f7fb" stroke="#cdd8e8" stroke-width="1.4"/>
+<text x="340" y="140" font-size="13" font-weight="700" fill="#12123A">Network edge, trust boundary</text>
+<text x="340" y="157" font-size="11.2" fill="#5b6b7d">Egress control, DNS, load balancing</text>
+<rect x="580" y="116" width="380" height="420" rx="12" fill="#eef7f1" stroke="#cdd8e8" stroke-width="1.4"/>
+<text x="594" y="140" font-size="13" font-weight="700" fill="#12123A">Cloud IaaS, clustered runtime</text>
+<text x="594" y="157" font-size="11.2" fill="#5b6b7d">Compute instances hosting the nodes</text>
+<rect x="982" y="116" width="494" height="420" rx="12" fill="#fbf5e8" stroke="#cdd8e8" stroke-width="1.4"/>
+<text x="996" y="140" font-size="13" font-weight="700" fill="#12123A">Host systems and incumbent estate</text>
+<text x="996" y="157" font-size="11.2" fill="#5b6b7d">Destination endpoints reached by the nodes</text>
+<rect x="24" y="556" width="1452" height="192" rx="12" fill="#f4f7fb" stroke="#cdd8e8" stroke-width="1.4"/>
+<text x="38" y="580" font-size="13" font-weight="700" fill="#12123A">Shared platform services and cluster dependencies</text>
+<text x="38" y="597" font-size="11.2" fill="#5b6b7d">Used by every node in the cluster, not held on any single node</text>
+<path d="M 286.0 206.0 L 315.0 206.0 L 315.0 200.0 L 344.0 200.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 442.0 232.0 L 442.0 237.0 L 442.0 237.0 L 442.0 242.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 442.0 292.0 L 442.0 297.0 L 442.0 297.0 L 442.0 302.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 540.0 346.0 L 569.0 346.0 L 569.0 215.0 L 598.0 215.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 540.0 346.0 L 569.0 346.0 L 569.0 321.0 L 598.0 321.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 540.0 346.0 L 569.0 346.0 L 569.0 427.0 L 598.0 427.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 540.0 506.0 L 569.0 506.0 L 569.0 427.0 L 598.0 427.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 442.0 400.0 L 442.0 395.0 L 442.0 395.0 L 442.0 390.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 770.0 474.0 L 770.0 516.0 L 750.0 516.0 L 750.0 558.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 750.0 590.0 L 750.0 606.0 L 153.0 606.0 L 153.0 622.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 750.0 590.0 L 750.0 606.0 L 392.0 606.0 L 392.0 622.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 750.0 590.0 L 750.0 606.0 L 631.0 606.0 L 631.0 622.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 750.0 590.0 L 750.0 606.0 L 870.0 606.0 L 870.0 622.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 750.0 590.0 L 750.0 606.0 L 1109.0 606.0 L 1109.0 622.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 750.0 590.0 L 750.0 606.0 L 1348.0 606.0 L 1348.0 622.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<path d="M 942.0 215.0 L 971.0 215.0 L 971.0 202.0 L 1000.0 202.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 942.0 321.0 L 971.0 321.0 L 971.0 280.0 L 1000.0 280.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 942.0 427.0 L 971.0 427.0 L 971.0 358.0 L 1000.0 358.0" fill="none" stroke="#2e6ca4" stroke-width="2.1" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M 1348.0 622.0 L 1348.0 578.0 L 1229.0 578.0 L 1229.0 534.0" fill="none" stroke="#5b6b7d" stroke-width="1.4" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#ahd)"/>
+<rect x="42" y="168" width="244" height="76" rx="9" fill="#dbe8f7" stroke="#2e6ca4" stroke-width="1.6"/>
+<text x="55" y="191" font-size="12.6" font-weight="700" fill="#12123A">MFT runtime (AFT engine)</text>
+<text x="55" y="210" font-size="10.9" fill="#5b6b7d">Transfer orchestration, protocol</text>
+<text x="55" y="224" font-size="10.9" fill="#5b6b7d">handling, retry and resume</text>
+<rect x="42" y="254" width="244" height="58" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="55" y="277" font-size="12.6" font-weight="700" fill="#12123A">Config catalogue and console</text>
+<text x="55" y="296" font-size="10.9" fill="#5b6b7d">One config row per interface</text>
+<rect x="42" y="322" width="244" height="52" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="55" y="345" font-size="12.6" font-weight="700" fill="#12123A">Scheduler and event triggers</text>
+<text x="55" y="364" font-size="10.9" fill="#5b6b7d">Time, arrival and API initiated</text>
+<rect x="42" y="384" width="244" height="52" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="55" y="407" font-size="12.6" font-weight="700" fill="#12123A">File Sharing (FS) module</text>
+<text x="55" y="426" font-size="10.9" fill="#5b6b7d">Ad hoc citizen upload and download</text>
+<rect x="42" y="446" width="244" height="58" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="55" y="469" font-size="12.6" font-weight="700" fill="#12123A">Audit, logging and alerting</text>
+<text x="55" y="488" font-size="10.9" fill="#5b6b7d">One record per transfer, retained</text>
+<rect x="344" y="168" width="196" height="64" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="357" y="191" font-size="12.6" font-weight="700" fill="#12123A">Egress control and TLS</text>
+<text x="357" y="210" font-size="10.9" fill="#5b6b7d">TLS 1.2+ outbound</text>
+<text x="357" y="224" font-size="10.9" fill="#5b6b7d">Source ranges allow listed</text>
+<rect x="344" y="242" width="196" height="50" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="357" y="265" font-size="12.6" font-weight="700" fill="#12123A">DNS, one virtual hostname</text>
+<text x="357" y="284" font-size="10.9" fill="#5b6b7d">One name for the whole cluster</text>
+<rect x="344" y="302" width="196" height="88" rx="9" fill="#dbe8f7" stroke="#2e6ca4" stroke-width="1.6"/>
+<text x="357" y="325" font-size="12.6" font-weight="700" fill="#12123A">Load balancer (VIP)</text>
+<text x="357" y="344" font-size="10.9" fill="#5b6b7d">Distributes across live nodes</text>
+<text x="357" y="358" font-size="10.9" fill="#5b6b7d">L4 for SFTP and FTPS,</text>
+<text x="357" y="372" font-size="10.9" fill="#5b6b7d">L7 for HTTPS and AS2</text>
+<rect x="344" y="400" width="196" height="70" rx="9" fill="#fbf1ee" stroke="#E24A2E" stroke-width="1.6"/>
+<text x="357" y="423" font-size="12.6" font-weight="700" fill="#12123A">Session and port handling</text>
+<text x="357" y="442" font-size="10.9" fill="#5b6b7d">Persistence, FTPS passive</text>
+<text x="357" y="456" font-size="10.9" fill="#5b6b7d">range, client IP preservation</text>
+<rect x="344" y="480" width="196" height="52" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="357" y="503" font-size="12.6" font-weight="700" fill="#12123A">Health probes</text>
+<text x="357" y="522" font-size="10.9" fill="#5b6b7d">Controls node rotation</text>
+<rect x="598" y="168" width="344" height="94" rx="9" fill="#e3f1e9" stroke="#1d7a4d" stroke-width="1.6"/>
+<text x="611" y="191" font-size="12.6" font-weight="700" fill="#12123A">Instance 1, Node 1</text>
+<text x="611" y="210" font-size="10.9" fill="#5b6b7d">Cluster member, in rotation</text>
+<text x="611" y="224" font-size="10.9" fill="#5b6b7d">Runs the generic MFT engine</text>
+<text x="611" y="238" font-size="10.9" fill="#5b6b7d">Availability zone A</text>
+<rect x="598" y="274" width="344" height="94" rx="9" fill="#e3f1e9" stroke="#1d7a4d" stroke-width="1.6"/>
+<text x="611" y="297" font-size="12.6" font-weight="700" fill="#12123A">Instance 2, Node 2</text>
+<text x="611" y="316" font-size="10.9" fill="#5b6b7d">Cluster member, in rotation</text>
+<text x="611" y="330" font-size="10.9" fill="#5b6b7d">Runs the generic MFT engine</text>
+<text x="611" y="344" font-size="10.9" fill="#5b6b7d">Availability zone B</text>
+<rect x="598" y="380" width="344" height="94" rx="9" fill="#e3f1e9" stroke="#1d7a4d" stroke-width="1.6"/>
+<text x="611" y="403" font-size="12.6" font-weight="700" fill="#12123A">Instance 3, Node N</text>
+<text x="611" y="422" font-size="10.9" fill="#5b6b7d">Horizontal scale unit</text>
+<text x="611" y="436" font-size="10.9" fill="#5b6b7d">Added without new Boomi components</text>
+<text x="611" y="450" font-size="10.9" fill="#5b6b7d">Availability zone C</text>
+<rect x="1000" y="168" width="458" height="68" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="1013" y="191" font-size="12.6" font-weight="700" fill="#12123A">HOD endpoint A, SFTP</text>
+<text x="1013" y="210" font-size="10.9" fill="#5b6b7d">Managed key based authentication</text>
+<rect x="1000" y="246" width="458" height="68" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="1013" y="269" font-size="12.6" font-weight="700" fill="#12123A">HOD endpoint B, network file share</text>
+<text x="1013" y="288" font-size="10.9" fill="#5b6b7d">Reached inside the LAN</text>
+<rect x="1000" y="324" width="458" height="68" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="1013" y="347" font-size="12.6" font-weight="700" fill="#12123A">HOD endpoint C, application drop zone</text>
+<text x="1013" y="366" font-size="10.9" fill="#5b6b7d">Directory watched by the host application</text>
+<rect x="1000" y="400" width="458" height="66" rx="9" fill="#f6ece0" stroke="#8a5a00" stroke-width="1.6"/>
+<text x="1013" y="423" font-size="12.6" font-weight="700" fill="#12123A">Incumbent estate, ESDES and SDS</text>
+<text x="1013" y="442" font-size="10.9" fill="#5b6b7d">Complemented, not replaced.</text>
+<text x="1013" y="456" font-size="10.9" fill="#5b6b7d">Boomi MFT sits alongside</text>
+<rect x="1000" y="474" width="458" height="60" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="1013" y="497" font-size="12.6" font-weight="700" fill="#12123A">Monitoring and SIEM</text>
+<text x="1013" y="516" font-size="10.9" fill="#5b6b7d">Cluster and transfer events,</text>
+<text x="1013" y="530" font-size="10.9" fill="#5b6b7d">correlated with platform audit</text>
+<rect x="520" y="558" width="460" height="32" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="750.0" y="578.5" font-size="12" font-weight="700" fill="#12123A" text-anchor="middle">Shared by every node in the cluster</text>
+<rect x="42" y="622" width="222" height="98" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="55" y="645" font-size="12.6" font-weight="700" fill="#12123A">Shared cluster file system</text>
+<text x="55" y="664" font-size="10.9" fill="#5b6b7d">Common working and staging</text>
+<text x="55" y="678" font-size="10.9" fill="#5b6b7d">directory visible to all nodes</text>
+<rect x="281" y="622" width="222" height="98" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="294" y="645" font-size="12.6" font-weight="700" fill="#12123A">Cluster database</text>
+<text x="294" y="664" font-size="10.9" fill="#5b6b7d">Shared state and cache table</text>
+<text x="294" y="678" font-size="10.9" fill="#5b6b7d">with TTL, not node local</text>
+<rect x="520" y="622" width="222" height="98" rx="9" fill="#fbf5e8" stroke="#8a5a00" stroke-width="1.6"/>
+<text x="533" y="645" font-size="12.6" font-weight="700" fill="#12123A">Credential source</text>
+<text x="533" y="664" font-size="10.9" fill="#5b6b7d">CyberArk PAM, gap G-14,</text>
+<text x="533" y="678" font-size="10.9" fill="#5b6b7d">no documented native path</text>
+<rect x="759" y="622" width="222" height="98" rx="9" fill="#fbf5e8" stroke="#8a5a00" stroke-width="1.6"/>
+<text x="772" y="645" font-size="12.6" font-weight="700" fill="#12123A">AV scan hook</text>
+<text x="772" y="664" font-size="10.9" fill="#5b6b7d">Approx 250 MB ceiling,</text>
+<text x="772" y="678" font-size="10.9" fill="#5b6b7d">gap G-15</text>
+<rect x="998" y="622" width="222" height="98" rx="9" fill="#fbf5e8" stroke="#8a5a00" stroke-width="1.6"/>
+<text x="1011" y="645" font-size="12.6" font-weight="700" fill="#12123A">Config promotion</text>
+<text x="1011" y="664" font-size="10.9" fill="#5b6b7d">No native CI/CD for MFT</text>
+<text x="1011" y="678" font-size="10.9" fill="#5b6b7d">config, gap G-13</text>
+<rect x="1237" y="622" width="222" height="98" rx="9" fill="#ffffff" stroke="#cdd8e8" stroke-width="1.6"/>
+<text x="1250" y="645" font-size="12.6" font-weight="700" fill="#12123A">Node telemetry</text>
+<text x="1250" y="664" font-size="10.9" fill="#5b6b7d">Per node health and</text>
+<text x="1250" y="678" font-size="10.9" fill="#5b6b7d">throughput metrics</text>
+<circle cx="315.0" cy="203.0" r="11.5" fill="#2e6ca4" stroke="#ffffff" stroke-width="2.2"/>
+<text x="315.0" y="207.4" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<circle cx="442.0" cy="237.0" r="11.5" fill="#2e6ca4" stroke="#ffffff" stroke-width="2.2"/>
+<text x="442.0" y="241.4" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<circle cx="442.0" cy="297.0" r="11.5" fill="#2e6ca4" stroke="#ffffff" stroke-width="2.2"/>
+<text x="442.0" y="301.4" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<circle cx="569.0" cy="280.5" r="11.5" fill="#2e6ca4" stroke="#ffffff" stroke-width="2.2"/>
+<text x="569.0" y="284.9" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<circle cx="569.0" cy="466.5" r="11.5" fill="#5b6b7d" stroke="#ffffff" stroke-width="2.2"/>
+<text x="569.0" y="470.9" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<circle cx="760.0" cy="516.0" r="11.5" fill="#5b6b7d" stroke="#ffffff" stroke-width="2.2"/>
+<text x="760.0" y="520.4" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+<circle cx="971.0" cy="208.5" r="11.5" fill="#2e6ca4" stroke="#ffffff" stroke-width="2.2"/>
+<text x="971.0" y="212.9" font-size="12.4" font-weight="700" fill="#ffffff" text-anchor="middle">7</text>
+<rect x="24" y="772" width="1452" height="118" rx="10" fill="#f6f8fb" stroke="#cdd8e8"/>
+<text x="42" y="795" font-size="13" font-weight="700" fill="#12123A">Request sequence</text>
+<text x="42" y="818" font-size="11.5" fill="#22333d">1  The MFT runtime on Boomi MCS raises the outbound transfer request over TLS.</text>
+<text x="42" y="838" font-size="11.5" fill="#22333d">2  The virtual hostname for the cluster is resolved, so no node address is ever published.</text>
+<text x="42" y="858" font-size="11.5" fill="#22333d">3  The request lands on the load balancer VIP inside the target cloud network.</text>
+<text x="42" y="878" font-size="11.5" fill="#22333d">4  The load balancer selects a node that is currently in rotation and passes the session to it.</text>
+<text x="758" y="818" font-size="11.5" fill="#22333d">5  Health probes continuously decide which nodes stay in rotation and which are drained.</text>
+<text x="758" y="838" font-size="11.5" fill="#22333d">6  The node works against the shared file system, cluster database and credential source.</text>
+<text x="758" y="858" font-size="11.5" fill="#22333d">7  The node opens the connection to the respective HOD endpoint and moves the file.</text>
+<line x1="42" y1="898" x2="66" y2="898" stroke="#2e6ca4" stroke-width="2.1"/>
+<text x="74" y="902" font-size="11.4" fill="#22333d">Transfer path</text>
+<line x1="172" y1="898" x2="196" y2="898" stroke="#5b6b7d" stroke-width="2.1" stroke-dasharray="6 4"/>
+<text x="204" y="902" font-size="11.4" fill="#22333d">Supporting and control traffic</text>
+<rect x="413" y="892" width="15" height="11" rx="3" fill="#fff" stroke="#1d7a4d" stroke-width="2"/>
+<text x="445" y="902" font-size="11.4" fill="#22333d">Cluster node, horizontally scalable</text>
+<rect x="686" y="892" width="15" height="11" rx="3" fill="#fff" stroke="#8a5a00" stroke-width="2"/>
+<text x="718" y="902" font-size="11.4" fill="#22333d">Known platform gap, owner required</text>
+<rect x="953" y="892" width="15" height="11" rx="3" fill="#fff" stroke="#E24A2E" stroke-width="2"/>
+<text x="985" y="902" font-size="11.4" fill="#22333d">Open design decision, owner required</text>
+</svg>

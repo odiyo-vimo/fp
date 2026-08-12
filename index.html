@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Boomi MFT File Sharing (FS): citizen upload/download &amp; agent dynamic links</title>
+<title>Boomi MFT clustered deployment with load balancer</title>
 <style>
   :root{--navy:#12123A;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;
         --bg:#f6f8fb;--red:#E24A2E;--green:#1d7a4d;--amber:#8a5a00;}
@@ -30,12 +30,12 @@
   p{margin:.5em 0}
   ul{margin:.4em 0;padding-left:2px;list-style:none}
   li{margin:.34em 0;padding-left:22px;position:relative}
-  li::before{content:"›";position:absolute;left:5px;top:0;color:var(--accent);font-weight:700}
+  li::before{content:"\203A";position:absolute;left:5px;top:0;color:var(--accent);font-weight:700}
   ol{padding-left:20px}
   ol li{padding-left:6px}
   ol li::before{content:none}
   .fig{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px;margin:12px 0;overflow:auto}
-  .fig img{display:block;width:100%;height:auto;min-width:820px}
+  .fig img{display:block;width:100%;height:auto;min-width:980px}
   .figcap{font-size:13px;color:var(--muted);margin:6px 4px 2px}
   .callout{background:var(--light);border:1px solid #cddcf0;border-left:5px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0}
   .callout.amber{border-left-color:var(--amber);background:#fbf5e8}
@@ -47,34 +47,34 @@
   th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
   th{background:var(--navy);color:#fff;font-weight:600}
   tr:nth-child(even) td{background:#f3f7fc}
-  td.k{font-weight:600;color:var(--navy)}
+  td.k{font-weight:600;color:var(--navy);white-space:nowrap}
   code{background:#eef3f9;padding:1px 6px;border-radius:5px;font-size:12.8px}
-  .pill{display:inline-block;font-size:11px;padding:1px 9px;border-radius:20px;margin-left:6px}
-  .pill.fs{background:#eef7f1;border:1px solid #bfe0cd;color:var(--green)}
-  .pill.aft{background:#eef3f9;border:1px solid #cdd;color:var(--accent)}
+  .own{font-size:12px;color:var(--red);font-weight:600;white-space:nowrap}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
   .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
-  .own{font-size:12px;color:var(--red);font-weight:600}
 </style>
 </head>
 <body>
 
 <div class="dlbar">
-  <span class="lbl">⬇ Download the diagram</span>
-  <a href="assets/mft-file-share-flow.vsdx" download>▣ Visio (.vsdx)</a>
-  <a href="assets/mft-file-share-flow.drawio" download>✎ draw.io</a>
-  <a href="assets/mft-file-share-flow.svg" download>◨ SVG</a>
-  <a href="assets/mft-file-share-flow.png" download>▤ PNG</a>
-  <a class="alt" href="assets/docs.zip" download>⬇ All deliverables (.zip)</a>
+  <span class="lbl">Download deliverables</span>
+  <a href="assets/boomi-mft-clustered-deployment-architecture.docx" download>&#9635; Architecture note (.docx)</a>
+  <a href="assets/boomi-mft-clustered-deployment-decisions.xlsx" download>&#9636; Decision register (.xlsx)</a>
+  <a href="assets/boomi-mft-clustered-deployment.drawio" download>&#9998; draw.io source</a>
+  <a href="assets/boomi-mft-clustered-deployment.svg" download>&#9704; Diagram (SVG)</a>
+  <a href="assets/boomi-mft-clustered-deployment.png" download>&#9636; Diagram (PNG)</a>
+  <a class="alt" href="assets/docs.zip" download>&#11015; All deliverables (.zip)</a>
 </div>
 
 <header>
-  <h1>Boomi MFT File Sharing (FS)</h1>
-  <p>Citizen upload / download and agent dynamic links. A solution-architect diagram plus the capability write-up behind it.</p>
+  <h1>Boomi MFT clustered deployment with load balancer</h1>
+  <p>The MFT runtime on Boomi MCS calls a load balancer, which distributes across clustered nodes on cloud compute instances, which then connect to the respective HOD endpoint.</p>
   <div class="meta">
-    <span>Capability: File Sharing (FS)</span>
-    <span>Distinct from: Automated File Transfer (AFT)</span>
-    <span>Platform: Boomi native MFT (ex-Thru)</span>
-    <span>Zone shown: SMIC (internal agents)</span>
+    <span>Version 1.0, draft for review</span>
+    <span>Integration Catalogue, MFT capability</span>
+    <span>16 open decisions, none with a named owner</span>
+    <span>Linked gaps G-13, G-14, G-15</span>
   </div>
 </header>
 
@@ -83,94 +83,184 @@
 <section>
   <h2>How to use this page</h2>
   <ul>
-    <li>The buttons at the very top download the same diagram in four formats. Use <strong>Visio (.vsdx)</strong> to drop straight into a Microsoft Visio solution-architecture pack, or <strong>draw.io</strong> if you want the fully editable source.</li>
-    <li>The diagram below is the live SVG render. It shows the two people who touch File Sharing (an external <strong>citizen/customer</strong> and an internal <strong>agent</strong> inside SMIC) and the four numbered steps that connect them.</li>
-    <li>The sections after the diagram explain what File Sharing actually is, how it differs from AFT, a naming trap to brief the team on, and the open design decisions that need a named owner before build.</li>
-    <li>Everything here is generated from one source model (<code>gen_fileshare.py</code>), so the SVG, draw.io and Visio files cannot drift apart.</li>
+    <li>The bar at the very top downloads every deliverable produced for this request. The <strong>zip</strong> contains all of them together.</li>
+    <li>The <strong>architecture note (.docx)</strong> is the reviewable document. It carries the diagram, the component table, the load balancing analysis and the full decision list, and is the version to circulate for Design Authority comment.</li>
+    <li>The <strong>decision register (.xlsx)</strong> is the working artefact. Three tabs: <em>Decision register</em>, <em>Assumption log</em> and <em>Described in brief</em>. Edit the Status and Owner columns only; the counts at the foot of the first tab recalculate on their own.</li>
+    <li>The <strong>draw.io source</strong> is the editable diagram. Open it live in the browser here: <a href="https://viewer.diagrams.net/?tags=%7B%7D&amp;lightbox=1&amp;edit=_blank&amp;layers=1&amp;nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-clustered-deployment.drawio" target="_blank" rel="noopener">open in the draw.io viewer</a>. Nothing is exported by hand, so the SVG, PNG and draw.io file are all emitted from one geometry model and cannot drift apart.</li>
+    <li>Read section <em>What was described against what has been assumed</em> before treating anything here as agreed. Only four statements came from the brief. Everything else is a pattern-standard addition awaiting confirmation.</li>
   </ul>
 </section>
 
 <section>
-  <h2>The diagram</h2>
+  <h2>Architecture diagram</h2>
   <div class="fig">
-    <img src="assets/mft-file-share-flow.svg" alt="Boomi MFT File Sharing flow: citizen uploads via Dropbox link, agent creates a dynamic link, citizen downloads via that link. Store is encrypted, AV scanned and audited."/>
+    <img src="assets/boomi-mft-clustered-deployment.svg" alt="Clustered Boomi MFT deployment: the MFT runtime on Boomi MCS calls a load balancer through a single virtual hostname, the load balancer distributes to three cluster nodes on cloud compute instances, and the nodes connect to HOD endpoints. Shared platform services sit beneath the cluster."/>
   </div>
-  <p class="figcap">Boomi MFT File Sharing (FS): external citizen, internal SMIC agent, and the ad-hoc upload / download flow driven by dynamic links.</p>
+  <p class="figcap">Solid lines carry the transfer. Dashed lines are supporting or control traffic. Amber boxes are known platform gaps, the red box is an open design decision.</p>
 </section>
 
 <section>
-  <h2>What File Sharing (FS) is</h2>
-  <p>File Sharing is the <strong>ad-hoc, person-driven</strong> half of Boomi Managed File Transfer. It is the capability originally built by Thru (acquired by Boomi in 2025) for enterprise file sync and share, and it is designed for organisation-wide use across both internal and external collaboration. A person, not a scheduled system, decides to send or receive a file, and the platform handles security, storage and audit around that action.</p>
-  <p>Two building blocks do the work shown in the diagram:</p>
-  <ul>
-    <li><strong>MFT Dropbox</strong> (inbound): lets people who do <em>not</em> hold an MFT account securely upload large files to an account holder. The intake form can be embedded in a web page, portal login page, or email signature, and the receiving agent gets a notification when a file lands. This is how a citizen uploads a document without needing credentials.</li>
-    <li><strong>Dynamic share links</strong> (outbound): an agent who holds an MFT account selects a file and generates a link to hand to an external party. Links can be time-limited and, in protected / message-password modes, require a password. Vanity URLs are supported. This is how a citizen downloads a document the agent has prepared for them.</li>
-  </ul>
-  <p>Around both flows sit the platform controls: encryption in transit and at rest, antivirus scanning, a full audit trail, and retention policies for content lifecycle and data-protection obligations. Agents can also drive File Sharing from add-ins for Outlook, Salesforce, Office 365 and Windows Explorer rather than only the MFT web portal.</p>
-</section>
-
-<section>
-  <h2>File Sharing (FS) vs Automated File Transfer (AFT)</h2>
-  <p>Both are Boomi MFT, but they solve different problems. Getting a solution reviewer to see the split quickly usually settles most confusion.</p>
-  <table>
-    <tr><th>Dimension</th><th>File Sharing (FS) <span class="pill fs">this diagram</span></th><th>Automated File Transfer (AFT) <span class="pill aft">separate</span></th></tr>
-    <tr><td class="k">Who initiates</td><td>A person, manually and ad hoc</td><td>A system, on a schedule or event trigger</td></tr>
-    <tr><td class="k">Typical action</td><td>Citizen uploads a document; agent shares one back via a link</td><td>Files moved endpoint-to-endpoint by a configured flow</td></tr>
-    <tr><td class="k">Interface</td><td>Web portal, Dropbox link, share links, Outlook / Salesforce / O365 add-ins</td><td>Configured flows, MFT node/agent, connectors and endpoints</td></tr>
-    <tr><td class="k">External party</td><td>Needs no MFT account (Dropbox / link)</td><td>Machine endpoints (SFTP, FTPS, cloud storage, etc.)</td></tr>
-    <tr><td class="k">Fit for</td><td>Person-to-person citizen document exchange</td><td>Repeatable, unattended, high-volume transfers</td></tr>
-  </table>
-  <div class="callout green">
-    <h4>Rule of thumb</h4>
-    <p>If a human clicks a button to send or fetch a single document, it is File Sharing. If a job runs on its own to move files between systems, it is AFT.</p>
-  </div>
-</section>
-
-<section>
-  <h2>Naming trap to brief the team on</h2>
-  <div class="callout red">
-    <h4>“File Share” and “File Sharing” are not the same thing in Boomi MFT</h4>
-    <p><strong>File Sharing (FS)</strong> is the ad-hoc capability in this diagram. But AFT also has an endpoint type literally called <strong>“File Share”</strong>, which is something else entirely: a connector to a network share on a server, inside a LAN or between the LAN and the MFT cloud. It uses the operating system <code>Net Use</code> command to mount the shared resource and reads the path to decide whether it can connect. It has nothing to do with citizen-facing upload or download links.</p>
-    <p>Recommendation: standardise the wording in the solution architecture so reviewers never read “File Share” and picture citizen dropboxes. Suggest <em>File Sharing (FS) module</em> for this capability and <em>AFT File Share endpoint</em> for the network-share connector. <span class="own">Decision owner needed: solution/naming authority.</span></p>
-  </div>
-</section>
-
-<section>
-  <h2>How the flow works (matches the numbers on the diagram)</h2>
+  <h2>Architecture as described</h2>
+  <p>The shape described is a straight left to right path.</p>
   <ol>
-    <li><strong>Citizen uploads.</strong> An external citizen opens the MFT Dropbox link (from a web page or email) and uploads a document over HTTPS/TLS. No MFT account is required. The file is antivirus scanned and stored encrypted, and the agent is notified.</li>
-    <li><strong>Agent creates a dynamic link.</strong> Inside SMIC, the agent (an MFT account holder) selects a document from the File Share store and generates a dynamic link. Where appropriate the link is time-limited and password protected.</li>
-    <li><strong>Link is delivered.</strong> The agent sends the link to the citizen by email or publishes it on a web page. The document itself is not emailed, only the controlled link to it.</li>
-    <li><strong>Citizen downloads.</strong> The citizen opens the link and downloads the document over HTTPS/TLS. The download is recorded in the audit trail alongside the original upload.</li>
+    <li>The MFT runtime, hosted on Boomi Managed Cloud Services, makes the call outbound.</li>
+    <li>That call reaches a load balancer.</li>
+    <li>The load balancer calls internally to the compute instances in the cloud infrastructure where the runtime nodes are present.</li>
+    <li>The node then connects to the respective HOD endpoint.</li>
   </ol>
-  <p>Every step is captured in the audit log, which is what makes File Sharing suitable where a compliance and evidence trail is required rather than ordinary email attachments or consumer file-share tools.</p>
+  <p>Everything else in the diagram is a supporting element added to make that path deployable. The two are kept separate below so the distinction is not lost.</p>
+
+  <h3>Request sequence</h3>
+  <ol>
+    <li>The MFT runtime on Boomi MCS raises the outbound transfer request over TLS.</li>
+    <li>The virtual hostname for the cluster is resolved, so no individual node address is ever published.</li>
+    <li>The request lands on the load balancer virtual IP inside the target cloud network.</li>
+    <li>The load balancer selects a node currently in rotation and passes the session to it.</li>
+    <li>Health probes continuously decide which nodes stay in rotation and which are drained.</li>
+    <li>The node works against the shared file system, cluster database and credential source.</li>
+    <li>The node opens the connection to the respective HOD endpoint and moves the file.</li>
+  </ol>
 </section>
 
 <section>
-  <h2>Editing the diagram / getting a clean Visio file</h2>
+  <h2>Component responsibilities</h2>
+  <table>
+    <tr><th style="width:20%">Component</th><th style="width:36%">Responsibility</th><th>Notes</th></tr>
+    <tr><td class="k">MFT runtime on MCS</td><td>Transfer orchestration, protocol handling, retry and resume</td><td>Vendor operated. Not in the customer change control path.</td></tr>
+    <tr><td class="k">Config catalogue</td><td>One configuration row per approved interface</td><td>Holds the config over construction principle. No new component per interface.</td></tr>
+    <tr><td class="k">DNS virtual hostname</td><td>One name representing the whole cluster</td><td>Node addresses are never published, which is what makes nodes replaceable.</td></tr>
+    <tr><td class="k">Load balancer</td><td>Distributes sessions across nodes in rotation</td><td>Layer and TLS posture are unresolved, see D-CL-03 and D-CL-04.</td></tr>
+    <tr><td class="k">Health probes</td><td>Decide which nodes are in rotation</td><td>Probe depth is unresolved, see D-CL-08.</td></tr>
+    <tr><td class="k">Cluster nodes</td><td>Execute the transfer and connect to the endpoint</td><td>Three shown illustratively. Actual count unresolved, see D-CL-11.</td></tr>
+    <tr><td class="k">Shared file system</td><td>Common working and staging directory</td><td>Availability posture unresolved, see D-CL-09.</td></tr>
+    <tr><td class="k">Cluster database</td><td>Shared state and cache with TTL</td><td>Required because the built in Cache shape is node local and unusable in a cluster.</td></tr>
+    <tr><td class="k">Credential source</td><td>Supplies endpoint credentials to every node</td><td>No documented native PAM path, gap G-14.</td></tr>
+    <tr><td class="k">AV scan hook</td><td>Scans content in transit</td><td>Approximately 250 MB ceiling, gap G-15.</td></tr>
+    <tr><td class="k">Monitoring and SIEM</td><td>Correlates cluster and transfer events</td><td>Per node telemetry has to be distinguishable, or a failing node hides in the aggregate.</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Load balancing considerations specific to file transfer</h2>
+  <p>Load balancing HTTP traffic is well trodden. Load balancing file transfer protocols is not, and the differences are the part of this design most likely to be underestimated.</p>
+
+  <h3>Protocol layer</h3>
+  <p>SFTP and FTPS are not HTTP. An HTTP aware load balancer cannot proxy them, so those listeners have to operate at the transport layer. HTTPS and AS2 can be handled at the application layer. The practical consequence is that a single load balancer product may not serve every protocol in the catalogue, which affects cost and the operational model.</p>
+
+  <h3>Multi channel protocols</h3>
+  <p>FTPS negotiates a separate data channel. If that channel is balanced independently and lands on a different node from the control channel, the transfer fails. Session persistence has to be explicit, and the passive port range has to be agreed and opened consistently across the load balancer, the firewall and every node.</p>
+
+  <h3>Identity and source address</h3>
+  <p>Two things commonly break at this point. Client certificate identity is lost if the load balancer terminates TLS without forwarding it, which matters wherever mTLS is the authentication method. Separately, source IP allow listing at the far end stops working if the load balancer source NATs, because every session then appears to come from the load balancer.</p>
+
+  <h3>Health checking</h3>
+  <p>A node whose port is open but whose transfer engine is wedged will keep receiving sessions if the probe only tests the port. An application level probe is materially better, but it depends on the product exposing something meaningful to probe. If it does not, the compensating control is monitoring per node throughput and alerting on a node that stops completing transfers.</p>
+</section>
+
+<section>
+  <h2>Cluster considerations</h2>
   <ul>
-    <li><strong>Visio, guaranteed route:</strong> open <code>mft-file-share-flow.drawio</code> in <a href="https://app.diagrams.net" target="_blank" rel="noopener">app.diagrams.net</a>, then <em>File → Export as → VSDX</em>. This produces a perfectly Visio-native file with glued connectors.</li>
-    <li><strong>Visio, direct:</strong> <code>mft-file-share-flow.vsdx</code> opens straight in Microsoft Visio as editable shapes and connectors. It is a deliberately simple starting layout for you to restyle in your house template.</li>
-    <li><strong>Embedding:</strong> use <code>mft-file-share-flow.svg</code> for crisp scaling in documents and slides, or <code>mft-file-share-flow.png</code> where SVG is not accepted.</li>
-    <li><strong>Regenerating:</strong> the four files come from the same node/edge model, so edit the model once and all formats regenerate together with no manual reconciliation.</li>
+    <li>Shared state cannot sit in the built in Cache shape, which is node local. A database backed cache table with TTL is the pattern that survives a clustered deployment.</li>
+    <li>A single shared working directory reintroduces a single point of failure behind an otherwise resilient front end. Its availability posture needs stating.</li>
+    <li>Spreading nodes across availability zones only helps if the shared file system and database are equally spread. A zone resilient front end over a single zone dependency is not zone resilient.</li>
+    <li>Adding node N must remain a configuration and infrastructure action, not a Boomi build action. If adding a node requires new Boomi components, the config over construction principle has been broken.</li>
+    <li>Configuration promotion has to land identically on every node. Partial promotion produces a cluster that behaves differently depending on which node answers, which is difficult to diagnose from the transfer logs alone.</li>
   </ul>
 </section>
 
 <section>
-  <h2>Design considerations needing a named owner</h2>
-  <p>Raising these now, before build, rather than deferring them. Each needs an owner and a recorded decision.</p>
+  <h2>What was described against what has been assumed</h2>
+  <p>This separation matters. Only the first group came from the brief.</p>
+  <div class="grid2">
+    <div class="callout green">
+      <h4>Described in the brief</h4>
+      <ul>
+        <li>MFT runtime hosted on Boomi MCS.</li>
+        <li>The runtime calls a load balancer.</li>
+        <li>The load balancer calls internally to compute instances where the nodes are present.</li>
+        <li>The node connects to the respective HOD.</li>
+      </ul>
+    </div>
+    <div class="callout amber">
+      <h4>Assumed, and requiring confirmation</h4>
+      <ul>
+        <li>Three nodes. Illustrative, with no capacity analysis behind the number.</li>
+        <li>Availability zone spread across the nodes.</li>
+        <li>A single DNS virtual hostname in front of the load balancer.</li>
+        <li>A shared cluster file system and a shared cluster database.</li>
+        <li>Credential sourcing, AV scanning and telemetry as cluster wide services.</li>
+        <li>The protocol set of SFTP, FTPS, HTTPS and AS2, and the three endpoint styles shown.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Challenge on the brief itself</h2>
+  <div class="callout red">
+    <h4>The target platform as stated cannot be built</h4>
+    <p>The brief describes EC2 instances running in Azure infrastructure. EC2 is AWS compute; the Azure equivalent is Virtual Machines or a Virtual Machine Scale Set. This is not a naming quibble. The platform decides which load balancer product is available, what a health probe can actually test, how availability zones are constructed, and which team raises the firewall change. The diagram therefore says <em>cloud IaaS</em> rather than picking one, and D-CL-01 carries the decision.</p>
+  </div>
+  <div class="callout red">
+    <h4>HOD is not expanded anywhere</h4>
+    <p>The destination is referred to as HOD without expansion and without an endpoint inventory. The endpoints in the diagram are illustrative styles, not real systems. Nothing at the host end can be security assessed until the term is confirmed and the endpoints are named, which is D-CL-02.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Open design decisions</h2>
+  <p>None of the following has a named owner. Each is capable of changing the deployment shape, so each needs an owner and a date before this note becomes a design. The same list is on the first tab of the decision register, ready to edit.</p>
   <table>
-    <tr><th>#</th><th>Consideration</th><th>Why it matters</th><th>Owner</th></tr>
-    <tr><td>FS-1</td><td>Public Dropbox vs Protected Dropbox for citizen uploads</td><td>An open, unauthenticated intake is convenient but widens the inbound attack surface. Protected / message-password mode raises the bar. Pick the posture deliberately for a public-facing service.</td><td class="own">To assign</td></tr>
-    <tr><td>FS-2</td><td>Dynamic link policy: expiry, password, single-use, revocation</td><td>A live download link is a bearer credential. Default TTL, whether a password is mandatory, and how a link is revoked all need to be set, not left to the individual agent.</td><td class="own">To assign</td></tr>
-    <tr><td>FS-3</td><td>Antivirus scan size limit on large citizen uploads</td><td>File Sharing is sold on large-file upload, yet the endpoint AV control (Windows MDE) has a scan-size ceiling flagged previously (gap G-15). Large citizen files could pass unscanned unless this is resolved.</td><td class="own">To assign</td></tr>
-    <tr><td>FS-4</td><td>Content inspection / DLP on citizen document exchange</td><td>The product does not provide native data-loss prevention. Decide whether sensitive-data inspection is required on the citizen channel and, if so, where it sits.</td><td class="own">To assign</td></tr>
-    <tr><td>FS-5</td><td>Retention and data-protection lifecycle</td><td>Retention policy governs how long citizen documents and their links persist. Set the retention window and deletion behaviour against the governing data-protection requirements.</td><td class="own">To assign</td></tr>
-    <tr><td>FS-6</td><td>Terminology standardisation (see naming trap)</td><td>Prevents reviewers conflating the FS module with the AFT File Share endpoint across the architecture set.</td><td class="own">To assign</td></tr>
+    <tr><th style="width:8%">Ref</th><th style="width:26%">Decision</th><th>Why it matters</th><th style="width:10%">Owner</th></tr>
+    <tr><td class="k">D-CL-01</td><td>Target cloud platform is contradictory in the brief</td><td>EC2 is AWS compute, described as running in Azure. Changes the load balancer product, health probe model, availability zone construct and firewall change route.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-02</td><td>Expansion and scope of HOD</td><td>Destination endpoints cannot be documented or security assessed until the term is confirmed and the inventory is named.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-03</td><td>Load balancer layer, L4 against L7</td><td>SFTP and FTPS cannot be proxied by an HTTP aware load balancer. May require two listener types or two load balancer instances.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-04</td><td>TLS termination against passthrough</td><td>Terminating loses client certificate identity unless forwarded. Passthrough limits health checking to the transport layer.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-05</td><td>Session persistence for multi channel protocols</td><td>FTPS opens a separate data channel that must return to the same node, or transfers fail intermittently.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-06</td><td>FTPS passive port range through load balancer and firewall</td><td>A range must be agreed and opened consistently across load balancer, firewall and every node, or it surfaces late as a long lead firewall change.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-07</td><td>Client IP preservation against source NAT</td><td>Endpoints and partners commonly allow list by source IP, which source NAT hides.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-08</td><td>Health probe semantics</td><td>An open TCP port is not evidence the transfer engine can accept work. A wedged but listening node stays in rotation.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-09</td><td>Shared cluster file system availability</td><td>A single shared working directory is a single point of failure behind a resilient front end.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-10</td><td>Node drain behaviour for in flight transfers</td><td>Restart from zero against resume from checkpoint changes large file transfer windows materially.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-11</td><td>Cluster sizing and the trigger to add a node</td><td>No scaling metric has been set, so capacity cannot be planned and cost cannot be forecast.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-12</td><td>Config promotion across cluster nodes, gap G-13</td><td>Partial promotion produces a cluster that behaves differently by node, which is hard to diagnose from transfer logs.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-13</td><td>Credential sourcing from PAM, gap G-14</td><td>Every node needs the same answer. Per node manual credentials do not scale.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-14</td><td>AV scan ceiling against large transfers, gap G-15</td><td>Behaviour above the approximately 250 MB ceiling, block, bypass or quarantine, must be a decision not a default.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-15</td><td>Inbound firewall change lead time</td><td>On the critical path, the same constraint already identified for POC-2.</td><td class="own">To assign</td></tr>
+    <tr><td class="k">D-CL-16</td><td>Certificate lifecycle for the cluster virtual hostname</td><td>One hostname means one certificate whose expiry affects every interface at once.</td><td class="own">To assign</td></tr>
   </table>
 </section>
 
-<p class="foot">Generated for the integration architecture programme. Diagram source of truth: gen_fileshare.py. Formats: .vsdx · .drawio · .svg · .png.</p>
+<section>
+  <h2>Cross programme tensions</h2>
+  <p>Recorded rather than resolved.</p>
+
+  <h3>Clustered infrastructure against config over construction</h3>
+  <p>A clustered runtime on customer managed compute is a build. The principle holds at the interface layer, where each approved interface is still a config row, but it does not hold for the platform underneath it. The risk is that the platform build quietly grows until adding an interface starts requiring infrastructure work again. Worth an explicit statement of where the config boundary sits.</p>
+
+  <h3>Overlap with the incumbent estate</h3>
+  <p>The nodes in this design reach host endpoints directly. ESDES already performs administered, secure and auditable file transfer to parts of that estate. Boomi MFT complements rather than replaces it, which has been confirmed previously, but at the point where both can reach the same endpoint the routing rule between them needs writing down. Otherwise the choice gets made per interface by whoever builds it.</p>
+
+  <h3>Prove it before you promise it</h3>
+  <p>The load balancing behaviours above are the items most likely to fail in a way that only shows up under real protocol traffic. A short proving exercise against one SFTP endpoint and one FTPS endpoint through the load balancer would retire most of the uncertainty in D-CL-03 to D-CL-08. Committing a delivery date for clustered MFT before that has run would be promising ahead of proof.</p>
+</section>
+
+<section>
+  <h2>Next actions</h2>
+  <table>
+    <tr><th style="width:48%">Action</th><th style="width:30%">Depends on</th><th>Owner</th></tr>
+    <tr><td>Confirm the target cloud platform and correct the brief</td><td>D-CL-01</td><td class="own">To assign</td></tr>
+    <tr><td>Confirm the expansion and endpoint inventory for HOD</td><td>D-CL-02</td><td class="own">To assign</td></tr>
+    <tr><td>Decide load balancer layer, TLS posture and persistence</td><td>D-CL-03 to D-CL-05</td><td class="own">To assign</td></tr>
+    <tr><td>Agree the FTPS passive range and raise the firewall change</td><td>D-CL-06, D-CL-15</td><td class="own">To assign</td></tr>
+    <tr><td>Settle client IP handling with the endpoint owners</td><td>D-CL-07</td><td class="own">To assign</td></tr>
+    <tr><td>Define the health probe and the compensating monitoring</td><td>D-CL-08</td><td class="own">To assign</td></tr>
+    <tr><td>State the availability posture of the shared file system and database</td><td>D-CL-09</td><td class="own">To assign</td></tr>
+    <tr><td>Run a proving exercise for SFTP and FTPS through the load balancer</td><td>Prove it before you promise it</td><td class="own">To assign</td></tr>
+  </table>
+</section>
+
+<p class="foot">Boomi MFT clustered deployment with load balancer, version 1.0. Diagram formats emitted from a single geometry model and validated for zero node overlaps and zero connector crossings before publication.</p>
 
 </main>
 </body>
