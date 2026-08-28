@@ -1,4 +1,4 @@
-<!-- File Transfer Requests Dashboard: table markup and styles only -->
+<!-- File Transfer Requests Dashboard and Transfer Catalog: table markup and styles only -->
 <style>
 .ftr-table { width: 100%; border-collapse: collapse; font-size: 15px;
   font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; color: #0b0c0c; min-width: 860px; }
@@ -67,6 +67,35 @@
     <tr>
       <td class="cell-action"><button type="button" class="btn-view">View Request</button></td>
       <td>SA Test</td><td>no-reply@boomi.com</td><td class="cell-nowrap">27/04/2026, 18:55:32</td><td>MFT Request Capture</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Screen 2: Transfer Catalog -->
+<table class="ftr-table" style="min-width:1020px;font-size:13px;">
+  <thead>
+    <tr>
+      <th scope="col">Name</th><th scope="col">Flow Name</th><th scope="col">Source</th>
+      <th scope="col">Destination</th><th scope="col">Schedule</th>
+      <th scope="col">Last Run</th><th scope="col">Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000 SFTP client access (Inbound)</td><td>MFT Transfer Catalog</td><td>Starez Inc. - 23303: Hosted SFTP - Thru SFTP</td><td>CSU - 23304: Hosted SFTP - Thru SFTP</td>
+      <td>Continuous</td><td></td><td class="cell-nowrap">08/07/2026, 08:35</td>
+    </tr>
+    <tr class="alt">
+      <td>000 SFTP server endpoint (Outbound)</td><td>MFT Transfer Catalog</td><td>Starez Inc. - 23302: Hosted SFTP - Thru SFTP</td><td>Starez Inc. - 23301: External SFTP - External SFTP</td>
+      <td>Continuous</td><td></td><td class="cell-nowrap">08/07/2026, 08:37</td>
+    </tr>
+    <tr>
+      <td>01. Example</td><td>MFT Transfer Catalog</td><td>DWP - 21127: CMA - S3 US West 2 - Amazon S3</td><td>DWP - 21128: CMEC - Azure Blob - Azure Blob</td>
+      <td>Continuous</td><td></td><td class="cell-nowrap">24/03/2026</td>
+    </tr>
+    <tr class="alt">
+      <td>02. Dept Upload Links to Download Links</td><td>MFT Transfer Catalog</td><td>DWP - Upload to Dept - Thru HTTPS Web UI Upload</td><td>Dept - Download from DWP - Thru HTTPS Web UI Upload</td>
+      <td>Continuous</td><td></td><td class="cell-nowrap">28/01/2026</td>
     </tr>
   </tbody>
 </table>
