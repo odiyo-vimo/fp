@@ -1,267 +1,414 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Boomi MFT clustered deployment with load balancer</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File Transfer Requests Dashboard</title>
 <style>
-  :root{--navy:#12123A;--accent:#2e6ca4;--light:#eaf1f8;--line:#d5deea;--ink:#233;--muted:#5b6b7d;
-        --bg:#f6f8fb;--red:#E24A2E;--green:#1d7a4d;--amber:#8a5a00;}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:"Segoe UI",system-ui,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
-  a{color:var(--accent)}
-  .dlbar{position:sticky;top:0;z-index:200;background:var(--navy);color:#fff;display:flex;flex-wrap:wrap;
-         gap:9px;align-items:center;padding:11px 20px;box-shadow:0 2px 10px rgba(0,0,0,.18)}
-  .dlbar .lbl{font-weight:700;letter-spacing:.3px;margin-right:4px;font-size:13.5px}
-  .dlbar a{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--navy);text-decoration:none;
-           font-weight:600;font-size:12.8px;padding:7px 12px;border-radius:7px;border:1px solid #dfe7f1;transition:.15s}
-  .dlbar a:hover{background:var(--light);transform:translateY(-1px)}
-  .dlbar a.alt{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
-  .dlbar a.alt:hover{background:rgba(255,255,255,.12)}
-  header{background:linear-gradient(120deg,var(--navy),#2b2b6a);color:#fff;padding:26px}
-  header h1{margin:0 0 6px;font-size:23px}
-  header p{margin:0;opacity:.92;font-size:15px}
-  .meta{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
-  .meta span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:3px 10px;border-radius:20px;font-size:12.5px}
-  main{max-width:1180px;margin:0 auto;padding:24px 20px 80px}
-  section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 26px;margin:16px 0;box-shadow:0 1px 3px rgba(20,40,70,.05)}
-  h2{color:var(--navy);border-left:5px solid var(--accent);padding-left:12px;margin:.2em 0 .7em;font-size:19px}
-  h3{color:var(--navy);margin:1em 0 .3em;font-size:15.5px}
-  p{margin:.5em 0}
-  ul{margin:.4em 0;padding-left:2px;list-style:none}
-  li{margin:.34em 0;padding-left:22px;position:relative}
-  li::before{content:"\203A";position:absolute;left:5px;top:0;color:var(--accent);font-weight:700}
-  ol{padding-left:20px}
-  ol li{padding-left:6px}
-  ol li::before{content:none}
-  .fig{border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px;margin:12px 0;overflow:auto}
-  .fig img{display:block;width:100%;height:auto;min-width:980px}
-  .figcap{font-size:13px;color:var(--muted);margin:6px 4px 2px}
-  .callout{background:var(--light);border:1px solid #cddcf0;border-left:5px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0}
-  .callout.amber{border-left-color:var(--amber);background:#fbf5e8}
-  .callout.red{border-left-color:var(--red);background:#fbf1ee}
-  .callout.green{border-left-color:var(--green);background:#eef7f1}
-  .callout h4{margin:0 0 6px;font-size:14.5px;color:var(--navy)}
-  .callout.amber h4{color:var(--amber)} .callout.red h4{color:var(--red)}
-  table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:13.4px}
-  th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
-  th{background:var(--navy);color:#fff;font-weight:600}
-  tr:nth-child(even) td{background:#f3f7fc}
-  td.k{font-weight:600;color:var(--navy);white-space:nowrap}
-  code{background:#eef3f9;padding:1px 6px;border-radius:5px;font-size:12.8px}
-  .own{font-size:12px;color:var(--red);font-weight:600;white-space:nowrap}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
-  .foot{color:var(--muted);font-size:12.5px;text-align:center;margin-top:22px}
+  :root {
+    --govuk-blue: #1d70b8;
+    --govuk-black: #0b0c0c;
+    --govuk-header: #12436d;
+    --govuk-grey: #f3f2f1;
+    --govuk-mid-grey: #b1b4b6;
+    --govuk-link: #1d70b8;
+    --govuk-green: #00703c;
+    --govuk-focus: #ffdd00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--govuk-black);
+    background: #ffffff;
+  }
+
+  /* ---------- sticky download bar ---------- */
+  .download-bar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: #0b0c0c;
+    border-bottom: 4px solid var(--govuk-focus);
+    padding: 12px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+  .download-bar .dl-label {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    margin-right: 8px;
+    letter-spacing: 0.02em;
+  }
+  .download-bar a {
+    display: inline-block;
+    background: var(--govuk-green);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 9px 14px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 0 #002d18;
+  }
+  .download-bar a:hover { background: #005a30; }
+  .download-bar a:focus {
+    background: var(--govuk-focus);
+    color: #0b0c0c;
+    outline: 3px solid transparent;
+    box-shadow: 0 2px 0 #0b0c0c;
+  }
+  .download-bar a.zip { background: #1d70b8; box-shadow: 0 2px 0 #003078; }
+  .download-bar a.zip:hover { background: #003078; }
+
+  /* ---------- govuk header ---------- */
+  header.govuk-header {
+    background: var(--govuk-header);
+    border-bottom: 10px solid #ffffff;
+    padding: 10px 20px;
+    color: #ffffff;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 10px; }
+  .crown { font-size: 20px; line-height: 1; }
+  .brand { font-weight: 700; font-size: 24px; letter-spacing: 0.02em; }
+  .service { font-size: 18px; font-weight: 400; }
+  .phase-strip { background: var(--govuk-header); height: 26px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 24px 20px 0; }
+  .backlink { display: inline-block; margin-bottom: 16px; color: var(--govuk-link); font-size: 15px; }
+  h1 { font-size: 34px; line-height: 1.1; margin: 4px 0 26px; }
+  h2 { font-size: 26px; margin: 36px 0 12px; }
+  h3 { font-size: 19px; margin: 24px 0 8px; }
+  p { margin: 0 0 14px; max-width: 780px; }
+  .lede { font-size: 17px; }
+  a { color: var(--govuk-link); }
+
+  .controls { display: flex; align-items: center; gap: 24px; margin: 20px 0 18px; }
+  .btn-secondary {
+    background: var(--govuk-grey);
+    border: 2px solid #0b0c0c;
+    box-shadow: 0 2px 0 #929191;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .btn-secondary:hover { background: #dbdad9; }
+  .btn-secondary:focus { background: var(--govuk-focus); border-color: #0b0c0c; outline: none; }
+  .selected-count { font-size: 16px; }
+
+  /* ---------- the table ---------- */
+  .table-wrap { overflow-x: auto; border-bottom: 1px solid var(--govuk-mid-grey); }
+  table.dashboard { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 860px; }
+  table.dashboard thead th {
+    background: #2b2b2b;
+    color: #ffffff;
+    text-align: left;
+    padding: 12px 14px;
+    font-weight: 700;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  table.dashboard tbody td {
+    padding: 10px 14px;
+    vertical-align: middle;
+    border-bottom: 1px solid #ffffff;
+  }
+  table.dashboard tbody tr { background: #ede9e2; }
+  table.dashboard tbody tr.alt { background: #e2ddd4; }
+  table.dashboard tbody tr:hover { background: #d6d0c4; }
+  .cell-action { width: 150px; }
+  .cell-name { font-weight: 400; }
+  .cell-nowrap { white-space: nowrap; }
+  .btn-view {
+    background: #f3f2f1;
+    border: 1px solid #6f777b;
+    border-radius: 2px;
+    padding: 7px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-view:hover { background: #ffffff; border-color: #0b0c0c; }
+  .btn-view:focus { background: var(--govuk-focus); border-color: #0b0c0c; outline: 2px solid #0b0c0c; }
+
+  /* ---------- panels ---------- */
+  .panel {
+    border-left: 8px solid var(--govuk-blue);
+    background: var(--govuk-grey);
+    padding: 14px 18px;
+    margin: 20px 0;
+  }
+  .panel.warn { border-left-color: #f47738; }
+  .panel h3 { margin-top: 0; }
+  .panel p:last-child, .panel ul:last-child { margin-bottom: 0; }
+
+  table.info { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0 20px; }
+  table.info th {
+    text-align: left; padding: 10px 12px; border-bottom: 2px solid #0b0c0c; font-weight: 700; vertical-align: bottom;
+  }
+  table.info td { padding: 10px 12px; border-bottom: 1px solid var(--govuk-mid-grey); vertical-align: top; }
+  .tag { display: inline-block; padding: 3px 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .tag-added { background: #cce2d8; color: #005a30; }
+  .tag-removed { background: #f6d7d2; color: #942514; }
+  .tag-changed { background: #fff7bf; color: #594d00; }
+
+  ol.steps { max-width: 820px; padding-left: 22px; }
+  ol.steps li { margin-bottom: 10px; }
+  ul.plain { max-width: 820px; padding-left: 22px; }
+  ul.plain li { margin-bottom: 8px; }
+  code { background: var(--govuk-grey); padding: 1px 5px; font-size: 14px; }
+
+  /* ---------- footer ---------- */
+  footer.govuk-footer {
+    margin-top: 48px;
+    border-top: 10px solid var(--govuk-blue);
+    background: var(--govuk-grey);
+    padding: 24px 20px 32px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-links a { margin-right: 16px; font-size: 15px; }
+  .ogl { font-weight: 700; border: 2px solid #0b0c0c; padding: 2px 6px; display: inline-block; margin: 14px 0 8px; font-size: 13px; }
+  .footer-note { font-size: 14px; }
+  .crown-copy { float: right; font-size: 14px; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 27px; }
+    .download-bar { padding: 10px 12px; }
+    .download-bar a { font-size: 13px; padding: 8px 10px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="dlbar">
-  <span class="lbl">Download deliverables</span>
-  <a href="assets/boomi-mft-clustered-deployment-architecture.docx" download>&#9635; Architecture note (.docx)</a>
-  <a href="assets/boomi-mft-clustered-deployment-decisions.xlsx" download>&#9636; Decision register (.xlsx)</a>
-  <a href="assets/boomi-mft-clustered-deployment.drawio" download>&#9998; draw.io source</a>
-  <a href="assets/boomi-mft-clustered-deployment.svg" download>&#9704; Diagram (SVG)</a>
-  <a href="assets/boomi-mft-clustered-deployment.png" download>&#9636; Diagram (PNG)</a>
-  <a class="alt" href="assets/docs.zip" download>&#11015; All deliverables (.zip)</a>
+<!-- Sticky download bar: always at the very top, above the service header -->
+<div class="download-bar">
+  <span class="dl-label">Downloads</span>
+  <a href="assets/file-transfer-requests-dashboard.drawio" download>Dashboard mockup (draw.io)</a>
+  <a href="assets/dashboard-table.html" download>Table snippet (HTML)</a>
+  <a class="zip" href="assets/docs.zip" download>All documents (ZIP)</a>
 </div>
 
-<header>
-  <h1>Boomi MFT clustered deployment with load balancer</h1>
-  <p>The MFT runtime on Boomi MCS calls a load balancer, which distributes across clustered nodes on cloud compute instances, which then connect to the respective HOD endpoint.</p>
-  <div class="meta">
-    <span>Version 1.0, draft for review</span>
-    <span>Integration Catalogue, MFT capability</span>
-    <span>16 open decisions, none with a named owner</span>
-    <span>Linked gaps G-13, G-14, G-15</span>
+<header class="govuk-header">
+  <div class="header-inner">
+    <span class="crown">&#9819;</span>
+    <span class="brand">GOV.UK</span>
+    <span class="service">Approvals Dashboard</span>
   </div>
 </header>
+<div class="phase-strip"></div>
 
 <main>
+  <a class="backlink" href="#">&lt; Back</a>
+  <h1>File Transfer Requests Dashboard</h1>
 
-<section>
+  <h2>Manage Requests</h2>
+  <p class="lede">Use this service to view file transfer requests raised through the self-service flow.</p>
+
+  <div class="controls">
+    <button type="button" class="btn-secondary" id="refresh">Refresh</button>
+    <span class="selected-count">Selected Rows: <span id="count">0</span></span>
+  </div>
+
+  <div class="table-wrap">
+    <table class="dashboard">
+      <thead>
+        <tr>
+          <th scope="col">Actions</th>
+          <th scope="col">Name</th>
+          <th scope="col">Requested By</th>
+          <th scope="col">Requested On</th>
+          <th scope="col">Flow Name</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr class="govuk-table__row">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="Lex BT S3 to Blob">View Request</button></td>
+        <td class="cell-name">Lex BT S3 to Blob</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">28/01/2026, 15:44:46</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row alt">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="Tax Office to Customs">View Request</button></td>
+        <td class="cell-name">Tax Office to Customs</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">13/03/2026, 13:08:19</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="Tax Office to Customs">View Request</button></td>
+        <td class="cell-name">Tax Office to Customs</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">17/03/2026, 14:40:02</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row alt">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="2027 Fiscal Project">View Request</button></td>
+        <td class="cell-name">2027 Fiscal Project</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">20/03/2026, 12:05:40</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="Aprove">View Request</button></td>
+        <td class="cell-name">Aprove</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">31/03/2026, 14:27:01</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row alt">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="Example !">View Request</button></td>
+        <td class="cell-name">Example !</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">01/04/2026, 17:57:27</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="tax personal">View Request</button></td>
+        <td class="cell-name">tax personal</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">08/04/2026, 15:35:18</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row alt">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="DWP2Dept-payments">View Request</button></td>
+        <td class="cell-name">DWP2Dept-payments</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">08/04/2026, 17:57:05</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="Beligum">View Request</button></td>
+        <td class="cell-name">Beligum</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">13/04/2026, 14:42:26</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row alt">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="ghfggh">View Request</button></td>
+        <td class="cell-name">ghfggh</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">24/04/2026, 13:37:12</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="cell-action"><button type="button" class="btn-view" data-name="SA Test">View Request</button></td>
+        <td class="cell-name">SA Test</td>
+        <td>no-reply@boomi.com</td>
+        <td class="cell-nowrap">27/04/2026, 18:55:32</td>
+        <td>MFT Request Capture</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <h2>How to use this page</h2>
-  <ul>
-    <li>The bar at the very top downloads every deliverable produced for this request. The <strong>zip</strong> contains all of them together.</li>
-    <li>The <strong>architecture note (.docx)</strong> is the reviewable document. It carries the diagram, the component table, the load balancing analysis and the full decision list, and is the version to circulate for Design Authority comment.</li>
-    <li>The <strong>decision register (.xlsx)</strong> is the working artefact. Three tabs: <em>Decision register</em>, <em>Assumption log</em> and <em>Described in brief</em>. Edit the Status and Owner columns only; the counts at the foot of the first tab recalculate on their own.</li>
-    <li>The <strong>draw.io source</strong> is the editable diagram. Open it live in the browser here: <a href="https://viewer.diagrams.net/?tags=%7B%7D&amp;lightbox=1&amp;edit=_blank&amp;layers=1&amp;nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-clustered-deployment.drawio" target="_blank" rel="noopener">open in the draw.io viewer</a>. Nothing is exported by hand, so the SVG, PNG and draw.io file are all emitted from one geometry model and cannot drift apart.</li>
-    <li>Read section <em>What was described against what has been assumed</em> before treating anything here as agreed. Only four statements came from the brief. Everything else is a pattern-standard addition awaiting confirmation.</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Architecture diagram</h2>
-  <div class="fig">
-    <img src="assets/boomi-mft-clustered-deployment.svg" alt="Clustered Boomi MFT deployment: the MFT runtime on Boomi MCS calls a load balancer through a single virtual hostname, the load balancer distributes to three cluster nodes on cloud compute instances, and the nodes connect to HOD endpoints. Shared platform services sit beneath the cluster."/>
-  </div>
-  <p class="figcap">Solid lines carry the transfer. Dashed lines are supporting or control traffic. Amber boxes are known platform gaps, the red box is an open design decision.</p>
-</section>
-
-<section>
-  <h2>Architecture as described</h2>
-  <p>The shape described is a straight left to right path.</p>
-  <ol>
-    <li>The MFT runtime, hosted on Boomi Managed Cloud Services, makes the call outbound.</li>
-    <li>That call reaches a load balancer.</li>
-    <li>The load balancer calls internally to the compute instances in the cloud infrastructure where the runtime nodes are present.</li>
-    <li>The node then connects to the respective HOD endpoint.</li>
+  <ol class="steps">
+    <li>Use the black bar at the top of the page to download the supporting documents. The ZIP contains every file in one download.</li>
+    <li>The table above is the working prototype of the requests grid. It is a static front-end mock, so <strong>View Request</strong> raises a confirmation message rather than opening a record.</li>
+    <li>To wire it to live data, replace the <code>&lt;tbody&gt;</code> contents with rows returned from the request configuration table, keeping the five column order fixed: Actions, Name, Requested By, Requested On, Flow Name.</li>
+    <li>To lift the markup into another page, download <strong>Table snippet (HTML)</strong>. It contains the table and its styles only, with no page furniture.</li>
+    <li>Read the open decisions below before treating the Flow Name column as agreed. It is not present in the source screen.</li>
   </ol>
-  <p>Everything else in the diagram is a supporting element added to make that path deployable. The two are kept separate below so the distinction is not lost.</p>
 
-  <h3>Request sequence</h3>
-  <ol>
-    <li>The MFT runtime on Boomi MCS raises the outbound transfer request over TLS.</li>
-    <li>The virtual hostname for the cluster is resolved, so no individual node address is ever published.</li>
-    <li>The request lands on the load balancer virtual IP inside the target cloud network.</li>
-    <li>The load balancer selects a node currently in rotation and passes the session to it.</li>
-    <li>Health probes continuously decide which nodes stay in rotation and which are drained.</li>
-    <li>The node works against the shared file system, cluster database and credential source.</li>
-    <li>The node opens the connection to the respective HOD endpoint and moves the file.</li>
+  <h3>Using the draw.io mockup</h3>
+  <ol class="steps">
+    <li>Download <strong>Dashboard mockup (draw.io)</strong> from the bar at the top.</li>
+    <li>Open <a href="https://app.diagrams.net">app.diagrams.net</a>, choose Open Existing Diagram, and select the downloaded <code>.drawio</code> file. It also opens in the draw.io desktop app and in the Confluence and Visual Studio Code draw.io plugins.</li>
+    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Row height is 32px and the column widths are Actions 160, Name 260, Requested By 220, Requested On 200, Flow Name 180, summing to the 1020px table width.</li>
+    <li>The orange panel at the foot of the diagram carries the open decisions. Keep it attached when circulating the mockup so reviewers see what is still unresolved.</li>
+    <li>To export for a slide or a document, use File, Export as, PNG with a transparent background and 2x scale.</li>
   </ol>
-</section>
 
-<section>
-  <h2>Component responsibilities</h2>
-  <table>
-    <tr><th style="width:20%">Component</th><th style="width:36%">Responsibility</th><th>Notes</th></tr>
-    <tr><td class="k">MFT runtime on MCS</td><td>Transfer orchestration, protocol handling, retry and resume</td><td>Vendor operated. Not in the customer change control path.</td></tr>
-    <tr><td class="k">Config catalogue</td><td>One configuration row per approved interface</td><td>Holds the config over construction principle. No new component per interface.</td></tr>
-    <tr><td class="k">DNS virtual hostname</td><td>One name representing the whole cluster</td><td>Node addresses are never published, which is what makes nodes replaceable.</td></tr>
-    <tr><td class="k">Load balancer</td><td>Distributes sessions across nodes in rotation</td><td>Layer and TLS posture are unresolved, see D-CL-03 and D-CL-04.</td></tr>
-    <tr><td class="k">Health probes</td><td>Decide which nodes are in rotation</td><td>Probe depth is unresolved, see D-CL-08.</td></tr>
-    <tr><td class="k">Cluster nodes</td><td>Execute the transfer and connect to the endpoint</td><td>Three shown illustratively. Actual count unresolved, see D-CL-11.</td></tr>
-    <tr><td class="k">Shared file system</td><td>Common working and staging directory</td><td>Availability posture unresolved, see D-CL-09.</td></tr>
-    <tr><td class="k">Cluster database</td><td>Shared state and cache with TTL</td><td>Required because the built in Cache shape is node local and unusable in a cluster.</td></tr>
-    <tr><td class="k">Credential source</td><td>Supplies endpoint credentials to every node</td><td>No documented native PAM path, gap G-14.</td></tr>
-    <tr><td class="k">AV scan hook</td><td>Scans content in transit</td><td>Approximately 250 MB ceiling, gap G-15.</td></tr>
-    <tr><td class="k">Monitoring and SIEM</td><td>Correlates cluster and transfer events</td><td>Per node telemetry has to be distinguishable, or a failing node hides in the aggregate.</td></tr>
+  <h3>Reusing the styling</h3>
+  <p>All styling is inline in this file, with no external dependencies or build step. Colours, the black table header and the alternating row shading follow the GOV.UK Design System conventions in the source screen. Focus states use the standard yellow focus colour so keyboard navigation stays visible.</p>
+
+  <h2>What changed from the source screen</h2>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Type</th><th scope="col">Item</th><th scope="col">Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class='tag tag-removed'>Removed</span></td><td>Justification</td><td>Free-text column removed from the grid. Retained on the detail view reached by View Request.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Flow Name</td><td>Names the originating Boomi Flow for each request. Source field not confirmed, see D-AD-01.</td></tr>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Action button label</td><td>View Transfer becomes View Request, matching the request-centric framing of this screen.</td></tr>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Page heading</td><td>File Transfer Approvals Dashboard becomes File Transfer Requests Dashboard. Manage Approvals becomes Manage Requests.</td></tr>
+    </tbody>
   </table>
-</section>
 
-<section>
-  <h2>Load balancing considerations specific to file transfer</h2>
-  <p>Load balancing HTTP traffic is well trodden. Load balancing file transfer protocols is not, and the differences are the part of this design most likely to be underestimated.</p>
+  <h2>Open decisions</h2>
+  <div class="panel warn">
+    <h3>Not yet agreed</h3>
+    <p>The items below are unresolved. They are recorded here rather than settled silently, and each needs a named owner before this screen is treated as final.</p>
+  </div>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Ref</th><th scope="col">Decision</th><th scope="col">Detail</th><th scope="col">Owner role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class='cell-nowrap'><strong>D-AD-01</strong></td><td>Flow Name source field</td><td>The Flow Name column does not exist in the source screenshot. The values shown are placeholders. Confirm whether Flow Name is the Boomi Flow developer name, the published Flow title, or a friendly label held in the request configuration table.</td><td>Boomi Flow developer / Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AD-02</strong></td><td>Requested By is a system address</td><td>Every row shows no-reply@boomi.com rather than the requesting user. Confirm whether the requester identity is captured elsewhere and should replace this value, or whether the column should be relabelled.</td><td>Boomi Flow developer</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AD-03</strong></td><td>Justification placement</td><td>Justification is removed from the grid by this change. Confirm it remains visible on the request detail screen so approval context is not lost.</td><td>Design Authority</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AD-04</strong></td><td>Sort and filter behaviour</td><td>The source screen offers Refresh and row selection only. Confirm whether column sorting, date filtering and pagination are in scope for this iteration.</td><td>Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AD-05</strong></td><td>Departmental naming on the published page</td><td>Row 8 is published as DWP2Dept-payments. The unredacted value is held in the Word and Excel deliverables only. Confirm the redaction rule for any wider publication.</td><td>Integration Architect</td></tr>
+    </tbody>
+  </table>
 
-  <h3>Protocol layer</h3>
-  <p>SFTP and FTPS are not HTTP. An HTTP aware load balancer cannot proxy them, so those listeners have to operate at the transport layer. HTTPS and AS2 can be handled at the application layer. The practical consequence is that a single load balancer product may not serve every protocol in the catalogue, which affects cost and the operational model.</p>
+  <h2>Notes and assumptions</h2>
+  <div class="panel">
+    <ul class="plain">
+        <li>Row data is transcribed from the supplied screenshot. Original spellings, including Aprove and Beligum, are preserved deliberately so the table reflects real captured data rather than a cleaned-up version.</li>
+        <li>Flow Name values are placeholders. They are not present in the source material and must not be treated as confirmed until D-AD-01 is closed.</li>
+        <li>The table is a static front-end prototype. No Boomi Flow, API or data source is wired to it.</li>
+        <li>Styling follows the GOV.UK Design System conventions visible in the screenshot: Transport-style typography stack, black table header, alternating row shading, and the standard footer with OGL licensing.</li>
+    </ul>
+  </div>
 
-  <h3>Multi channel protocols</h3>
-  <p>FTPS negotiates a separate data channel. If that channel is balanced independently and lands on a different node from the control channel, the transfer fails. Session persistence has to be explicit, and the passive port range has to be agreed and opened consistently across the load balancer, the firewall and every node.</p>
-
-  <h3>Identity and source address</h3>
-  <p>Two things commonly break at this point. Client certificate identity is lost if the load balancer terminates TLS without forwarding it, which matters wherever mTLS is the authentication method. Separately, source IP allow listing at the far end stops working if the load balancer source NATs, because every session then appears to come from the load balancer.</p>
-
-  <h3>Health checking</h3>
-  <p>A node whose port is open but whose transfer engine is wedged will keep receiving sessions if the probe only tests the port. An application level probe is materially better, but it depends on the product exposing something meaningful to probe. If it does not, the compensating control is monitoring per node throughput and alerting on a node that stops completing transfers.</p>
-</section>
-
-<section>
-  <h2>Cluster considerations</h2>
-  <ul>
-    <li>Shared state cannot sit in the built in Cache shape, which is node local. A database backed cache table with TTL is the pattern that survives a clustered deployment.</li>
-    <li>A single shared working directory reintroduces a single point of failure behind an otherwise resilient front end. Its availability posture needs stating.</li>
-    <li>Spreading nodes across availability zones only helps if the shared file system and database are equally spread. A zone resilient front end over a single zone dependency is not zone resilient.</li>
-    <li>Adding node N must remain a configuration and infrastructure action, not a Boomi build action. If adding a node requires new Boomi components, the config over construction principle has been broken.</li>
-    <li>Configuration promotion has to land identically on every node. Partial promotion produces a cluster that behaves differently depending on which node answers, which is difficult to diagnose from the transfer logs alone.</li>
+  <h2>Files in this deliverable</h2>
+  <ul class="plain">
+    <li><code>index.html</code> &mdash; this page, containing the prototype table and all instructions.</li>
+    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup of the full screen, every cell a separate shape.</li>
+    <li><code>assets/dashboard-table.html</code> &mdash; standalone table markup and CSS for lifting into another page.</li>
+    <li><code>assets/docs.zip</code> &mdash; both of the above in one archive.</li>
   </ul>
-</section>
-
-<section>
-  <h2>What was described against what has been assumed</h2>
-  <p>This separation matters. Only the first group came from the brief.</p>
-  <div class="grid2">
-    <div class="callout green">
-      <h4>Described in the brief</h4>
-      <ul>
-        <li>MFT runtime hosted on Boomi MCS.</li>
-        <li>The runtime calls a load balancer.</li>
-        <li>The load balancer calls internally to compute instances where the nodes are present.</li>
-        <li>The node connects to the respective HOD.</li>
-      </ul>
-    </div>
-    <div class="callout amber">
-      <h4>Assumed, and requiring confirmation</h4>
-      <ul>
-        <li>Three nodes. Illustrative, with no capacity analysis behind the number.</li>
-        <li>Availability zone spread across the nodes.</li>
-        <li>A single DNS virtual hostname in front of the load balancer.</li>
-        <li>A shared cluster file system and a shared cluster database.</li>
-        <li>Credential sourcing, AV scanning and telemetry as cluster wide services.</li>
-        <li>The protocol set of SFTP, FTPS, HTTPS and AS2, and the three endpoint styles shown.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2>Challenge on the brief itself</h2>
-  <div class="callout red">
-    <h4>The target platform as stated cannot be built</h4>
-    <p>The brief describes EC2 instances running in Azure infrastructure. EC2 is AWS compute; the Azure equivalent is Virtual Machines or a Virtual Machine Scale Set. This is not a naming quibble. The platform decides which load balancer product is available, what a health probe can actually test, how availability zones are constructed, and which team raises the firewall change. The diagram therefore says <em>cloud IaaS</em> rather than picking one, and D-CL-01 carries the decision.</p>
-  </div>
-  <div class="callout red">
-    <h4>HOD is not expanded anywhere</h4>
-    <p>The destination is referred to as HOD without expansion and without an endpoint inventory. The endpoints in the diagram are illustrative styles, not real systems. Nothing at the host end can be security assessed until the term is confirmed and the endpoints are named, which is D-CL-02.</p>
-  </div>
-</section>
-
-<section>
-  <h2>Open design decisions</h2>
-  <p>None of the following has a named owner. Each is capable of changing the deployment shape, so each needs an owner and a date before this note becomes a design. The same list is on the first tab of the decision register, ready to edit.</p>
-  <table>
-    <tr><th style="width:8%">Ref</th><th style="width:26%">Decision</th><th>Why it matters</th><th style="width:10%">Owner</th></tr>
-    <tr><td class="k">D-CL-01</td><td>Target cloud platform is contradictory in the brief</td><td>EC2 is AWS compute, described as running in Azure. Changes the load balancer product, health probe model, availability zone construct and firewall change route.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-02</td><td>Expansion and scope of HOD</td><td>Destination endpoints cannot be documented or security assessed until the term is confirmed and the inventory is named.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-03</td><td>Load balancer layer, L4 against L7</td><td>SFTP and FTPS cannot be proxied by an HTTP aware load balancer. May require two listener types or two load balancer instances.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-04</td><td>TLS termination against passthrough</td><td>Terminating loses client certificate identity unless forwarded. Passthrough limits health checking to the transport layer.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-05</td><td>Session persistence for multi channel protocols</td><td>FTPS opens a separate data channel that must return to the same node, or transfers fail intermittently.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-06</td><td>FTPS passive port range through load balancer and firewall</td><td>A range must be agreed and opened consistently across load balancer, firewall and every node, or it surfaces late as a long lead firewall change.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-07</td><td>Client IP preservation against source NAT</td><td>Endpoints and partners commonly allow list by source IP, which source NAT hides.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-08</td><td>Health probe semantics</td><td>An open TCP port is not evidence the transfer engine can accept work. A wedged but listening node stays in rotation.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-09</td><td>Shared cluster file system availability</td><td>A single shared working directory is a single point of failure behind a resilient front end.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-10</td><td>Node drain behaviour for in flight transfers</td><td>Restart from zero against resume from checkpoint changes large file transfer windows materially.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-11</td><td>Cluster sizing and the trigger to add a node</td><td>No scaling metric has been set, so capacity cannot be planned and cost cannot be forecast.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-12</td><td>Config promotion across cluster nodes, gap G-13</td><td>Partial promotion produces a cluster that behaves differently by node, which is hard to diagnose from transfer logs.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-13</td><td>Credential sourcing from PAM, gap G-14</td><td>Every node needs the same answer. Per node manual credentials do not scale.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-14</td><td>AV scan ceiling against large transfers, gap G-15</td><td>Behaviour above the approximately 250 MB ceiling, block, bypass or quarantine, must be a decision not a default.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-15</td><td>Inbound firewall change lead time</td><td>On the critical path, the same constraint already identified for POC-2.</td><td class="own">To assign</td></tr>
-    <tr><td class="k">D-CL-16</td><td>Certificate lifecycle for the cluster virtual hostname</td><td>One hostname means one certificate whose expiry affects every interface at once.</td><td class="own">To assign</td></tr>
-  </table>
-</section>
-
-<section>
-  <h2>Cross programme tensions</h2>
-  <p>Recorded rather than resolved.</p>
-
-  <h3>Clustered infrastructure against config over construction</h3>
-  <p>A clustered runtime on customer managed compute is a build. The principle holds at the interface layer, where each approved interface is still a config row, but it does not hold for the platform underneath it. The risk is that the platform build quietly grows until adding an interface starts requiring infrastructure work again. Worth an explicit statement of where the config boundary sits.</p>
-
-  <h3>Overlap with the incumbent estate</h3>
-  <p>The nodes in this design reach host endpoints directly. ESDES already performs administered, secure and auditable file transfer to parts of that estate. Boomi MFT complements rather than replaces it, which has been confirmed previously, but at the point where both can reach the same endpoint the routing rule between them needs writing down. Otherwise the choice gets made per interface by whoever builds it.</p>
-
-  <h3>Prove it before you promise it</h3>
-  <p>The load balancing behaviours above are the items most likely to fail in a way that only shows up under real protocol traffic. A short proving exercise against one SFTP endpoint and one FTPS endpoint through the load balancer would retire most of the uncertainty in D-CL-03 to D-CL-08. Committing a delivery date for clustered MFT before that has run would be promising ahead of proof.</p>
-</section>
-
-<section>
-  <h2>Next actions</h2>
-  <table>
-    <tr><th style="width:48%">Action</th><th style="width:30%">Depends on</th><th>Owner</th></tr>
-    <tr><td>Confirm the target cloud platform and correct the brief</td><td>D-CL-01</td><td class="own">To assign</td></tr>
-    <tr><td>Confirm the expansion and endpoint inventory for HOD</td><td>D-CL-02</td><td class="own">To assign</td></tr>
-    <tr><td>Decide load balancer layer, TLS posture and persistence</td><td>D-CL-03 to D-CL-05</td><td class="own">To assign</td></tr>
-    <tr><td>Agree the FTPS passive range and raise the firewall change</td><td>D-CL-06, D-CL-15</td><td class="own">To assign</td></tr>
-    <tr><td>Settle client IP handling with the endpoint owners</td><td>D-CL-07</td><td class="own">To assign</td></tr>
-    <tr><td>Define the health probe and the compensating monitoring</td><td>D-CL-08</td><td class="own">To assign</td></tr>
-    <tr><td>State the availability posture of the shared file system and database</td><td>D-CL-09</td><td class="own">To assign</td></tr>
-    <tr><td>Run a proving exercise for SFTP and FTPS through the load balancer</td><td>Prove it before you promise it</td><td class="own">To assign</td></tr>
-  </table>
-</section>
-
-<p class="foot">Boomi MFT clustered deployment with load balancer, version 1.0. Diagram formats emitted from a single geometry model and validated for zero node overlaps and zero connector crossings before publication.</p>
-
 </main>
+
+<footer class="govuk-footer">
+  <div class="footer-inner">
+    <span class="crown-copy">&copy; Crown copyright</span>
+    <div class="footer-links">
+      <a href="#">Help</a><a href="#">Privacy</a><a href="#">Cookies</a>
+    </div>
+    <div class="ogl">OGL</div>
+    <p class="footer-note">All content is available under the
+      <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">Open Government Licence v3.0</a>
+      except where otherwise stated.</p>
+  </div>
+</footer>
+
+<script>
+  var selected = 0;
+  document.querySelectorAll('.btn-view').forEach(function (b) {
+    b.addEventListener('click', function () {
+      selected += 1;
+      document.getElementById('count').textContent = selected;
+      alert('View Request: ' + b.getAttribute('data-name') +
+            '\n\nThis is a static prototype. Wire this button to the request detail screen.');
+    });
+  });
+  document.getElementById('refresh').addEventListener('click', function () {
+    selected = 0;
+    document.getElementById('count').textContent = '0';
+  });
+</script>
+
 </body>
 </html>
