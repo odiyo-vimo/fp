@@ -126,6 +126,9 @@
   .cell-action { width: 150px; }
   .cell-name { font-weight: 400; }
   .cell-nowrap { white-space: nowrap; }
+  table.dashboard.wide { font-size: 13px; min-width: 1020px; }
+  table.dashboard.wide tbody td { vertical-align: top; }
+  .empty { color: #6f777b; font-style: italic; }
   .btn-view {
     background: #f3f2f1;
     border: 1px solid #6f777b;
@@ -209,7 +212,7 @@
   <a class="backlink" href="#">&lt; Back</a>
   <h1>File Transfer Requests Dashboard</h1>
 
-  <h2>Manage Requests</h2>
+  <h2>Screen 1: Manage Requests</h2>
   <p class="lede">Use this service to view file transfer requests raised through the self-service flow.</p>
 
   <div class="controls">
@@ -310,11 +313,91 @@
     </table>
   </div>
 
+  <h2>Screen 2: Transfer Catalog</h2>
+  <h3>Catalog</h3>
+  <p class="lede">Use this service to browse existing scheduled file transfers configurations</p>
+
+  <div class="controls">
+    <button type="button" class="btn-secondary" id="refresh2">Refresh</button>
+    <span class="selected-count">Selected Rows: <span id="count2">0</span></span>
+  </div>
+
+  <div class="table-wrap">
+    <table class="dashboard wide">
+      <thead>
+        <tr><th scope="col">Name</th><th scope="col">Flow Name</th><th scope="col">Source</th><th scope="col">Destination</th><th scope="col">Schedule</th><th scope="col">Last Run</th><th scope="col">Created</th></tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="cell-name">000 SFTP client access (Inbound)</td>
+        <td>MFT Transfer Catalog</td>
+        <td>Starez Inc. - 23303: Hosted SFTP - Thru SFTP</td>
+        <td>CSU - 23304: Hosted SFTP - Thru SFTP</td>
+        <td>Continuous</td>
+        <td><span class='empty'>Not set</span></td>
+        <td class="cell-nowrap">08/07/2026, 08:35</td>
+      </tr>
+      <tr class="alt">
+        <td class="cell-name">000 SFTP server endpoint (Outbound)</td>
+        <td>MFT Transfer Catalog</td>
+        <td>Starez Inc. - 23302: Hosted SFTP - Thru SFTP</td>
+        <td>Starez Inc. - 23301: External SFTP - External SFTP</td>
+        <td>Continuous</td>
+        <td><span class='empty'>Not set</span></td>
+        <td class="cell-nowrap">08/07/2026, 08:37</td>
+      </tr>
+      <tr>
+        <td class="cell-name">01. Example</td>
+        <td>MFT Transfer Catalog</td>
+        <td>DWP - 21127: CMA - S3 US West 2 - Amazon S3</td>
+        <td>DWP - 21128: CMEC - Azure Blob - Azure Blob</td>
+        <td>Continuous</td>
+        <td><span class='empty'>Not set</span></td>
+        <td class="cell-nowrap">24/03/2026</td>
+      </tr>
+      <tr class="alt">
+        <td class="cell-name">02. Dept Upload Links to Download Links</td>
+        <td>MFT Transfer Catalog</td>
+        <td>DWP - Upload to Dept - Thru HTTPS Web UI Upload</td>
+        <td>Dept - Download from DWP - Thru HTTPS Web UI Upload</td>
+        <td>Continuous</td>
+        <td><span class='empty'>Not set</span></td>
+        <td class="cell-nowrap">28/01/2026</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>What changed on the catalog</h3>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Type</th><th scope="col">Item</th><th scope="col">Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class='tag tag-removed'>Removed</span></td><td>Description</td><td>Column removed from the grid. Only one of the four visible rows carried a value, and it was the placeholder Test.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Flow Name</td><td>Names the originating Boomi Flow for each catalog entry. Source field not confirmed, see D-AD-01.</td></tr>
+      <tr><td><span class='tag tag-kept'>Kept</span></td><td>Name, Source, Destination, Schedule, Last Run, Created</td><td>Retained in the source order, with Last Run before Created as shown on screen.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Open decisions on the catalog</h3>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Ref</th><th scope="col">Decision</th><th scope="col">Detail</th><th scope="col">Owner role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class='cell-nowrap'><strong>D-TC-01</strong></td><td>Last Run has no values</td><td>The Last Run column is present in the source screen but every visible row is empty, and the column was partially cut off by the screen edge. Confirm whether Last Run is populated for continuous transfers or only for scheduled ones.</td><td>Boomi Flow developer</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-TC-02</strong></td><td>Created timestamps truncated in source</td><td>Seconds are not legible for any row and the time is cut off entirely for rows 3 and 4. Those two rows show the date only. Confirm the full values before this table is used as a data reference.</td><td>Integration Architect</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-TC-03</strong></td><td>Row count</td><td>Only four rows were visible in the supplied screenshot. The catalog is likely longer. Confirm whether pagination or scrolling is required.</td><td>Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-TC-04</strong></td><td>Source and Destination format</td><td>Values follow an implied Organisation - Endpoint ID: Endpoint Name - Endpoint Type convention. Confirm this is the intended display format rather than a concatenation artefact.</td><td>Design Authority</td></tr>
+    </tbody>
+  </table>
+
   <h2>How to use this page</h2>
   <ol class="steps">
     <li>Use the black bar at the top of the page to download the supporting documents. The ZIP contains every file in one download.</li>
-    <li>The table above is the working prototype of the requests grid. It is a static front-end mock, so <strong>View Request</strong> raises a confirmation message rather than opening a record.</li>
-    <li>To wire it to live data, replace the <code>&lt;tbody&gt;</code> contents with rows returned from the request configuration table, keeping the five column order fixed: Actions, Name, Requested By, Requested On, Flow Name.</li>
+    <li>Two screens are prototyped above. Screen 1 is the requests grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
+    <li>To wire either screen to live data, replace the <code>&lt;tbody&gt;</code> contents with rows from the request configuration table. Keep the column order fixed. Screen 1: Actions, Name, Requested By, Requested On, Flow Name. Screen 2: Name, Flow Name, Source, Destination, Schedule, Last Run, Created.</li>
     <li>To lift the markup into another page, download <strong>Table snippet (HTML)</strong>. It contains the table and its styles only, with no page furniture.</li>
     <li>Read the open decisions below before treating the Flow Name column as agreed. It is not present in the source screen.</li>
   </ol>
@@ -323,8 +406,9 @@
   <ol class="steps">
     <li>Download <strong>Dashboard mockup (draw.io)</strong> from the bar at the top.</li>
     <li>Open <a href="https://app.diagrams.net">app.diagrams.net</a>, choose Open Existing Diagram, and select the downloaded <code>.drawio</code> file. It also opens in the draw.io desktop app and in the Confluence and Visual Studio Code draw.io plugins.</li>
-    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Row height is 32px and the column widths are Actions 160, Name 260, Requested By 220, Requested On 200, Flow Name 180, summing to the 1020px table width.</li>
-    <li>The orange panel at the foot of the diagram carries the open decisions. Keep it attached when circulating the mockup so reviewers see what is still unresolved.</li>
+    <li>The file has two pages, selectable by the tabs at the foot of the draw.io canvas: Requests Dashboard and Transfer Catalog.</li>
+    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Requests Dashboard: row height 32px, columns Actions 160, Name 260, Requested By 220, Requested On 200, Flow Name 180. Transfer Catalog: row height 64px, columns Name 180, Flow Name 140, Source 200, Destination 200, Schedule 100, Last Run 100, Created 100. Both sum to the 1020px table width.</li>
+    <li>The orange panel at the foot of each page carries the open decisions for that screen. Keep it attached when circulating the mockup so reviewers see what is still unresolved.</li>
     <li>To export for a slide or a document, use File, Export as, PNG with a transparent background and 2x scale.</li>
   </ol>
 
@@ -375,8 +459,8 @@
   <h2>Files in this deliverable</h2>
   <ul class="plain">
     <li><code>index.html</code> &mdash; this page, containing the prototype table and all instructions.</li>
-    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup of the full screen, every cell a separate shape.</li>
-    <li><code>assets/dashboard-table.html</code> &mdash; standalone table markup and CSS for lifting into another page.</li>
+    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup, two pages, every cell a separate shape.</li>
+    <li><code>assets/dashboard-table.html</code> &mdash; standalone markup and CSS for both tables, for lifting into another page.</li>
     <li><code>assets/docs.zip</code> &mdash; both of the above in one archive.</li>
   </ul>
 </main>
@@ -403,6 +487,9 @@
       alert('View Request: ' + b.getAttribute('data-name') +
             '\n\nThis is a static prototype. Wire this button to the request detail screen.');
     });
+  });
+  document.getElementById('refresh2').addEventListener('click', function () {
+    document.getElementById('count2').textContent = '0';
   });
   document.getElementById('refresh').addEventListener('click', function () {
     selected = 0;
