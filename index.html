@@ -129,6 +129,15 @@
   table.dashboard.wide { font-size: 13px; min-width: 1020px; }
   table.dashboard.wide tbody td { vertical-align: top; }
   .empty { color: #6f777b; font-style: italic; }
+  .summary-box { background: var(--govuk-grey); border: 1px solid var(--govuk-mid-grey);
+    padding: 16px 18px; margin: 16px 0 28px; max-width: none; }
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 12px; }
+  .card { border: 1px solid var(--govuk-mid-grey); display: flex; flex-direction: column; }
+  .card-title { background: #ffffff; padding: 18px 16px; font-size: 19px; font-weight: 700; min-height: 78px; }
+  .card-body { background: #f2ebe8; padding: 16px; flex: 1; }
+  .card-link { display: block; color: #4c2c92; font-size: 15px; margin-bottom: 12px; }
+  .card-body p { margin: 0; font-size: 14px; }
+  @media (max-width: 800px) { .card-grid { grid-template-columns: 1fr; } }
   .btn-view {
     background: #f3f2f1;
     border: 1px solid #6f777b;
@@ -393,10 +402,66 @@
     </tbody>
   </table>
 
+  <h2>Screen 3: Dashboard (landing page)</h2>
+  <h3>Manage File Transfers</h3>
+  <div class="summary-box">
+    <p style="margin:0">This is the entry point for managing file transfers on the platform. From here you can browse what is already configured, move an approved configuration through to the next environment, and clear the approvals queue that gates those moves. The three cards below follow the lifecycle in order: see what exists, promote a change, then approve it.</p>
+  </div>
+
+  <div class="card-grid">
+      <div class="card">
+        <div class="card-title">MFT Transfer Catalog</div>
+        <div class="card-body">
+          <a class="card-link" href="#">Transfer Catalog</a>
+          <p>Browse existing scheduled file transfer configurations. Each entry shows its source, destination, schedule and when it last ran.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">MFT Flow Promotion</div>
+        <div class="card-body">
+          <a class="card-link" href="#">Promote a Flow</a>
+          <p>Move an approved transfer configuration from one environment to the next. Raises the promotion request and tracks it through to release.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Approval - MFT flow promotion</div>
+        <div class="card-body">
+          <a class="card-link" href="#">View Approval Requests</a>
+          <p>Review outstanding promotion requests and approve or reject them. Nothing moves environment until it has been cleared here.</p>
+        </div>
+      </div>
+  </div>
+
+  <h3>What changed on the landing page</h3>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Type</th><th scope="col">Item</th><th scope="col">Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Page heading</td><td>Developer Dashboard becomes Dashboard. The Manage File Transfers subheading is retained.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Landing page summary</td><td>Short paragraph below the subheading explaining what the screen is for and how the three cards relate to each other.</td></tr>
+      <tr><td><span class='tag tag-removed'>Removed</span></td><td>Six original cards</td><td>Configure a New File Transfer, Your Scheduled File Transfers, View File Transfer History, Manage Transfer Approvals, View the Transfer Catalog and Generate Client Upload Requests are all removed.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Three replacement cards</td><td>MFT Transfer Catalog, MFT Flow Promotion and Approval - MFT flow promotion, laid out in a single row.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Open decisions on the landing page</h3>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Ref</th><th scope="col">Decision</th><th scope="col">Detail</th><th scope="col">Owner role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class='cell-nowrap'><strong>D-DB-01</strong></td><td>Card link labels</td><td>The link text inside each card was not specified. Transfer Catalog, Promote a Flow and View Approval Requests are proposed. Confirm the wording before build.</td><td>Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-DB-02</strong></td><td>Removed capability</td><td>Configure a New File Transfer, View File Transfer History and Generate Client Upload Requests are dropped by this change. Confirm whether that capability moves elsewhere in the journey or is out of scope entirely.</td><td>Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-DB-03</strong></td><td>Approval card naming</td><td>Approval - MFT flow promotion breaks the naming pattern of the other two cards and mixes sentence and title case. Confirm whether it should read MFT Flow Promotion Approvals.</td><td>Design Authority</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-DB-04</strong></td><td>Role based visibility</td><td>The approvals card should probably only be visible to approvers. Confirm whether the dashboard renders all three cards to every user or filters by role.</td><td>Integration Architect</td></tr>
+    </tbody>
+  </table>
+
   <h2>How to use this page</h2>
   <ol class="steps">
     <li>Use the black bar at the top of the page to download the supporting documents. The ZIP contains every file in one download.</li>
-    <li>Two screens are prototyped above. Screen 1 is the requests grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
+    <li>Three screens are prototyped above. Screen 3 is the landing page users arrive at first. Screen 1 is the requests grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
     <li>To wire either screen to live data, replace the <code>&lt;tbody&gt;</code> contents with rows from the request configuration table. Keep the column order fixed. Screen 1: Actions, Name, Requested By, Requested On, Flow Name. Screen 2: Name, Flow Name, Source, Destination, Schedule, Last Run, Created.</li>
     <li>To lift the markup into another page, download <strong>Table snippet (HTML)</strong>. It contains the table and its styles only, with no page furniture.</li>
     <li>Read the open decisions below before treating the Flow Name column as agreed. It is not present in the source screen.</li>
@@ -406,7 +471,7 @@
   <ol class="steps">
     <li>Download <strong>Dashboard mockup (draw.io)</strong> from the bar at the top.</li>
     <li>Open <a href="https://app.diagrams.net">app.diagrams.net</a>, choose Open Existing Diagram, and select the downloaded <code>.drawio</code> file. It also opens in the draw.io desktop app and in the Confluence and Visual Studio Code draw.io plugins.</li>
-    <li>The file has two pages, selectable by the tabs at the foot of the draw.io canvas: Requests Dashboard and Transfer Catalog.</li>
+    <li>The file has three pages, selectable by the tabs at the foot of the draw.io canvas: Requests Dashboard, Transfer Catalog and Dashboard.</li>
     <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Requests Dashboard: row height 32px, columns Actions 160, Name 260, Requested By 220, Requested On 200, Flow Name 180. Transfer Catalog: row height 64px, columns Name 180, Flow Name 140, Source 200, Destination 200, Schedule 100, Last Run 100, Created 100. Both sum to the 1020px table width.</li>
     <li>The orange panel at the foot of each page carries the open decisions for that screen. Keep it attached when circulating the mockup so reviewers see what is still unresolved.</li>
     <li>To export for a slide or a document, use File, Export as, PNG with a transparent background and 2x scale.</li>
@@ -459,7 +524,7 @@
   <h2>Files in this deliverable</h2>
   <ul class="plain">
     <li><code>index.html</code> &mdash; this page, containing the prototype table and all instructions.</li>
-    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup, two pages, every cell a separate shape.</li>
+    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup, three pages, every cell a separate shape.</li>
     <li><code>assets/dashboard-table.html</code> &mdash; standalone markup and CSS for both tables, for lifting into another page.</li>
     <li><code>assets/docs.zip</code> &mdash; both of the above in one archive.</li>
   </ul>
