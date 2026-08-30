@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>File Transfer Requests Dashboard</title>
+<title>Approvals - MFT Flow Promotion</title>
 <style>
   :root {
     --govuk-blue: #1d70b8;
@@ -129,6 +129,7 @@
   table.dashboard.wide { font-size: 13px; min-width: 1020px; }
   table.dashboard.wide tbody td { vertical-align: top; }
   .empty { color: #6f777b; font-style: italic; }
+  .env { font-weight: 700; }
   .summary-box { background: var(--govuk-grey); border: 1px solid var(--govuk-mid-grey);
     padding: 16px 18px; margin: 16px 0 28px; max-width: none; }
   .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 12px; }
@@ -212,25 +213,20 @@
   <div class="header-inner">
     <span class="crown">&#9819;</span>
     <span class="brand">GOV.UK</span>
-    <span class="service">Approvals Dashboard</span>
+    <span class="service">Managed File Transfer</span>
   </div>
 </header>
 <div class="phase-strip"></div>
 
 <main>
   <a class="backlink" href="#">&lt; Back</a>
-  <h1>File Transfer Requests Dashboard</h1>
+  <h1>Approvals - MFT Flow Promotion</h1>
 
-  <h2>Screen 1: Manage Requests</h2>
-  <p class="lede">Use this service to view file transfer requests raised through the self-service flow.</p>
-
-  <div class="controls">
-    <button type="button" class="btn-secondary" id="refresh">Refresh</button>
-    <span class="selected-count">Selected Rows: <span id="count">0</span></span>
-  </div>
+  <h2>Screen 1: Approvals - MFT Flow Promotion</h2>
+  <p class="lede">Use this service to view file transfer requests and take appropriate action</p>
 
   <div class="table-wrap">
-    <table class="dashboard">
+    <table class="dashboard wide">
       <thead>
         <tr>
           <th scope="col">Actions</th>
@@ -238,6 +234,8 @@
           <th scope="col">Requested By</th>
           <th scope="col">Requested On</th>
           <th scope="col">Flow Name</th>
+          <th scope="col">Flow ID</th>
+          <th scope="col">From Env &rarr; To Env</th>
         </tr>
       </thead>
       <tbody>
@@ -247,6 +245,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">28/01/2026, 15:44:46</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0001</td>
+        <td class="cell-nowrap env">Dev &rarr; Test</td>
       </tr>
       <tr class="govuk-table__row alt">
         <td class="cell-action"><button type="button" class="btn-view" data-name="Tax Office to Customs">View Request</button></td>
@@ -254,6 +254,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">13/03/2026, 13:08:19</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0002</td>
+        <td class="cell-nowrap env">Dev &rarr; Test</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="cell-action"><button type="button" class="btn-view" data-name="Tax Office to Customs">View Request</button></td>
@@ -261,6 +263,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">17/03/2026, 14:40:02</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0002</td>
+        <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
       </tr>
       <tr class="govuk-table__row alt">
         <td class="cell-action"><button type="button" class="btn-view" data-name="2027 Fiscal Project">View Request</button></td>
@@ -268,6 +272,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">20/03/2026, 12:05:40</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0003</td>
+        <td class="cell-nowrap env">Dev &rarr; Test</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="cell-action"><button type="button" class="btn-view" data-name="Aprove">View Request</button></td>
@@ -275,6 +281,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">31/03/2026, 14:27:01</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0004</td>
+        <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
       </tr>
       <tr class="govuk-table__row alt">
         <td class="cell-action"><button type="button" class="btn-view" data-name="Example !">View Request</button></td>
@@ -282,6 +290,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">01/04/2026, 17:57:27</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0005</td>
+        <td class="cell-nowrap env">Dev &rarr; Test</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="cell-action"><button type="button" class="btn-view" data-name="tax personal">View Request</button></td>
@@ -289,6 +299,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">08/04/2026, 15:35:18</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0006</td>
+        <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
       </tr>
       <tr class="govuk-table__row alt">
         <td class="cell-action"><button type="button" class="btn-view" data-name="DWP2Dept-payments">View Request</button></td>
@@ -296,6 +308,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">08/04/2026, 17:57:05</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0007</td>
+        <td class="cell-nowrap env">Dev &rarr; Test</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="cell-action"><button type="button" class="btn-view" data-name="Beligum">View Request</button></td>
@@ -303,6 +317,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">13/04/2026, 14:42:26</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0008</td>
+        <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
       </tr>
       <tr class="govuk-table__row alt">
         <td class="cell-action"><button type="button" class="btn-view" data-name="ghfggh">View Request</button></td>
@@ -310,6 +326,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">24/04/2026, 13:37:12</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0009</td>
+        <td class="cell-nowrap env">Dev &rarr; Test</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="cell-action"><button type="button" class="btn-view" data-name="SA Test">View Request</button></td>
@@ -317,6 +335,8 @@
         <td>no-reply@boomi.com</td>
         <td class="cell-nowrap">27/04/2026, 18:55:32</td>
         <td>MFT Request Capture</td>
+        <td class="cell-nowrap">FLW-0010</td>
+        <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
       </tr>
       </tbody>
     </table>
@@ -461,8 +481,8 @@
   <h2>How to use this page</h2>
   <ol class="steps">
     <li>Use the black bar at the top of the page to download the supporting documents. The ZIP contains every file in one download.</li>
-    <li>Three screens are prototyped above. Screen 3 is the landing page users arrive at first. Screen 1 is the requests grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
-    <li>To wire either screen to live data, replace the <code>&lt;tbody&gt;</code> contents with rows from the request configuration table. Keep the column order fixed. Screen 1: Actions, Name, Requested By, Requested On, Flow Name. Screen 2: Name, Flow Name, Source, Destination, Schedule, Last Run, Created.</li>
+    <li>Three screens are prototyped above. Screen 3 is the landing page users arrive at first. Screen 1 is the promotion approvals grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
+    <li>To wire either screen to live data, replace the <code>&lt;tbody&gt;</code> contents with rows from the request configuration table. Keep the column order fixed. Screen 1: Actions, Name, Requested By, Requested On, Flow Name, Flow ID, From Env to To Env. Screen 2: Name, Flow Name, Source, Destination, Schedule, Last Run, Created.</li>
     <li>To lift the markup into another page, download <strong>Table snippet (HTML)</strong>. It contains the table and its styles only, with no page furniture.</li>
     <li>Read the open decisions below before treating the Flow Name column as agreed. It is not present in the source screen.</li>
   </ol>
@@ -471,8 +491,8 @@
   <ol class="steps">
     <li>Download <strong>Dashboard mockup (draw.io)</strong> from the bar at the top.</li>
     <li>Open <a href="https://app.diagrams.net">app.diagrams.net</a>, choose Open Existing Diagram, and select the downloaded <code>.drawio</code> file. It also opens in the draw.io desktop app and in the Confluence and Visual Studio Code draw.io plugins.</li>
-    <li>The file has three pages, selectable by the tabs at the foot of the draw.io canvas: Requests Dashboard, Transfer Catalog and Dashboard.</li>
-    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Requests Dashboard: row height 32px, columns Actions 160, Name 260, Requested By 220, Requested On 200, Flow Name 180. Transfer Catalog: row height 64px, columns Name 180, Flow Name 140, Source 200, Destination 200, Schedule 100, Last Run 100, Created 100. Both sum to the 1020px table width.</li>
+    <li>The file has three pages, selectable by the tabs at the foot of the draw.io canvas: Approvals - MFT Flow Promotion, Transfer Catalog and Dashboard.</li>
+    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Approvals - MFT Flow Promotion: row height 32px, columns Actions 130, Name 190, Requested By 165, Requested On 165, Flow Name 150, Flow ID 100, From Env to To Env 120. Transfer Catalog: row height 64px, columns Name 180, Flow Name 140, Source 200, Destination 200, Schedule 100, Last Run 100, Created 100. Both sum to the 1020px table width.</li>
     <li>The orange panel at the foot of each page carries the open decisions for that screen. Keep it attached when circulating the mockup so reviewers see what is still unresolved.</li>
     <li>To export for a slide or a document, use File, Export as, PNG with a transparent background and 2x scale.</li>
   </ol>
@@ -486,10 +506,13 @@
       <tr><th scope="col">Type</th><th scope="col">Item</th><th scope="col">Detail</th></tr>
     </thead>
     <tbody>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Flow ID</td><td>Identifies the Boomi Flow being promoted. Not present in the source screen, see D-AP-01.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>From Env -&gt; To Env</td><td>Names the promotion hop, for example Dev to Test or Test to Pre-Prod. Not present in the source screen, see D-AP-02.</td></tr>
       <tr><td><span class='tag tag-removed'>Removed</span></td><td>Justification</td><td>Free-text column removed from the grid. Retained on the detail view reached by View Request.</td></tr>
-      <tr><td><span class='tag tag-added'>Added</span></td><td>Flow Name</td><td>Names the originating Boomi Flow for each request. Source field not confirmed, see D-AD-01.</td></tr>
-      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Action button label</td><td>View Transfer becomes View Request, matching the request-centric framing of this screen.</td></tr>
-      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Page heading</td><td>File Transfer Approvals Dashboard becomes File Transfer Requests Dashboard. Manage Approvals becomes Manage Requests.</td></tr>
+      <tr><td><span class='tag tag-removed'>Removed</span></td><td>Refresh and Selected Rows</td><td>The controls above the grid are not present on this screen in the source.</td></tr>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Page heading</td><td>Now reads Approvals - MFT Flow Promotion, matching the built screen.</td></tr>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Service name</td><td>Header reads GOV.UK Managed File Transfer.</td></tr>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Lede wording</td><td>The source reads file transfer requesd. Corrected to requests, see D-AP-05.</td></tr>
     </tbody>
   </table>
 
@@ -503,11 +526,12 @@
       <tr><th scope="col">Ref</th><th scope="col">Decision</th><th scope="col">Detail</th><th scope="col">Owner role</th></tr>
     </thead>
     <tbody>
-      <tr><td class='cell-nowrap'><strong>D-AD-01</strong></td><td>Flow Name source field</td><td>The Flow Name column does not exist in the source screenshot. The values shown are placeholders. Confirm whether Flow Name is the Boomi Flow developer name, the published Flow title, or a friendly label held in the request configuration table.</td><td>Boomi Flow developer / Product Owner</td></tr>
-      <tr><td class='cell-nowrap'><strong>D-AD-02</strong></td><td>Requested By is a system address</td><td>Every row shows no-reply@boomi.com rather than the requesting user. Confirm whether the requester identity is captured elsewhere and should replace this value, or whether the column should be relabelled.</td><td>Boomi Flow developer</td></tr>
-      <tr><td class='cell-nowrap'><strong>D-AD-03</strong></td><td>Justification placement</td><td>Justification is removed from the grid by this change. Confirm it remains visible on the request detail screen so approval context is not lost.</td><td>Design Authority</td></tr>
-      <tr><td class='cell-nowrap'><strong>D-AD-04</strong></td><td>Sort and filter behaviour</td><td>The source screen offers Refresh and row selection only. Confirm whether column sorting, date filtering and pagination are in scope for this iteration.</td><td>Product Owner</td></tr>
-      <tr><td class='cell-nowrap'><strong>D-AD-05</strong></td><td>Departmental naming on the published page</td><td>Row 8 is published as DWP2Dept-payments. The unredacted value is held in the Word and Excel deliverables only. Confirm the redaction rule for any wider publication.</td><td>Integration Architect</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-01</strong></td><td>Flow ID format and source</td><td>Flow ID is a new column with no values in the source screen. The identifiers shown, FLW-0001 onwards, are placeholders. Confirm whether this is the Boomi Flow GUID, a shortened display form of it, or a separate reference held in the request configuration table.</td><td>Boomi Flow developer</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-02</strong></td><td>Promotion path values</td><td>From Env -&gt; To Env is new. Dev to Test and Test to Pre-Prod are used as placeholders across the rows. Confirm the full set of valid hops, whether Pre-Prod to Prod is in scope, and whether a request can skip an environment.</td><td>Design Authority</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-03</strong></td><td>Requested By is a system address</td><td>Every row shows no-reply@boomi.com rather than the requesting user. Confirm whether the requester identity is captured elsewhere and should replace this value.</td><td>Boomi Flow developer</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-04</strong></td><td>Navigation strip not reproduced</td><td>The source screen shows a lower navigation strip with Dashboard and Transfer Catalog entries, partially cut off. It is not reproduced in the mockup. Confirm the full navigation model.</td><td>Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-05</strong></td><td>Lede typo in the built screen</td><td>The live screen reads file transfer requesd. The mockup corrects this to requests. Raise as a defect against the built Flow.</td><td>Boomi Flow developer</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-06</strong></td><td>Departmental naming on the published page</td><td>Row 8 is published as DWP2Dept-payments. Confirm the redaction rule for any wider publication.</td><td>Integration Architect</td></tr>
     </tbody>
   </table>
 
@@ -515,7 +539,7 @@
   <div class="panel">
     <ul class="plain">
         <li>Row data is transcribed from the supplied screenshot. Original spellings, including Aprove and Beligum, are preserved deliberately so the table reflects real captured data rather than a cleaned-up version.</li>
-        <li>Flow Name values are placeholders. They are not present in the source material and must not be treated as confirmed until D-AD-01 is closed.</li>
+        <li>Flow ID and From Env -&gt; To Env values are placeholders. Neither column exists in the source screen, so no real values were available. They must not be treated as confirmed until D-AP-01 and D-AP-02 are closed.</li>
         <li>The table is a static front-end prototype. No Boomi Flow, API or data source is wired to it.</li>
         <li>Styling follows the GOV.UK Design System conventions visible in the screenshot: Transport-style typography stack, black table header, alternating row shading, and the standard footer with OGL licensing.</li>
     </ul>
@@ -545,10 +569,11 @@
 
 <script>
   var selected = 0;
+  var counter = document.getElementById('count');
   document.querySelectorAll('.btn-view').forEach(function (b) {
     b.addEventListener('click', function () {
       selected += 1;
-      document.getElementById('count').textContent = selected;
+      if (counter) { counter.textContent = selected; }
       alert('View Request: ' + b.getAttribute('data-name') +
             '\n\nThis is a static prototype. Wire this button to the request detail screen.');
     });
@@ -556,10 +581,7 @@
   document.getElementById('refresh2').addEventListener('click', function () {
     document.getElementById('count2').textContent = '0';
   });
-  document.getElementById('refresh').addEventListener('click', function () {
-    selected = 0;
-    document.getElementById('count').textContent = '0';
-  });
+
 </script>
 
 </body>
