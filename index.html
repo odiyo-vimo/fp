@@ -130,6 +130,32 @@
   table.dashboard.wide tbody td { vertical-align: top; }
   .empty { color: #6f777b; font-style: italic; }
   .env { font-weight: 700; }
+  .cell-status { text-align: center; }
+  .status { display: inline-block; padding: 3px 10px; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em; }
+  .status-requested { background: #d2e2f1; color: #0b0c0c; }
+  .status-approved { background: #cce2d8; color: #005a30; }
+  .status-rejected { background: #f6d7d2; color: #942514; }
+  .hint { font-size: 14px; color: #505a5f; }
+  .detail-panel { border: 1px solid var(--govuk-mid-grey); margin: 18px 0 28px; }
+  .detail-head { background: #2b2b2b; color: #ffffff; margin: 0; padding: 11px 14px;
+    font-size: 15px; font-weight: 700; }
+  .kv { display: grid; grid-template-columns: 300px 1fr; border-bottom: 1px solid var(--govuk-mid-grey); }
+  .kv:nth-child(even) { background: var(--govuk-grey); }
+  .kv .k { padding: 9px 14px; font-weight: 700; font-size: 14px; }
+  .kv .v { padding: 9px 14px; font-size: 14px; }
+  .decision-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 20px 14px; }
+  .btn-approve, .btn-reject { color: #ffffff; border: 2px solid transparent; padding: 12px 28px;
+    font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; }
+  .btn-approve { background: #00703c; box-shadow: 0 3px 0 #002d18; }
+  .btn-approve:hover { background: #005a30; }
+  .btn-reject { background: #d4351c; box-shadow: 0 3px 0 #55150b; }
+  .btn-reject:hover { background: #aa2a16; }
+  .btn-approve:focus, .btn-reject:focus { background: var(--govuk-focus); color: #0b0c0c;
+    box-shadow: 0 3px 0 #0b0c0c; outline: none; }
+  .cancel-link { font-size: 15px; }
+  .decision-result { padding: 0 14px 18px; font-weight: 700; font-size: 15px; }
+  @media (max-width: 640px) { .kv { grid-template-columns: 1fr; } }
   .summary-box { background: var(--govuk-grey); border: 1px solid var(--govuk-mid-grey);
     padding: 16px 18px; margin: 16px 0 28px; max-width: none; }
   .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 12px; }
@@ -232,96 +258,130 @@
           <th scope="col">Actions</th>
           <th scope="col">Flow Name</th>
           <th scope="col">Flow ID</th>
-          <th scope="col">Env</th>
+          <th scope="col">Status</th>
+          <th scope="col">Environment</th>
           <th scope="col">Requested On</th>
           <th scope="col">Requested By</th>
         </tr>
       </thead>
       <tbody>
       <tr class="govuk-table__row">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0001">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0001" data-status="Requested"
+            data-env="Dev &rarr; Test" data-on="28/01/2026, 15:44:46" data-by="j.abraham">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0001</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Dev &rarr; Test</td>
         <td class="cell-nowrap">28/01/2026, 15:44:46</td>
         <td>j.abraham</td>
       </tr>
       <tr class="govuk-table__row alt">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0002">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0002" data-status="Approved"
+            data-env="Dev &rarr; Test" data-on="13/03/2026, 13:08:19" data-by="s.whitfield">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0002</td>
+        <td class="cell-status"><span class="status status-approved">Approved</span></td>
         <td class="cell-nowrap env">Dev &rarr; Test</td>
         <td class="cell-nowrap">13/03/2026, 13:08:19</td>
         <td>s.whitfield</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0002">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0002" data-status="Requested"
+            data-env="Test &rarr; Pre-Prod" data-on="17/03/2026, 14:40:02" data-by="s.whitfield">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0002</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
         <td class="cell-nowrap">17/03/2026, 14:40:02</td>
         <td>s.whitfield</td>
       </tr>
       <tr class="govuk-table__row alt">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0003">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0003" data-status="Requested"
+            data-env="Dev &rarr; Test" data-on="20/03/2026, 12:05:40" data-by="r.mensah">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0003</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Dev &rarr; Test</td>
         <td class="cell-nowrap">20/03/2026, 12:05:40</td>
         <td>r.mensah</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0004">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0004" data-status="Rejected"
+            data-env="Test &rarr; Pre-Prod" data-on="31/03/2026, 14:27:01" data-by="t.okafor">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0004</td>
+        <td class="cell-status"><span class="status status-rejected">Rejected</span></td>
         <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
         <td class="cell-nowrap">31/03/2026, 14:27:01</td>
         <td>t.okafor</td>
       </tr>
       <tr class="govuk-table__row alt">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0005">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0005" data-status="Requested"
+            data-env="Dev &rarr; Test" data-on="01/04/2026, 17:57:27" data-by="l.duarte">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0005</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Dev &rarr; Test</td>
         <td class="cell-nowrap">01/04/2026, 17:57:27</td>
         <td>l.duarte</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0006">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0006" data-status="Approved"
+            data-env="Test &rarr; Pre-Prod" data-on="08/04/2026, 15:35:18" data-by="k.nayar">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0006</td>
+        <td class="cell-status"><span class="status status-approved">Approved</span></td>
         <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
         <td class="cell-nowrap">08/04/2026, 15:35:18</td>
         <td>k.nayar</td>
       </tr>
       <tr class="govuk-table__row alt">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0007">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0007" data-status="Requested"
+            data-env="Dev &rarr; Test" data-on="08/04/2026, 17:57:05" data-by="p.carmichael">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0007</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Dev &rarr; Test</td>
         <td class="cell-nowrap">08/04/2026, 17:57:05</td>
         <td>p.carmichael</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0008">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0008" data-status="Requested"
+            data-env="Test &rarr; Pre-Prod" data-on="13/04/2026, 14:42:26" data-by="e.lindqvist">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0008</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
         <td class="cell-nowrap">13/04/2026, 14:42:26</td>
         <td>e.lindqvist</td>
       </tr>
       <tr class="govuk-table__row alt">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0009">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0009" data-status="Rejected"
+            data-env="Dev &rarr; Test" data-on="24/04/2026, 13:37:12" data-by="d.marsh">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0009</td>
+        <td class="cell-status"><span class="status status-rejected">Rejected</span></td>
         <td class="cell-nowrap env">Dev &rarr; Test</td>
         <td class="cell-nowrap">24/04/2026, 13:37:12</td>
         <td>d.marsh</td>
       </tr>
       <tr class="govuk-table__row">
-        <td class="cell-action"><button type="button" class="btn-view" data-name="FLW-0010">View Request</button></td>
+        <td class="cell-action"><button type="button" class="btn-view"
+            data-flow="MFT Request Capture" data-id="FLW-0010" data-status="Requested"
+            data-env="Test &rarr; Pre-Prod" data-on="27/04/2026, 18:55:32" data-by="c.reyes">View Request</button></td>
         <td class="cell-name">MFT Request Capture</td>
         <td class="cell-nowrap">FLW-0010</td>
+        <td class="cell-status"><span class="status status-requested">Requested</span></td>
         <td class="cell-nowrap env">Test &rarr; Pre-Prod</td>
         <td class="cell-nowrap">27/04/2026, 18:55:32</td>
         <td>c.reyes</td>
@@ -466,11 +526,98 @@
     </tbody>
   </table>
 
+  <h2 id="request-detail">Screen 4: Request Detail - MFT Flow Promotion</h2>
+  <p class="lede">Review the flow and the requested promotion details, then approve or reject the request.</p>
+  <p class="hint">Reached from <strong>View Request</strong> on screen 1. Selecting a row above fills the request summary below from that row. The endpoint, schedule and requester sections stay at their sample values.</p>
+
+  <div class="detail-panel">
+      <section class="detail-block">
+        <h4 class="detail-head">Request summary</h4>
+        <div class="kv"><div class="k">Flow Name</div><div class="v" data-field="Flow Name">MFT Request Capture</div></div>
+        <div class="kv"><div class="k">Flow ID</div><div class="v" data-field="Flow ID">FLW-0001</div></div>
+        <div class="kv"><div class="k">Status</div><div class="v" data-field="Status">Requested</div></div>
+        <div class="kv"><div class="k">Environment</div><div class="v" data-field="Environment">Dev &rarr; Test</div></div>
+        <div class="kv"><div class="k">Requested On</div><div class="v" data-field="Requested On">28/01/2026, 15:44:46</div></div>
+        <div class="kv"><div class="k">Requested By</div><div class="v" data-field="Requested By">j.abraham</div></div>
+        <div class="kv"><div class="k">Justification</div><div class="v" data-field="Justification">New inbound feed for the customs use case</div></div>
+      </section>
+      <section class="detail-block">
+        <h4 class="detail-head">Source endpoint</h4>
+        <div class="kv"><div class="k">Endpoint name</div><div class="v" data-field="Endpoint name">Starez Inc. - Hosted SFTP</div></div>
+        <div class="kv"><div class="k">Endpoint ID</div><div class="v" data-field="Endpoint ID">23303</div></div>
+        <div class="kv"><div class="k">Protocol</div><div class="v" data-field="Protocol">SFTP via Thru</div></div>
+        <div class="kv"><div class="k">Host</div><div class="v" data-field="Host">sftp.source.internal</div></div>
+        <div class="kv"><div class="k">Port</div><div class="v" data-field="Port">22</div></div>
+        <div class="kv"><div class="k">Directory</div><div class="v" data-field="Directory">/outbound/customs</div></div>
+        <div class="kv"><div class="k">Authentication</div><div class="v" data-field="Authentication">SSH key pair, credential reference held in the vault</div></div>
+      </section>
+      <section class="detail-block">
+        <h4 class="detail-head">Destination endpoint</h4>
+        <div class="kv"><div class="k">Endpoint name</div><div class="v" data-field="Endpoint name">CSU - Hosted SFTP</div></div>
+        <div class="kv"><div class="k">Endpoint ID</div><div class="v" data-field="Endpoint ID">23304</div></div>
+        <div class="kv"><div class="k">Protocol</div><div class="v" data-field="Protocol">SFTP via Thru</div></div>
+        <div class="kv"><div class="k">Host</div><div class="v" data-field="Host">sftp.destination.internal</div></div>
+        <div class="kv"><div class="k">Port</div><div class="v" data-field="Port">22</div></div>
+        <div class="kv"><div class="k">Directory</div><div class="v" data-field="Directory">/inbound/customs</div></div>
+        <div class="kv"><div class="k">Authentication</div><div class="v" data-field="Authentication">SSH key pair, credential reference held in the vault</div></div>
+      </section>
+      <section class="detail-block">
+        <h4 class="detail-head">Schedule</h4>
+        <div class="kv"><div class="k">Schedule type</div><div class="v" data-field="Schedule type">Continuous</div></div>
+        <div class="kv"><div class="k">Trigger</div><div class="v" data-field="Trigger">File arrival at source</div></div>
+        <div class="kv"><div class="k">Polling interval</div><div class="v" data-field="Polling interval">Every 5 minutes</div></div>
+        <div class="kv"><div class="k">Time zone</div><div class="v" data-field="Time zone">Europe/London</div></div>
+        <div class="kv"><div class="k">Retry policy</div><div class="v" data-field="Retry policy">3 attempts, 10 minute backoff</div></div>
+        <div class="kv"><div class="k">Failure notification</div><div class="v" data-field="Failure notification">Email to the requester and the platform team</div></div>
+      </section>
+      <section class="detail-block">
+        <h4 class="detail-head">Submitted by the requester</h4>
+        <div class="kv"><div class="k">File name pattern</div><div class="v" data-field="File name pattern">customs_*.csv</div></div>
+        <div class="kv"><div class="k">Expected file size</div><div class="v" data-field="Expected file size">Up to 50 MB</div></div>
+        <div class="kv"><div class="k">Expected volume</div><div class="v" data-field="Expected volume">Around 20 files per day</div></div>
+        <div class="kv"><div class="k">Data classification</div><div class="v" data-field="Data classification">OFFICIAL</div></div>
+        <div class="kv"><div class="k">Retention period</div><div class="v" data-field="Retention period">30 days at the landing zone</div></div>
+        <div class="kv"><div class="k">Business contact</div><div class="v" data-field="Business contact">j.abraham</div></div>
+      </section>
+
+    <div class="decision-bar">
+      <button type="button" class="btn-approve">Approve</button>
+      <button type="button" class="btn-reject">Reject</button>
+      <a class="cancel-link" href="#">Cancel and return to list</a>
+    </div>
+    <p class="decision-result" id="decision-result"></p>
+  </div>
+
+  <h3>What changed on the detail screen</h3>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Type</th><th scope="col">Item</th><th scope="col">Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Request detail screen</td><td>New screen reached from View Request. Shows the flow summary, both endpoints, the schedule and everything the requester submitted.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Approve and Reject buttons</td><td>Approve is green, Reject is red, both at the foot of the page below all the detail.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Open decisions on the detail screen</h3>
+  <table class="info">
+    <thead>
+      <tr><th scope="col">Ref</th><th scope="col">Decision</th><th scope="col">Detail</th><th scope="col">Owner role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class='cell-nowrap'><strong>D-VR-01</strong></td><td>Field list not confirmed</td><td>The fields shown on the detail screen are inferred from the transfer catalog and from what an approver would need. They have not been confirmed against the request capture Flow. Confirm the actual submitted field set before build.</td><td>Boomi Flow developer</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-VR-02</strong></td><td>Reject reason capture</td><td>Reject is currently a single button with no reason field. Confirm whether the approver must record a reason, and whether it is free text or a controlled list.</td><td>Design Authority</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-VR-03</strong></td><td>Confirmation step</td><td>Approve triggers the promotion API immediately as drawn. Confirm whether an are you sure interstitial is required, given the action moves configuration between environments.</td><td>Product Owner</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-VR-04</strong></td><td>Credential display</td><td>The endpoint sections name the authentication method and reference a vault entry rather than showing any secret. Confirm this is sufficient for the approver to make a decision without exposing credentials.</td><td>Integration Architect</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-VR-05</strong></td><td>Behaviour after a decision</td><td>Confirm what the approver sees after approving or rejecting, whether the row disappears from the grid, changes status in place, or moves to a completed view.</td><td>Product Owner</td></tr>
+    </tbody>
+  </table>
+
   <h2>How to use this page</h2>
   <ol class="steps">
     <li>Use the black bar at the top of the page to download the supporting documents. The ZIP contains every file in one download.</li>
-    <li>Three screens are prototyped above. Screen 3 is the landing page users arrive at first. Screen 1 is the promotion approvals grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
-    <li>To wire either screen to live data, replace the <code>&lt;tbody&gt;</code> contents with rows from the request configuration table. Keep the column order fixed. Screen 1: Actions, Flow Name, Flow ID, Env, Requested On, Requested By. Screen 2: Name, Flow Name, Source, Destination, Schedule, Last Run, Created.</li>
+    <li>Four screens are prototyped above. Screen 3 is the landing page users arrive at first, and screen 4 is the request detail reached from View Request. Screen 1 is the promotion approvals grid, where <strong>View Request</strong> raises a confirmation message rather than opening a record. Screen 2 is the transfer catalog, which is read only.</li>
+    <li>To wire either screen to live data, replace the <code>&lt;tbody&gt;</code> contents with rows from the request configuration table. Keep the column order fixed. Screen 1: Actions, Flow Name, Flow ID, Status, Environment, Requested On, Requested By. Screen 2: Name, Flow Name, Source, Destination, Schedule, Last Run, Created.</li>
     <li>To lift the markup into another page, download <strong>Table snippet (HTML)</strong>. It contains the table and its styles only, with no page furniture.</li>
     <li>Read the open decisions below before treating the Flow Name column as agreed. It is not present in the source screen.</li>
   </ol>
@@ -479,8 +626,8 @@
   <ol class="steps">
     <li>Download <strong>Dashboard mockup (draw.io)</strong> from the bar at the top.</li>
     <li>Open <a href="https://app.diagrams.net">app.diagrams.net</a>, choose Open Existing Diagram, and select the downloaded <code>.drawio</code> file. It also opens in the draw.io desktop app and in the Confluence and Visual Studio Code draw.io plugins.</li>
-    <li>The file has three pages, selectable by the tabs at the foot of the draw.io canvas: Approvals - MFT Flow Promotion, Transfer Catalog and Dashboard.</li>
-    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Approvals - MFT Flow Promotion: row height 32px, columns Actions 130, Flow Name 200, Flow ID 130, Env 180, Requested On 200, Requested By 180. Transfer Catalog: row height 64px, columns Name 180, Flow Name 140, Source 200, Destination 200, Schedule 100, Last Run 100, Created 100. Both sum to the 1020px table width.</li>
+    <li>The file has three pages, selectable by the tabs at the foot of the draw.io canvas: Approvals - MFT Flow Promotion, Transfer Catalog, Dashboard and Request Detail.</li>
+    <li>Every header cell, data cell and action button is a separate shape, so rows can be added, removed or reordered without redrawing the grid. Approvals - MFT Flow Promotion: row height 32px, columns Actions 120, Flow Name 180, Flow ID 110, Status 110, Environment 160, Requested On 180, Requested By 160. Transfer Catalog: row height 64px, columns Name 180, Flow Name 140, Source 200, Destination 200, Schedule 100, Last Run 100, Created 100. Both sum to the 1020px table width.</li>
     <li>The orange panel at the foot of each page carries the open decisions for that screen. Keep it attached when circulating the mockup so reviewers see what is still unresolved.</li>
     <li>To export for a slide or a document, use File, Export as, PNG with a transparent background and 2x scale.</li>
   </ol>
@@ -502,6 +649,10 @@
       <tr><td><span class='tag tag-removed'>Removed</span></td><td>Justification</td><td>Free-text column removed from the grid. Retained on the detail view reached by View Request.</td></tr>
       <tr><td><span class='tag tag-removed'>Removed</span></td><td>Refresh and Selected Rows</td><td>The controls above the grid are not present on this screen in the source.</td></tr>
       <tr><td><span class='tag tag-changed'>Changed</span></td><td>Lede wording</td><td>The source reads file transfer requesd. Corrected to requests, see D-AP-05.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Request detail screen</td><td>New screen reached from View Request. Shows the flow summary, both endpoints, the schedule and everything the requester submitted.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Approve and Reject buttons</td><td>Approve is green, Reject is red, both at the foot of the page below all the detail.</td></tr>
+      <tr><td><span class='tag tag-added'>Added</span></td><td>Status</td><td>New fourth column with the values Requested, Approved and Rejected, colour coded. See D-AP-08.</td></tr>
+      <tr><td><span class='tag tag-changed'>Changed</span></td><td>Environment heading</td><td>The built screen renders Enviornment. Corrected to Environment. See D-AP-09.</td></tr>
     </tbody>
   </table>
 
@@ -522,6 +673,8 @@
       <tr><td class='cell-nowrap'><strong>D-AP-04</strong></td><td>Navigation strip not reproduced</td><td>The source screen shows a lower navigation strip with Dashboard and Transfer Catalog entries, partially cut off. It is not reproduced in the mockup. Confirm the full navigation model.</td><td>Product Owner</td></tr>
       <tr><td class='cell-nowrap'><strong>D-AP-05</strong></td><td>Lede typo in the built screen</td><td>The live screen reads file transfer requesd. The mockup corrects this to requests. Raise as a defect against the built Flow.</td><td>Boomi Flow developer</td></tr>
       <tr><td class='cell-nowrap'><strong>D-AP-06</strong></td><td>Departmental naming on the published page</td><td>Row 8 is published as DWP2Dept-payments. Confirm the redaction rule for any wider publication.</td><td>Integration Architect</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-08</strong></td><td>Status values and grid filtering</td><td>Status is added with the values Requested, Approved and Rejected. The values on individual rows are placeholders. Confirm whether this grid shows all statuses or only Requested items awaiting a decision, and whether a fourth in-progress or failed status is needed once the promotion API is called.</td><td>Design Authority</td></tr>
+      <tr><td class='cell-nowrap'><strong>D-AP-09</strong></td><td>Environment column heading typo</td><td>The built screen renders the heading as Enviornment. Corrected to Environment in the mockup. Raise as a defect against the Flow.</td><td>Boomi Flow developer</td></tr>
     </tbody>
   </table>
 
@@ -538,7 +691,7 @@
   <h2>Files in this deliverable</h2>
   <ul class="plain">
     <li><code>index.html</code> &mdash; this page, containing the prototype table and all instructions.</li>
-    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup, three pages, every cell a separate shape.</li>
+    <li><code>assets/file-transfer-requests-dashboard.drawio</code> &mdash; editable draw.io mockup, four pages, every cell a separate shape.</li>
     <li><code>assets/dashboard-table.html</code> &mdash; standalone markup and CSS for both tables, for lifting into another page.</li>
     <li><code>assets/docs.zip</code> &mdash; both of the above in one archive.</li>
   </ul>
@@ -560,14 +713,35 @@
 <script>
   var selected = 0;
   var counter = document.getElementById('count');
+  function setField(name, value) {
+    var el = document.querySelector('.v[data-field="' + name + '"]');
+    if (el) { el.innerHTML = value; }
+  }
   document.querySelectorAll('.btn-view').forEach(function (b) {
     b.addEventListener('click', function () {
       selected += 1;
       if (counter) { counter.textContent = selected; }
-      alert('View Request: ' + b.getAttribute('data-name') +
-            '\n\nThis is a static prototype. Wire this button to the request detail screen.');
+      setField('Flow Name', b.getAttribute('data-flow'));
+      setField('Flow ID', b.getAttribute('data-id'));
+      setField('Status', b.getAttribute('data-status'));
+      setField('Environment', b.getAttribute('data-env'));
+      setField('Requested On', b.getAttribute('data-on'));
+      setField('Requested By', b.getAttribute('data-by'));
+      var out = document.getElementById('decision-result');
+      if (out) { out.textContent = ''; }
+      document.getElementById('request-detail').scrollIntoView({behavior: 'smooth'});
     });
   });
+  var approve = document.querySelector('.btn-approve');
+  var reject = document.querySelector('.btn-reject');
+  function decide(word) {
+    var id = document.querySelector('.v[data-field="Flow ID"]').textContent;
+    document.getElementById('decision-result').textContent =
+      word + ' recorded for ' + id + '. Static prototype, no promotion API is called.';
+    setField('Status', word === 'Approve' ? 'Approved' : 'Rejected');
+  }
+  if (approve) { approve.addEventListener('click', function () { decide('Approve'); }); }
+  if (reject) { reject.addEventListener('click', function () { decide('Reject'); }); }
   document.getElementById('refresh2').addEventListener('click', function () {
     document.getElementById('count2').textContent = '0';
   });
