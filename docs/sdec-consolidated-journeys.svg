@@ -1,0 +1,391 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2602 1440" width="2602" height="1440" font-family="Arial, Helvetica, sans-serif" role="img" aria-labelledby="sd-t">
+<title id="sd-t">SDEC consolidated integration requirements: consolidated journey diagram</title>
+<defs>
+<marker id="sd-m-rest" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2B4C7E"/></marker>
+<marker id="sd-m-event" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
+<marker id="sd-m-cmd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
+<marker id="sd-m-file" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803D"/></marker>
+<marker id="sd-m-ui" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#64748B"/></marker>
+<marker id="sd-m-handoff" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111827"/></marker>
+</defs>
+<rect x="0" y="0" width="2602" height="1440" fill="#ffffff"/>
+<text x="30" y="46" font-size="24" font-weight="bold" fill="#1E2A38">SDEC consolidated integration journeys</text>
+<text x="30" y="72" font-size="13" fill="#475569">v0.1 (draft), 30 September 2026. Create Thread, External User Document Upload and External User Submission, with NRS and eDMS legs. Step numbers match the source sequence diagrams; requirement detail is in the workbook.</text>
+<rect x="30" y="100" width="2508" height="148" rx="10" fill="#F6F8FA" stroke="#CBD5E1"/>
+<line x1="220" y1="112" x2="220" y2="236" stroke="#CBD5E1"/>
+<text x="46" y="146" font-size="12" fill="#475569">Journey 1</text>
+<text x="46" y="168" font-size="17" font-weight="bold" fill="#1E2A38">Create Thread</text>
+<text x="46" y="192" font-size="11.5" fill="#475569">Internal user</text>
+<rect x="30" y="312" width="2508" height="424" rx="10" fill="#F6F8FA" stroke="#CBD5E1"/>
+<line x1="220" y1="324" x2="220" y2="724" stroke="#CBD5E1"/>
+<text x="46" y="496" font-size="12" fill="#475569">Journey 2</text>
+<text x="46" y="518" font-size="17" font-weight="bold" fill="#1E2A38">External User</text>
+<text x="46" y="538" font-size="17" font-weight="bold" fill="#1E2A38">Document Upload</text>
+<text x="46" y="562" font-size="11.5" fill="#475569">External user</text>
+<text x="46" y="382.0" font-size="12" font-style="italic" fill="#334155">Thread Manager side</text>
+<text x="46" y="397.0" font-size="12" font-style="italic" fill="#334155">effect</text>
+<text x="46" y="658.0" font-size="12" font-style="italic" fill="#334155">AV / validation failure</text>
+<rect x="30" y="800" width="2508" height="424" rx="10" fill="#F6F8FA" stroke="#CBD5E1"/>
+<line x1="220" y1="812" x2="220" y2="1212" stroke="#CBD5E1"/>
+<text x="46" y="984" font-size="12" fill="#475569">Journey 3</text>
+<text x="46" y="1006" font-size="17" font-weight="bold" fill="#1E2A38">External User</text>
+<text x="46" y="1026" font-size="17" font-weight="bold" fill="#1E2A38">Submission</text>
+<text x="46" y="1050" font-size="11.5" fill="#475569">External user; internal</text>
+<text x="46" y="1065" font-size="11.5" fill="#475569">user notified</text>
+<text x="46" y="870.0" font-size="12" font-style="italic" fill="#334155">NRS leg (parallel, non-</text>
+<text x="46" y="885.0" font-size="12" font-style="italic" fill="#334155">blocking)</text>
+<text x="46" y="1146.0" font-size="12" font-style="italic" fill="#334155">eDMS leg (parallel)</text>
+<path d="M 416.0 174.0 L 474.0 174.0" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#sd-m-ui)"/>
+<rect x="435.3" y="159.0" width="19.4" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="445.0" y="170.0" font-size="10" text-anchor="middle" fill="#64748B">UI</text>
+<path d="M 650.0 174.0 L 708.0 174.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="663.6" y="159.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="679.0" y="170.0" font-size="10" text-anchor="middle" fill="#2B4C7E">POST</text>
+<path d="M 884.0 174.0 L 942.0 174.0" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#sd-m-ui)"/>
+<rect x="897.6" y="159.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="913.0" y="170.0" font-size="10" text-anchor="middle" fill="#64748B">page</text>
+<path d="M 1118.0 174.0 L 1176.0 174.0" fill="none" stroke="#15803D" stroke-width="3.2" stroke-linejoin="round" marker-end="url(#sd-m-file)"/>
+<rect x="1125.9" y="159.0" width="42.2" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1147.0" y="170.0" font-size="10" text-anchor="middle" fill="#15803D">upload</text>
+<path d="M 1352.0 174.0 L 1410.0 174.0" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#sd-m-ui)"/>
+<rect x="1354.2" y="159.0" width="53.6" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1381.0" y="170.0" font-size="10" text-anchor="middle" fill="#64748B">continue</text>
+<path d="M 1586.0 174.0 L 1644.0 174.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="1602.5" y="159.0" width="25.1" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1615.0" y="170.0" font-size="10" text-anchor="middle" fill="#2B4C7E">PUT</text>
+<path d="M 1820.0 174.0 L 1878.0 174.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="2 3" stroke-linejoin="round" marker-end="url(#sd-m-cmd)"/>
+<rect x="1825.0" y="159.0" width="47.9" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1849.0" y="170.0" font-size="10" text-anchor="middle" fill="#C2410C">command</text>
+<path d="M 2054.0 174.0 L 2112.0 174.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="2064.8" y="159.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="2083.0" y="170.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 2200.0 226.0 L 2200.0 280.0 L 328.0 280.0 L 328.0 472.0" fill="none" stroke="#111827" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#sd-m-handoff)"/>
+<rect x="1116.0" y="264.0" width="296.0" height="15.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1264.0" y="276.0" font-size="11" text-anchor="middle" fill="#111827" font-weight="bold">Handoff: recipient asked to provide documents</text>
+<path d="M 416.0 524.0 L 474.0 524.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="429.6" y="509.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="445.0" y="520.0" font-size="10" text-anchor="middle" fill="#2B4C7E">POST</text>
+<path d="M 650.0 524.0 L 708.0 524.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="663.6" y="509.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="679.0" y="520.0" font-size="10" text-anchor="middle" fill="#2B4C7E">POST</text>
+<path d="M 562.0 472.0 L 562.0 386.0 L 708.0 386.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="616.8" y="371.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="635.0" y="382.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 884.0 524.0 L 942.0 524.0" fill="none" stroke="#15803D" stroke-width="3.2" stroke-linejoin="round" marker-end="url(#sd-m-file)"/>
+<rect x="891.9" y="509.0" width="42.2" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="913.0" y="520.0" font-size="10" text-anchor="middle" fill="#15803D">S3 PUT</text>
+<path d="M 1118.0 524.0 L 1176.0 524.0" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#sd-m-ui)"/>
+<rect x="1131.6" y="509.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1147.0" y="520.0" font-size="10" text-anchor="middle" fill="#64748B">scan</text>
+<path d="M 1352.0 524.0 L 1410.0 524.0" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#sd-m-ui)"/>
+<rect x="1362.8" y="509.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1381.0" y="520.0" font-size="10" text-anchor="middle" fill="#64748B">clean</text>
+<path d="M 1264.0 576.0 L 1264.0 662.0 L 1410.0 662.0" fill="none" stroke="#64748B" stroke-width="1.4" stroke-linejoin="round" marker-end="url(#sd-m-ui)"/>
+<rect x="1310.2" y="647.0" width="53.6" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1337.0" y="658.0" font-size="10" text-anchor="middle" fill="#64748B">infected</text>
+<path d="M 1586.0 524.0 L 1644.0 524.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1596.8" y="509.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1615.0" y="520.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 1820.0 524.0 L 1878.0 524.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1830.8" y="509.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1849.0" y="520.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 1586.0 662.0 L 1644.0 662.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1596.8" y="647.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1615.0" y="658.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 1820.0 662.0 L 1878.0 662.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1830.8" y="647.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1849.0" y="658.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 2054.0 524.0 L 2558.0 524.0 L 2558.0 768.0 L 328.0 768.0 L 328.0 960.0" fill="none" stroke="#111827" stroke-width="2.2" stroke-dasharray="10 5" stroke-linejoin="round" marker-end="url(#sd-m-handoff)"/>
+<rect x="1285.4" y="752.0" width="315.2" height="15.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1443.0" y="764.0" font-size="11" text-anchor="middle" fill="#111827" font-weight="bold">Handoff: documents staged, user submits response</text>
+<path d="M 416.0 1012.0 L 474.0 1012.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="429.6" y="997.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="445.0" y="1008.0" font-size="10" text-anchor="middle" fill="#2B4C7E">POST</text>
+<path d="M 650.0 1012.0 L 708.0 1012.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="663.6" y="997.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="679.0" y="1008.0" font-size="10" text-anchor="middle" fill="#2B4C7E">POST</text>
+<path d="M 796.0 960.0 L 796.0 874.0 L 942.0 874.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="830.8" y="859.0" width="76.4" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="869.0" y="870.0" font-size="10" text-anchor="middle" fill="#2B4C7E">REST via HIP</text>
+<path d="M 1118.0 874.0 L 1176.0 874.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="2 3" stroke-linejoin="round" marker-end="url(#sd-m-cmd)"/>
+<rect x="1123.0" y="859.0" width="47.9" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1147.0" y="870.0" font-size="10" text-anchor="middle" fill="#C2410C">command</text>
+<path d="M 1352.0 874.0 L 1410.0 874.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1362.8" y="859.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1381.0" y="870.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 1586.0 874.0 L 1644.0 874.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1596.8" y="859.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1615.0" y="870.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 796.0 1064.0 L 796.0 1150.0 L 942.0 1150.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="2 3" stroke-linejoin="round" marker-end="url(#sd-m-cmd)"/>
+<rect x="845.0" y="1135.0" width="47.9" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="869.0" y="1146.0" font-size="10" text-anchor="middle" fill="#C2410C">command</text>
+<path d="M 1118.0 1150.0 L 1176.0 1150.0" fill="none" stroke="#2B4C7E" stroke-width="1.8" stroke-linejoin="round" marker-end="url(#sd-m-rest)"/>
+<rect x="1131.6" y="1135.0" width="30.8" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1147.0" y="1146.0" font-size="10" text-anchor="middle" fill="#2B4C7E">REST</text>
+<path d="M 1352.0 1150.0 L 1410.0 1150.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1362.8" y="1135.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1381.0" y="1146.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 1586.0 1150.0 L 1644.0 1150.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1596.8" y="1135.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1615.0" y="1146.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<path d="M 1820.0 874.0 L 1966.0 874.0 L 1966.0 960.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1866.2" y="859.0" width="53.6" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1893.0" y="870.0" font-size="10" text-anchor="middle" fill="#C2410C">accepted</text>
+<path d="M 1820.0 1150.0 L 1966.0 1150.0 L 1966.0 1064.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="1863.3" y="1135.0" width="59.3" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="1893.0" y="1146.0" font-size="10" text-anchor="middle" fill="#C2410C">completed</text>
+<path d="M 2054.0 1012.0 L 2112.0 1012.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="2 3" stroke-linejoin="round" marker-end="url(#sd-m-cmd)"/>
+<rect x="2059.1" y="997.0" width="47.9" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="2083.0" y="1008.0" font-size="10" text-anchor="middle" fill="#C2410C">command</text>
+<path d="M 2288.0 1012.0 L 2346.0 1012.0" fill="none" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" stroke-linejoin="round" marker-end="url(#sd-m-event)"/>
+<rect x="2298.8" y="997.0" width="36.5" height="14.0" fill="#ffffff" fill-opacity="0.92"/>
+<text x="2317.0" y="1008.0" font-size="10" text-anchor="middle" fill="#C2410C">event</text>
+<g><rect x="240" y="122" width="176" height="104" rx="6" fill="#F7EDD4" stroke="#7A5A12" stroke-width="1.5"/>
+<path d="M240 142 V128 Q240 122 246 122 H410 Q416 122 416 128 V142 Z" fill="#7A5A12"/>
+<text x="248" y="136" font-size="10" font-weight="bold" fill="#ffffff">Internal user</text>
+<text x="248" y="158" font-size="11.5" fill="#1E2A38">Start Create Thread and</text>
+<text x="248" y="172" font-size="11.5" fill="#1E2A38">enter contact details</text>
+<text x="248" y="218" font-size="10" fill="#475569">Steps 1-6</text></g>
+<g><rect x="474" y="122" width="176" height="104" rx="6" fill="#DDF1EF" stroke="#0E6E6E" stroke-width="1.5"/>
+<path d="M474 142 V128 Q474 122 480 122 H644 Q650 122 650 128 V142 Z" fill="#0E6E6E"/>
+<text x="482" y="136" font-size="10" font-weight="bold" fill="#ffffff">SDEC front end (MDTP)</text>
+<text x="482" y="158" font-size="11.5" fill="#1E2A38">Save contact details,</text>
+<text x="482" y="172" font-size="11.5" fill="#1E2A38">request thread creation</text>
+<text x="482" y="218" font-size="10" fill="#475569">Steps 7-8</text></g>
+<g><rect x="708" y="122" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M708 142 V128 Q708 122 714 122 H878 Q884 122 884 128 V142 Z" fill="#1F5E8C"/>
+<text x="716" y="136" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="716" y="158" font-size="11.5" fill="#1E2A38">Create thread, technical +</text>
+<text x="716" y="172" font-size="11.5" fill="#1E2A38">business reference,</text>
+<text x="716" y="186" font-size="11.5" fill="#1E2A38">Pending thread created</text>
+<text x="716" y="218" font-size="10" fill="#475569">Steps 9-12</text></g>
+<g><rect x="942" y="122" width="176" height="104" rx="6" fill="#F7EDD4" stroke="#7A5A12" stroke-width="1.5"/>
+<path d="M942 142 V128 Q942 122 948 122 H1112 Q1118 122 1118 128 V142 Z" fill="#7A5A12"/>
+<text x="950" y="136" font-size="10" font-weight="bold" fill="#ffffff">Internal user</text>
+<text x="950" y="158" font-size="11.5" fill="#1E2A38">Enter message title and</text>
+<text x="950" y="172" font-size="11.5" fill="#1E2A38">body, attach files</text>
+<text x="950" y="218" font-size="10" fill="#475569">Steps 15-17</text></g>
+<g><rect x="1176" y="122" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1176 142 V128 Q1176 122 1182 122 H1346 Q1352 122 1352 128 V142 Z" fill="#B4531A"/>
+<text x="1184" y="136" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="1184" y="158" font-size="11.5" fill="#1E2A38">Upload each file (separate</text>
+<text x="1184" y="172" font-size="11.5" fill="#1E2A38">File Upload sequence, TBC)</text>
+<text x="1184" y="218" font-size="10" fill="#475569">Loop</text></g>
+<g><rect x="1410" y="122" width="176" height="104" rx="6" fill="#DDF1EF" stroke="#0E6E6E" stroke-width="1.5"/>
+<path d="M1410 142 V128 Q1410 122 1416 122 H1580 Q1586 122 1586 128 V142 Z" fill="#0E6E6E"/>
+<text x="1418" y="136" font-size="10" font-weight="bold" fill="#ffffff">SDEC front end (MDTP)</text>
+<text x="1418" y="158" font-size="11.5" fill="#1E2A38">Cache details, file count</text>
+<text x="1418" y="172" font-size="11.5" fill="#1E2A38">and size check, check</text>
+<text x="1418" y="186" font-size="11.5" fill="#1E2A38">answers</text>
+<text x="1418" y="218" font-size="10" fill="#475569">Steps 20-36</text></g>
+<g><rect x="1644" y="122" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M1644 142 V128 Q1644 122 1650 122 H1814 Q1820 122 1820 128 V142 Z" fill="#1F5E8C"/>
+<text x="1652" y="136" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="1652" y="158" font-size="11.5" fill="#1E2A38">Confirm and send, PUT</text>
+<text x="1652" y="172" font-size="11.5" fill="#1E2A38">Submission Service API</text>
+<text x="1652" y="218" font-size="10" fill="#475569">Steps 39-44</text></g>
+<g><rect x="1878" y="122" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1878 142 V128 Q1878 122 1884 122 H2048 Q2054 122 2054 128 V142 Z" fill="#B4531A"/>
+<text x="1886" y="136" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="1886" y="158" font-size="11.5" fill="#1E2A38">Transfer thread files to</text>
+<text x="1886" y="172" font-size="11.5" fill="#1E2A38">eDMS (reuses eDMS leg)</text>
+<text x="1886" y="218" font-size="10" fill="#475569">Step 45</text></g>
+<g><rect x="2112" y="122" width="176" height="104" rx="6" fill="#F6E1EC" stroke="#8A2D5B" stroke-width="1.5"/>
+<path d="M2112 142 V128 Q2112 122 2118 122 H2282 Q2288 122 2288 128 V142 Z" fill="#8A2D5B"/>
+<text x="2120" y="136" font-size="10" font-weight="bold" fill="#ffffff">Communication Service</text>
+<text x="2120" y="158" font-size="11.5" fill="#1E2A38">Thread confirmation event</text>
+<text x="2120" y="172" font-size="11.5" fill="#1E2A38">notifies recipient</text>
+<text x="2120" y="186" font-size="11.5" fill="#1E2A38">(proposed)</text>
+<text x="2120" y="218" font-size="10" fill="#475569">Design note</text></g>
+<g><rect x="240" y="472" width="176" height="104" rx="6" fill="#F7EDD4" stroke="#7A5A12" stroke-width="1.5"/>
+<path d="M240 492 V478 Q240 472 246 472 H410 Q416 472 416 478 V492 Z" fill="#7A5A12"/>
+<text x="248" y="486" font-size="10" font-weight="bold" fill="#ffffff">External user</text>
+<text x="248" y="508" font-size="11.5" fill="#1E2A38">Select documents, request</text>
+<text x="248" y="522" font-size="11.5" fill="#1E2A38">upload</text>
+<text x="248" y="568" font-size="10" fill="#475569">Steps 1-3</text></g>
+<g><rect x="474" y="472" width="176" height="104" rx="6" fill="#DDF1EF" stroke="#0E6E6E" stroke-width="1.5"/>
+<path d="M474 492 V478 Q474 472 480 472 H644 Q650 472 650 478 V492 Z" fill="#0E6E6E"/>
+<text x="482" y="486" font-size="10" font-weight="bold" fill="#ffffff">SDEC front end (MDTP)</text>
+<text x="482" y="508" font-size="11.5" fill="#1E2A38">Upload in progress, POST</text>
+<text x="482" y="522" font-size="11.5" fill="#1E2A38">/file_uploads</text>
+<text x="482" y="568" font-size="10" fill="#475569">Steps 4-5</text></g>
+<g><rect x="708" y="472" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M708 492 V478 Q708 472 714 472 H878 Q884 472 884 478 V492 Z" fill="#B4531A"/>
+<text x="716" y="486" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="716" y="508" font-size="11.5" fill="#1E2A38">Upload strategy, pre-</text>
+<text x="716" y="522" font-size="11.5" fill="#1E2A38">signed URLs, file</text>
+<text x="716" y="536" font-size="11.5" fill="#1E2A38">collection id</text>
+<text x="716" y="568" font-size="10" fill="#475569">Steps 6-7, 10</text></g>
+<g><rect x="708" y="334" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M708 354 V340 Q708 334 714 334 H878 Q884 334 884 340 V354 Z" fill="#1F5E8C"/>
+<text x="716" y="348" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="716" y="370" font-size="11.5" fill="#1E2A38">document_upload_requested:</text>
+<text x="716" y="384" font-size="11.5" fill="#1E2A38">create SDEC Document</text>
+<text x="716" y="398" font-size="11.5" fill="#1E2A38">records</text>
+<text x="716" y="430" font-size="10" fill="#475569">Steps 8-9</text></g>
+<g><rect x="942" y="472" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M942 492 V478 Q942 472 948 472 H1112 Q1118 472 1118 478 V492 Z" fill="#B4531A"/>
+<text x="950" y="486" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="950" y="508" font-size="11.5" fill="#1E2A38">Browser uploads to landing</text>
+<text x="950" y="522" font-size="11.5" fill="#1E2A38">bucket (S3)</text>
+<text x="950" y="568" font-size="10" fill="#475569">Step 11</text></g>
+<g><rect x="1176" y="472" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1176 492 V478 Q1176 472 1182 472 H1346 Q1352 472 1352 478 V492 Z" fill="#B4531A"/>
+<text x="1184" y="486" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="1184" y="508" font-size="11.5" fill="#1E2A38">AV scan and validation</text>
+<text x="1184" y="568" font-size="10" fill="#475569">Step 12</text></g>
+<g><rect x="1410" y="472" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1410 492 V478 Q1410 472 1416 472 H1580 Q1586 472 1586 478 V492 Z" fill="#B4531A"/>
+<text x="1418" y="486" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="1418" y="508" font-size="11.5" fill="#1E2A38">Move to clean staging</text>
+<text x="1418" y="522" font-size="11.5" fill="#1E2A38">bucket</text>
+<text x="1418" y="568" font-size="10" fill="#475569">Step 18</text></g>
+<g><rect x="1644" y="472" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1644 492 V478 Q1644 472 1650 472 H1814 Q1820 472 1820 478 V492 Z" fill="#B4531A"/>
+<text x="1652" y="486" font-size="10" font-weight="bold" fill="#ffffff">HIP Event Management</text>
+<text x="1652" y="508" font-size="11.5" fill="#1E2A38">file_upload_succeeded to</text>
+<text x="1652" y="522" font-size="11.5" fill="#1E2A38">front end and Thread</text>
+<text x="1652" y="536" font-size="11.5" fill="#1E2A38">Manager</text>
+<text x="1652" y="568" font-size="10" fill="#475569">Step 19</text></g>
+<g><rect x="1878" y="472" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M1878 492 V478 Q1878 472 1884 472 H2048 Q2054 472 2054 478 V492 Z" fill="#1F5E8C"/>
+<text x="1886" y="486" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="1886" y="508" font-size="11.5" fill="#1E2A38">Document upload succeeded,</text>
+<text x="1886" y="522" font-size="11.5" fill="#1E2A38">user notified</text>
+<text x="1886" y="568" font-size="10" fill="#475569">Steps 20-22</text></g>
+<g><rect x="1410" y="610" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1410 630 V616 Q1410 610 1416 610 H1580 Q1586 610 1586 616 V630 Z" fill="#B4531A"/>
+<text x="1418" y="624" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="1418" y="646" font-size="11.5" fill="#1E2A38">Move to quarantine bucket</text>
+<text x="1418" y="706" font-size="10" fill="#475569">Step 13</text></g>
+<g><rect x="1644" y="610" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1644 630 V616 Q1644 610 1650 610 H1814 Q1820 610 1820 616 V630 Z" fill="#B4531A"/>
+<text x="1652" y="624" font-size="10" font-weight="bold" fill="#ffffff">HIP Event Management</text>
+<text x="1652" y="646" font-size="11.5" fill="#1E2A38">file_upload_failed with</text>
+<text x="1652" y="660" font-size="11.5" fill="#1E2A38">error details</text>
+<text x="1652" y="706" font-size="10" fill="#475569">Step 14</text></g>
+<g><rect x="1878" y="610" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M1878 630 V616 Q1878 610 1884 610 H2048 Q2054 610 2054 616 V630 Z" fill="#1F5E8C"/>
+<text x="1886" y="624" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="1886" y="646" font-size="11.5" fill="#1E2A38">Document upload failed,</text>
+<text x="1886" y="660" font-size="11.5" fill="#1E2A38">user notified</text>
+<text x="1886" y="706" font-size="10" fill="#475569">Steps 15-17</text></g>
+<g><rect x="240" y="960" width="176" height="104" rx="6" fill="#F7EDD4" stroke="#7A5A12" stroke-width="1.5"/>
+<path d="M240 980 V966 Q240 960 246 960 H410 Q416 960 416 966 V980 Z" fill="#7A5A12"/>
+<text x="248" y="974" font-size="10" font-weight="bold" fill="#ffffff">External user</text>
+<text x="248" y="996" font-size="11.5" fill="#1E2A38">Submit, browser hashes</text>
+<text x="248" y="1010" font-size="11.5" fill="#1E2A38">form (SHA-256 TBC)</text>
+<text x="248" y="1056" font-size="10" fill="#475569">Steps 1-3</text></g>
+<g><rect x="474" y="960" width="176" height="104" rx="6" fill="#DDF1EF" stroke="#0E6E6E" stroke-width="1.5"/>
+<path d="M474 980 V966 Q474 960 480 960 H644 Q650 960 650 966 V980 Z" fill="#0E6E6E"/>
+<text x="482" y="974" font-size="10" font-weight="bold" fill="#ffffff">SDEC front end (MDTP)</text>
+<text x="482" y="996" font-size="11.5" fill="#1E2A38">Validate and sign hash</text>
+<text x="482" y="1056" font-size="10" fill="#475569">Steps 4-5</text></g>
+<g><rect x="708" y="960" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M708 980 V966 Q708 960 714 960 H878 Q884 960 884 966 V980 Z" fill="#1F5E8C"/>
+<text x="716" y="974" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="716" y="996" font-size="11.5" fill="#1E2A38">POST</text>
+<text x="716" y="1010" font-size="11.5" fill="#1E2A38">/interaction/submissions,</text>
+<text x="716" y="1024" font-size="11.5" fill="#1E2A38">Submission requested, ack</text>
+<text x="716" y="1056" font-size="10" fill="#475569">Steps 6-10</text></g>
+<g><rect x="942" y="822" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M942 842 V828 Q942 822 948 822 H1112 Q1118 822 1118 828 V842 Z" fill="#B4531A"/>
+<text x="950" y="836" font-size="10" font-weight="bold" fill="#ffffff">HIP API Management</text>
+<text x="950" y="858" font-size="11.5" fill="#1E2A38">NRS Submission and</text>
+<text x="950" y="872" font-size="11.5" fill="#1E2A38">Attachment APIs, NRS id,</text>
+<text x="950" y="886" font-size="11.5" fill="#1E2A38">pre-signed URLs</text>
+<text x="950" y="918" font-size="10" fill="#475569">Steps 11-17</text></g>
+<g><rect x="1176" y="822" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1176 842 V828 Q1176 822 1182 822 H1346 Q1352 822 1352 828 V842 Z" fill="#B4531A"/>
+<text x="1184" y="836" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="1184" y="858" font-size="11.5" fill="#1E2A38">request_file_transfer</text>
+<text x="1184" y="872" font-size="11.5" fill="#1E2A38">(NRS), upload to NRS</text>
+<text x="1184" y="886" font-size="11.5" fill="#1E2A38">transient</text>
+<text x="1184" y="918" font-size="10" fill="#475569">Steps 18-20</text></g>
+<g><rect x="1410" y="822" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1410 842 V828 Q1410 822 1416 822 H1580 Q1586 822 1586 828 V842 Z" fill="#B4531A"/>
+<text x="1418" y="836" font-size="10" font-weight="bold" fill="#ffffff">HIP Event Management</text>
+<text x="1418" y="858" font-size="11.5" fill="#1E2A38">file_transfer_succeeded</text>
+<text x="1418" y="872" font-size="11.5" fill="#1E2A38">(NRS), transferred to NRS</text>
+<text x="1418" y="918" font-size="10" fill="#475569">Steps 21-22</text></g>
+<g><rect x="1644" y="822" width="176" height="104" rx="6" fill="#E9E4F5" stroke="#5B4B8A" stroke-width="1.5"/>
+<path d="M1644 842 V828 Q1644 822 1650 822 H1814 Q1820 822 1820 828 V842 Z" fill="#5B4B8A"/>
+<text x="1652" y="836" font-size="10" font-weight="bold" fill="#ffffff">NRS</text>
+<text x="1652" y="858" font-size="11.5" fill="#1E2A38">attachments_accepted, sign</text>
+<text x="1652" y="872" font-size="11.5" fill="#1E2A38">and store evidentially</text>
+<text x="1652" y="918" font-size="10" fill="#475569">A.1, A.2, 23-24</text></g>
+<g><rect x="942" y="1098" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M942 1118 V1104 Q942 1098 948 1098 H1112 Q1118 1098 1118 1104 V1118 Z" fill="#B4531A"/>
+<text x="950" y="1112" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="950" y="1134" font-size="11.5" fill="#1E2A38">request_file_transfer</text>
+<text x="950" y="1148" font-size="11.5" fill="#1E2A38">(eDMS), send to eDMS API</text>
+<text x="950" y="1194" font-size="10" fill="#475569">Steps 25-26</text></g>
+<g><rect x="1176" y="1098" width="176" height="104" rx="6" fill="#E3F0DA" stroke="#3F6B2A" stroke-width="1.5"/>
+<path d="M1176 1118 V1104 Q1176 1098 1182 1098 H1346 Q1352 1098 1352 1104 V1118 Z" fill="#3F6B2A"/>
+<text x="1184" y="1112" font-size="10" font-weight="bold" fill="#ffffff">eDMS (Doxis)</text>
+<text x="1184" y="1134" font-size="11.5" fill="#1E2A38">Validate and store</text>
+<text x="1184" y="1148" font-size="11.5" fill="#1E2A38">documents, return result</text>
+<text x="1184" y="1194" font-size="10" fill="#475569">Steps 27-28</text></g>
+<g><rect x="1410" y="1098" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M1410 1118 V1104 Q1410 1098 1416 1098 H1580 Q1586 1098 1586 1104 V1118 Z" fill="#B4531A"/>
+<text x="1418" y="1112" font-size="10" font-weight="bold" fill="#ffffff">HIP Event Management</text>
+<text x="1418" y="1134" font-size="11.5" fill="#1E2A38">file_transfer_succeeded</text>
+<text x="1418" y="1148" font-size="11.5" fill="#1E2A38">(eDMS), Submission</text>
+<text x="1418" y="1162" font-size="11.5" fill="#1E2A38">completed</text>
+<text x="1418" y="1194" font-size="10" fill="#475569">Steps 29-30</text></g>
+<g><rect x="1644" y="1098" width="176" height="104" rx="6" fill="#F6E1EC" stroke="#8A2D5B" stroke-width="1.5"/>
+<path d="M1644 1118 V1104 Q1644 1098 1650 1098 H1814 Q1820 1098 1820 1104 V1118 Z" fill="#8A2D5B"/>
+<text x="1652" y="1112" font-size="10" font-weight="bold" fill="#ffffff">Communication Service</text>
+<text x="1652" y="1134" font-size="11.5" fill="#1E2A38">submission_completed,</text>
+<text x="1652" y="1148" font-size="11.5" fill="#1E2A38">email / SMS to both users</text>
+<text x="1652" y="1194" font-size="10" fill="#475569">Steps 31-38</text></g>
+<g><rect x="1878" y="960" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M1878 980 V966 Q1878 960 1884 960 H2048 Q2054 960 2054 966 V980 Z" fill="#1F5E8C"/>
+<text x="1886" y="974" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="1886" y="996" font-size="11.5" fill="#1E2A38">Gate: eDMS ingested and</text>
+<text x="1886" y="1010" font-size="11.5" fill="#1E2A38">NRS accepted,</text>
+<text x="1886" y="1024" font-size="11.5" fill="#1E2A38">delete_staged_files</text>
+<text x="1886" y="1056" font-size="10" fill="#475569">Step 39</text></g>
+<g><rect x="2112" y="960" width="176" height="104" rx="6" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<path d="M2112 980 V966 Q2112 960 2118 960 H2282 Q2288 960 2288 966 V980 Z" fill="#B4531A"/>
+<text x="2120" y="974" font-size="10" font-weight="bold" fill="#ffffff">HIP File Transfer Manager</text>
+<text x="2120" y="996" font-size="11.5" fill="#1E2A38">Delete staged files from</text>
+<text x="2120" y="1010" font-size="11.5" fill="#1E2A38">clean staging</text>
+<text x="2120" y="1056" font-size="10" fill="#475569">Step 40</text></g>
+<g><rect x="2346" y="960" width="176" height="104" rx="6" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<path d="M2346 980 V966 Q2346 960 2352 960 H2516 Q2522 960 2522 966 V980 Z" fill="#1F5E8C"/>
+<text x="2354" y="974" font-size="10" font-weight="bold" fill="#ffffff">SDEC Thread Manager (HCP)</text>
+<text x="2354" y="996" font-size="11.5" fill="#1E2A38">file_deletion_succeeded,</text>
+<text x="2354" y="1010" font-size="11.5" fill="#1E2A38">staged files deleted</text>
+<text x="2354" y="1056" font-size="10" fill="#475569">Steps 41-42</text></g>
+<rect x="30" y="1260" width="2508" height="150" rx="10" fill="#ffffff" stroke="#CBD5E1"/>
+<text x="46" y="1288" font-size="14" font-weight="bold" fill="#1E2A38">Legend</text>
+<text x="46" y="1312" font-size="12" fill="#475569">Box colour shows the system that performs the stage</text>
+<rect x="46" y="1324" width="22" height="16" rx="3" fill="#F7EDD4" stroke="#7A5A12" stroke-width="1.5"/>
+<text x="76" y="1337" font-size="12" fill="#1E2A38">Users (internal and external)</text>
+<rect x="396" y="1324" width="22" height="16" rx="3" fill="#DDF1EF" stroke="#0E6E6E" stroke-width="1.5"/>
+<text x="426" y="1337" font-size="12" fill="#1E2A38">SDEC front end (MDTP)</text>
+<rect x="746" y="1324" width="22" height="16" rx="3" fill="#FCE8D8" stroke="#B4531A" stroke-width="1.5"/>
+<text x="776" y="1337" font-size="12" fill="#1E2A38">HIP (iPaaS): API, Event, File Transfer</text>
+<rect x="1096" y="1324" width="22" height="16" rx="3" fill="#DCEAF6" stroke="#1F5E8C" stroke-width="1.5"/>
+<text x="1126" y="1337" font-size="12" fill="#1E2A38">SDEC Thread Manager (HCP)</text>
+<rect x="1446" y="1324" width="22" height="16" rx="3" fill="#E9E4F5" stroke="#5B4B8A" stroke-width="1.5"/>
+<text x="1476" y="1337" font-size="12" fill="#1E2A38">NRS</text>
+<rect x="1796" y="1324" width="22" height="16" rx="3" fill="#E3F0DA" stroke="#3F6B2A" stroke-width="1.5"/>
+<text x="1826" y="1337" font-size="12" fill="#1E2A38">eDMS (Doxis)</text>
+<rect x="2146" y="1324" width="22" height="16" rx="3" fill="#F6E1EC" stroke="#8A2D5B" stroke-width="1.5"/>
+<text x="2176" y="1337" font-size="12" fill="#1E2A38">Communication Service / SMS Gateway</text>
+<text x="46" y="1366" font-size="12" fill="#475569">Line style shows the integration type</text>
+<path d="M46 1388 H92" stroke="#2B4C7E" stroke-width="1.8" marker-end="url(#sd-m-rest)"/>
+<text x="102" y="1392" font-size="12" fill="#1E2A38">Synchronous REST call</text>
+<path d="M446 1388 H492" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#sd-m-event)"/>
+<text x="502" y="1392" font-size="12" fill="#1E2A38">Event (publish / subscribe)</text>
+<path d="M846 1388 H892" stroke="#C2410C" stroke-width="1.8" stroke-dasharray="2 3" marker-end="url(#sd-m-cmd)"/>
+<text x="902" y="1392" font-size="12" fill="#1E2A38">Async command on queue</text>
+<path d="M1246 1388 H1292" stroke="#15803D" stroke-width="3.2" marker-end="url(#sd-m-file)"/>
+<text x="1302" y="1392" font-size="12" fill="#1E2A38">File transfer (S3 / pre-signed URL)</text>
+<path d="M1646 1388 H1692" stroke="#64748B" stroke-width="1.4" marker-end="url(#sd-m-ui)"/>
+<text x="1702" y="1392" font-size="12" fill="#1E2A38">User interaction / internal step</text>
+<path d="M2046 1388 H2092" stroke="#111827" stroke-width="2.2" stroke-dasharray="10 5" marker-end="url(#sd-m-handoff)"/>
+<text x="2102" y="1392" font-size="12" fill="#1E2A38">Journey handoff</text>
+</svg>
