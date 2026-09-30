@@ -1,0 +1,588 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2212 4176" width="2212" height="4176" font-family="Arial, Helvetica, sans-serif" role="img" aria-labelledby="sq-t">
+<title id="sq-t">SDEC consolidated interaction diagram</title><defs>
+<marker id="sq-sync" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2B4C7E"/></marker>
+<marker id="sq-resp" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#475569" stroke-width="1.4"/></marker>
+<marker id="sq-event" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
+<marker id="sq-cmd" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
+<marker id="sq-file" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#15803D"/></marker>
+<marker id="sq-notify" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#8A2D5B" stroke-width="1.4"/></marker>
+<marker id="sq-self" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
+</defs>
+<rect width="2212" height="4176" fill="#ffffff"/>
+<text x="30" y="44" font-size="24" font-weight="bold" fill="#1E2A38">SDEC consolidated interaction diagram</text>
+<text x="30" y="70" font-size="13" fill="#475569">v0.1 (draft), 30 September 2026. Journeys 1 to 3 on one sequence, showing HIP API Management, Event Management and File Transfer Manager in every integration. Numbering follows the source designs (J journey . step).</text>
+<rect x="50" y="92" width="290" height="3914" rx="8" fill="#F7EDD4" fill-opacity="0.55" stroke="#7A5A12" stroke-opacity="0.6"/>
+<text x="195.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#7A5A12">Users</text>
+<rect x="374" y="92" width="290" height="3914" rx="8" fill="#DDF1EF" fill-opacity="0.55" stroke="#0E6E6E" stroke-opacity="0.6"/>
+<text x="519.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#0E6E6E">SDEC (MDTP)</text>
+<rect x="698" y="92" width="440" height="3914" rx="8" fill="#FCE8D8" fill-opacity="0.55" stroke="#B4531A" stroke-opacity="0.6"/>
+<text x="918.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#B4531A">HIP (iPaaS / MFT)</text>
+<rect x="1172" y="92" width="140" height="3914" rx="8" fill="#DCEAF6" fill-opacity="0.55" stroke="#1F5E8C" stroke-opacity="0.6"/>
+<text x="1242.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#1F5E8C">SDEC (HCP)</text>
+<rect x="1346" y="92" width="140" height="3914" rx="8" fill="#E9E4F5" fill-opacity="0.55" stroke="#5B4B8A" stroke-opacity="0.6"/>
+<text x="1416.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#5B4B8A">NRS</text>
+<rect x="1520" y="92" width="140" height="3914" rx="8" fill="#E3F0DA" fill-opacity="0.55" stroke="#3F6B2A" stroke-opacity="0.6"/>
+<text x="1590.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#3F6B2A">eDMS</text>
+<rect x="1694" y="92" width="140" height="3914" rx="8" fill="#F6E1EC" fill-opacity="0.55" stroke="#8A2D5B" stroke-opacity="0.6"/>
+<text x="1764.0" y="110" font-size="12" font-weight="bold" text-anchor="middle" fill="#8A2D5B">Notification</text>
+<line x1="120" y1="176" x2="120" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="56.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#7A5A12" stroke-width="1.5"/>
+<text x="120" y="149.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Internal user /</text>
+<text x="120" y="163.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">browser</text>
+<line x1="270" y1="176" x2="270" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="206.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#7A5A12" stroke-width="1.5"/>
+<text x="270" y="149.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">External user /</text>
+<text x="270" y="163.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">browser</text>
+<line x1="444" y1="176" x2="444" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="380.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#0E6E6E" stroke-width="1.5"/>
+<text x="444" y="149.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Front-end Service</text>
+<text x="444" y="163.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">(internal)</text>
+<line x1="594" y1="176" x2="594" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="530.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#0E6E6E" stroke-width="1.5"/>
+<text x="594" y="149.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Front-end Service</text>
+<text x="594" y="163.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">(external)</text>
+<line x1="768" y1="176" x2="768" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="704.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#B4531A" stroke-width="1.5"/>
+<text x="768" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">API Management</text>
+<line x1="918" y1="176" x2="918" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="854.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#B4531A" stroke-width="1.5"/>
+<text x="918" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Event Management</text>
+<line x1="1068" y1="176" x2="1068" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="1004.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#B4531A" stroke-width="1.5"/>
+<text x="1068" y="149.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">File Transfer</text>
+<text x="1068" y="163.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Manager</text>
+<line x1="1242" y1="176" x2="1242" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="1178.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#1F5E8C" stroke-width="1.5"/>
+<text x="1242" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Thread Manager</text>
+<line x1="1416" y1="176" x2="1416" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="1352.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#5B4B8A" stroke-width="1.5"/>
+<text x="1416" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">NRS</text>
+<line x1="1590" y1="176" x2="1590" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="1526.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#3F6B2A" stroke-width="1.5"/>
+<text x="1590" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">eDMS (Doxis)</text>
+<line x1="1764" y1="176" x2="1764" y2="4000" stroke="#64748B" stroke-dasharray="4 4"/>
+<rect x="1700.0" y="128" width="128" height="48" rx="4" fill="#ffffff" stroke="#8A2D5B" stroke-width="1.5"/>
+<text x="1764" y="142.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Communication</text>
+<text x="1764" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Service / SMS</text>
+<text x="1764" y="170.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Gateway</text>
+<rect x="30" y="220" width="1840" height="30" rx="4" fill="#1E2A38"/>
+<text x="42" y="240" font-size="13" font-weight="bold" fill="#ffffff">Journey 1: Create Thread (internal user, authenticated with permission to create threads)</text>
+<rect x="30" y="1218" width="1840" height="30" rx="4" fill="#1E2A38"/>
+<text x="42" y="1238" font-size="13" font-weight="bold" fill="#ffffff">Journey 2: External User Document Upload (recipient provides documents)</text>
+<rect x="30" y="2196" width="1840" height="30" rx="4" fill="#1E2A38"/>
+<text x="42" y="2216" font-size="13" font-weight="bold" fill="#ffffff">Journey 3: External User Submission (crystallisation)</text>
+<rect x="54" y="558" width="1080" height="60" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M54 558 H104 V570 L96 578 H54 Z" fill="#1E2A38"/>
+<text x="61" y="573" font-size="11" font-weight="bold" fill="#ffffff">loop</text>
+<text x="112" y="574" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[for each uploaded file]</text>
+<rect x="54" y="734" width="606" height="126" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M54 734 H104 V746 L96 754 H54 Z" fill="#1E2A38"/>
+<text x="61" y="749" font-size="11" font-weight="bold" fill="#ffffff">loop</text>
+<text x="112" y="750" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[until user confirms thread]</text>
+<rect x="204" y="1658" width="1452" height="516" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M204 1658 H247 V1670 L239 1678 H204 Z" fill="#1E2A38"/>
+<text x="211" y="1673" font-size="11" font-weight="bold" fill="#ffffff">alt</text>
+<line x1="204" y1="1920" x2="1656" y2="1920" stroke="#1E2A38" stroke-dasharray="7 4"/>
+<text x="255" y="1674" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[AV / validation failure]</text>
+<text x="212" y="1936" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[AV / validation success]</text>
+<rect x="54" y="2474" width="1776" height="1254" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M54 2474 H97 V2486 L89 2494 H54 Z" fill="#1E2A38"/>
+<text x="61" y="2489" font-size="11" font-weight="bold" fill="#ffffff">par</text>
+<line x1="54" y1="3210" x2="1830" y2="3210" stroke="#1E2A38" stroke-dasharray="7 4"/>
+<text x="105" y="2490" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[NRS submission (non-blocking)]</text>
+<text x="62" y="3226" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[eDMS ingestion]</text>
+<rect x="852" y="3748" width="804" height="222" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M852 3748 H895 V3760 L887 3768 H852 Z" fill="#1E2A38"/>
+<text x="859" y="3763" font-size="11" font-weight="bold" fill="#ffffff">opt</text>
+<text x="903" y="3764" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[eDMS ingested AND NRS accepted]</text>
+<line x1="120" y1="284" x2="442" y2="284" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="177.8" y="267.0" width="208.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="181.8" y="278.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.2</text>
+<text x="215.0" y="278.5" font-size="11" fill="#1E2A38">Retrieve Contact Detail page</text>
+<line x1="444" y1="314" x2="122" y2="314" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="204.3" y="297.0" width="155.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="208.3" y="308.5" font-size="11" font-weight="bold" fill="#475569">J1.3</text>
+<text x="241.5" y="308.5" font-size="11" fill="#1E2A38">Contact Detail page</text>
+<line x1="120" y1="344" x2="442" y2="344" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="127.7" y="327.0" width="308.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="131.7" y="338.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.7</text>
+<text x="164.8" y="338.5" font-size="11" fill="#1E2A38">Save contact details: POST Thread Service API</text>
+<path d="M444 370 H472 V384 H446" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="478.0" y="371.0" width="178.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="482.0" y="382.5" font-size="11" font-weight="bold" fill="#334155">J1.8</text>
+<text x="515.2" y="382.5" font-size="11" fill="#1E2A38">Persist contact details</text>
+<line x1="444" y1="410" x2="1240" y2="410" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="685.7" y="393.0" width="314.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="689.7" y="404.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.9</text>
+<text x="722.9" y="404.5" font-size="11" fill="#1E2A38">Create thread request: POST Thread Service API</text>
+<path d="M1242 436 H1270 V450 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="437.0" width="344.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="448.5" font-size="11" font-weight="bold" fill="#334155">J1.10</text>
+<text x="1319.5" y="448.5" font-size="11" fill="#1E2A38">Generate thread reference (technical and business)</text>
+<path d="M1242 472 H1270 V486 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="473.0" width="261.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="484.5" font-size="11" font-weight="bold" fill="#334155">J1.11</text>
+<text x="1319.5" y="484.5" font-size="11" fill="#1E2A38">Update state: Pending thread created</text>
+<line x1="1242" y1="512" x2="446" y2="512" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="656.0" y="495.0" width="374.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="660.0" y="506.5" font-size="11" font-weight="bold" fill="#475569">J1.12</text>
+<text x="699.5" y="506.5" font-size="11" fill="#1E2A38">Thread created (reference held back until confirmation)</text>
+<line x1="444" y1="542" x2="122" y2="542" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="186.4" y="525.0" width="191.1" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="190.4" y="536.5" font-size="11" font-weight="bold" fill="#475569">J1.15</text>
+<text x="229.9" y="536.5" font-size="11" fill="#1E2A38">Send / Request File page</text>
+<line x1="120" y1="606" x2="1066" y2="606" stroke="#15803D" stroke-width="3.0" marker-end="url(#sq-file)"/>
+<rect x="430.8" y="589.0" width="326.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="434.8" y="600.5" font-size="11" font-weight="bold" fill="#15803D">J1.L</text>
+<text x="468.0" y="600.5" font-size="11" fill="#1E2A38">Upload file (separate File Upload sequence, TBC)</text>
+<line x1="120" y1="652" x2="442" y2="652" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="130.4" y="635.0" width="303.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="134.4" y="646.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.21</text>
+<text x="173.9" y="646.5" font-size="11" fill="#1E2A38">Save thread details: PUT Thread Service API</text>
+<path d="M444 678 H472 V692 H446" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="478.0" y="679.0" width="345.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="482.0" y="690.5" font-size="11" font-weight="bold" fill="#334155">J1.22-23</text>
+<text x="540.4" y="690.5" font-size="11" fill="#1E2A38">Cache thread details; check file count and size</text>
+<line x1="444" y1="718" x2="122" y2="718" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="204.2" y="701.0" width="155.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="208.2" y="712.5" font-size="11" font-weight="bold" fill="#475569">J1.24</text>
+<text x="247.7" y="712.5" font-size="11" fill="#1E2A38">Check Answers page</text>
+<line x1="120" y1="782" x2="442" y2="782" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="151.1" y="765.0" width="261.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="155.1" y="776.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.33</text>
+<text x="194.6" y="776.5" font-size="11" fill="#1E2A38">Change and save: PUT Interaction API</text>
+<path d="M444 808 H472 V822 H446" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="478.0" y="809.0" width="167.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="482.0" y="820.5" font-size="11" font-weight="bold" fill="#334155">J1.34</text>
+<text x="521.5" y="820.5" font-size="11" fill="#1E2A38">Cache thread details</text>
+<line x1="444" y1="848" x2="122" y2="848" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="133.3" y="831.0" width="297.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="137.3" y="842.5" font-size="11" font-weight="bold" fill="#475569">J1.35</text>
+<text x="176.8" y="842.5" font-size="11" fill="#1E2A38">Thread details saved; Check Answers screen</text>
+<line x1="120" y1="894" x2="442" y2="894" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="127.4" y="877.0" width="309.1" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="131.4" y="888.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.40</text>
+<text x="170.9" y="888.5" font-size="11" fill="#1E2A38">Confirm and Send: PUT Submission Service API</text>
+<line x1="444" y1="924" x2="1240" y2="924" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="697.3" y="907.0" width="291.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="701.3" y="918.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.41</text>
+<text x="740.8" y="918.5" font-size="11" fill="#1E2A38">Submit thread: PUT Submission Service API</text>
+<path d="M1242 950 H1270 V964 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="951.0" width="226.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="962.5" font-size="11" font-weight="bold" fill="#334155">J1.42</text>
+<text x="1319.5" y="962.5" font-size="11" fill="#1E2A38">Update thread (thread details)</text>
+<line x1="1242" y1="990" x2="446" y2="990" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="741.5" y="973.0" width="202.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="745.5" y="984.5" font-size="11" font-weight="bold" fill="#475569">J1.43</text>
+<text x="785.0" y="984.5" font-size="11" fill="#1E2A38">Thread submission response</text>
+<line x1="444" y1="1020" x2="122" y2="1020" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="136.3" y="1003.0" width="291.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="140.3" y="1014.5" font-size="11" font-weight="bold" fill="#475569">J1.44</text>
+<text x="179.8" y="1014.5" font-size="11" fill="#1E2A38">Thread submission response (confirmation)</text>
+<line x1="1242" y1="1050" x2="920" y2="1050" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="931.4" y="1033.0" width="297.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="935.4" y="1044.5" font-size="11" font-weight="bold" fill="#C2410C">J1.45</text>
+<text x="974.9" y="1044.5" font-size="11" fill="#1E2A38">request_file_transfer (eDMS, thread files)</text>
+<line x1="918" y1="1080" x2="1066" y2="1080" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="885.6" y="1063.0" width="214.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="889.6" y="1074.5" font-size="11" font-weight="bold" fill="#C2410C">J1.45</text>
+<text x="929.1" y="1074.5" font-size="11" fill="#1E2A38">request_file_transfer (eDMS)</text>
+<line x1="1068" y1="1110" x2="1588" y2="1110" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="1159.7" y="1093.0" width="338.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1163.7" y="1104.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.45</text>
+<text x="1203.2" y="1104.5" font-size="11" fill="#1E2A38">Upload thread documents: eDMS upload document API</text>
+<line x1="1590" y1="1140" x2="1070" y2="1140" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="1254.1" y="1123.0" width="149.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1258.1" y="1134.5" font-size="11" font-weight="bold" fill="#475569">J1.45</text>
+<text x="1297.6" y="1134.5" font-size="11" fill="#1E2A38">Success / failure</text>
+<line x1="1242" y1="1170" x2="920" y2="1170" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="978.8" y="1153.0" width="202.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="982.8" y="1164.5" font-size="11" font-weight="bold" fill="#C2410C">J1.N</text>
+<text x="1016.0" y="1164.5" font-size="11" fill="#1E2A38">thread_confirmed (proposed)</text>
+<line x1="918" y1="1200" x2="1762" y2="1200" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="1171.9" y="1183.0" width="338.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1175.9" y="1194.5" font-size="11" font-weight="bold" fill="#C2410C">J1.N</text>
+<text x="1209.1" y="1194.5" font-size="11" fill="#1E2A38">Notify recipient (search, email, outlook services)</text>
+<path d="M270 1278 H298 V1292 H272" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="304.0" y="1279.0" width="339.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="308.0" y="1290.5" font-size="11" font-weight="bold" fill="#334155">J2.1-2</text>
+<text x="353.8" y="1290.5" font-size="11" fill="#1E2A38">Select files; device returns names, types, sizes</text>
+<line x1="270" y1="1318" x2="592" y2="1318" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="298.3" y="1301.0" width="267.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="302.3" y="1312.5" font-size="11" font-weight="bold" fill="#2B4C7E">J2.3</text>
+<text x="335.5" y="1312.5" font-size="11" fill="#1E2A38">Request upload: POST /document_uploads</text>
+<path d="M594 1344 H622 V1358 H596" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="628.0" y="1345.0" width="237.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="632.0" y="1356.5" font-size="11" font-weight="bold" fill="#334155">J2.4</text>
+<text x="665.2" y="1356.5" font-size="11" fill="#1E2A38">Session state: Upload in progress</text>
+<line x1="594" y1="1384" x2="1066" y2="1384" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="626.5" y="1367.0" width="409.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="630.5" y="1378.5" font-size="11" font-weight="bold" fill="#2B4C7E">J2.5</text>
+<text x="663.7" y="1378.5" font-size="11" fill="#1E2A38">Request file upload: POST /file_uploads (metadata, thread ids)</text>
+<path d="M1068 1410 H1096 V1424 H1070" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1102.0" y="1411.0" width="361.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1106.0" y="1422.5" font-size="11" font-weight="bold" fill="#334155">J2.6</text>
+<text x="1139.2" y="1422.5" font-size="11" fill="#1E2A38">Upload strategy (single / multi-part); pre-signed URLs</text>
+<line x1="1068" y1="1450" x2="596" y2="1450" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="706.1" y="1433.0" width="249.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="710.1" y="1444.5" font-size="11" font-weight="bold" fill="#475569">J2.7</text>
+<text x="743.4" y="1444.5" font-size="11" fill="#1E2A38">File collection id, pre-signed URLs</text>
+<line x1="594" y1="1480" x2="916" y2="1480" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="660.6" y="1463.0" width="190.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="664.6" y="1474.5" font-size="11" font-weight="bold" fill="#C2410C">J2.8</text>
+<text x="697.9" y="1474.5" font-size="11" fill="#1E2A38">document_upload_requested</text>
+<line x1="918" y1="1510" x2="1240" y2="1510" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="984.6" y="1493.0" width="190.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="988.6" y="1504.5" font-size="11" font-weight="bold" fill="#C2410C">J2.8</text>
+<text x="1021.9" y="1504.5" font-size="11" fill="#1E2A38">document_upload_requested</text>
+<path d="M1242 1536 H1270 V1550 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="1537.0" width="326.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="1548.5" font-size="11" font-weight="bold" fill="#334155">J2.9</text>
+<text x="1313.2" y="1548.5" font-size="11" fill="#1E2A38">Update interaction; create SDEC Document records</text>
+<line x1="594" y1="1576" x2="272" y2="1576" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="363.0" y="1559.0" width="138.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="367.0" y="1570.5" font-size="11" font-weight="bold" fill="#475569">J2.10</text>
+<text x="406.5" y="1570.5" font-size="11" fill="#1E2A38">Pre-signed URLs</text>
+<line x1="270" y1="1606" x2="1066" y2="1606" stroke="#15803D" stroke-width="3.0" marker-end="url(#sq-file)"/>
+<rect x="476.1" y="1589.0" width="385.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="480.1" y="1600.5" font-size="11" font-weight="bold" fill="#15803D">J2.11</text>
+<text x="519.6" y="1600.5" font-size="11" fill="#1E2A38">Upload documents via pre-signed URLs (landing bucket, S3)</text>
+<path d="M1068 1632 H1096 V1646 H1070" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1102.0" y="1633.0" width="256.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1106.0" y="1644.5" font-size="11" font-weight="bold" fill="#334155">J2.12</text>
+<text x="1145.5" y="1644.5" font-size="11" fill="#1E2A38">AV scan and validation (AV Service)</text>
+<path d="M1068 1702 H1096 V1716 H1070" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1102.0" y="1703.0" width="226.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1106.0" y="1714.5" font-size="11" font-weight="bold" fill="#334155">J2.13</text>
+<text x="1145.5" y="1714.5" font-size="11" fill="#1E2A38">Move to quarantine bucket (S3)</text>
+<line x1="1068" y1="1742" x2="920" y2="1742" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="832.5" y="1725.0" width="320.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="836.5" y="1736.5" font-size="11" font-weight="bold" fill="#C2410C">J2.14</text>
+<text x="876.0" y="1736.5" font-size="11" fill="#1E2A38">file_upload_failed (references, error details)</text>
+<line x1="918" y1="1772" x2="596" y2="1772" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="678.1" y="1755.0" width="155.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="682.1" y="1766.5" font-size="11" font-weight="bold" fill="#C2410C">J2.14</text>
+<text x="721.6" y="1766.5" font-size="11" fill="#1E2A38">file_upload_failed</text>
+<line x1="918" y1="1802" x2="1240" y2="1802" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="1002.1" y="1785.0" width="155.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1006.1" y="1796.5" font-size="11" font-weight="bold" fill="#C2410C">J2.14</text>
+<text x="1045.7" y="1796.5" font-size="11" fill="#1E2A38">file_upload_failed</text>
+<path d="M594 1828 H622 V1842 H596" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="628.0" y="1829.0" width="267.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="632.0" y="1840.5" font-size="11" font-weight="bold" fill="#334155">J2.15</text>
+<text x="671.5" y="1840.5" font-size="11" fill="#1E2A38">Session state: Document upload failed</text>
+<line x1="594" y1="1868" x2="272" y2="1868" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<rect x="321.7" y="1851.0" width="220.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="325.7" y="1862.5" font-size="11" font-weight="bold" fill="#8A2D5B">J2.16</text>
+<text x="365.2" y="1862.5" font-size="11" fill="#1E2A38">Upload failed (error details)</text>
+<path d="M1242 1894 H1270 V1908 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="1895.0" width="220.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="1906.5" font-size="11" font-weight="bold" fill="#334155">J2.17</text>
+<text x="1319.5" y="1906.5" font-size="11" fill="#1E2A38">State: Document upload failed</text>
+<path d="M1068 1960 H1096 V1974 H1070" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1102.0" y="1961.0" width="244.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1106.0" y="1972.5" font-size="11" font-weight="bold" fill="#334155">J2.18</text>
+<text x="1145.5" y="1972.5" font-size="11" fill="#1E2A38">Move to clean staging bucket (S3)</text>
+<line x1="1068" y1="2000" x2="920" y2="2000" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="841.4" y="1983.0" width="303.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="845.4" y="1994.5" font-size="11" font-weight="bold" fill="#C2410C">J2.19</text>
+<text x="884.9" y="1994.5" font-size="11" fill="#1E2A38">file_upload_succeeded (document references)</text>
+<line x1="918" y1="2030" x2="596" y2="2030" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="669.3" y="2013.0" width="173.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="673.3" y="2024.5" font-size="11" font-weight="bold" fill="#C2410C">J2.19</text>
+<text x="712.8" y="2024.5" font-size="11" fill="#1E2A38">file_upload_succeeded</text>
+<line x1="918" y1="2060" x2="1240" y2="2060" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="993.3" y="2043.0" width="173.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="997.3" y="2054.5" font-size="11" font-weight="bold" fill="#C2410C">J2.19</text>
+<text x="1036.8" y="2054.5" font-size="11" fill="#1E2A38">file_upload_succeeded</text>
+<path d="M594 2086 H622 V2100 H596" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="628.0" y="2087.0" width="285.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="632.0" y="2098.5" font-size="11" font-weight="bold" fill="#334155">J2.20</text>
+<text x="671.5" y="2098.5" font-size="11" fill="#1E2A38">Session state: Document upload succeeded</text>
+<line x1="594" y1="2126" x2="272" y2="2126" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<rect x="360.1" y="2109.0" width="143.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="364.1" y="2120.5" font-size="11" font-weight="bold" fill="#8A2D5B">J2.21</text>
+<text x="403.6" y="2120.5" font-size="11" fill="#1E2A38">Upload succeeded</text>
+<path d="M1242 2152 H1270 V2166 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="2153.0" width="238.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="2164.5" font-size="11" font-weight="bold" fill="#334155">J2.22</text>
+<text x="1319.5" y="2164.5" font-size="11" fill="#1E2A38">State: Document upload succeeded</text>
+<path d="M270 2256 H298 V2270 H272" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="304.0" y="2257.0" width="285.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="308.0" y="2268.5" font-size="11" font-weight="bold" fill="#334155">J3.1-2</text>
+<text x="353.8" y="2268.5" font-size="11" fill="#1E2A38">Submit; hash form content (SHA-256 TBC)</text>
+<line x1="270" y1="2296" x2="592" y2="2296" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="239.3" y="2279.0" width="385.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="243.3" y="2290.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.3</text>
+<text x="276.5" y="2290.5" font-size="11" fill="#1E2A38">Submit interaction response: POST /interaction/submissions</text>
+<path d="M594 2322 H622 V2336 H596" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="628.0" y="2323.0" width="280.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="632.0" y="2334.5" font-size="11" font-weight="bold" fill="#334155">J3.4-5</text>
+<text x="677.8" y="2334.5" font-size="11" fill="#1E2A38">Validate hash; sign hash if not signed</text>
+<line x1="594" y1="2362" x2="1240" y2="2362" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="743.0" y="2345.0" width="350.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="747.0" y="2356.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.6</text>
+<text x="780.2" y="2356.5" font-size="11" fill="#1E2A38">POST /interaction/submissions (content, signed hash)</text>
+<path d="M1242 2388 H1270 V2402 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="2389.0" width="202.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="2400.5" font-size="11" font-weight="bold" fill="#334155">J3.7</text>
+<text x="1313.2" y="2400.5" font-size="11" fill="#1E2A38">State: Submission requested</text>
+<line x1="1242" y1="2428" x2="596" y2="2428" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="796.1" y="2411.0" width="243.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="800.1" y="2422.5" font-size="11" font-weight="bold" fill="#475569">J3.8</text>
+<text x="833.3" y="2422.5" font-size="11" fill="#1E2A38">Submission confirmation (ack only)</text>
+<line x1="594" y1="2458" x2="272" y2="2458" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="300.6" y="2441.0" width="262.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="304.6" y="2452.5" font-size="11" font-weight="bold" fill="#475569">J3.9-10</text>
+<text x="356.8" y="2452.5" font-size="11" fill="#1E2A38">Submission confirmation (ack only)</text>
+<line x1="1242" y1="2522" x2="770" y2="2522" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="865.2" y="2505.0" width="279.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="869.2" y="2516.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.11</text>
+<text x="908.7" y="2516.5" font-size="11" fill="#1E2A38">NRS submission request (Submission API)</text>
+<line x1="768" y1="2552" x2="1414" y2="2552" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="922.7" y="2535.0" width="338.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="926.7" y="2546.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.11</text>
+<text x="966.2" y="2546.5" font-size="11" fill="#1E2A38">NRS submission request (signed payload, doc refs)</text>
+<path d="M1416 2578 H1444 V2592 H1418" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1450.0" y="2579.0" width="273.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1454.0" y="2590.5" font-size="11" font-weight="bold" fill="#334155">J3.12</text>
+<text x="1493.5" y="2590.5" font-size="11" fill="#1E2A38">Store payload and metadata (transient)</text>
+<line x1="1416" y1="2618" x2="770" y2="2618" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="1017.1" y="2601.0" width="149.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1021.1" y="2612.5" font-size="11" font-weight="bold" fill="#475569">J3.13</text>
+<text x="1060.6" y="2612.5" font-size="11" fill="#1E2A38">NRS submission id</text>
+<line x1="768" y1="2648" x2="1240" y2="2648" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="930.1" y="2631.0" width="149.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="934.1" y="2642.5" font-size="11" font-weight="bold" fill="#475569">J3.13</text>
+<text x="973.6" y="2642.5" font-size="11" fill="#1E2A38">NRS submission id</text>
+<path d="M1242 2674 H1270 V2688 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="2675.0" width="185.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="2686.5" font-size="11" font-weight="bold" fill="#334155">J3.14</text>
+<text x="1319.5" y="2686.5" font-size="11" fill="#1E2A38">Store NRS submission id</text>
+<line x1="1242" y1="2714" x2="770" y2="2714" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="865.2" y="2697.0" width="279.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="869.2" y="2708.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.15</text>
+<text x="908.7" y="2708.5" font-size="11" fill="#1E2A38">NRS attachment request (Attachment API)</text>
+<line x1="768" y1="2744" x2="1414" y2="2744" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="913.9" y="2727.0" width="356.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="917.9" y="2738.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.15</text>
+<text x="957.4" y="2738.5" font-size="11" fill="#1E2A38">NRS attachment request (submission id, doc metadata)</text>
+<path d="M1416 2770 H1444 V2784 H1418" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1450.0" y="2771.0" width="232.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1454.0" y="2782.5" font-size="11" font-weight="bold" fill="#334155">J3.16</text>
+<text x="1493.5" y="2782.5" font-size="11" fill="#1E2A38">Generate pre-signed upload URLs</text>
+<line x1="1416" y1="2810" x2="770" y2="2810" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="1023.0" y="2793.0" width="138.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1027.0" y="2804.5" font-size="11" font-weight="bold" fill="#475569">J3.17</text>
+<text x="1066.5" y="2804.5" font-size="11" fill="#1E2A38">Pre-signed URLs</text>
+<line x1="768" y1="2840" x2="1240" y2="2840" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="936.0" y="2823.0" width="138.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="940.0" y="2834.5" font-size="11" font-weight="bold" fill="#475569">J3.17</text>
+<text x="979.5" y="2834.5" font-size="11" fill="#1E2A38">Pre-signed URLs</text>
+<line x1="1242" y1="2870" x2="920" y2="2870" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="875.3" y="2853.0" width="409.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="879.3" y="2864.5" font-size="11" font-weight="bold" fill="#C2410C">J3.18</text>
+<text x="918.8" y="2864.5" font-size="11" fill="#1E2A38">request_file_transfer (NRS, pre-signed URLs, file collection)</text>
+<line x1="918" y1="2900" x2="1066" y2="2900" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="888.6" y="2883.0" width="208.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="892.6" y="2894.5" font-size="11" font-weight="bold" fill="#C2410C">J3.18</text>
+<text x="932.1" y="2894.5" font-size="11" fill="#1E2A38">request_file_transfer (NRS)</text>
+<line x1="1068" y1="2930" x2="1414" y2="2930" stroke="#15803D" stroke-width="3.0" marker-end="url(#sq-file)"/>
+<rect x="1105.2" y="2913.0" width="273.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1109.2" y="2924.5" font-size="11" font-weight="bold" fill="#15803D">J3.19</text>
+<text x="1148.7" y="2924.5" font-size="11" fill="#1E2A38">Upload documents (NRS pre-signed URLs)</text>
+<path d="M1416 2956 H1444 V2970 H1418" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1450.0" y="2957.0" width="297.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1454.0" y="2968.5" font-size="11" font-weight="bold" fill="#334155">J3.20</text>
+<text x="1493.5" y="2968.5" font-size="11" fill="#1E2A38">Store attachments (transient) and validate</text>
+<line x1="1068" y1="2996" x2="920" y2="2996" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="882.7" y="2979.0" width="220.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="886.7" y="2990.5" font-size="11" font-weight="bold" fill="#C2410C">J3.21</text>
+<text x="926.2" y="2990.5" font-size="11" fill="#1E2A38">file_transfer_succeeded (NRS)</text>
+<line x1="918" y1="3026" x2="1240" y2="3026" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="969.7" y="3009.0" width="220.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="973.7" y="3020.5" font-size="11" font-weight="bold" fill="#C2410C">J3.21</text>
+<text x="1013.2" y="3020.5" font-size="11" fill="#1E2A38">file_transfer_succeeded (NRS)</text>
+<path d="M1242 3052 H1270 V3066 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="3053.0" width="256.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="3064.5" font-size="11" font-weight="bold" fill="#334155">J3.22</text>
+<text x="1319.5" y="3064.5" font-size="11" fill="#1E2A38">State: documents transferred to NRS</text>
+<line x1="1416" y1="3092" x2="920" y2="3092" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="1080.1" y="3075.0" width="173.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1084.1" y="3086.5" font-size="11" font-weight="bold" fill="#C2410C">J3.A.1</text>
+<text x="1129.9" y="3086.5" font-size="11" fill="#1E2A38">attachments_accepted</text>
+<line x1="918" y1="3122" x2="1240" y2="3122" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="993.1" y="3105.0" width="173.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="997.1" y="3116.5" font-size="11" font-weight="bold" fill="#C2410C">J3.A.1</text>
+<text x="1042.9" y="3116.5" font-size="11" fill="#1E2A38">attachments_accepted</text>
+<path d="M1242 3148 H1270 V3162 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="3149.0" width="226.9" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="3160.5" font-size="11" font-weight="bold" fill="#334155">J3.A.2</text>
+<text x="1325.8" y="3160.5" font-size="11" fill="#1E2A38">State: NRS documents accepted</text>
+<path d="M1416 3184 H1444 V3198 H1418" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1450.0" y="3185.0" width="263.1" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1454.0" y="3196.5" font-size="11" font-weight="bold" fill="#334155">J3.23-24</text>
+<text x="1512.4" y="3196.5" font-size="11" fill="#1E2A38">Sign; store in evidential storage</text>
+<line x1="1242" y1="3254" x2="920" y2="3254" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="922.5" y="3237.0" width="315.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="926.5" y="3248.5" font-size="11" font-weight="bold" fill="#C2410C">J3.25</text>
+<text x="966.0" y="3248.5" font-size="11" fill="#1E2A38">request_file_transfer (eDMS, file collection)</text>
+<line x1="918" y1="3284" x2="1066" y2="3284" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="885.6" y="3267.0" width="214.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="889.6" y="3278.5" font-size="11" font-weight="bold" fill="#C2410C">J3.25</text>
+<text x="929.1" y="3278.5" font-size="11" fill="#1E2A38">request_file_transfer (eDMS)</text>
+<line x1="1068" y1="3314" x2="1588" y2="3314" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="1186.2" y="3297.0" width="285.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1190.2" y="3308.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.26</text>
+<text x="1229.8" y="3308.5" font-size="11" fill="#1E2A38">Send documents: eDMS upload document API</text>
+<path d="M1590 3340 H1618 V3354 H1592" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1624.0" y="3341.0" width="155.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1628.0" y="3352.5" font-size="11" font-weight="bold" fill="#334155">J3.27</text>
+<text x="1667.5" y="3352.5" font-size="11" fill="#1E2A38">Validate and store</text>
+<line x1="1590" y1="3380" x2="1070" y2="3380" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<rect x="1254.1" y="3363.0" width="149.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1258.1" y="3374.5" font-size="11" font-weight="bold" fill="#475569">J3.28</text>
+<text x="1297.6" y="3374.5" font-size="11" fill="#1E2A38">Success / failure</text>
+<line x1="1068" y1="3410" x2="920" y2="3410" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="838.5" y="3393.0" width="309.1" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="842.5" y="3404.5" font-size="11" font-weight="bold" fill="#C2410C">J3.29</text>
+<text x="882.0" y="3404.5" font-size="11" fill="#1E2A38">file_transfer_succeeded (eDMS document refs)</text>
+<line x1="918" y1="3440" x2="1240" y2="3440" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="966.8" y="3423.0" width="226.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="970.8" y="3434.5" font-size="11" font-weight="bold" fill="#C2410C">J3.29</text>
+<text x="1010.2" y="3434.5" font-size="11" fill="#1E2A38">file_transfer_succeeded (eDMS)</text>
+<path d="M1242 3466 H1270 V3480 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="3467.0" width="344.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="3478.5" font-size="11" font-weight="bold" fill="#334155">J3.30</text>
+<text x="1319.5" y="3478.5" font-size="11" fill="#1E2A38">State: Submission completed (not dependent on NRS)</text>
+<line x1="1242" y1="3506" x2="920" y2="3506" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="986.8" y="3489.0" width="186.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="990.8" y="3500.5" font-size="11" font-weight="bold" fill="#C2410C">J3.31-32</text>
+<text x="1049.2" y="3500.5" font-size="11" fill="#1E2A38">submission_completed</text>
+<line x1="918" y1="3536" x2="596" y2="3536" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="672.2" y="3519.0" width="167.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="676.2" y="3530.5" font-size="11" font-weight="bold" fill="#C2410C">J3.31</text>
+<text x="715.8" y="3530.5" font-size="11" fill="#1E2A38">submission_completed</text>
+<line x1="918" y1="3566" x2="446" y2="3566" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="597.2" y="3549.0" width="167.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="601.2" y="3560.5" font-size="11" font-weight="bold" fill="#C2410C">J3.32</text>
+<text x="640.8" y="3560.5" font-size="11" fill="#1E2A38">submission_completed</text>
+<line x1="1242" y1="3596" x2="1762" y2="3596" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<rect x="1383.8" y="3579.0" width="238.3" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1387.8" y="3590.5" font-size="11" font-weight="bold" fill="#2B4C7E">J3.33</text>
+<text x="1427.3" y="3590.5" font-size="11" fill="#1E2A38">Send notification (endpoint TBC)</text>
+<line x1="594" y1="3626" x2="272" y2="3626" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<rect x="338.8" y="3609.0" width="186.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="342.8" y="3620.5" font-size="11" font-weight="bold" fill="#8A2D5B">J3.34-35</text>
+<text x="401.2" y="3620.5" font-size="11" fill="#1E2A38">Submission completed</text>
+<line x1="444" y1="3656" x2="122" y2="3656" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<rect x="145.1" y="3639.0" width="273.7" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="149.1" y="3650.5" font-size="11" font-weight="bold" fill="#8A2D5B">J3.36</text>
+<text x="188.6" y="3650.5" font-size="11" fill="#1E2A38">External user has submitted a response</text>
+<line x1="1764" y1="3686" x2="272" y2="3686" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<rect x="874.2" y="3669.0" width="285.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="878.2" y="3680.5" font-size="11" font-weight="bold" fill="#8A2D5B">J3.37</text>
+<text x="917.8" y="3680.5" font-size="11" fill="#1E2A38">Email and / or SMS: submission completed</text>
+<line x1="1764" y1="3716" x2="122" y2="3716" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<rect x="817.0" y="3699.0" width="250.1" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="821.0" y="3710.5" font-size="11" font-weight="bold" fill="#8A2D5B">J3.38</text>
+<text x="860.5" y="3710.5" font-size="11" fill="#1E2A38">Email: external user has responded</text>
+<line x1="1242" y1="3796" x2="920" y2="3796" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="937.2" y="3779.0" width="285.5" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="941.2" y="3790.5" font-size="11" font-weight="bold" fill="#C2410C">J3.39</text>
+<text x="980.8" y="3790.5" font-size="11" fill="#1E2A38">delete_staged_files (file collection id)</text>
+<line x1="918" y1="3826" x2="1066" y2="3826" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<rect x="912.2" y="3809.0" width="161.6" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="916.2" y="3820.5" font-size="11" font-weight="bold" fill="#C2410C">J3.39</text>
+<text x="955.7" y="3820.5" font-size="11" fill="#1E2A38">delete_staged_files</text>
+<path d="M1068 3852 H1096 V3866 H1070" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1102.0" y="3853.0" width="256.0" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1106.0" y="3864.5" font-size="11" font-weight="bold" fill="#334155">J3.40</text>
+<text x="1145.5" y="3864.5" font-size="11" fill="#1E2A38">Delete staged files (clean staging)</text>
+<line x1="1068" y1="3892" x2="920" y2="3892" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="900.4" y="3875.0" width="185.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="904.4" y="3886.5" font-size="11" font-weight="bold" fill="#C2410C">J3.41</text>
+<text x="943.9" y="3886.5" font-size="11" fill="#1E2A38">file_deletion_succeeded</text>
+<line x1="918" y1="3922" x2="1240" y2="3922" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<rect x="987.4" y="3905.0" width="185.2" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="991.4" y="3916.5" font-size="11" font-weight="bold" fill="#C2410C">J3.41</text>
+<text x="1030.9" y="3916.5" font-size="11" fill="#1E2A38">file_deletion_succeeded</text>
+<path d="M1242 3948 H1270 V3962 H1244" fill="none" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<rect x="1276.0" y="3949.0" width="208.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
+<text x="1280.0" y="3960.5" font-size="11" font-weight="bold" fill="#334155">J3.42</text>
+<text x="1319.5" y="3960.5" font-size="11" fill="#1E2A38">State: staged files deleted</text>
+<rect x="1882" y="396" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="410" x2="1882" y2="415.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="413" font-size="11" fill="#5B1A14">OI-19: route MDTP to HCP calls via HIP API</text>
+<text x="1890" y="427" font-size="11" fill="#5B1A14">Management, or direct?</text>
+<rect x="1882" y="592" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="606" x2="1882" y2="611.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="609" font-size="11" fill="#5B1A14">OI-04 / MFT-14: confirm Create Thread upload</text>
+<text x="1890" y="623" font-size="11" fill="#5B1A14">reuses the Journey 2 pattern</text>
+<rect x="1882" y="936" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="950" x2="1882" y2="948.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="953" font-size="11" fill="#5B1A14">OI-08: thread state after step 42 to be defined</text>
+<rect x="1882" y="1186" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="1200" x2="1882" y2="1205.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="1203" font-size="11" fill="#5B1A14">OI-09: confirmation screen to be removed; event</text>
+<text x="1890" y="1217" font-size="11" fill="#5B1A14">replaces it</text>
+<rect x="1882" y="1370" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="1384" x2="1882" y2="1389.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="1387" font-size="11" fill="#5B1A14">OI-22: microservice TBC; confirm HIP owns the</text>
+<text x="1890" y="1401" font-size="11" fill="#5B1A14">File Transfer API</text>
+<rect x="1882" y="1496" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="1510" x2="1882" y2="1515.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="1513" font-size="11" fill="#5B1A14">OI-20: HIP Event Management or SDEC internal</text>
+<text x="1890" y="1527" font-size="11" fill="#5B1A14">channel?</text>
+<rect x="1882" y="1618" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="1632" x2="1882" y2="1637.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="1635" font-size="11" fill="#5B1A14">OI-21: file size vs AV scan ceiling (G-15,</text>
+<text x="1890" y="1649" font-size="11" fill="#5B1A14">about 250 MB)</text>
+<rect x="1882" y="1788" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="1802" x2="1882" y2="1807.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="1805" font-size="11" fill="#5B1A14">OI-10: internal user or support notification</text>
+<text x="1890" y="1819" font-size="11" fill="#5B1A14">here?</text>
+<rect x="1882" y="2242" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="2256" x2="1882" y2="2254.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="2259" font-size="11" fill="#5B1A14">OI-14: hash algorithm and where signing happens</text>
+<rect x="1882" y="2538" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="2552" x2="1882" y2="2557.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="2555" font-size="11" fill="#5B1A14">OI-12 / OI-13: no NRS dependency on eDMS; end-</text>
+<text x="1890" y="2569" font-size="11" fill="#5B1A14">to-end document ids or submission id?</text>
+<rect x="1882" y="2730" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="2744" x2="1882" y2="2749.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="2747" font-size="11" fill="#5B1A14">OI-15: who requests NRS pre-signed URLs (TM,</text>
+<text x="1890" y="2761" font-size="11" fill="#5B1A14">FTM or Submission API)?</text>
+<rect x="1882" y="3012" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="3026" x2="1882" y2="3031.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="3029" font-size="11" fill="#5B1A14">OI-18: failure events and retries not yet</text>
+<text x="1890" y="3043" font-size="11" fill="#5B1A14">defined</text>
+<rect x="1882" y="3108" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="3122" x2="1882" y2="3127.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="3125" font-size="11" fill="#5B1A14">OI-16: async event (SDEC preference) or polling</text>
+<text x="1890" y="3139" font-size="11" fill="#5B1A14">(NRS suggestion)</text>
+<rect x="1882" y="3582" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="3596" x2="1882" y2="3601.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="3599" font-size="11" fill="#5B1A14">OI-17: response status handling in</text>
+<text x="1890" y="3613" font-size="11" fill="#5B1A14">communication design</text>
+<rect x="1882" y="3812" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1872" y1="3826" x2="1882" y2="3824.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1890" y="3829" font-size="11" fill="#5B1A14">OI-23: staged files if a leg never completes</text>
+<rect x="30" y="4046" width="2152" height="100" rx="8" fill="#ffffff" stroke="#CBD5E1"/>
+<text x="46" y="4072" font-size="14" font-weight="bold" fill="#1E2A38">Legend</text>
+<line x1="46" y1="4096" x2="96" y2="4096" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
+<text x="106" y="4100" font-size="12" fill="#1E2A38">Synchronous request</text>
+<line x1="486" y1="4096" x2="536" y2="4096" stroke="#475569" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#sq-resp)"/>
+<text x="546" y="4100" font-size="12" fill="#1E2A38">Response</text>
+<line x1="926" y1="4096" x2="976" y2="4096" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-event)"/>
+<text x="986" y="4100" font-size="12" fill="#1E2A38">Event (via Event Management)</text>
+<line x1="1366" y1="4096" x2="1416" y2="4096" stroke="#C2410C" stroke-width="1.4" stroke-dasharray="2 3" marker-end="url(#sq-cmd)"/>
+<text x="1426" y="4100" font-size="12" fill="#1E2A38">Async command (request queue)</text>
+<line x1="46" y1="4126" x2="96" y2="4126" stroke="#15803D" stroke-width="3.0" marker-end="url(#sq-file)"/>
+<text x="106" y="4130" font-size="12" fill="#1E2A38">File transfer (pre-signed URL / S3)</text>
+<line x1="486" y1="4126" x2="536" y2="4126" stroke="#8A2D5B" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#sq-notify)"/>
+<text x="546" y="4130" font-size="12" fill="#1E2A38">User notification (push, email, SMS)</text>
+<line x1="926" y1="4126" x2="976" y2="4126" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
+<text x="986" y="4130" font-size="12" fill="#1E2A38">Internal processing</text>
+<rect x="1366" y="4118" width="26" height="14" rx="3" fill="#F6D5D0" stroke="#C0504D"/><text x="1400" y="4130" font-size="12" fill="#1E2A38">Open item (see workbook Open Items sheet)</text>
+</svg>
