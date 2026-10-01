@@ -10,7 +10,7 @@
 </defs>
 <rect x="0" y="0" width="2602" height="1440" fill="#ffffff"/>
 <text x="30" y="46" font-size="24" font-weight="bold" fill="#1E2A38">SDEC consolidated integration journeys</text>
-<text x="30" y="72" font-size="13" fill="#475569">v0.2 (draft), 1 October 2026. Create Thread, External User Document Upload and External User Submission, with NRS and eDMS legs. Step numbers match the source sequence diagrams; requirement detail is in the workbook.</text>
+<text x="30" y="72" font-size="13" fill="#475569">v0.1 (draft), 30 September 2026. Create Thread, External User Document Upload and External User Submission, with NRS and eDMS legs. Step numbers match the source sequence diagrams; requirement detail is in the workbook.</text>
 <rect x="30" y="100" width="2508" height="148" rx="10" fill="#F6F8FA" stroke="#CBD5E1"/>
 <line x1="220" y1="112" x2="220" y2="236" stroke="#CBD5E1"/>
 <text x="46" y="146" font-size="12" fill="#475569">Journey 1</text>
