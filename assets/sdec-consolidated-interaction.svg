@@ -1,5 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2212 4176" width="2212" height="4176" font-family="Arial, Helvetica, sans-serif" role="img" aria-labelledby="sq-t">
-<title id="sq-t">SDEC consolidated interaction diagram</title><defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2210 4176" width="2210" height="4176" font-family="Arial, Helvetica, sans-serif" role="img" aria-label="SDEC consolidated interaction diagram"><defs>
 <marker id="sq-sync" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2B4C7E"/></marker>
 <marker id="sq-resp" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#475569" stroke-width="1.4"/></marker>
 <marker id="sq-event" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C2410C"/></marker>
@@ -8,7 +7,7 @@
 <marker id="sq-notify" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#8A2D5B" stroke-width="1.4"/></marker>
 <marker id="sq-self" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker>
 </defs>
-<rect width="2212" height="4176" fill="#ffffff"/>
+<rect width="2210" height="4176" fill="#ffffff"/>
 <text x="30" y="44" font-size="24" font-weight="bold" fill="#1E2A38">SDEC consolidated interaction diagram</text>
 <text x="30" y="70" font-size="13" fill="#475569">v0.1 (draft), 30 September 2026. Journeys 1 to 3 on one sequence, showing HIP API Management, Event Management and File Transfer Manager in every integration. Numbering follows the source designs (J journey . step).</text>
 <rect x="50" y="92" width="290" height="3914" rx="8" fill="#F7EDD4" fill-opacity="0.55" stroke="#7A5A12" stroke-opacity="0.6"/>
@@ -65,36 +64,36 @@
 <text x="1764" y="142.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Communication</text>
 <text x="1764" y="156.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Service / SMS</text>
 <text x="1764" y="170.0" font-size="11" font-weight="bold" text-anchor="middle" fill="#1E2A38">Gateway</text>
-<rect x="30" y="220" width="1840" height="30" rx="4" fill="#1E2A38"/>
+<rect x="30" y="220" width="1826.0" height="30" rx="4" fill="#1E2A38"/>
 <text x="42" y="240" font-size="13" font-weight="bold" fill="#ffffff">Journey 1: Create Thread (internal user, authenticated with permission to create threads)</text>
-<rect x="30" y="1218" width="1840" height="30" rx="4" fill="#1E2A38"/>
+<rect x="30" y="1218" width="1826.0" height="30" rx="4" fill="#1E2A38"/>
 <text x="42" y="1238" font-size="13" font-weight="bold" fill="#ffffff">Journey 2: External User Document Upload (recipient provides documents)</text>
-<rect x="30" y="2196" width="1840" height="30" rx="4" fill="#1E2A38"/>
+<rect x="30" y="2196" width="1826.0" height="30" rx="4" fill="#1E2A38"/>
 <text x="42" y="2216" font-size="13" font-weight="bold" fill="#ffffff">Journey 3: External User Submission (crystallisation)</text>
-<rect x="54" y="558" width="1080" height="60" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
-<path d="M54 558 H104 V570 L96 578 H54 Z" fill="#1E2A38"/>
-<text x="61" y="573" font-size="11" font-weight="bold" fill="#ffffff">loop</text>
-<text x="112" y="574" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[for each uploaded file]</text>
-<rect x="54" y="734" width="606" height="126" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
-<path d="M54 734 H104 V746 L96 754 H54 Z" fill="#1E2A38"/>
-<text x="61" y="749" font-size="11" font-weight="bold" fill="#ffffff">loop</text>
-<text x="112" y="750" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[until user confirms thread]</text>
-<rect x="204" y="1658" width="1452" height="516" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
-<path d="M204 1658 H247 V1670 L239 1678 H204 Z" fill="#1E2A38"/>
-<text x="211" y="1673" font-size="11" font-weight="bold" fill="#ffffff">alt</text>
-<line x1="204" y1="1920" x2="1656" y2="1920" stroke="#1E2A38" stroke-dasharray="7 4"/>
-<text x="255" y="1674" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[AV / validation failure]</text>
-<text x="212" y="1936" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[AV / validation success]</text>
-<rect x="54" y="2474" width="1776" height="1254" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
-<path d="M54 2474 H97 V2486 L89 2494 H54 Z" fill="#1E2A38"/>
-<text x="61" y="2489" font-size="11" font-weight="bold" fill="#ffffff">par</text>
-<line x1="54" y1="3210" x2="1830" y2="3210" stroke="#1E2A38" stroke-dasharray="7 4"/>
-<text x="105" y="2490" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[NRS submission (non-blocking)]</text>
-<text x="62" y="3226" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[eDMS ingestion]</text>
-<rect x="852" y="3748" width="804" height="222" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
-<path d="M852 3748 H895 V3760 L887 3768 H852 Z" fill="#1E2A38"/>
-<text x="859" y="3763" font-size="11" font-weight="bold" fill="#ffffff">opt</text>
-<text x="903" y="3764" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[eDMS ingested AND NRS accepted]</text>
+<rect x="54.0" y="558" width="1080.0" height="60" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M54.0 558 H104.0 V570 L96.0 578 H54.0 Z" fill="#1E2A38"/>
+<text x="61.0" y="573" font-size="11" font-weight="bold" fill="#ffffff">loop</text>
+<text x="112.0" y="574" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[for each uploaded file]</text>
+<rect x="54.0" y="734" width="606.0" height="126" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M54.0 734 H104.0 V746 L96.0 754 H54.0 Z" fill="#1E2A38"/>
+<text x="61.0" y="749" font-size="11" font-weight="bold" fill="#ffffff">loop</text>
+<text x="112.0" y="750" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[until user confirms thread]</text>
+<rect x="204.0" y="1658" width="1452.0" height="516" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M204.0 1658 H247.0 V1670 L239.0 1678 H204.0 Z" fill="#1E2A38"/>
+<text x="211.0" y="1673" font-size="11" font-weight="bold" fill="#ffffff">alt</text>
+<line x1="204.0" y1="1920" x2="1656.0" y2="1920" stroke="#1E2A38" stroke-dasharray="7 4"/>
+<text x="255.0" y="1674" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[AV / validation failure]</text>
+<text x="212.0" y="1936" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[AV / validation success]</text>
+<rect x="54.0" y="2474" width="1776.0" height="1254" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M54.0 2474 H97.0 V2486 L89.0 2494 H54.0 Z" fill="#1E2A38"/>
+<text x="61.0" y="2489" font-size="11" font-weight="bold" fill="#ffffff">par</text>
+<line x1="54.0" y1="3210" x2="1830.0" y2="3210" stroke="#1E2A38" stroke-dasharray="7 4"/>
+<text x="105.0" y="2490" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[NRS submission (non-blocking)]</text>
+<text x="62.0" y="3226" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[eDMS ingestion]</text>
+<rect x="852.0" y="3748" width="804.0" height="222" fill="none" stroke="#1E2A38" stroke-width="1.2"/>
+<path d="M852.0 3748 H895.0 V3760 L887.0 3768 H852.0 Z" fill="#1E2A38"/>
+<text x="859.0" y="3763" font-size="11" font-weight="bold" fill="#ffffff">opt</text>
+<text x="903.0" y="3764" font-size="11.5" font-style="italic" font-weight="bold" fill="#1E2A38">[eDMS ingested AND NRS accepted]</text>
 <line x1="120" y1="284" x2="442" y2="284" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
 <rect x="177.8" y="267.0" width="208.4" height="15" fill="#ffffff" fill-opacity="0.9"/>
 <text x="181.8" y="278.5" font-size="11" font-weight="bold" fill="#2B4C7E">J1.2</text>
@@ -511,64 +510,64 @@
 <rect x="1276.0" y="3949.0" width="208.8" height="15" fill="#ffffff" fill-opacity="0.9"/>
 <text x="1280.0" y="3960.5" font-size="11" font-weight="bold" fill="#334155">J3.42</text>
 <text x="1319.5" y="3960.5" font-size="11" fill="#1E2A38">State: staged files deleted</text>
-<rect x="1882" y="396" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="410" x2="1882" y2="415.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="413" font-size="11" fill="#5B1A14">OI-19: route MDTP to HCP calls via HIP API</text>
-<text x="1890" y="427" font-size="11" fill="#5B1A14">Management, or direct?</text>
-<rect x="1882" y="592" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="606" x2="1882" y2="611.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="609" font-size="11" fill="#5B1A14">OI-04 / MFT-14: confirm Create Thread upload</text>
-<text x="1890" y="623" font-size="11" fill="#5B1A14">reuses the Journey 2 pattern</text>
-<rect x="1882" y="936" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="950" x2="1882" y2="948.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="953" font-size="11" fill="#5B1A14">OI-08: thread state after step 42 to be defined</text>
-<rect x="1882" y="1186" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="1200" x2="1882" y2="1205.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="1203" font-size="11" fill="#5B1A14">OI-09: confirmation screen to be removed; event</text>
-<text x="1890" y="1217" font-size="11" fill="#5B1A14">replaces it</text>
-<rect x="1882" y="1370" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="1384" x2="1882" y2="1389.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="1387" font-size="11" fill="#5B1A14">OI-22: microservice TBC; confirm HIP owns the</text>
-<text x="1890" y="1401" font-size="11" fill="#5B1A14">File Transfer API</text>
-<rect x="1882" y="1496" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="1510" x2="1882" y2="1515.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="1513" font-size="11" fill="#5B1A14">OI-20: HIP Event Management or SDEC internal</text>
-<text x="1890" y="1527" font-size="11" fill="#5B1A14">channel?</text>
-<rect x="1882" y="1618" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="1632" x2="1882" y2="1637.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="1635" font-size="11" fill="#5B1A14">OI-21: file size vs AV scan ceiling (G-15,</text>
-<text x="1890" y="1649" font-size="11" fill="#5B1A14">about 250 MB)</text>
-<rect x="1882" y="1788" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="1802" x2="1882" y2="1807.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="1805" font-size="11" fill="#5B1A14">OI-10: internal user or support notification</text>
-<text x="1890" y="1819" font-size="11" fill="#5B1A14">here?</text>
-<rect x="1882" y="2242" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="2256" x2="1882" y2="2254.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="2259" font-size="11" fill="#5B1A14">OI-14: hash algorithm and where signing happens</text>
-<rect x="1882" y="2538" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="2552" x2="1882" y2="2557.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="2555" font-size="11" fill="#5B1A14">OI-12 / OI-13: no NRS dependency on eDMS; end-</text>
-<text x="1890" y="2569" font-size="11" fill="#5B1A14">to-end document ids or submission id?</text>
-<rect x="1882" y="2730" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="2744" x2="1882" y2="2749.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="2747" font-size="11" fill="#5B1A14">OI-15: who requests NRS pre-signed URLs (TM,</text>
-<text x="1890" y="2761" font-size="11" fill="#5B1A14">FTM or Submission API)?</text>
-<rect x="1882" y="3012" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="3026" x2="1882" y2="3031.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="3029" font-size="11" fill="#5B1A14">OI-18: failure events and retries not yet</text>
-<text x="1890" y="3043" font-size="11" fill="#5B1A14">defined</text>
-<rect x="1882" y="3108" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="3122" x2="1882" y2="3127.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="3125" font-size="11" fill="#5B1A14">OI-16: async event (SDEC preference) or polling</text>
-<text x="1890" y="3139" font-size="11" fill="#5B1A14">(NRS suggestion)</text>
-<rect x="1882" y="3582" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="3596" x2="1882" y2="3601.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="3599" font-size="11" fill="#5B1A14">OI-17: response status handling in</text>
-<text x="1890" y="3613" font-size="11" fill="#5B1A14">communication design</text>
-<rect x="1882" y="3812" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
-<line x1="1872" y1="3826" x2="1882" y2="3824.0" stroke="#C0504D" stroke-dasharray="2 2"/>
-<text x="1890" y="3829" font-size="11" fill="#5B1A14">OI-23: staged files if a leg never completes</text>
-<rect x="30" y="4046" width="2152" height="100" rx="8" fill="#ffffff" stroke="#CBD5E1"/>
+<rect x="1880.0" y="396" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="410" x2="1880.0" y2="415.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="413" font-size="11" fill="#5B1A14">OI-19: route MDTP to HCP calls via HIP API</text>
+<text x="1888.0" y="427" font-size="11" fill="#5B1A14">Management, or direct?</text>
+<rect x="1880.0" y="592" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="606" x2="1880.0" y2="611.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="609" font-size="11" fill="#5B1A14">OI-04 / MFT-14: confirm Create Thread upload</text>
+<text x="1888.0" y="623" font-size="11" fill="#5B1A14">reuses the Journey 2 pattern</text>
+<rect x="1880.0" y="936" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="950" x2="1880.0" y2="948.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="953" font-size="11" fill="#5B1A14">OI-08: thread state after step 42 to be defined</text>
+<rect x="1880.0" y="1186" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="1200" x2="1880.0" y2="1205.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="1203" font-size="11" fill="#5B1A14">OI-09: confirmation screen to be removed; event</text>
+<text x="1888.0" y="1217" font-size="11" fill="#5B1A14">replaces it</text>
+<rect x="1880.0" y="1370" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="1384" x2="1880.0" y2="1389.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="1387" font-size="11" fill="#5B1A14">OI-22: microservice TBC; confirm HIP owns the</text>
+<text x="1888.0" y="1401" font-size="11" fill="#5B1A14">File Transfer API</text>
+<rect x="1880.0" y="1496" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="1510" x2="1880.0" y2="1515.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="1513" font-size="11" fill="#5B1A14">OI-20: HIP Event Management or SDEC internal</text>
+<text x="1888.0" y="1527" font-size="11" fill="#5B1A14">channel?</text>
+<rect x="1880.0" y="1618" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="1632" x2="1880.0" y2="1637.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="1635" font-size="11" fill="#5B1A14">OI-21: file size vs AV scan ceiling (G-15,</text>
+<text x="1888.0" y="1649" font-size="11" fill="#5B1A14">about 250 MB)</text>
+<rect x="1880.0" y="1788" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="1802" x2="1880.0" y2="1807.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="1805" font-size="11" fill="#5B1A14">OI-10: internal user or support notification</text>
+<text x="1888.0" y="1819" font-size="11" fill="#5B1A14">here?</text>
+<rect x="1880.0" y="2242" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="2256" x2="1880.0" y2="2254.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="2259" font-size="11" fill="#5B1A14">OI-14: hash algorithm and where signing happens</text>
+<rect x="1880.0" y="2538" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="2552" x2="1880.0" y2="2557.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="2555" font-size="11" fill="#5B1A14">OI-12 / OI-13: no NRS dependency on eDMS; end-</text>
+<text x="1888.0" y="2569" font-size="11" fill="#5B1A14">to-end document ids or submission id?</text>
+<rect x="1880.0" y="2730" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="2744" x2="1880.0" y2="2749.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="2747" font-size="11" fill="#5B1A14">OI-15: who requests NRS pre-signed URLs (TM,</text>
+<text x="1888.0" y="2761" font-size="11" fill="#5B1A14">FTM or Submission API)?</text>
+<rect x="1880.0" y="3012" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="3026" x2="1880.0" y2="3031.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="3029" font-size="11" fill="#5B1A14">OI-18: failure events and retries not yet</text>
+<text x="1888.0" y="3043" font-size="11" fill="#5B1A14">defined</text>
+<rect x="1880.0" y="3108" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="3122" x2="1880.0" y2="3127.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="3125" font-size="11" fill="#5B1A14">OI-16: async event (SDEC preference) or polling</text>
+<text x="1888.0" y="3139" font-size="11" fill="#5B1A14">(NRS suggestion)</text>
+<rect x="1880.0" y="3582" width="300" height="38" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="3596" x2="1880.0" y2="3601.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="3599" font-size="11" fill="#5B1A14">OI-17: response status handling in</text>
+<text x="1888.0" y="3613" font-size="11" fill="#5B1A14">communication design</text>
+<rect x="1880.0" y="3812" width="300" height="24" rx="3" fill="#F6D5D0" stroke="#C0504D"/>
+<line x1="1870.0" y1="3826" x2="1880.0" y2="3824.0" stroke="#C0504D" stroke-dasharray="2 2"/>
+<text x="1888.0" y="3829" font-size="11" fill="#5B1A14">OI-23: staged files if a leg never completes</text>
+<rect x="30" y="4046" width="2150.0" height="100" rx="8" fill="#ffffff" stroke="#CBD5E1"/>
 <text x="46" y="4072" font-size="14" font-weight="bold" fill="#1E2A38">Legend</text>
 <line x1="46" y1="4096" x2="96" y2="4096" stroke="#2B4C7E" stroke-width="1.4" marker-end="url(#sq-sync)"/>
 <text x="106" y="4100" font-size="12" fill="#1E2A38">Synchronous request</text>
@@ -584,5 +583,5 @@
 <text x="546" y="4130" font-size="12" fill="#1E2A38">User notification (push, email, SMS)</text>
 <line x1="926" y1="4126" x2="976" y2="4126" stroke="#334155" stroke-width="1.2" marker-end="url(#sq-self)"/>
 <text x="986" y="4130" font-size="12" fill="#1E2A38">Internal processing</text>
-<rect x="1366" y="4118" width="26" height="14" rx="3" fill="#F6D5D0" stroke="#C0504D"/><text x="1400" y="4130" font-size="12" fill="#1E2A38">Open item (see workbook Open Items sheet)</text>
+<rect x="1366" y="4118" width="26" height="14" rx="3" fill="#F6D5D0" stroke="#C0504D"/><text x="1400" y="4130" font-size="12" fill="#1E2A38">Open item (see Open Items)</text>
 </svg>
