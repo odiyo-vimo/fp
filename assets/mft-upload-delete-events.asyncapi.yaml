@@ -1,0 +1,140 @@
+asyncapi: 2.6.0
+info:
+  title: MFT hold events
+  version: 1.0.0-draft
+  description: Events for IDD-FT-002 on Boomi Event Streams (CloudEvents 1.0).
+defaultContentType: application/cloudevents+json
+channels:
+  file-transfer.mft-hold.events:
+    subscribe:
+      operationId: receiveMftHoldEvents
+      message:
+        oneOf:
+        - $ref: '#/components/messages/document_upload_requested'
+        - $ref: '#/components/messages/file_upload_received'
+        - $ref: '#/components/messages/file_upload_succeeded'
+        - $ref: '#/components/messages/file_upload_failed'
+        - $ref: '#/components/messages/file_upload_expired'
+        - $ref: '#/components/messages/file_deleted'
+components:
+  messages:
+    document_upload_requested:
+      name: document_upload_requested
+      summary: URLs issued (P01)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.document_upload_requested.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, sourceSystem, businessReference, expiresAt, files[]{fileId, externalDocumentId, documentName, fileSizeBytes, mimeType}'
+    file_upload_received:
+      name: file_upload_received
+      summary: File written to MFT /inbound (P02)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_received.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, mftPath, fileSizeBytes, checksumSha256'
+      examples:
+      - payload:
+          specversion: '1.0'
+          id: evt-2c7e9a14-0b3d-4f58-8e61-9d4a7c2b5f03
+          source: /hip/file-transfer/mft-hold
+          type: hip.file-transfer.file_upload_received.v1
+          time: '2026-10-03T10:17:12Z'
+          subject: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+          datacontenttype: application/json
+          correlationid: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+          data:
+            fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+            fileId: f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9
+            externalDocumentId: DOC-1001
+            sourceSystem: SDEC-FE
+            mftPath: /inbound/SDEC-FE/f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9.bin
+            fileSizeBytes: 2483011
+            checksumSha256: yvQRE13JUl2vqF8HHg/Y1yGKHuHAnWY5KHxmPNIS9HA=
+    file_upload_succeeded:
+      name: file_upload_succeeded
+      summary: MFT scan clean, file in /available (P03)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_succeeded.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, mftFileCode, mftPath, holdUntil'
+    file_upload_failed:
+      name: file_upload_failed
+      summary: MFT blocked the file (P03)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_failed.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, mftFileCode, reasonCode (AV_INFECTED, TYPE_MISMATCH, MFT_TRANSFER_FAILED)'
+    file_upload_expired:
+      name: file_upload_expired
+      summary: URL not used in time (P05)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_expired.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, expiresAt'
+    file_deleted:
+      name: file_deleted
+      summary: File removed (P04, P05, P03)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_deleted.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, reason (REQUESTED, HOLD_PERIOD_ENDED), requestReason, previousStatus'
+      examples:
+      - payload:
+          specversion: '1.0'
+          id: evt-6b0d3f27-9e4a-4c15-b8d2-7a1e5c3f9b60
+          source: /hip/file-transfer/mft-hold
+          type: hip.file-transfer.file_deleted.v1
+          time: '2026-10-03T11:02:44Z'
+          subject: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+          datacontenttype: application/json
+          correlationid: c9e2a7d4-5b13-4f8e-a6c0-1d7f3b9e2a58
+          data:
+            fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+            fileId: f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9
+            externalDocumentId: DOC-1001
+            sourceSystem: SDEC-FE
+            reason: REQUESTED
+            requestReason: Uploaded against the wrong thread
+            previousStatus: AVAILABLE
