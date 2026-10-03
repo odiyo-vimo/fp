@@ -1,0 +1,663 @@
+openapi: 3.0.3
+info:
+  title: File Upload Request API
+  version: 1.0.0-draft
+  description: Issues presigned upload URLs for documents that Boomi MFT picks up from the landing bucket. Design reference IDD-FT-001 v0.1 (draft).
+servers:
+- url: https://api.hip.example/file-transfer/v1
+security:
+- oauth2:
+  - file-transfer.upload.request
+paths:
+  /file_uploads:
+    post:
+      operationId: requestFileUpload
+      summary: Request presigned upload URLs for 1 to 10 documents
+      parameters:
+      - name: X-Correlation-ID
+        in: header
+        required: false
+        schema:
+          type: string
+          format: uuid
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadRequest'
+            example:
+              correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+              sourceSystem: SDEC-FE
+              businessReference: THR-2026-004512
+              contextAttributes:
+                threadId: THR-2026-004512
+                interactionId: INT-77810
+              documents:
+              - externalDocumentId: DOC-1001
+                documentName: bank-statement-march-2026.pdf
+                fileSizeBytes: 2483011
+                mimeType: application/pdf
+                checksumSha256: yvQRE13JUl2vqF8HHg/Y1yGKHuHAnWY5KHxmPNIS9HA=
+                documentType: EVIDENCE
+              - externalDocumentId: DOC-1002
+                documentName: property-survey-scans.tiff
+                fileSizeBytes: 157286400
+                mimeType: image/tiff
+                checksumSha256: eF9ICNK9bGbqcYPRNIFRHxog9C+TMqnvbooft/Vq/KY=
+                documentType: EVIDENCE
+              - externalDocumentId: DOC-1003
+                documentName: site-video.mp4
+                fileSizeBytes: 524288000
+                mimeType: video/mp4
+                documentType: EVIDENCE
+      responses:
+        '201':
+          description: Collection created; per-file URL or rejection
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+              example:
+                fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+                correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+                status: PENDING_UPLOAD
+                createdAt: '2026-10-03T10:15:00Z'
+                expiresAt: '2026-10-03T10:30:00Z'
+                acceptedCount: 2
+                rejectedCount: 1
+                files:
+                - externalDocumentId: DOC-1001
+                  fileId: f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9
+                  status: URL_ISSUED
+                  uploadStrategy: SINGLE
+                  upload:
+                    method: PUT
+                    url: https://hip-ft-landing-dev.s3.eu-west-2.amazonaws.com/landing/SDEC-FE/fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851/f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAEXAMPLEHIPFT0001%2F20261003%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20261003T101500Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host%3Bx-amz-checksum-sha256&X-Amz-Signature=dea1c5d5bd5f704c1d5695ecdf2c241aa0b441bb3659e2fc8f3f507b22b78d06
+                    requiredHeaders:
+                      x-amz-checksum-sha256: yvQRE13JUl2vqF8HHg/Y1yGKHuHAnWY5KHxmPNIS9HA=
+                    expiresAt: '2026-10-03T10:30:00Z'
+                - externalDocumentId: DOC-1002
+                  fileId: f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846
+                  status: URL_ISSUED
+                  uploadStrategy: MULTIPART
+                  upload:
+                    method: PUT
+                    partSizeBytes: 16777216
+                    partCount: 10
+                    parts:
+                    - partNumber: 1
+                      url: https://hip-ft-landing-dev.s3.eu-west-2.amazonaws.com/landing/SDEC-FE/fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851/f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAEXAMPLEHIPFT0001%2F20261003%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20261003T101500Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&partNumber=1&uploadId=VXBsb2FkSWQtZXhhbXBsZS1tdWx0aXBhcnQtZjQxYzdlMmQw&X-Amz-Signature=1d809ed58f454f1559873c59dd6027a4d808ed5c5cb2c70b7022f6bd7581b21b
+                    - partNumber: 2
+                      url: https://hip-ft-landing-dev.s3.eu-west-2.amazonaws.com/landing/SDEC-FE/fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851/f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAEXAMPLEHIPFT0001%2F20261003%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20261003T101500Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&partNumber=2&uploadId=VXBsb2FkSWQtZXhhbXBsZS1tdWx0aXBhcnQtZjQxYzdlMmQw&X-Amz-Signature=f3ab7fa79cfa1dd0f2d383646d2e8ffccf92423fad3ec73b7291e435148b36c2
+                    - partNumber: '...'
+                      url: (parts 3 to 9 omitted in this sample)
+                    - partNumber: 10
+                      url: https://hip-ft-landing-dev.s3.eu-west-2.amazonaws.com/landing/SDEC-FE/fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851/f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAEXAMPLEHIPFT0001%2F20261003%2Feu-west-2%2Fs3%2Faws4_request&X-Amz-Date=20261003T101500Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&partNumber=10&uploadId=VXBsb2FkSWQtZXhhbXBsZS1tdWx0aXBhcnQtZjQxYzdlMmQw&X-Amz-Signature=6f8c6f2b544498771ca781d956dcb3d8a31605c20b2ceee2cfdd8c30f63be63b
+                    completeUrl: https://api.hip.example/file-transfer/v1/file_uploads/fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851/files/f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846/complete
+                    expiresAt: '2026-10-03T10:30:00Z'
+                - externalDocumentId: DOC-1003
+                  status: REJECTED
+                  rejection:
+                    code: FILE_TOO_LARGE
+                    detail: 524288000 bytes exceeds the policy limit of 262144000 bytes for SDEC-FE/EVIDENCE.
+        '400':
+          description: Schema or request rule failure
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://api.hip.example/problems/invalid-request
+                title: Request does not match the schema
+                status: 400
+                code: DUPLICATE_EXTERNAL_ID_IN_REQUEST
+                detail: externalDocumentId DOC-1001 appears more than once in documents[].
+                correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+                errors:
+                - pointer: /documents/2/externalDocumentId
+                  message: Duplicate value DOC-1001
+        '401':
+          description: Unauthenticated
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Source system not permitted
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Idempotency key reused or external id in use
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://api.hip.example/problems/idempotency-key-reused
+                title: Idempotency-Key already used with a different request body
+                status: 409
+                code: IDEMPOTENCY_KEY_REUSED
+                detail: Idempotency-Key 0b7e9c52-3f61-4a2d-8e44-91d6c0f2a7b3 was first used at 2026-10-03T10:15:00Z with a different payload hash.
+                correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+        '422':
+          description: Too many documents or none accepted
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                type: https://api.hip.example/problems/no-documents-accepted
+                title: No document passed the upload policy
+                status: 422
+                code: NO_DOCUMENTS_ACCEPTED
+                detail: All 1 documents were rejected. See files[] for the reason per document.
+                correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+                files:
+                - externalDocumentId: DOC-1003
+                  status: REJECTED
+                  rejection:
+                    code: FILE_TOO_LARGE
+                    detail: 524288000 bytes exceeds the policy limit of 262144000 bytes.
+        '429':
+          description: Rate limited
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '503':
+          description: Dependency unavailable
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /file_uploads/{fileCollectionId}:
+    get:
+      operationId: getFileUploadStatus
+      summary: Collection and per-file status
+      parameters:
+      - name: fileCollectionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-Correlation-ID
+        in: header
+        required: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CollectionStatus'
+              example:
+                fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+                correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+                status: COMPLETED_WITH_ERRORS
+                createdAt: '2026-10-03T10:15:00Z'
+                expiresAt: '2026-10-03T10:30:00Z'
+                files:
+                - externalDocumentId: DOC-1001
+                  fileId: f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9
+                  status: AVAILABLE
+                  mftFileCode: FC7Q2M9K4D
+                  updatedAt: '2026-10-03T10:18:05Z'
+                - externalDocumentId: DOC-1002
+                  fileId: f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846
+                  status: AVAILABLE
+                  mftFileCode: FC7Q2M9P1X
+                  updatedAt: '2026-10-03T10:24:12Z'
+                - externalDocumentId: DOC-1003
+                  status: REJECTED
+                  updatedAt: '2026-10-03T10:15:00Z'
+        '404':
+          description: Unknown collection or not owned by caller
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /file_uploads/{fileCollectionId}/files/{fileId}/complete:
+    post:
+      operationId: completeMultipartUpload
+      summary: Complete a multipart upload
+      parameters:
+      - name: fileCollectionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fileId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-Correlation-ID
+        in: header
+        required: false
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteRequest'
+      responses:
+        '202':
+          description: Upload assembled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompleteResponse'
+              example:
+                fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+                fileId: f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846
+                externalDocumentId: DOC-1002
+                status: UPLOADED
+                correlationId: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+                uploadedAt: '2026-10-03T10:22:41Z'
+        '400':
+          description: Parts missing or out of order
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '404':
+          description: Unknown file
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: File not in URL_ISSUED or not MULTIPART
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '410':
+          description: Upload expired
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '502':
+          description: S3 rejected CompleteMultipartUpload
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://auth.hip.example/oauth2/token
+          scopes:
+            file-transfer.upload.request: Request upload URLs
+  schemas:
+    DocumentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - externalDocumentId
+      - documentName
+      - fileSizeBytes
+      - mimeType
+      properties:
+        externalDocumentId:
+          type: string
+          pattern: ^[A-Za-z0-9._:-]{1,64}$
+        documentName:
+          type: string
+          minLength: 1
+          maxLength: 255
+          pattern: ^[^/\\\x00-\x1f]+$
+        fileSizeBytes:
+          type: integer
+          format: int64
+          minimum: 1
+        mimeType:
+          type: string
+          maxLength: 127
+        checksumSha256:
+          type: string
+          pattern: ^[A-Za-z0-9+/]{43}=$
+        documentType:
+          type: string
+          pattern: ^[A-Z0-9_]{2,30}$
+          default: GENERAL
+      description: checksumSha256 is required when fileSizeBytes <= singleUploadMaxBytes (enforced by the Boomi process; file is REJECTED with CHECKSUM_REQUIRED otherwise).
+    UploadRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - correlationId
+      - sourceSystem
+      - documents
+      properties:
+        correlationId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+        sourceSystem:
+          type: string
+          pattern: ^[A-Z0-9-]{3,20}$
+        businessReference:
+          type: string
+          maxLength: 64
+        contextAttributes:
+          type: object
+          maxProperties: 10
+          additionalProperties:
+            type: string
+            maxLength: 128
+        documents:
+          type: array
+          minItems: 1
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/DocumentRequest'
+    Rejection:
+      type: object
+      required:
+      - code
+      - detail
+      properties:
+        code:
+          type: string
+          enum:
+          - FILE_TOO_LARGE
+          - FILE_EMPTY
+          - MIME_TYPE_NOT_ALLOWED
+          - CHECKSUM_REQUIRED
+          - NAME_INVALID
+        detail:
+          type: string
+    Part:
+      type: object
+      required:
+      - partNumber
+      - url
+      properties:
+        partNumber:
+          type: integer
+          minimum: 1
+          maximum: 10000
+        url:
+          type: string
+          format: uri
+    UploadInstruction:
+      type: object
+      required:
+      - method
+      - expiresAt
+      properties:
+        method:
+          type: string
+          enum:
+          - PUT
+        url:
+          type: string
+          format: uri
+        requiredHeaders:
+          type: object
+          additionalProperties:
+            type: string
+        partSizeBytes:
+          type: integer
+        partCount:
+          type: integer
+        parts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Part'
+        completeUrl:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+    FileResult:
+      type: object
+      required:
+      - externalDocumentId
+      - status
+      properties:
+        externalDocumentId:
+          type: string
+          pattern: ^[A-Za-z0-9._:-]{1,64}$
+        fileId:
+          type: string
+        status:
+          type: string
+          enum:
+          - URL_ISSUED
+          - REJECTED
+        uploadStrategy:
+          type: string
+          enum:
+          - SINGLE
+          - MULTIPART
+        upload:
+          $ref: '#/components/schemas/UploadInstruction'
+        rejection:
+          $ref: '#/components/schemas/Rejection'
+    UploadResponse:
+      type: object
+      required:
+      - fileCollectionId
+      - correlationId
+      - status
+      - createdAt
+      - expiresAt
+      - acceptedCount
+      - rejectedCount
+      - files
+      properties:
+        fileCollectionId:
+          type: string
+        correlationId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+        status:
+          type: string
+          enum:
+          - PENDING_UPLOAD
+        createdAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        acceptedCount:
+          type: integer
+        rejectedCount:
+          type: integer
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResult'
+    CompleteRequest:
+      type: object
+      required:
+      - correlationId
+      - parts
+      properties:
+        correlationId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+        parts:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+            - partNumber
+            - eTag
+            properties:
+              partNumber:
+                type: integer
+                minimum: 1
+              eTag:
+                type: string
+    CompleteResponse:
+      type: object
+      required:
+      - fileCollectionId
+      - fileId
+      - externalDocumentId
+      - status
+      - correlationId
+      properties:
+        fileCollectionId:
+          type: string
+        fileId:
+          type: string
+        externalDocumentId:
+          type: string
+          pattern: ^[A-Za-z0-9._:-]{1,64}$
+        status:
+          type: string
+          enum:
+          - UPLOADED
+        correlationId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+        uploadedAt:
+          type: string
+          format: date-time
+    CollectionStatus:
+      type: object
+      required:
+      - fileCollectionId
+      - status
+      - files
+      properties:
+        fileCollectionId:
+          type: string
+        correlationId:
+          type: string
+          format: uuid
+          minLength: 36
+          maxLength: 36
+        status:
+          type: string
+          enum:
+          - PENDING_UPLOAD
+          - IN_PROGRESS
+          - COMPLETED
+          - COMPLETED_WITH_ERRORS
+          - EXPIRED
+        createdAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        files:
+          type: array
+          items:
+            type: object
+            required:
+            - externalDocumentId
+            - status
+            properties:
+              externalDocumentId:
+                type: string
+                pattern: ^[A-Za-z0-9._:-]{1,64}$
+              fileId:
+                type: string
+              status:
+                type: string
+                enum:
+                - URL_ISSUED
+                - UPLOADED
+                - AVAILABLE
+                - QUARANTINED
+                - FAILED
+                - EXPIRED
+                - REJECTED
+              mftFileCode:
+                type: string
+              updatedAt:
+                type: string
+                format: date-time
+    Problem:
+      type: object
+      required:
+      - type
+      - title
+      - status
+      - code
+      - correlationId
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        code:
+          type: string
+          enum:
+          - CORRELATION_ID_MISMATCH
+          - DEPENDENCY_UNAVAILABLE
+          - DUPLICATE_EXTERNAL_ID_IN_REQUEST
+          - EXTERNAL_ID_IN_USE
+          - IDEMPOTENCY_KEY_REUSED
+          - INTERNAL_ERROR
+          - INVALID_REQUEST
+          - NO_DOCUMENTS_ACCEPTED
+          - RATE_LIMITED
+          - SOURCE_SYSTEM_NOT_PERMITTED
+          - TOO_MANY_DOCUMENTS
+          - UNAUTHENTICATED
+        detail:
+          type: string
+        correlationId:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              pointer:
+                type: string
+              message:
+                type: string
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResult'

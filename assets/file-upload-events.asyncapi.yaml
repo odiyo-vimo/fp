@@ -1,0 +1,134 @@
+asyncapi: 2.6.0
+info:
+  title: File upload events
+  version: 1.0.0-draft
+  description: Events produced by the File Upload Request integration on Boomi Event Streams. CloudEvents 1.0 structured JSON.
+defaultContentType: application/cloudevents+json
+channels:
+  file-transfer.upload.events:
+    description: One topic per environment; type attribute distinguishes events.
+    subscribe:
+      operationId: receiveFileUploadEvents
+      message:
+        oneOf:
+        - $ref: '#/components/messages/document_upload_requested'
+        - $ref: '#/components/messages/file_upload_succeeded'
+        - $ref: '#/components/messages/file_upload_failed'
+        - $ref: '#/components/messages/file_upload_expired'
+        - $ref: '#/components/messages/file_collection_completed'
+components:
+  messages:
+    document_upload_requested:
+      name: document_upload_requested
+      title: document_upload_requested
+      summary: Upload URLs issued for a collection (P01, step 15)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.document_upload_requested.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, sourceSystem, businessReference, contextAttributes, expiresAt, files[]{fileId, externalDocumentId, documentName, fileSizeBytes, mimeType, uploadStrategy}'
+    file_upload_succeeded:
+      name: file_upload_succeeded
+      title: file_upload_succeeded
+      summary: File passed MFT scan and is in clean staging (P03)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_succeeded.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, mftFileCode, stagingLocation, fileSizeBytes, checksumSha256, scannedAt'
+      examples:
+      - payload:
+          specversion: '1.0'
+          id: evt-5d2a7c90-1f3e-4b68-a9d4-0e7b3c6f8a21
+          source: /hip/file-transfer/upload
+          type: hip.file-transfer.file_upload_succeeded.v1
+          time: '2026-10-03T10:18:05Z'
+          subject: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+          datacontenttype: application/json
+          correlationid: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+          data:
+            fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+            fileId: f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9
+            externalDocumentId: DOC-1001
+            sourceSystem: SDEC-FE
+            businessReference: THR-2026-004512
+            mftFileCode: FC7Q2M9K4D
+            stagingLocation: s3://hip-ft-clean-dev/clean/SDEC-FE/fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851/f-9a1e4c7b-2d58-4e03-b6f1-0c3a8d27e5b9
+            fileSizeBytes: 2483011
+            checksumSha256: yvQRE13JUl2vqF8HHg/Y1yGKHuHAnWY5KHxmPNIS9HA=
+            scannedAt: '2026-10-03T10:17:58Z'
+    file_upload_failed:
+      name: file_upload_failed
+      title: file_upload_failed
+      summary: File blocked by MFT (AV or rule) or transfer failed (P03)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_failed.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, mftFileCode, reasonCode (AV_INFECTED, TYPE_MISMATCH, MFT_TRANSFER_FAILED), reasonDetail'
+      examples:
+      - payload:
+          specversion: '1.0'
+          id: evt-8b0e4f13-6a2c-4d97-b5e1-3c9f7a0d2e64
+          source: /hip/file-transfer/upload
+          type: hip.file-transfer.file_upload_failed.v1
+          time: '2026-10-03T10:19:40Z'
+          subject: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+          datacontenttype: application/json
+          correlationid: 6f1c2b4e-8d0a-4b8e-9f3a-2c7d5e1a9b40
+          data:
+            fileCollectionId: fc-3e8a1d9c-5b27-4f60-a2c4-7d19e0b6f851
+            fileId: f-41c7e2d0-8b39-4a65-9e12-d5f0a3b7c846
+            externalDocumentId: DOC-1002
+            sourceSystem: SDEC-FE
+            mftFileCode: FC7Q2M9P1X
+            reasonCode: AV_INFECTED
+            reasonDetail: Blocked by MFT anti virus flow endpoint.
+    file_upload_expired:
+      name: file_upload_expired
+      title: file_upload_expired
+      summary: URL lifetime passed with no upload (P04)
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_upload_expired.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, fileId, externalDocumentId, expiresAt'
+    file_collection_completed:
+      name: file_collection_completed
+      title: file_collection_completed
+      summary: Every file in the collection reached a terminal state
+      headers:
+        type: object
+        properties:
+          type:
+            type: string
+            const: hip.file-transfer.file_collection_completed.v1
+          correlationid:
+            type: string
+      payload:
+        type: object
+        description: 'data fields: fileCollectionId, status, counts{available, failed, expired, rejected}'
