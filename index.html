@@ -1,222 +1,305 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SDEC Security and Patterns</title>
-<style>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="claude:viewport-fit-sides" content="cover"><title>SDEC Document Checksum</title><style>
 :root{--bg:#f6f7f9;--card:#fff;--ink:#1f2933;--muted:#52606d;--rule:#d9dee4;--accent:#1d4e89;--accentbg:#e8f0fa;
---ok:#1e6b3a;--okbg:#e4f3e9;--prop:#7a5a00;--propbg:#fdf3d6;--open:#b3401a;--openbg:#fcebe5;--bar:#14304f;--codebg:#f0f2f5}
+--ok:#1e6b3a;--okbg:#e4f3e9;--prop:#7a5a00;--propbg:#fdf3d6;--open:#b3401a;--openbg:#fcebe5;--bar:#14304f;--barink:#cfd8e3;--codebg:#f0f2f5;--grp:#f3efe2}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b2129;--ink:#e4e7eb;--muted:#a0aab4;--rule:#323b46;
---accent:#8ab4e8;--accentbg:#1d2c40;--ok:#7fd19b;--okbg:#17301f;--prop:#e8c86a;--propbg:#33290d;--open:#f0997a;--openbg:#3a1d14;--bar:#0b1a2b;--codebg:#232a33}}
+--accent:#8ab4e8;--accentbg:#1d2c40;--ok:#7fd19b;--okbg:#17301f;--prop:#e8c86a;--propbg:#33290d;--open:#f0997a;--openbg:#3a1d14;--bar:#0b1a2b;--barink:#cfd8e3;--codebg:#232a33;--grp:#2a2619;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12161c;--card:#1b2129;--ink:#e4e7eb;--muted:#a0aab4;--rule:#323b46;
+--accent:#8ab4e8;--accentbg:#1d2c40;--ok:#7fd19b;--okbg:#17301f;--prop:#e8c86a;--propbg:#33290d;--open:#f0997a;--openbg:#3a1d14;--bar:#0b1a2b;--barink:#cfd8e3;--codebg:#232a33;--grp:#2a2619;color-scheme:dark}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",Calibri,Arial,sans-serif}
-.dlbar{position:sticky;top:0;z-index:20;background:var(--bar);padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.dlbar span{color:#cfd8e3;font-size:13px;margin-right:4px}
+.dlbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dlbar span{color:var(--barink);font-size:13px;margin-right:4px}
 .btn{display:inline-block;background:#fff;color:#14304f;text-decoration:none;font-size:13px;font-weight:600;padding:6px 12px;border-radius:4px}
 .btn.alt{background:transparent;color:#fff;border:1px solid #6d8bab}
-header{background:var(--card);border-bottom:1px solid var(--rule);padding:22px 16px}
+.btn:focus-visible,.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrapx{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{background:var(--card);border-bottom:1px solid var(--rule);padding-block:22px}
 header .in,main{max-width:1120px;margin:0 auto}
-h1{margin:0 0 4px;font-size:24px}.meta{color:var(--muted);font-size:13px}
-nav{margin-top:10px;font-size:13px}nav a{color:var(--accent);margin-right:14px;text-decoration:none}
-main{padding:8px 16px 48px}
-section{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 8px;margin:18px 0}
-h2{font-size:19px;margin:0 0 10px;color:var(--accent)}h3{font-size:15px;margin:14px 0 8px}
+h1{margin:0 0 4px;font-size:24px;text-wrap:balance}.meta{color:var(--muted);font-size:13px}
+nav{margin-top:10px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 14px}nav a{color:var(--accent);text-decoration:none}
+main{padding-block:8px 48px}
+section{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 8px;margin:18px 0;min-width:0}
+h2{font-size:19px;margin:0 0 10px;color:var(--accent);text-wrap:balance}h3{font-size:15px;margin:14px 0 8px}
+p,li{max-width:78ch}
 .tw{overflow-x:auto;margin-bottom:12px}table{border-collapse:collapse;width:100%;font-size:14px}
 th,td{border:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top}th{background:var(--accentbg)}
-td:first-child{white-space:nowrap}table.wrap td:nth-child(2){min-width:150px}table.risk{min-width:900px}
+td:first-child{white-space:nowrap}table.steps{min-width:820px}table.steps td:nth-child(2){white-space:nowrap}
+tr.grp td{background:var(--grp);font-weight:600;font-size:13px}
+td code,.mono{font-family:Consolas,Menlo,monospace;font-size:12.5px;word-break:break-all;font-variant-numeric:tabular-nums}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
 .chip.ok{color:var(--ok);background:var(--okbg)}.chip.prop{color:var(--prop);background:var(--propbg)}.chip.open{color:var(--open);background:var(--openbg)}
 .copyhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .copy{font:inherit;font-size:13px;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:4px;padding:4px 10px;cursor:pointer}
 pre{background:var(--codebg);padding:12px;border-radius:4px;overflow-x:auto;font-size:12.5px;line-height:1.45}
 code{font-family:Consolas,Menlo,monospace;font-size:13px}
-.diagram{border:1px solid var(--rule);border-radius:4px;overflow-x:auto;background:#fff}.diagram svg{display:block;width:100%;min-width:760px;height:auto}
-ol li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
-#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--bar);color:#fff;padding:8px 14px;border-radius:4px;font-size:13px;opacity:0;transition:opacity .2s}
+.diagram{border:1px solid var(--rule);border-radius:4px;overflow-x:auto;background:#fff}.diagram svg{display:block;width:100%;min-width:900px;height:auto}
+.callout{border-left:3px solid var(--open);background:var(--openbg);padding:10px 12px;border-radius:0 4px 4px 0;margin:12px 0;font-size:14px}
+.callout b{color:var(--open)}
+ol li,ul li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.facts div{border:1px solid var(--rule);border-radius:4px;padding:10px 12px;min-width:0}
+.facts b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--bar);color:#fff;padding:8px 14px;border-radius:4px;font-size:13px;opacity:0;transition:opacity .2s}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
 </style></head><body>
-<div class="dlbar"><span>Downloads:</span><a class="btn" href="assets/sdec-oauth-client-credentials.drawio" download>OAuth sequence (.drawio)</a><a class="btn" href="assets/sdec-oauth-client-credentials.png" download>OAuth sequence (PNG)</a><a class="btn" href="assets/sdec-oauth-client-credentials.svg" download>OAuth sequence (SVG)</a><a class="btn" href="assets/docs.zip" download>All files (.zip)</a>
-<a class="btn alt" href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/sdec-oauth-client-credentials.drawio" target="_blank" rel="noopener">Open diagram in diagrams.net</a></div>
-<header><div class="in"><h1>SDEC Integration: Assumptions, Risks, Security, OAuth 2.0 and Integration Patterns</h1>
-<div class="meta">Draft content for the SDEC IDD sections 3.2, 4 and 5.2 &middot; v0.2 (draft) &middot; 14 October 2026 &middot; Aligned to IDD-FT-002, IDD-FT-003 and IDD-NRS-001</div>
-<nav><a href="#assumptions">Assumptions</a><a href="#risks">Risks</a><a href="#security">Security</a><a href="#oauth">OAuth</a><a href="#patterns">Patterns</a><a href="#decisions">Decisions</a></nav></div></header>
-<main>
+<div class="dlbar"><span>Downloads:</span><a class="btn" href="assets/sdec-document-checksum.drawio" download>Checksum sequence (.drawio)</a><a class="btn" href="assets/sdec-document-checksum.png" download>Checksum sequence (PNG)</a><a class="btn" href="assets/sdec-document-checksum.svg" download>Checksum sequence (SVG)</a><a class="btn" href="assets/docs.zip" download>All files (.zip)</a><a class="btn alt" href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/sdec-document-checksum.drawio" target="_blank" rel="noopener">Open diagram in diagrams.net</a><a class="btn alt" href="sdec-security-oauth.html">Previous page: Security and OAuth</a></div>
+<header class="wrapx"><div class="in"><h1>SDEC Document Checksum: How Upload Integrity Works</h1>
+<div class="meta">External User Document Upload &middot; v0.1 (draft) &middot; 14 October 2026 &middot; Aligned to IDD-FT-002, IDD-FT-003 (SDEC-MFT-API-01), IDD-NRS-001 (SDEC-NRS-API-02) and security control S-08</div>
+<nav><a href="#what">What it is</a><a href="#why">Why it is needed</a><a href="#compare">Checksum vs signature</a><a href="#sequence">Sequence</a><a href="#errors">Errors</a><a href="#build">Build notes</a><a href="#decisions">Decisions</a></nav></div></header>
+<main class="wrapx">
 <section><h2>How to use this page</h2><ol>
-<li><b>Section 3.2 Assumptions:</b> use <i>Copy table for Word</i> on part 1 and paste over the empty table; columns match the template (#, Assumption, Description, Owner).</li>
-<li><b>Risks:</b> paste part 2 as a new sub-section after 3.2 (suggested 3.3 Risks). Rating is Impact / Likelihood.</li>
-<li><b>Section 4 Security Summary:</b> keep the SbD paragraph and replace <code>//ToDo</code> with part 3.</li>
-<li><b>Authentication:</b> add part 4 as 4.1 Authentication and Authorisation, with the scope table and the sequence diagram. Download the PNG to paste into Word, or the .drawio to edit (File &gt; Export as &gt; VSDX in diagrams.net gives a Visio file).</li>
-<li><b>Section 5.2 Integration:</b> paste part 5 over the empty Pattern table; it uses the same two columns.</li>
-<li><b>Open decisions:</b> add D-12 to D-17 to the decision log; numbering continues from IDD-NRS-001 (D-11).</li>
-</ol><p class="note">Owners are roles. Boomi components (API layer, broker, transient storage, processes) are shown as one iPaaS throughout. Status values: Agreed (in existing IDD content), Proposed (awaiting sign-off), Open (tracked gap or decision).</p></section>
+<li><b>Parts 1 to 3</b> explain the concept. Use them as background for the integrity control (S-08) in section 4 of the SDEC IDD.</li>
+<li><b>Part 4 Sequence:</b> download the PNG to paste into Word, or the .drawio to edit in diagrams.net (File &gt; Export as &gt; VSDX gives a Visio file). Step numbers in the table match the diagram labels. Use <i>Copy table for Word</i> to paste the step table under the diagram.</li>
+<li><b>Part 5 Errors:</b> add the rows to Exception/Error Handling in SDEC-MFT-API-01 (upload leg) and to the transfer flow entry.</li>
+<li><b>Part 6 Build notes:</b> hand to the SDEC, iPaaS and NRS delivery groups as acceptance points.</li>
+<li><b>Part 7 Decisions:</b> add D-18 to D-21 to the decision log. Numbering continues from D-17.</li>
+<li>The previous page (Assumptions, Risks, Security, OAuth and Patterns v0.2) is still available from <i>Previous page</i> in the bar above.</li>
+</ol><p class="note">Boomi components (API layer, broker, transient storage, processes) are shown as one iPaaS, as in the other SDEC pages. Status values: Agreed (in existing IDD content), Proposed (awaiting sign-off), Open (decision needed).</p></section>
 
-<section id="assumptions"><h2>1. Assumptions (section 3.2)</h2>
-<div class="copyhead"><h3>The following assumptions have been made</h3><button class="copy" data-target="t-ass">Copy table for Word</button></div><div id="t-ass"><div class="tw"><table class="wrap"><thead><tr><th>#</th><th>Assumption</th><th>Description</th><th>Owner</th></tr></thead><tbody><tr><td>A-01</td><td><b>Single integration platform</b></td><td>Boomi iPaaS (API layer, message broker, transient file storage, integration processes) is treated as one platform. It issues and validates OAuth tokens, hosts the APIs, publishes events and performs file transfers.</td><td>Boomi Platform Owner</td></tr><tr><td>A-02</td><td><b>App-to-app authentication only</b></td><td>SDEC authenticates its own users and owns the user session. The integration layer receives no end-user identity or user token.</td><td>SDEC Technical Lead</td></tr><tr><td>A-03</td><td><b>Server-side calls only</b></td><td>All token and API calls are made from the SDEC backend. The browser only uses a presigned URL to upload file content.</td><td>SDEC Technical Lead</td></tr><tr><td>A-04</td><td><b>NRS APIs available</b></td><td>NRS exposes Submission and Attachment APIs to iPaaS, issues one presigned upload URL per document, and accepts uploads from iPaaS. NRS schemas and limits are provided before build (D-11).</td><td>NRS Technical Lead</td></tr><tr><td>A-05</td><td><b>eDMS delivery follows the same pattern</b></td><td>Documents are delivered to eDMS with the same transfer, event and webhook pattern as NRS. The eDMS interface specification is still to be provided.</td><td>eDMS Technical Lead</td></tr><tr><td>A-06</td><td><b>SDEC webhook endpoint</b></td><td>SDEC provides an HTTPS webhook endpoint reachable from iPaaS for transfer and document events. It is secured per D-16 and processes each event ID once.</td><td>SDEC Technical Lead</td></tr><tr><td>A-07</td><td><b>Document limits</b></td><td>Up to 10 documents per upload request and up to 20 GB per document. MIME allow-list and URL expiry are set under D-03.</td><td>Security Architect</td></tr><tr><td>A-08</td><td><b>Clean files only</b></td><td>Only files with status AVAILABLE (AV scan passed) are transferred to NRS or eDMS.</td><td>Boomi Platform Owner</td></tr><tr><td>A-09</td><td><b>Transient storage only</b></td><td>iPaaS is not a system of record for documents. NRS and eDMS hold the records; iPaaS purges files after delivery, on delete or by TTL (D-04).</td><td>Boomi Platform Owner</td></tr><tr><td>A-10</td><td><b>Correlation</b></td><td>SDEC generates an X-Correlation-ID per journey and sends it on every call, so a submission can be traced end to end.</td><td>SDEC Technical Lead</td></tr><tr><td>A-11</td><td><b>Environments</b></td><td>Matching dev, test, pre-prod and prod environments exist for SDEC, iPaaS, NRS and eDMS, each with separate client credentials.</td><td>Integration Architect</td></tr><tr><td>A-12</td><td><b>Network connectivity</b></td><td>Firewall and allow-list changes between SDEC hosting, iPaaS, NRS and eDMS are delivered before system integration testing.</td><td>Infrastructure Lead</td></tr><tr><td>A-13</td><td><b>Volumes within platform capacity</b></td><td>Expected submissions per day and document sizes (average and peak) fit current iPaaS capacity. SDEC to provide figures for sizing.</td><td>SDEC Product Owner</td></tr><tr><td>A-14</td><td><b>Security assurance</b></td><td>SbD (HLSRs and SoA) and the DPIA complete before go-live. Any controls they add are absorbed without changing the integration patterns.</td><td>SbD Practitioner</td></tr></tbody></table></div></div>
+<section id="what"><h2>1. What a checksum is</h2>
+<p>A checksum is a short, fixed-length fingerprint calculated from every byte of a file. The SDEC upload uses <b>SHA-256</b>, which always produces 32 bytes (256 bits), whether the file is 1 KB or 20 GB.</p>
+<div class="facts"><div><b>Deterministic</b>The same bytes always give the same value, on any machine.</div>
+<div><b>Sensitive</b>Changing one bit, or dropping the last byte, gives a completely different value.</div>
+<div><b>One-way</b>The file cannot be rebuilt from the value, so the value holds no document content.</div>
+<div><b>Collision resistant</b>It is not practical to make a different file with the same value.</div></div>
+<h3>Example</h3>
+<div class="tw"><table><thead><tr><th>Input</th><th>SHA-256 as hex (64 characters)</th><th>Base64, as sent in checksumSha256 (44 characters)</th></tr></thead><tbody>
+<tr><td><code>hello world</code></td><td class="mono">b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9</td><td class="mono">uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek=</td></tr>
+<tr><td><code>hello World</code> (one letter changed)</td><td class="mono">db4067cec62c58bf8b2f8982071e77c082da9e00924bf3631f3b024fa54e7d7e</td><td class="mono">20BnzsYsWL+LL4mCBx53wILangCSS/NjHzsCT6VOfX4=</td></tr>
+</tbody></table></div>
+<div class="callout"><b>Common defect:</b> Base64 encoding the 64-character hex string instead of the 32 raw bytes. That gives an 88-character value (<span class="mono">Yjk0ZDI3Yjk5MzRkM2UwOGE1...</span>) that never matches. A valid checksumSha256 is always 44 characters and ends in <code>=</code>.</div>
 </section>
 
-<section id="risks"><h2>2. Risks</h2>
-<div class="copyhead"><h3>SDEC integration risks</h3><button class="copy" data-target="t-risk">Copy table for Word</button></div><div id="t-risk"><div class="tw"><table class="wrap risk"><thead><tr><th>#</th><th>Risk</th><th>Description</th><th>Impact / Likelihood</th><th>Mitigation</th><th>Owner</th></tr></thead><tbody><tr><td>R-01</td><td><b>Large files cannot be AV scanned</b></td><td>The current scan limit (G-15) is far below the 20 GB maximum, so large documents may be blocked or released unscanned.</td><td><span class="chip open">High / High</span></td><td>Agree a large-file scanning approach or lower the maximum size before build; never release unscanned files.</td><td>Boomi Platform Owner</td></tr><tr><td>R-02</td><td><b>NRS URL expires mid-transfer</b></td><td>Transfer of a large file outlasts the NRS presigned URL expiry (D-09), so the upload fails.</td><td><span class="chip open">High / Medium</span></td><td>Set expiry against the largest file&#x27;s transfer time; on expiry, request a new URL for that document and re-try.</td><td>NRS Technical Lead</td></tr><tr><td>R-03</td><td><b>Duplicate submissions</b></td><td>NRS may not support Idempotency-Key (D-08); a timeout followed by a re-try creates a second submission or attachment.</td><td><span class="chip open">High / Medium</span></td><td>iPaaS keeps an idempotency store keyed on Idempotency-Key if NRS cannot.</td><td>Integration Architect</td></tr><tr><td>R-04</td><td><b>Partial submission</b></td><td>Some attachments transfer and others fail, leaving an incomplete submission in NRS.</td><td><span class="chip open">High / Medium</span></td><td>Track status per document; re-try only failed documents; agree with NRS how an incomplete submission is handled and closed.</td><td>NRS Technical Lead</td></tr><tr><td>R-05</td><td><b>Transfer re-tries exhausted</b></td><td>NRS or eDMS stays unavailable beyond the re-try policy; documents wait in transient storage and the user journey stalls.</td><td><span class="chip prop">Medium / Medium</span></td><td>Bounded re-try with backoff (D-17), failed event and webhook to SDEC, operational alert, replay runbook, TTL longer than the re-try window.</td><td>Integration Architect</td></tr><tr><td>R-06</td><td><b>Missed or duplicate webhooks</b></td><td>SDEC misses a callback or receives it twice, so thread state is wrong.</td><td><span class="chip prop">Medium / Medium</span></td><td>Event ID de-duplication, delivery re-try with dead-letter queue, reconciliation through the document status API.</td><td>SDEC Technical Lead</td></tr><tr><td>R-07</td><td><b>Client secret compromise</b></td><td>A leaked secret lets another party call the APIs as SDEC.</td><td><span class="chip open">High / Low</span></td><td>Secrets vault, rotation, least-privilege scopes, monitoring of token use; consider private_key_jwt or mTLS (D-15).</td><td>Security Architect</td></tr><tr><td>R-08</td><td><b>No native PAM integration</b></td><td>Platform credentials cannot be sourced natively from enterprise PAM (G-14), increasing manual handling.</td><td><span class="chip prop">Medium / High</span></td><td>Interim controlled process with audit; track G-14 to closure.</td><td>Boomi Platform Owner</td></tr><tr><td>R-09</td><td><b>Document status is a platform enhancement</b></td><td>Document-level status tracking is not native to Boomi MFT and must be built, putting delivery dates at risk.</td><td><span class="chip prop">Medium / Medium</span></td><td>Prove the status store early with a spike; agree polling, events or both (D-01).</td><td>Boomi Platform Owner</td></tr><tr><td>R-10</td><td><b>Transient storage capacity</b></td><td>Concurrent large uploads, and two copies during supersession, exceed storage (D-06).</td><td><span class="chip prop">Medium / Medium</span></td><td>Size from A-13 volumes, set quotas, enforce TTL purge, monitor capacity.</td><td>Infrastructure Lead</td></tr><tr><td>R-11</td><td><b>eDMS interface not defined</b></td><td>The eDMS leg cannot be designed or tested until its interface is known.</td><td><span class="chip prop">Medium / High</span></td><td>Engage eDMS early; name an owner; hold design slot for the eDMS entry.</td><td>Integration Architect</td></tr><tr><td>R-12</td><td><b>Browser upload failures</b></td><td>Uploads of large files over poor connections fail with no resume, forcing a full re-upload.</td><td><span class="chip prop">Medium / Medium</span></td><td>Assess multipart or resumable upload; clear user messaging; new URL on expiry.</td><td>SDEC Technical Lead</td></tr><tr><td>R-13</td><td><b>Personal data in logs</b></td><td>Document names and metadata may contain personal data and leak into logs.</td><td><span class="chip prop">Medium / Low</span></td><td>Mask names, tokens and URLs in logs; review log policy in the DPIA.</td><td>Security Architect</td></tr><tr><td>R-14</td><td><b>Late security requirements</b></td><td>HLSRs issued late require design changes (for example mTLS or extra encryption).</td><td><span class="chip prop">Medium / Medium</span></td><td>Engage the SbD practitioner now; design keeps mTLS and private_key_jwt as drop-in options.</td><td>Security Architect</td></tr><tr><td>R-15</td><td><b>Connectivity lead times</b></td><td>Firewall and network changes take longer than planned and delay integration testing.</td><td><span class="chip prop">Medium / High</span></td><td>Raise change requests at design sign-off; test connectivity early in each environment.</td><td>Infrastructure Lead</td></tr></tbody></table></div></div>
-</section>
+<section id="why"><h2>2. Why it is needed when TLS is already used</h2>
+<p>TLS protects each connection. It does not prove that the file stored at the end is the file the user selected at the start. The document crosses several hops and rests in transient storage between them; one checksum, created once in the browser, is checked at each point.</p>
+<ul>
+<li><b>Truncated large uploads.</b> A 20 GB stream that drops early can reach the server as a shorter body. The digest shows it is incomplete.</li>
+<li><b>File changed after selection.</b> If the user edits or replaces the file on disk after step 1, the upload no longer matches what was registered.</li>
+<li><b>Corruption at rest or in copy.</b> A storage or copy fault in transient storage is caught before delivery to NRS or eDMS.</li>
+<li><b>Wrong file on a valid URL.</b> The digest is part of the signed presigned URL, so the URL only accepts the one file it was issued for (S-06).</li>
+<li><b>Evidence of receipt.</b> NRS can show it holds exactly the bytes the user submitted, which supports audit and dispute handling.</li>
+</ul></section>
 
-<section id="security"><h2>3. Security Summary (section 4)</h2>
-<p>Integration position for the SbD process. Each row should be traced to an HLSR and the SoA once issued.</p>
-<div class="copyhead"><h3>Security points</h3><button class="copy" data-target="t-sec">Copy table for Word</button></div><div id="t-sec"><div class="tw"><table class="wrap"><thead><tr><th>#</th><th>Control area</th><th>Summary</th><th>Status</th></tr></thead><tbody><tr><td>S-01</td><td><b>Secure by Design status</b></td><td>SbD assessment for SDEC integration is in progress. HLSRs and the SoA are produced by the SbD practitioner; the points below are the integration position to feed into them and will be traced to HLSR IDs once issued.</td><td><span class="chip prop">Pending SbD</span></td></tr><tr><td>S-02</td><td><b>Authentication</b></td><td>App-to-app only. Every API call uses OAuth 2.0 client credentials and a bearer token issued by iPaaS. No end-user identity or user token is passed to the integration layer.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-03</td><td><b>Authorisation</b></td><td>One scope per operation (least privilege). iPaaS binds each client ID to a sourceSystem, so a consumer can only read, upload or delete documents it created.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-04</td><td><b>Credential management</b></td><td>Client secrets are issued per environment, held in the enterprise secrets vault, never placed in source code, config files or logs, and rotated on a schedule with an overlap window. Sourcing platform credentials from PAM is a tracked gap (G-14).</td><td><span class="chip open">Open (G-14)</span></td></tr><tr><td>S-05</td><td><b>Transport security</b></td><td>TLS 1.2 minimum (1.3 preferred) on every leg: SDEC to iPaaS, browser to iPaaS, and iPaaS to NRS and eDMS. No plaintext endpoints.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-06</td><td><b>Presigned URLs</b></td><td>HMAC-signed, time-bound and bound to one fileId, declared size, digest and document ID. Treated as bearer credentials: never logged in full, revoked on delete, expiry agreed under D-03 and D-09.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-07</td><td><b>Browser boundary</b></td><td>The client secret and access token never reach the browser. The SDEC backend requests the presigned URL and passes only that URL to the browser. CORS on the upload endpoint allows SDEC origins and the PUT method only.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-08</td><td><b>Integrity</b></td><td>SHA-256 checksum declared when the URL is requested and verified with Content-Digest on upload. A mismatch is rejected (422) and the file is not released.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-09</td><td><b>Malware protection</b></td><td>Every file is AV scanned before it can reach AVAILABLE. Infected files are quarantined, alerted and never released to NRS or eDMS. Files above the current scan limit need a design (G-15, R-01).</td><td><span class="chip open">Open (G-15)</span></td></tr><tr><td>S-10</td><td><b>Data at rest and retention</b></td><td>Transient storage is encrypted at rest. Files are purged after delivery to NRS and eDMS, on delete, or by TTL (D-04). iPaaS holds no long-term copy of documents.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-11</td><td><b>API threat protection</b></td><td>At the iPaaS API layer: schema validation, payload size limits, rate limiting (429 with Retry-After), JSON threat protection and Idempotency-Key replay handling.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-12</td><td><b>Logging and audit</b></td><td>X-Correlation-ID end to end. Log metadata only: no form payload, tokens, client secrets or full presigned URLs. Document names are masked. Security events forwarded to protective monitoring (SIEM).</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-13</td><td><b>Error handling</b></td><td>All errors use the Problem structure. No stack traces, internal hostnames or platform detail are returned to consumers.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-14</td><td><b>Downstream credentials</b></td><td>NRS and eDMS credentials are held and managed by iPaaS. SDEC has no direct network route or credentials to NRS or eDMS.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-15</td><td><b>Data protection</b></td><td>DPIA to cover uploaded documents and submission payloads containing personal data. Metadata kept to what each API needs.</td><td><span class="chip prop">Pending DPIA</span></td></tr></tbody></table></div></div>
-</section>
+<section id="compare"><h2>3. Checksum, URL signature, OAuth token and TLS</h2>
+<div class="tw"><table><thead><tr><th>Control</th><th>What it proves</th><th>Secret involved</th><th>Created by</th><th>Checked by</th></tr></thead><tbody>
+<tr><td>Checksum (SHA-256)</td><td>File content has not changed</td><td>None</td><td>SDEC browser</td><td>iPaaS on upload and before transfer; NRS on delivery</td></tr>
+<tr><td>HMAC signature on the presigned URL</td><td>URL was issued by iPaaS and not altered; binds fileId, size, digest and document ID</td><td>iPaaS signing key</td><td>iPaaS</td><td>iPaaS on the PUT</td></tr>
+<tr><td>OAuth bearer token</td><td>Caller is the SDEC backend with the right scope</td><td>Client secret</td><td>iPaaS token endpoint</td><td>iPaaS on every API call</td></tr>
+<tr><td>TLS</td><td>Each connection is encrypted and protected in transit</td><td>Session keys</td><td>Both ends</td><td>Both ends</td></tr>
+</tbody></table></div>
+<p class="note">A checksum on its own does not prove who sent the file, because anyone can calculate SHA-256. The URL signature covers the digest, and that is what ties the content to an authorised request.</p></section>
 
-<section id="oauth"><h2>4. Authentication: OAuth 2.0 Client Credentials</h2>
-<p>All SDEC integration patterns use OAuth 2.0 client credentials. SDEC exchanges its client ID and secret with iPaaS for a short-lived bearer token, then presents that token on every API call. iPaaS both issues and validates the token. The integration supports app-to-app authentication only.</p>
-<div class="copyhead"><h3>Key points</h3><button class="copy" data-target="t-oauth">Copy table for Word</button></div><div id="t-oauth"><div class="tw"><table class="wrap"><thead><tr><th>Topic</th><th>Guidance</th></tr></thead><tbody><tr><td><b>Grant type</b></td><td>Client credentials (RFC 6749, section 4.4). Machine to machine, no user involved, no refresh token. When the token expires, SDEC requests a new one.</td></tr><tr><td><b>Token issuer</b></td><td>iPaaS issues and validates the tokens through its own token endpoint. There is no separate authorisation server in the flow.</td></tr><tr><td><b>Who calls</b></td><td>Only the SDEC backend holds the client secret and calls the token endpoint and the APIs. The browser only ever receives a presigned URL.</td></tr><tr><td><b>Client registration</b></td><td>One client per environment (dev, test, pre-prod, prod). Each client ID maps to one sourceSystem value and a fixed set of scopes.</td></tr><tr><td><b>Token request</b></td><td>POST /oauth2/token with form-encoded grant_type=client_credentials and the scopes needed. The client authenticates with HTTP Basic (client ID:client secret) over TLS.</td></tr><tr><td><b>Token response</b></td><td>access_token (signed JWT), token_type Bearer, expires_in (proposed 3600 seconds, D-13) and the granted scope.</td></tr><tr><td><b>Using the token</b></td><td>Send Authorization: Bearer &lt;access_token&gt; on every API call. Never put the token in a query string, URL or log line.</td></tr><tr><td><b>Caching</b></td><td>Reuse the token until shortly before expiry (for example renew when less than 60 seconds remain). Do not request a token per API call; the token endpoint is rate limited.</td></tr><tr><td><b>Validation in iPaaS</b></td><td>Signature, issuer, audience, expiry and not-before (small clock-skew allowance), scope against the operation, and client ID against sourceSystem.</td></tr><tr><td><b>Errors</b></td><td>401 invalid_token: discard the cached token, request a new one once and re-try the call. 401 invalid_client or 403 insufficient_scope: configuration fault; log, alert and do not re-try.</td></tr><tr><td><b>Secret rotation</b></td><td>Two secrets are valid during a rotation window so SDEC can switch without downtime. Rotation period agreed with security (D-13).</td></tr><tr><td><b>Hardening option</b></td><td>private_key_jwt (RFC 7523) or mutual TLS client authentication (RFC 8705) removes the shared secret. Recommended for decision before go-live (D-15).</td></tr></tbody></table></div></div>
-<div class="copyhead"><h3>Scopes per operation</h3><button class="copy" data-target="t-scope">Copy table for Word</button></div><div id="t-scope"><div class="tw"><table class=""><thead><tr><th>Scope</th><th>Operation</th><th>API ref</th><th>Status</th></tr></thead><tbody><tr><td><code>file-transfer.upload.request</code></td><td>Generate presigned URL</td><td>SDEC-MFT-API-01</td><td>Defined (IDD-FT-002)</td></tr><tr><td><code>file-transfer.status.read</code></td><td>Get document status</td><td>SDEC-MFT-API-02</td><td>Proposed (D-02)</td></tr><tr><td><code>file-transfer.file.delete</code></td><td>Delete file</td><td>SDEC-MFT-API-03</td><td>Defined (IDD-FT-002)</td></tr><tr><td><code>nrs.submission.create</code></td><td>NRS submission</td><td>SDEC-NRS-API-01</td><td>Proposed (D-14)</td></tr><tr><td><code>nrs.attachment.create</code></td><td>NRS attachment presigned URL</td><td>SDEC-NRS-API-02</td><td>Proposed (D-14)</td></tr></tbody></table></div></div>
-<h3>Sequence diagram</h3>
-<div class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1482" role="img" aria-label="OAuth 2.0 client credentials sequence between SDEC Backend, iPaaS and NRS" font-family="Helvetica, Arial, sans-serif">
-<defs><marker id="fa-i" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1 L10,5 L0,9 z" fill="#333"/></marker><marker id="oa-i" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1 L10,5 L0,9" fill="none" stroke="#333" stroke-width="1.3"/></marker></defs>
-<rect width="1000" height="1482" fill="#ffffff"/>
-<rect x="40" y="108" width="920" height="527" fill="none" stroke="#c9a879" stroke-width="1.3"/>
-<rect x="40" y="653" width="920" height="481" fill="none" stroke="#c9a879" stroke-width="1.3"/>
-<rect x="40" y="1152" width="920" height="286" fill="none" stroke="#c9a879" stroke-width="1.3"/>
-<rect x="98" y="864" width="662" height="256" fill="none" stroke="#b85450" stroke-width="1.3"/>
-<line x1="170" y1="80" x2="170" y2="1474" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="520" y1="80" x2="520" y2="1474" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
-<line x1="850" y1="80" x2="850" y2="1474" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
-<path d="M40,108 h200 v30 l-12,12 h-188 z" fill="#fff2cc" stroke="#c9a879" stroke-width="1.3"/>
-<text x="136.0" y="125" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Integration Flow -</text>
-<text x="136.0" y="140" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Success</text>
-<path d="M40,653 h200 v30 l-12,12 h-188 z" fill="#fff2cc" stroke="#c9a879" stroke-width="1.3"/>
-<text x="136.0" y="670" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Integration Flow -</text>
-<text x="136.0" y="685" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Token Expired</text>
-<path d="M40,1152 h200 v30 l-12,12 h-188 z" fill="#fff2cc" stroke="#c9a879" stroke-width="1.3"/>
-<text x="136.0" y="1169" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Integration Flow -</text>
-<text x="136.0" y="1184" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Invalid Credentials</text>
-<path d="M98,864 h92 v15 l-12,12 h-80 z" fill="#f8cecc" stroke="#b85450" stroke-width="1.3"/>
-<text x="140.0" y="881" text-anchor="middle" font-size="12.5" fill="#7a2b28">Re-try</text>
-<rect x="85.0" y="24" width="170" height="56" fill="#f9dcc4" stroke="#d99a62" stroke-width="1.4"/>
-<text x="170" y="57.0" text-anchor="middle" font-size="14" font-weight="600" fill="#222">SDEC Backend</text>
-<rect x="435.0" y="24" width="170" height="56" fill="#c9d6e2" stroke="#7f98ad" stroke-width="1.4"/>
-<text x="520" y="57.0" text-anchor="middle" font-size="14" font-weight="600" fill="#222">iPaaS</text>
-<rect x="765.0" y="24" width="170" height="56" fill="#d5e8d4" stroke="#82b366" stroke-width="1.4"/>
-<text x="850" y="57.0" text-anchor="middle" font-size="14" font-weight="600" fill="#222">NRS</text>
-<rect x="163.0" y="188" width="14" height="431" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="513.0" y="188" width="14" height="431" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="843.0" y="509" width="14" height="67" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="163.0" y="733" width="14" height="371" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="513.0" y="733" width="14" height="371" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="163.0" y="1232" width="14" height="194" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="513.0" y="1232" width="14" height="136" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="520" y="240" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="170" y="337" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="520" y="449" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="520" y="785" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="170" y="919" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="520" y="1284" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<rect x="170" y="1396" width="14" height="26" fill="#ffffff" stroke="#555" stroke-width="1.2"/>
-<line x1="177.0" y1="200" x2="513.0" y2="200" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="276.0" y="167" width="138.0" height="14" fill="#ffffff"/>
-<text x="345.0" y="178" text-anchor="middle" font-size="12" fill="#222">Request Access Token</text>
-<rect x="170.4" y="182" width="349.2" height="14" fill="#ffffff"/>
-<text x="345.0" y="193" text-anchor="middle" font-size="12" fill="#222">POST /oauth2/token (Client ID, Client Secret, Scope)</text>
-<path d="M527,222 H568 V252 H535" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="576" y="232" font-size="12" fill="#222">Validate Client ID, Secret and</text>
-<text x="576" y="247" font-size="12" fill="#222">Scope; Issue Bearer Token (JWT)</text>
-<line x1="513.0" y1="297" x2="177.0" y2="297" stroke="#333" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#oa-i)"/>
-<rect x="233.1" y="279" width="223.8" height="14" fill="#ffffff"/>
-<text x="345.0" y="290" text-anchor="middle" font-size="12" fill="#222">Access Token (Bearer, expires_in)</text>
-<path d="M177,319 H218 V349 H185" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="226" y="329" font-size="12" fill="#222">Cache Token</text>
-<text x="226" y="344" font-size="12" fill="#222">Until Expiry</text>
-<line x1="177.0" y1="409" x2="513.0" y2="409" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="305.7" y="376" width="78.6" height="14" fill="#ffffff"/>
-<text x="345.0" y="387" text-anchor="middle" font-size="12" fill="#222">API Request</text>
-<rect x="246.3" y="391" width="197.4" height="14" fill="#ffffff"/>
-<text x="345.0" y="402" text-anchor="middle" font-size="12" fill="#222">(Authorization: Bearer Token)</text>
-<path d="M527,431 H568 V461 H535" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="576" y="441" font-size="12" fill="#222">Validate Bearer Token</text>
-<text x="576" y="456" font-size="12" fill="#222">(Signature, Expiry, Scope)</text>
-<line x1="527.0" y1="521" x2="843.0" y2="521" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="596.2" y="488" width="177.6" height="14" fill="#ffffff"/>
-<text x="685.0" y="499" text-anchor="middle" font-size="12" fill="#222">Forward Request (NRS APIs)</text>
-<rect x="589.6" y="503" width="190.8" height="14" fill="#ffffff"/>
-<text x="685.0" y="514" text-anchor="middle" font-size="12" fill="#222">(iPaaS-held NRS Credentials)</text>
-<line x1="843.0" y1="564" x2="527.0" y2="564" stroke="#333" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#oa-i)"/>
-<rect x="658.9" y="546" width="52.2" height="14" fill="#ffffff"/>
-<text x="685.0" y="557" text-anchor="middle" font-size="12" fill="#222">Success</text>
-<line x1="513.0" y1="607" x2="177.0" y2="607" stroke="#333" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#oa-i)"/>
-<rect x="256.2" y="589" width="177.6" height="14" fill="#ffffff"/>
-<text x="345.0" y="600" text-anchor="middle" font-size="12" fill="#222">Response (201 / 200 / 202)</text>
-<line x1="177.0" y1="745" x2="513.0" y2="745" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="305.7" y="712" width="78.6" height="14" fill="#ffffff"/>
-<text x="345.0" y="723" text-anchor="middle" font-size="12" fill="#222">API Request</text>
-<rect x="269.4" y="727" width="151.2" height="14" fill="#ffffff"/>
-<text x="345.0" y="738" text-anchor="middle" font-size="12" fill="#222">(Expired Bearer Token)</text>
-<path d="M527,767 H568 V797 H535" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="576" y="777" font-size="12" fill="#222">Validate Bearer Token:</text>
-<text x="576" y="792" font-size="12" fill="#222">Token Expired</text>
-<line x1="513.0" y1="842" x2="177.0" y2="842" stroke="#333" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#oa-i)"/>
-<rect x="236.4" y="824" width="217.2" height="14" fill="#ffffff"/>
-<text x="345.0" y="835" text-anchor="middle" font-size="12" fill="#222">401 Unauthorised (invalid_token)</text>
-<path d="M177,901 H218 V931 H185" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="226" y="911" font-size="12" fill="#222">Discard Cached Token</text>
-<line x1="177.0" y1="991" x2="513.0" y2="991" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="276.0" y="958" width="138.0" height="14" fill="#ffffff"/>
-<text x="345.0" y="969" text-anchor="middle" font-size="12" fill="#222">Request Access Token</text>
-<rect x="233.1" y="973" width="223.8" height="14" fill="#ffffff"/>
-<text x="345.0" y="984" text-anchor="middle" font-size="12" fill="#222">(Client ID, Client Secret, Scope)</text>
-<line x1="513.0" y1="1034" x2="177.0" y2="1034" stroke="#333" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#oa-i)"/>
-<rect x="289.2" y="1016" width="111.6" height="14" fill="#ffffff"/>
-<text x="345.0" y="1027" text-anchor="middle" font-size="12" fill="#222">New Access Token</text>
-<line x1="177.0" y1="1092" x2="513.0" y2="1092" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="266.1" y="1059" width="157.8" height="14" fill="#ffffff"/>
-<text x="345.0" y="1070" text-anchor="middle" font-size="12" fill="#222">Re-try API Request Once</text>
-<rect x="282.6" y="1074" width="124.8" height="14" fill="#ffffff"/>
-<text x="345.0" y="1085" text-anchor="middle" font-size="12" fill="#222">(New Bearer Token)</text>
-<line x1="177.0" y1="1244" x2="513.0" y2="1244" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<rect x="276.0" y="1211" width="138.0" height="14" fill="#ffffff"/>
-<text x="345.0" y="1222" text-anchor="middle" font-size="12" fill="#222">Request Access Token</text>
-<rect x="295.8" y="1226" width="98.4" height="14" fill="#ffffff"/>
-<text x="345.0" y="1237" text-anchor="middle" font-size="12" fill="#222">or API Request</text>
-<path d="M527,1266 H568 V1296 H535" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="576" y="1276" font-size="12" fill="#222">Validate Client and Scope:</text>
-<text x="576" y="1291" font-size="12" fill="#222">Rejected</text>
-<line x1="513.0" y1="1356" x2="177.0" y2="1356" stroke="#333" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#oa-i)"/>
-<rect x="276.0" y="1323" width="138.0" height="14" fill="#ffffff"/>
-<text x="345.0" y="1334" text-anchor="middle" font-size="12" fill="#222">401 invalid_client /</text>
-<rect x="269.4" y="1338" width="151.2" height="14" fill="#ffffff"/>
-<text x="345.0" y="1349" text-anchor="middle" font-size="12" fill="#222">403 insufficient_scope</text>
-<path d="M177,1378 H218 V1408 H185" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#fa-i)"/>
-<text x="226" y="1388" font-size="12" fill="#222">Log and Raise Alert;</text>
-<text x="226" y="1403" font-size="12" fill="#222">Do Not Retry</text>
+<section id="sequence"><h2>4. Sequence: checksum through upload and delivery</h2>
+<p>Three flows: a matching upload, a mismatch with re-try, and the onward transfer to NRS where the same digest is checked again.</p>
+<div class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 1889" role="img" aria-label="Document checksum sequence between SDEC Browser, SDEC Backend, iPaaS and NRS" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="fa" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1 L10,5 L0,9 z" fill="#333"/></marker><marker id="oa" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,1 L10,5 L0,9" fill="none" stroke="#333" stroke-width="1.3"/></marker></defs>
+<rect width="1300" height="1889" fill="#ffffff"/>
+<rect x="40" y="110" width="1220" height="764" fill="none" stroke="#c9a879" stroke-width="1.3"/>
+<path d="M40,110 h220 v30 l-12,12 h-208 z" fill="#fff2cc" stroke="#c9a879" stroke-width="1.3"/>
+<text x="144.0" y="127.5" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Integration Flow -</text>
+<text x="144.0" y="142.5" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Checksum match</text>
+<rect x="40" y="892" width="1220" height="491" fill="none" stroke="#c9a879" stroke-width="1.3"/>
+<path d="M40,892 h220 v30 l-12,12 h-208 z" fill="#fff2cc" stroke="#c9a879" stroke-width="1.3"/>
+<text x="144.0" y="909.5" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Integration Flow -</text>
+<text x="144.0" y="924.5" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Checksum mismatch</text>
+<rect x="80" y="1126" width="820" height="229" fill="none" stroke="#b85450" stroke-width="1.3"/>
+<path d="M80,1126 h92 v15 l-12,12 h-80 z" fill="#f8cecc" stroke="#b85450" stroke-width="1.3"/>
+<text x="120.0" y="1143.5" text-anchor="middle" font-size="12.5" fill="#7a2b28">Re-try</text>
+<rect x="40" y="1401" width="1220" height="454" fill="none" stroke="#c9a879" stroke-width="1.3"/>
+<path d="M40,1401 h220 v30 l-12,12 h-208 z" fill="#fff2cc" stroke="#c9a879" stroke-width="1.3"/>
+<text x="144.0" y="1418.5" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Integration Flow -</text>
+<text x="144.0" y="1433.5" text-anchor="middle" font-size="12.5" fill="#5c4a1e">Onward transfer to NRS</text>
+<line x1="150" y1="80" x2="150" y2="1881" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="65" y="24" width="170" height="56" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.3"/>
+<text x="150" y="57.0" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2933">SDEC Browser</text>
+<line x1="450" y1="80" x2="450" y2="1881" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="365" y="24" width="170" height="56" fill="#f9dcc4" stroke="#d99a62" stroke-width="1.3"/>
+<text x="450" y="57.0" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2933">SDEC Backend</text>
+<line x1="760" y1="80" x2="760" y2="1881" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="675" y="24" width="170" height="56" fill="#c9d6e2" stroke="#7f98ad" stroke-width="1.3"/>
+<text x="760" y="57.0" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2933">iPaaS</text>
+<line x1="1050" y1="80" x2="1050" y2="1881" stroke="#8a8a8a" stroke-width="1" stroke-dasharray="4 4"/>
+<rect x="965" y="24" width="170" height="56" fill="#d5e8d4" stroke="#82b366" stroke-width="1.3"/>
+<text x="1050" y="57.0" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f2933">NRS</text>
+<path d="M150,172 H180 V210 H152" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="190" y="178" font-size="12" fill="#1f2933">1. Read the file in chunks and</text>
+<text x="190" y="194" font-size="12" fill="#1f2933">compute SHA-256 (streaming)</text>
+<rect x="175.75" y="231" width="248.5" height="19" fill="#ffffff"/>
+<line x1="150" y1="256" x2="450" y2="256" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="300.0" y="244" text-anchor="middle" font-size="12" fill="#1f2933">2. Document metadata + checksumSha256</text>
+<rect x="487.25" y="279" width="235.5" height="35" fill="#ffffff"/>
+<line x1="450" y1="320" x2="760" y2="320" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="605.0" y="292" text-anchor="middle" font-size="12" fill="#1f2933">3. POST /generate_presignedurl with</text>
+<text x="605.0" y="308" text-anchor="middle" font-size="12" fill="#1f2933">documents[].checksumSha256</text>
+<path d="M760,350 H790 V404 H762" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="800" y="356" font-size="12" fill="#1f2933">4. Register fileId, store expected</text>
+<text x="800" y="372" font-size="12" fill="#1f2933">digest, sign URL bound to fileId,</text>
+<text x="800" y="388" font-size="12" fill="#1f2933">size and digest</text>
+<rect x="471.0" y="425" width="268.0" height="35" fill="#ffffff"/>
+<line x1="760" y1="466" x2="450" y2="466" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="605.0" y="438" text-anchor="middle" font-size="12" fill="#1f2933">5. 201 upload.url + requiredHeaders</text>
+<text x="605.0" y="454" text-anchor="middle" font-size="12" fill="#1f2933">(Content-Digest, X-External-Document-ID)</text>
+<rect x="185.5" y="489" width="229.0" height="19" fill="#ffffff"/>
+<line x1="450" y1="514" x2="150" y2="514" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="300.0" y="502" text-anchor="middle" font-size="12" fill="#1f2933">6. Presigned URL and header values</text>
+<rect x="243.0" y="537" width="424.0" height="19" fill="#ffffff"/>
+<line x1="150" y1="562" x2="760" y2="562" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="455.0" y="550" text-anchor="middle" font-size="12" fill="#1f2933">7. PUT /uploads/{fileId} with Content-Digest: sha-256=:&lt;Base64&gt;:</text>
+<path d="M760,592 H790 V646 H762" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="800" y="598" font-size="12" fill="#1f2933">8. Verify URL signature; header</text>
+<text x="800" y="614" font-size="12" fill="#1f2933">digest must equal the registered</text>
+<text x="800" y="630" font-size="12" fill="#1f2933">digest</text>
+<path d="M760,674 H790 V712 H762" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="800" y="680" font-size="12" fill="#1f2933">9. Stream bytes to /inbound and hash</text>
+<text x="800" y="696" font-size="12" fill="#1f2933">while writing</text>
+<path d="M760,740 H790 V794 H762" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="800" y="746" font-size="12" fill="#1f2933">10. Computed = expected: status</text>
+<text x="800" y="762" font-size="12" fill="#1f2933">UPLOADED, event</text>
+<text x="800" y="778" font-size="12" fill="#1f2933">file_upload_received, start AV scan</text>
+<rect x="324.25" y="815" width="261.5" height="19" fill="#ffffff"/>
+<line x1="760" y1="840" x2="150" y2="840" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="455.0" y="828" text-anchor="middle" font-size="12" fill="#1f2933">11. 201 Created (bytes received intact)</text>
+<rect x="239.75" y="947" width="430.5" height="19" fill="#ffffff"/>
+<line x1="150" y1="972" x2="760" y2="972" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="455.0" y="960" text-anchor="middle" font-size="12" fill="#1f2933">12. PUT /uploads/{fileId} (bytes altered or truncated on the way)</text>
+<path d="M760,1002 H790 V1056 H762" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="800" y="1008" font-size="12" fill="#1f2933">13. Computed differs from expected:</text>
+<text x="800" y="1024" font-size="12" fill="#1f2933">discard file, never released</text>
+<text x="800" y="1040" font-size="12" fill="#1f2933">downstream</text>
+<rect x="321.0" y="1077" width="268.0" height="19" fill="#ffffff"/>
+<line x1="760" y1="1102" x2="150" y2="1102" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="455.0" y="1090" text-anchor="middle" font-size="12" fill="#1f2933">14. 422 Problem: Content-Digest mismatch</text>
+<path d="M150,1173 H180 V1227 H152" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="190" y="1179" font-size="12" fill="#1f2933">15. Recompute SHA-256. If it differs</text>
+<text x="190" y="1195" font-size="12" fill="#1f2933">from step 2, the file changed:</text>
+<text x="190" y="1211" font-size="12" fill="#1f2933">request a new URL</text>
+<rect x="285.25" y="1248" width="339.5" height="19" fill="#ffffff"/>
+<line x1="150" y1="1273" x2="760" y2="1273" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="455.0" y="1261" text-anchor="middle" font-size="12" fill="#1f2933">16. PUT again with the same URL (while not expired)</text>
+<rect x="272.25" y="1296" width="365.5" height="19" fill="#ffffff"/>
+<line x1="760" y1="1321" x2="150" y2="1321" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="455.0" y="1309" text-anchor="middle" font-size="12" fill="#1f2933">17. 201 Created, or 410 URL_EXPIRED (request a new URL)</text>
+<rect x="512.0" y="1456" width="476.0" height="19" fill="#ffffff"/>
+<line x1="450" y1="1481" x2="1050" y2="1481" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="750.0" y="1469" text-anchor="middle" font-size="12" fill="#1f2933">18. NRS attachment request via iPaaS proxy, with the same checksumSha256</text>
+<rect x="655.0" y="1504" width="190.0" height="19" fill="#ffffff"/>
+<line x1="1050" y1="1529" x2="450" y2="1529" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="750.0" y="1517" text-anchor="middle" font-size="12" fill="#1f2933">19. NRS presigned upload URL</text>
+<path d="M760,1559 H790 V1613 H762" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="800" y="1565" font-size="12" fill="#1f2933">20. Re-hash the file from transient</text>
+<text x="800" y="1581" font-size="12" fill="#1f2933">storage and compare with the</text>
+<text x="800" y="1597" font-size="12" fill="#1f2933">registered digest</text>
+<rect x="797.0" y="1634" width="216.0" height="35" fill="#ffffff"/>
+<line x1="760" y1="1675" x2="1050" y2="1675" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="905.0" y="1647" text-anchor="middle" font-size="12" fill="#1f2933">21. PUT file to the NRS URL with</text>
+<text x="905.0" y="1663" text-anchor="middle" font-size="12" fill="#1f2933">Content-Digest</text>
+<path d="M1050,1705 H1080 V1775 H1052" fill="none" stroke="#333" stroke-width="1.2" marker-end="url(#fa)"/>
+<text x="1090" y="1711" font-size="12" fill="#1f2933">22. Verify digest</text>
+<text x="1090" y="1727" font-size="12" fill="#1f2933">against checksumSha256</text>
+<text x="1090" y="1743" font-size="12" fill="#1f2933">from the attachment</text>
+<text x="1090" y="1759" font-size="12" fill="#1f2933">request</text>
+<rect x="790.5" y="1796" width="229.0" height="19" fill="#ffffff"/>
+<line x1="1050" y1="1821" x2="760" y2="1821" stroke="#333" stroke-width="1.2" stroke-dasharray="6 4" marker-end="url(#oa)"/>
+<text x="905.0" y="1809" text-anchor="middle" font-size="12" fill="#1f2933">23. 201 Created (delivered intact)</text>
 </svg></div>
-<p class="note">Success: token request and caching happen once per token lifetime; the API request repeats for every call while the token is valid. NRS is only called for the NRS APIs, and iPaaS uses its own NRS credentials on that leg (S-14). Token Expired: one re-try with a new token. Invalid Credentials: no re-try.</p>
-<h3>Example exchange</h3><pre><code>POST /oauth2/token HTTP/1.1
-Host: &lt;ipaas-host&gt;
-Authorization: Basic base64(client_id:client_secret)
-Content-Type: application/x-www-form-urlencoded
+<div class="copyhead"><h3>Step description</h3><button class="copy" data-target="t-steps">Copy table for Word</button></div>
+<div id="t-steps"><div class="tw"><table class="steps"><thead><tr><th>#</th><th>Participants</th><th>Message</th><th>What happens</th></tr></thead><tbody>
+<tr class="grp"><td colspan="4">Checksum match</td></tr>
+<tr><td>1</td><td>SDEC Browser</td><td>Read the file in chunks and compute SHA-256 (streaming)</td><td>The browser reads the selected file from disk in chunks and feeds each chunk to an incremental SHA-256 hash. The 32-byte result is Base64 encoded (44 characters).</td></tr>
+<tr><td>2</td><td>SDEC Browser to SDEC Backend</td><td>Document metadata + checksumSha256</td><td>The browser sends name, size, MIME type and the Base64 checksum to the SDEC backend. No file content is sent here.</td></tr>
+<tr><td>3</td><td>SDEC Backend to iPaaS</td><td>POST /generate_presignedurl with documents[].checksumSha256</td><td>SDEC-MFT-API-01. The backend calls iPaaS with its OAuth token. The checksum is the expected value for the bytes that will follow.</td></tr>
+<tr><td>4</td><td>iPaaS</td><td>Register fileId, store expected digest, sign URL bound to fileId, size and digest</td><td>iPaaS stores checksumSha256 against the fileId and signs the presigned URL (HMAC). The signature covers the digest, so a different file cannot be uploaded with this URL.</td></tr>
+<tr><td>5</td><td>iPaaS to SDEC Backend</td><td>201 upload.url + requiredHeaders (Content-Digest, X-External-Document-ID)</td><td>The response returns the URL, its expiry and the headers the PUT must carry.</td></tr>
+<tr><td>6</td><td>SDEC Backend to SDEC Browser</td><td>Presigned URL and header values</td><td>Only the URL and header values reach the browser. The OAuth token stays on the backend (S-07).</td></tr>
+<tr><td>7</td><td>SDEC Browser to iPaaS</td><td>PUT /uploads/{fileId} with Content-Digest: sha-256=:&lt;Base64&gt;:</td><td>The browser streams the file body directly to iPaaS transient storage and declares the digest in the Content-Digest header.</td></tr>
+<tr><td>8</td><td>iPaaS</td><td>Verify URL signature; header digest must equal the registered digest</td><td>Checked before any bytes are stored. A header that differs from the registered value means the request does not match the URL and is rejected.</td></tr>
+<tr><td>9</td><td>iPaaS</td><td>Stream bytes to /inbound and hash while writing</td><td>iPaaS computes its own SHA-256 over the bytes as they arrive. It never trusts the declared value alone.</td></tr>
+<tr><td>10</td><td>iPaaS</td><td>Computed = expected: status UPLOADED, event file_upload_received, start AV scan</td><td>Only a matching file moves to UPLOADED. The AV scan then decides AVAILABLE or QUARANTINED.</td></tr>
+<tr><td>11</td><td>iPaaS to SDEC Browser</td><td>201 Created (bytes received intact)</td><td>A 2xx on the PUT now means the bytes arrived complete and unaltered. It does not mean the AV scan passed (use SDEC-MFT-API-02 or events).</td></tr>
+<tr class="grp"><td colspan="4">Checksum mismatch</td></tr>
+<tr><td>12</td><td>SDEC Browser to iPaaS</td><td>PUT /uploads/{fileId} (bytes altered or truncated on the way)</td><td>Example causes: dropped connection that ends the stream early, a proxy or extension altering the body, a disk read error, or the file edited after step 1.</td></tr>
+<tr><td>13</td><td>iPaaS</td><td>Computed differs from expected: discard file, never released downstream</td><td>The partial or altered file is deleted from /inbound. It never reaches UPLOADED, AV scan, NRS or eDMS.</td></tr>
+<tr><td>14</td><td>iPaaS to SDEC Browser</td><td>422 Problem: Content-Digest mismatch</td><td>Problem structure with correlationId. No file content or stack trace is returned.</td></tr>
+<tr class="grp"><td colspan="4">Checksum mismatch: Re-try</td></tr>
+<tr><td>15</td><td>SDEC Browser</td><td>Recompute SHA-256. If it differs from step 2, the file changed: request a new URL</td><td>A new value means the file on disk is not the one registered, so the old URL can never succeed. SDEC restarts at step 2 with the new checksum.</td></tr>
+<tr><td>16</td><td>SDEC Browser to iPaaS</td><td>PUT again with the same URL (while not expired)</td><td>Same value means the bytes were damaged in transit. Re-try the upload on the same URL (subject to D-20).</td></tr>
+<tr><td>17</td><td>iPaaS to SDEC Browser</td><td>201 Created, or 410 URL_EXPIRED (request a new URL)</td><td>Bounded re-try. On 410 the backend requests a new presigned URL.</td></tr>
+<tr class="grp"><td colspan="4">Onward transfer to NRS</td></tr>
+<tr><td>18</td><td>SDEC Backend to NRS</td><td>NRS attachment request via iPaaS proxy, with the same checksumSha256</td><td>SDEC-NRS-API-02. The digest registered at upload is passed to NRS so the receiving system can check the file too.</td></tr>
+<tr><td>19</td><td>NRS to SDEC Backend</td><td>NRS presigned upload URL</td><td>Returned through the iPaaS proxy. SDEC then sends the transfer request (separate flow, step 18 of the NRS sequence).</td></tr>
+<tr><td>20</td><td>iPaaS</td><td>Re-hash the file from transient storage and compare with the registered digest</td><td>Catches corruption at rest before delivery. Cost for very large files is covered by D-21.</td></tr>
+<tr><td>21</td><td>iPaaS to NRS</td><td>PUT file to the NRS URL with Content-Digest</td><td>iPaaS streams the clean (AVAILABLE) file to NRS with the same digest value.</td></tr>
+<tr><td>22</td><td>NRS</td><td>Verify digest against checksumSha256 from the attachment request</td><td>NRS support for this check is to be confirmed (D-11, D-21).</td></tr>
+<tr><td>23</td><td>NRS to iPaaS</td><td>201 Created (delivered intact)</td><td>One digest, created once in the browser, is checked at every hop: upload, storage and delivery.</td></tr>
+</tbody></table></div></div>
+<h3>Header and value formats</h3>
+<pre><code>Request (step 3), per document:
+  "checksumSha256": "uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek="
 
-grant_type=client_credentials&amp;scope=file-transfer.upload.request file-transfer.file.delete
+Upload (step 7), RFC 9530 Content-Digest format (proposed, D-18):
+  Content-Digest: sha-256=:uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek=:
+  X-External-Document-ID: &lt;externalDocumentId&gt;</code></pre></section>
 
-HTTP/1.1 200 OK
-Content-Type: application/json
-Cache-Control: no-store
+<section id="errors"><h2>5. Error handling for checksum failures</h2>
+<div class="copyhead"><h3>Where a mismatch is caught and what SDEC does</h3><button class="copy" data-target="t-err">Copy table for Word</button></div>
+<div id="t-err"><div class="tw"><table><thead><tr><th>Where</th><th>Condition</th><th>Response</th><th>SDEC action</th></tr></thead><tbody>
+<tr><td>URL request (step 3)</td><td>checksumSha256 missing, not Base64, or not 32 bytes</td><td>400 Problem (schema)</td><td>Defect in SDEC. Fix the encoding; do not re-try unchanged.</td></tr>
+<tr><td>PUT, before body (step 8)</td><td>Content-Digest header missing, badly formatted, or different from the registered digest</td><td>400 or 422 Problem (code to be set under D-18)</td><td>Send exactly the value returned in requiredHeaders.</td></tr>
+<tr><td>PUT, end of stream (step 13)</td><td>Digest of received bytes differs from expected</td><td>422 Problem (Content-Digest mismatch); file discarded</td><td>Recompute. Same value: re-try on the same URL. Different value: file changed, request a new URL.</td></tr>
+<tr><td>PUT</td><td>URL expired during re-try</td><td>410 URL_EXPIRED</td><td>Request a new presigned URL (SDEC-MFT-API-01).</td></tr>
+<tr><td>Before transfer (step 20)</td><td>Stored file no longer matches the registered digest</td><td>Transfer not started; transfer failed event and webhook to SDEC; operational alert (proposed)</td><td>Ask the user to upload again; incident raised for the storage fault.</td></tr>
+<tr><td>NRS delivery (step 22)</td><td>NRS digest check fails</td><td>NRS rejects; transfer re-try policy applies (D-17)</td><td>Follow transfer failure handling; no direct action unless re-tries are exhausted.</td></tr>
+</tbody></table></div></div>
+<p class="note">Rule for every case: a file whose digest does not match is never set to UPLOADED or AVAILABLE and is never released to NRS or eDMS (S-08, A-08).</p></section>
 
-{ "access_token": "eyJhbGciOi...", "token_type": "Bearer",
-  "expires_in": 3600, "scope": "file-transfer.upload.request file-transfer.file.delete" }
+<section id="build"><h2>6. Build notes by delivery group</h2>
+<h3>SDEC browser</h3><ul>
+<li>Use a streaming SHA-256 that reads the file in chunks (for example 32 MB). Web Crypto <code>crypto.subtle.digest</code> needs the whole file in memory, so it is not suitable for files up to 20 GB.</li>
+<li>Run the hash in a Web Worker and show progress. A 20 GB file is read twice (hash, then upload), and hashing alone can take several minutes on a typical laptop.</li>
+<li>Encode the 32 raw digest bytes as Base64. Never encode the hex string.</li>
+</ul>
+<pre><code>// Example with the hash-wasm library (incremental SHA-256)
+import { createSHA256 } from 'hash-wasm';
 
-POST /generate_presignedurl HTTP/1.1
-Host: &lt;ipaas-host&gt;
-Authorization: Bearer eyJhbGciOi...
-Idempotency-Key: 7d1c...   X-Correlation-ID: 4b2e...</code></pre>
-</section>
+async function sha256Base64(file, chunk = 32 * 1024 * 1024) {
+  const h = await createSHA256();
+  h.init();
+  for (let pos = 0; pos &lt; file.size; pos += chunk) {
+    h.update(new Uint8Array(await file.slice(pos, pos + chunk).arrayBuffer()));
+  }
+  const bytes = h.digest('binary');            // 32 raw bytes
+  return btoa(String.fromCharCode(...bytes));  // 44-character Base64
+}</code></pre>
+<h3>SDEC backend</h3><ul>
+<li>Pass checksumSha256 through unchanged and store it against externalDocumentId for reconciliation. The backend never sees file content (A-03), so it cannot recompute it.</li>
+</ul>
+<h3>iPaaS</h3><ul>
+<li>Store the expected digest with the fileId and include it in the HMAC signing input for the presigned URL.</li>
+<li>Calculate SHA-256 incrementally while streaming the body to /inbound; compare before setting UPLOADED. On mismatch, delete the partial file.</li>
+<li>Keep the computed digest in the document status record so SDEC-MFT-API-02 can return it.</li>
+<li>Re-verify before transfer to NRS and eDMS (scope under D-21). Digest values hold no personal data and can be logged; document names stay masked (S-12).</li>
+</ul>
+<h3>NRS</h3><ul>
+<li>Accept checksumSha256 in the attachment request (SDEC-NRS-API-02) and verify it on receipt. Support to be confirmed under D-11 and D-21.</li>
+</ul></section>
 
-<section id="patterns"><h2>5. Integration Patterns (section 5.2)</h2>
-<div class="copyhead"><h3>Pattern</h3><button class="copy" data-target="t-pat">Copy table for Word</button></div><div id="t-pat"><div class="tw"><table class="wrap"><thead><tr><th>Pattern</th><th>Description</th></tr></thead><tbody><tr><td><b>Synchronous API</b></td><td>Request and response over HTTPS (REST, JSON) to iPaaS; SDEC receives the result in the same call. Used for: generate presigned URL (SDEC-MFT-API-01), get document status (SDEC-MFT-API-02), delete file (SDEC-MFT-API-03), NRS submission (SDEC-NRS-API-01) and NRS attachment URL (SDEC-NRS-API-02). Controls: OAuth 2.0 bearer token, Idempotency-Key on create and delete, X-Correlation-ID, agreed timeouts, Problem error structure. No file content passes through this pattern.</td></tr><tr><td><b>Asynchronous File Upload</b></td><td>SDEC obtains a time-bound presigned URL through the synchronous API, then the browser uploads the file directly to iPaaS transient storage with HTTP PUT. Files up to 20 GB are streamed and never pass through the API layer. After upload the file is AV scanned and moves to AVAILABLE or QUARANTINED; SDEC learns the outcome from events or the status API, not from the PUT response. Used for: External User Document Upload.</td></tr><tr><td><b>Event Notification (Webhook)</b></td><td>iPaaS publishes document and transfer events (CloudEvents 1.0) on its message broker and calls back an SDEC webhook with the document ID as the default. SDEC may instead consume from the broker directly. Callbacks are authenticated, re-tried with backoff and carry an event ID so SDEC can discard duplicates. Missed events are reconciled with one status call.</td></tr><tr><td><b>Asynchronous File Transfer</b></td><td>SDEC sends Transfer Document (document ID, NRS presigned URL) and iPaaS acknowledges straight away. iPaaS publishes a transfer request event on its broker, consumes it, locates the document in transient storage and uploads it to the NRS presigned URL. On success it publishes a success event and calls back SDEC; on failure it re-tries, then publishes a failed event and calls back SDEC. SDEC never handles file content. Files are deleted once NRS and eDMS have both acknowledged delivery (SDEC-MFT-API-03).</td></tr></tbody></table></div></div>
-</section>
-
-<section id="decisions"><h2>6. Open decisions</h2>
-<div class="copyhead"><h3>Decision log additions</h3><button class="copy" data-target="t-dec">Copy table for Word</button></div><div id="t-dec"><div class="tw"><table class="wrap"><thead><tr><th>ID</th><th>Decision required</th><th>Owner role</th></tr></thead><tbody><tr><td>D-12</td><td>Token endpoint path, JWT signing key management and key rotation within iPaaS.</td><td>Boomi Platform Owner with Security Architect</td></tr><tr><td>D-13</td><td>Access token lifetime (expires_in) and client secret rotation period.</td><td>Security Architect</td></tr><tr><td>D-14</td><td>Final scope names for document status, NRS submission and NRS attachment operations.</td><td>Integration Architect</td></tr><tr><td>D-15</td><td>Whether to replace the client secret with private_key_jwt or mutual TLS before go-live.</td><td>Security Architect</td></tr><tr><td>D-16</td><td>Webhook security for callbacks to SDEC: OAuth on the SDEC endpoint, HMAC payload signature, or both.</td><td>Integration Architect with SDEC Technical Lead</td></tr><tr><td>D-17</td><td>Transfer re-try policy: number of attempts, backoff, and when the failed event and callback are raised to SDEC.</td><td>Integration Architect with NRS Technical Lead</td></tr></tbody></table></div></div>
-</section>
-</main><div id="toast">Copied. Paste into Word.</div>
+<section id="decisions"><h2>7. Open decisions</h2>
+<div class="copyhead"><h3>Add to the decision log</h3><button class="copy" data-target="t-dec">Copy table for Word</button></div>
+<div id="t-dec"><div class="tw"><table><thead><tr><th>ID</th><th>Decision required</th><th>Owner role</th><th>Status</th></tr></thead><tbody>
+<tr><td>D-18</td><td>Content-Digest header format (RFC 9530 <code>sha-256=:&lt;Base64&gt;:</code> or plain Base64) and the Problem code for a header that differs from the registered digest.</td><td>Integration Architect</td><td><span class="chip open">Open</span></td></tr>
+<tr><td>D-19</td><td>Browser hashing approach for files up to 20 GB: whole-file streaming hash, or per-part checksums with multipart or resumable upload (links to R-12).</td><td>SDEC Technical Lead with Integration Architect</td><td><span class="chip open">Open</span></td></tr>
+<tr><td>D-20</td><td>File status after a digest mismatch: keep URL_ISSUED and allow re-try on the same URL, or set REJECTED and require a new URL.</td><td>Integration Architect</td><td><span class="chip open">Open</span></td></tr>
+<tr><td>D-21</td><td>Whether iPaaS re-hashes before each transfer (processing cost for large files) and whether NRS and eDMS verify the digest on receipt.</td><td>Boomi Platform Owner with NRS Technical Lead</td><td><span class="chip open">Open</span></td></tr>
+</tbody></table></div></div></section>
+</main><div id="toast" role="status"></div>
 <script>
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.opacity=1;setTimeout(function(){t.style.opacity=0},1600)}
 function wordHtml(el){var c=el.cloneNode(true);c.querySelectorAll('table').forEach(function(t){t.setAttribute('border','1');t.style.borderCollapse='collapse';t.style.width='100%';t.style.fontFamily='Calibri,Arial';t.style.fontSize='10pt'});
 c.querySelectorAll('th,td').forEach(function(x){x.style.border='1px solid #808080';x.style.padding='4px';x.style.verticalAlign='top';x.style.color='#000'});
-c.querySelectorAll('th').forEach(function(x){x.style.background='#d9e2cf'});c.querySelectorAll('.chip').forEach(function(x){x.removeAttribute('class')});return c.innerHTML}
+c.querySelectorAll('th').forEach(function(x){x.style.background='#d9e2cf'});c.querySelectorAll('tr.grp td').forEach(function(x){x.style.background='#f2f2f2';x.style.fontWeight='bold'});c.querySelectorAll('.chip').forEach(function(x){x.removeAttribute('class')});return c.innerHTML}
 document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){var el=document.getElementById(b.dataset.target);var h=wordHtml(el);
 function fallback(){var d=document.createElement('div');d.innerHTML=h;d.style.position='fixed';d.style.left='-9999px';document.body.appendChild(d);var r=document.createRange();r.selectNodeContents(d);var s=getSelection();s.removeAllRanges();s.addRange(r);
 try{document.execCommand('copy');toast('Copied. Paste into Word.')}catch(e){toast('Select the table and copy manually.')}s.removeAllRanges();d.remove()}
 try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([h],{type:'text/html'}),'text/plain':new Blob([el.innerText],{type:'text/plain'})})]).then(function(){toast('Copied. Paste into Word.')},fallback)}catch(e){fallback()}})});
-</script></body></html>
+</script>
+</body></html>
