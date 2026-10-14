@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SDEC Security and Patterns</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1f2933;--muted:#52606d;--rule:#d9dee4;--accent:#1d4e89;--accentbg:#e8f0fa;
+--ok:#1e6b3a;--okbg:#e4f3e9;--prop:#7a5a00;--propbg:#fdf3d6;--open:#b3401a;--openbg:#fcebe5;--bar:#14304f;--codebg:#f0f2f5;
+--d-bg:#ffffff;--d-line:#1f2933;--d-life:#9aa5b1;--d-text:#1f2933;--d-muted:#52606d;--d-headbg:#f5f7fa;--d-accent:#1d4e89;--d-accentbg:#e8f0fa;
+--d-onaccent:#ffffff;--d-note:#c9a227;--d-notebg:#fdf8e6;--d-warn:#b3401a;--d-warnbg:#fcebe5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b2129;--ink:#e4e7eb;--muted:#a0aab4;--rule:#323b46;
+--accent:#8ab4e8;--accentbg:#1d2c40;--ok:#7fd19b;--okbg:#17301f;--prop:#e8c86a;--propbg:#33290d;--open:#f0997a;--openbg:#3a1d14;--bar:#0b1a2b;--codebg:#232a33;
+--d-bg:#1b2129;--d-line:#e4e7eb;--d-life:#5f6b78;--d-text:#e4e7eb;--d-muted:#a0aab4;--d-headbg:#232a33;--d-accent:#8ab4e8;--d-accentbg:#1d2c40;
+--d-onaccent:#12161c;--d-note:#c9a227;--d-notebg:#2e2810;--d-warn:#f0997a;--d-warnbg:#3a1d14}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",Calibri,Arial,sans-serif}
+.dlbar{position:sticky;top:0;z-index:20;background:var(--bar);padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dlbar span{color:#cfd8e3;font-size:13px;margin-right:4px}
+.btn{display:inline-block;background:#fff;color:#14304f;text-decoration:none;font-size:13px;font-weight:600;padding:6px 12px;border-radius:4px}
+.btn.alt{background:transparent;color:#fff;border:1px solid #6d8bab}
+header{background:var(--card);border-bottom:1px solid var(--rule);padding:22px 16px}
+header .in,main{max-width:1080px;margin:0 auto}
+h1{margin:0 0 4px;font-size:24px}.meta{color:var(--muted);font-size:13px}
+main{padding:8px 16px 48px}
+section{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 8px;margin:18px 0}
+h2{font-size:19px;margin:0 0 10px;color:var(--accent)}h3{font-size:15px;margin:14px 0 8px}
+.tw{overflow-x:auto;margin-bottom:12px}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top}th{background:var(--accentbg)}
+td:first-child{white-space:nowrap}table.wrap td:first-child{white-space:normal;min-width:150px}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
+.chip.ok{color:var(--ok);background:var(--okbg)}.chip.prop{color:var(--prop);background:var(--propbg)}.chip.open{color:var(--open);background:var(--openbg)}
+.copyhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.copy{font:inherit;font-size:13px;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:4px;padding:4px 10px;cursor:pointer}
+pre{background:var(--codebg);padding:12px;border-radius:4px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+code{font-family:Consolas,Menlo,monospace;font-size:13px}
+.diagram{border:1px solid var(--rule);border-radius:4px;overflow-x:auto;background:var(--d-bg)}.diagram svg{display:block;width:100%;min-width:720px;height:auto}
+ol li,ul li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--bar);color:#fff;padding:8px 14px;border-radius:4px;font-size:13px;opacity:0;transition:opacity .2s}
+</style></head><body>
+<div class="dlbar"><span>Downloads:</span><a class="btn" href="assets/sdec-oauth-client-credentials.drawio" download>OAuth sequence (.drawio)</a><a class="btn" href="assets/sdec-oauth-client-credentials.png" download>OAuth sequence (PNG)</a><a class="btn" href="assets/sdec-oauth-client-credentials.svg" download>OAuth sequence (SVG)</a><a class="btn" href="assets/docs.zip" download>All files (.zip)</a>
+<a class="btn alt" href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/sdec-oauth-client-credentials.drawio" target="_blank" rel="noopener">Open diagram in diagrams.net</a></div>
+<header><div class="in"><h1>SDEC Integration: Security Summary, OAuth 2.0 and Integration Patterns</h1>
+<div class="meta">Draft content for the SDEC IDD, sections 4 and 5.2 &middot; v0.1 (draft) &middot; 14 October 2026 &middot; Aligned to IDD-FT-002, IDD-FT-003 and IDD-NRS-001</div></div></header>
+<main>
+<section><h2>How to use this page</h2><ol>
+<li><b>Section 4 Security Summary:</b> keep the existing SbD paragraph and replace <code>//ToDo</code> with the table in part 1. Use <i>Copy table for Word</i> and paste; borders and bold text carry over.</li>
+<li><b>Authentication:</b> add part 2 as a sub-section of section 4 (suggested 4.1 Authentication and Authorisation), including the scope table.</li>
+<li><b>Diagram:</b> download the PNG to paste into Word, or the .drawio file to edit. For a Visio file, open the .drawio in diagrams.net and use File &gt; Export as &gt; VSDX.</li>
+<li><b>Section 5.2 Integration:</b> copy the pattern table in part 3 over the empty Pattern table; it uses the same two columns.</li>
+<li><b>Open decisions:</b> add D-12 to D-16 to the decision log; numbering continues from IDD-NRS-001 (D-11).</li>
+</ol><p class="note">Status values: Agreed (stated in the existing IDD content), Proposed (integration position awaiting sign-off), Open (tracked gap or decision).</p></section>
+
+<section><h2>1. Security Summary (section 4)</h2>
+<p>Integration position for the SbD process. Each row should be traced to an HLSR and the SoA once the SbD practitioner issues them.</p>
+<div class="copyhead"><h3>Security points</h3><button class="copy" data-target="t-sec">Copy table for Word</button></div><div id="t-sec"><div class="tw"><table class="wrap"><thead><tr><th>#</th><th>Control area</th><th>Summary</th><th>Status</th></tr></thead><tbody><tr><td>S-01</td><td><b>Secure by Design status</b></td><td>SbD assessment for SDEC integration is in progress. HLSRs and the SoA are produced by the SbD practitioner; the points below are the integration position to feed into them and will be traced to HLSR IDs once issued.</td><td><span class="chip prop">Pending SbD</span></td></tr><tr><td>S-02</td><td><b>Authentication</b></td><td>App-to-app only. Every API call uses OAuth 2.0 client credentials and a bearer token. No end-user identity or user token is passed to the integration layer; user identity and session control stay in SDEC.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-03</td><td><b>Authorisation</b></td><td>One scope per operation (least privilege). The Gateway binds each client_id to a sourceSystem, so a consumer can only read, upload or delete documents it created.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-04</td><td><b>Credential management</b></td><td>Client secrets are issued per environment, held in the enterprise secrets vault, never placed in source code, config files or logs, and rotated on a schedule with an overlap window. Sourcing platform credentials from PAM is a tracked gap (G-14).</td><td><span class="chip open">Open (G-14)</span></td></tr><tr><td>S-05</td><td><b>Transport security</b></td><td>TLS 1.2 minimum (1.3 preferred) on every leg: SDEC to Gateway, browser to Boomi MFT, and Boomi/HIP to NRS and eDMS. No plaintext endpoints.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-06</td><td><b>Presigned URLs</b></td><td>HMAC-signed, time-bound and bound to one fileId, declared size, digest and document ID. Treated as bearer credentials: never logged in full, revoked on delete, expiry agreed under D-03 and D-09.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-07</td><td><b>Browser boundary</b></td><td>The client secret and access token never reach the browser. The SDEC server side requests the presigned URL and passes only that URL to the browser. CORS on the upload endpoint allows SDEC origins and the PUT method only.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-08</td><td><b>Integrity</b></td><td>SHA-256 checksum declared when the URL is requested and verified with Content-Digest on upload. A mismatch is rejected (422) and the file is not released.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-09</td><td><b>Malware protection</b></td><td>Every file is AV scanned before it can reach AVAILABLE. Infected files are quarantined, alerted and never released to NRS or eDMS. Scanning files above the current scan limit (G-15) needs a design for files up to 20 GB.</td><td><span class="chip open">Open (G-15)</span></td></tr><tr><td>S-10</td><td><b>Data at rest and retention</b></td><td>Transient storage is encrypted at rest. Files are purged after delivery to NRS and eDMS, on delete, or by TTL (D-04). The integration layer holds no long-term copy of documents.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-11</td><td><b>API threat protection</b></td><td>At the Gateway: schema validation, payload size limits, rate limiting (429 with Retry-After), JSON threat protection and Idempotency-Key replay handling.</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-12</td><td><b>Logging and audit</b></td><td>X-Correlation-ID end to end. Log metadata only: no form payload, tokens, client secrets or full presigned URLs. Document names may contain personal data and are masked. Security events forwarded to protective monitoring (SIEM).</td><td><span class="chip prop">Proposed</span></td></tr><tr><td>S-13</td><td><b>Error handling</b></td><td>All errors use the Problem structure. No stack traces, internal hostnames or platform detail are returned to consumers.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-14</td><td><b>Downstream credentials</b></td><td>NRS and eDMS credentials are held and managed by HIP. SDEC has no direct network route or credentials to NRS or eDMS.</td><td><span class="chip ok">Agreed</span></td></tr><tr><td>S-15</td><td><b>Data protection</b></td><td>DPIA to cover uploaded documents and submission payloads containing personal data. Metadata kept to what each API needs.</td><td><span class="chip prop">Pending DPIA</span></td></tr></tbody></table></div></div>
+</section>
+
+<section><h2>2. Authentication: OAuth 2.0 Client Credentials</h2>
+<p>All SDEC integration patterns use OAuth 2.0 client credentials: SDEC exchanges its client ID and secret for a short-lived bearer token, then presents that token on every API call. The integration supports app-to-app authentication only.</p>
+<div class="copyhead"><h3>Key points</h3><button class="copy" data-target="t-oauth">Copy table for Word</button></div><div id="t-oauth"><div class="tw"><table class="wrap"><thead><tr><th>Topic</th><th>Guidance</th></tr></thead><tbody><tr><td><b>Grant type</b></td><td>Client credentials (RFC 6749, section 4.4). Machine to machine, no user involved, no refresh token. When the token expires, SDEC requests a new one.</td></tr><tr><td><b>Who calls</b></td><td>Only SDEC server-side components hold the client secret and call the token endpoint and the APIs. The browser only ever receives a presigned URL.</td></tr><tr><td><b>Client registration</b></td><td>One client per consuming system per environment (dev, test, pre-prod, prod). Each client_id maps to one sourceSystem value and a fixed set of scopes.</td></tr><tr><td><b>Token request</b></td><td>POST to the token endpoint with form-encoded grant_type=client_credentials and the scopes needed. The client authenticates with HTTP Basic (client_id:client_secret) over TLS.</td></tr><tr><td><b>Token response</b></td><td>access_token (signed JWT), token_type Bearer, expires_in (proposed 3600 seconds, D-13) and the granted scope.</td></tr><tr><td><b>Using the token</b></td><td>Send Authorization: Bearer &lt;access_token&gt; on every API call. Never put the token in a query string, URL or log line.</td></tr><tr><td><b>Caching</b></td><td>Reuse the token until shortly before expiry (for example renew when less than 60 seconds remain). Do not request a token per API call; the token endpoint is rate limited.</td></tr><tr><td><b>Validation at the Gateway</b></td><td>Signature checked against the issuer's JWKS (cached), then iss, aud, exp and nbf (small clock-skew allowance), scope against the operation, and client_id against sourceSystem.</td></tr><tr><td><b>Errors</b></td><td>Token endpoint: 400 invalid_request or invalid_scope, 401 invalid_client. API: 401 invalid_token means discard the cached token, fetch a new one once and retry; 403 insufficient_scope is a configuration fault and must not be retried.</td></tr><tr><td><b>Secret rotation</b></td><td>Two secrets are valid during a rotation window so SDEC can switch without downtime. Rotation period agreed with security (D-13).</td></tr><tr><td><b>Hardening option</b></td><td>private_key_jwt (RFC 7523) or mutual TLS client authentication (RFC 8705) removes the shared secret. Recommended for decision before go-live (D-15).</td></tr></tbody></table></div></div>
+<div class="copyhead"><h3>Scopes per operation</h3><button class="copy" data-target="t-scope">Copy table for Word</button></div><div id="t-scope"><div class="tw"><table class=""><thead><tr><th>Scope</th><th>Operation</th><th>API ref</th><th>Status</th></tr></thead><tbody><tr><td><code>file-transfer.upload.request</code></td><td>Generate presigned URL</td><td>SDEC-MFT-API-01</td><td>Defined (IDD-FT-002)</td></tr><tr><td><code>file-transfer.status.read</code></td><td>Get document status</td><td>SDEC-MFT-API-02</td><td>Proposed (D-02)</td></tr><tr><td><code>file-transfer.file.delete</code></td><td>Delete file</td><td>SDEC-MFT-API-03</td><td>Defined (IDD-FT-002)</td></tr><tr><td><code>nrs.submission.create</code></td><td>NRS submission</td><td>SDEC-NRS-API-01</td><td>Proposed (D-14)</td></tr><tr><td><code>nrs.attachment.create</code></td><td>NRS attachment presigned URL</td><td>SDEC-NRS-API-02</td><td>Proposed (D-14)</td></tr></tbody></table></div></div>
+<h3>Token flow</h3>
+<div class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 772" role="img" aria-label="OAuth 2.0 client credentials sequence for SDEC" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="ah-i" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--d-line)"/></marker></defs>
+<rect width="940" height="772" fill="var(--d-bg)"/>
+<line x1="116" y1="74" x2="116" y2="762" stroke="var(--d-life)" stroke-width="1.2" stroke-dasharray="5 5"/>
+<rect x="16.0" y="18" width="200" height="56" rx="6" fill="var(--d-headbg)" stroke="var(--d-line)" stroke-width="1.4"/>
+<text x="116" y="42" text-anchor="middle" font-size="14" font-weight="600" fill="var(--d-text)">SDEC backend</text>
+<text x="116" y="60" text-anchor="middle" font-size="11" fill="var(--d-muted)">Thread Manager / HTTP service</text>
+<line x1="352" y1="74" x2="352" y2="762" stroke="var(--d-life)" stroke-width="1.2" stroke-dasharray="5 5"/>
+<rect x="252.0" y="18" width="200" height="56" rx="6" fill="var(--d-accentbg)" stroke="var(--d-accent)" stroke-width="1.4"/>
+<text x="352" y="42" text-anchor="middle" font-size="14" font-weight="600" fill="var(--d-accent)">Authorisation server</text>
+<text x="352" y="60" text-anchor="middle" font-size="11" fill="var(--d-muted)">OAuth 2.0 token endpoint</text>
+<line x1="588" y1="74" x2="588" y2="762" stroke="var(--d-life)" stroke-width="1.2" stroke-dasharray="5 5"/>
+<rect x="488.0" y="18" width="200" height="56" rx="6" fill="var(--d-accentbg)" stroke="var(--d-accent)" stroke-width="1.4"/>
+<text x="588" y="42" text-anchor="middle" font-size="14" font-weight="600" fill="var(--d-accent)">Boomi API Gateway</text>
+<text x="588" y="60" text-anchor="middle" font-size="11" fill="var(--d-muted)">Policy enforcement point</text>
+<line x1="824" y1="74" x2="824" y2="762" stroke="var(--d-life)" stroke-width="1.2" stroke-dasharray="5 5"/>
+<rect x="724.0" y="18" width="200" height="56" rx="6" fill="var(--d-headbg)" stroke="var(--d-line)" stroke-width="1.4"/>
+<text x="824" y="42" text-anchor="middle" font-size="14" font-weight="600" fill="var(--d-text)">Boomi iPaaS / HIP</text>
+<text x="824" y="60" text-anchor="middle" font-size="11" fill="var(--d-muted)">API process, MFT, NRS proxy</text>
+<line x1="116" y1="146" x2="350" y2="146" stroke="var(--d-line)" stroke-width="1.6" marker-end="url(#ah-i)"/>
+<rect x="169.5" y="104.0" width="129.0" height="16.0" fill="var(--d-bg)"/>
+<rect x="82.2" y="120.0" width="303.7" height="15.0" fill="var(--d-bg)"/>
+<text x="234.0" y="116" text-anchor="middle" font-size="12" font-weight="600" fill="var(--d-text)" >POST /oauth2/token</text>
+<text x="234.0" y="131" text-anchor="middle" font-size="11" fill="var(--d-muted)" >client_id:secret (HTTP Basic), grant_type, scope</text>
+<circle cx="102" cy="146" r="9.5" fill="var(--d-accent)"/>
+<text x="102" y="150" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">1</text>
+<rect x="236.0" y="168" width="232" height="42" rx="5" fill="var(--d-notebg)" stroke="var(--d-note)" stroke-width="1.2"/>
+<text x="360.0" y="185" text-anchor="middle" font-size="11.5" fill="var(--d-text)">Authenticate client, check</text>
+<text x="360.0" y="200" text-anchor="middle" font-size="11.5" fill="var(--d-text)">permitted scopes, sign JWT</text>
+<circle cx="249.0" cy="189" r="9.5" fill="var(--d-accent)"/>
+<text x="249.0" y="193" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">2</text>
+<line x1="352" y1="274" x2="118" y2="274" stroke="var(--d-line)" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ah-i)"/>
+<rect x="209.8" y="232.0" width="48.3" height="16.0" fill="var(--d-bg)"/>
+<rect x="79.1" y="248.0" width="309.8" height="15.0" fill="var(--d-bg)"/>
+<text x="234.0" y="244" text-anchor="middle" font-size="12" font-weight="600" fill="var(--d-text)" >200 OK</text>
+<text x="234.0" y="259" text-anchor="middle" font-size="11" fill="var(--d-muted)" >access_token (JWT), token_type=Bearer, expires_in</text>
+<circle cx="366" cy="274" r="9.5" fill="var(--d-accent)"/>
+<text x="366" y="278" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">3</text>
+<rect x="0.0" y="296" width="232" height="42" rx="5" fill="var(--d-notebg)" stroke="var(--d-note)" stroke-width="1.2"/>
+<text x="124.0" y="313" text-anchor="middle" font-size="11.5" fill="var(--d-text)">Cache token in memory;</text>
+<text x="124.0" y="328" text-anchor="middle" font-size="11.5" fill="var(--d-text)">renew shortly before expiry</text>
+<circle cx="13.0" cy="317" r="9.5" fill="var(--d-accent)"/>
+<text x="13.0" y="321" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">4</text>
+<line x1="116" y1="402" x2="586" y2="402" stroke="var(--d-line)" stroke-width="1.6" marker-end="url(#ah-i)"/>
+<rect x="193.4" y="360.0" width="317.1" height="16.0" fill="var(--d-bg)"/>
+<rect x="212.5" y="376.0" width="279.0" height="15.0" fill="var(--d-bg)"/>
+<text x="352.0" y="372" text-anchor="middle" font-size="12" font-weight="600" fill="var(--d-text)" >API call: Authorization: Bearer &lt;access_token&gt;</text>
+<text x="352.0" y="387" text-anchor="middle" font-size="11" fill="var(--d-muted)" >Idempotency-Key, X-Correlation-ID, JSON body</text>
+<circle cx="102" cy="402" r="9.5" fill="var(--d-accent)"/>
+<text x="102" y="406" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">5</text>
+<rect x="472.0" y="424" width="232" height="42" rx="5" fill="var(--d-notebg)" stroke="var(--d-note)" stroke-width="1.2"/>
+<text x="596.0" y="441" text-anchor="middle" font-size="11.5" fill="var(--d-text)">Validate JWT: JWKS signature,</text>
+<text x="596.0" y="456" text-anchor="middle" font-size="11.5" fill="var(--d-text)">iss, aud, exp, scope, client_id</text>
+<circle cx="485.0" cy="445" r="9.5" fill="var(--d-accent)"/>
+<text x="485.0" y="449" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">6</text>
+<line x1="588" y1="530" x2="822" y2="530" stroke="var(--d-line)" stroke-width="1.6" marker-end="url(#ah-i)"/>
+<rect x="651.6" y="488.0" width="108.8" height="16.0" fill="var(--d-bg)"/>
+<rect x="603.4" y="504.0" width="205.1" height="15.0" fill="var(--d-bg)"/>
+<text x="706.0" y="500" text-anchor="middle" font-size="12" font-weight="600" fill="var(--d-text)" >Forward request</text>
+<text x="706.0" y="515" text-anchor="middle" font-size="11" fill="var(--d-muted)" >client identity + correlation ID</text>
+<circle cx="574" cy="530" r="9.5" fill="var(--d-accent)"/>
+<text x="574" y="534" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">7</text>
+<line x1="824" y1="594" x2="590" y2="594" stroke="var(--d-line)" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ah-i)"/>
+<rect x="675.1" y="552.0" width="61.8" height="16.0" fill="var(--d-bg)"/>
+<rect x="621.9" y="568.0" width="168.2" height="15.0" fill="var(--d-bg)"/>
+<text x="706.0" y="564" text-anchor="middle" font-size="12" font-weight="600" fill="var(--d-text)" >Response</text>
+<text x="706.0" y="579" text-anchor="middle" font-size="11" fill="var(--d-muted)" >201 / 200 / 202 or Problem</text>
+<circle cx="838" cy="594" r="9.5" fill="var(--d-accent)"/>
+<text x="838" y="598" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">8</text>
+<line x1="588" y1="658" x2="118" y2="658" stroke="var(--d-line)" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#ah-i)"/>
+<rect x="294.2" y="616.0" width="115.5" height="16.0" fill="var(--d-bg)"/>
+<rect x="209.4" y="632.0" width="285.2" height="15.0" fill="var(--d-bg)"/>
+<text x="352.0" y="628" text-anchor="middle" font-size="12" font-weight="600" fill="var(--d-text)" >Response to SDEC</text>
+<text x="352.0" y="643" text-anchor="middle" font-size="11" fill="var(--d-muted)" >or 401 invalid_token / 403 insufficient_scope</text>
+<circle cx="602" cy="658" r="9.5" fill="var(--d-accent)"/>
+<text x="602" y="662" text-anchor="middle" font-size="11" font-weight="700" fill="var(--d-onaccent)">9</text>
+<rect x="16" y="684" width="672" height="62" fill="none" stroke="var(--d-warn)" stroke-width="1.3" stroke-dasharray="4 3"/>
+<path d="M16,684 h150 v14 l-10,10 h-140 z" fill="var(--d-warnbg)" stroke="var(--d-warn)" stroke-width="1.3"/>
+<text x="24" y="700" font-size="11.5" font-weight="700" fill="var(--d-warn)">alt  401 invalid_token</text>
+<rect x="45.3" y="718.5" width="613.4" height="15.5" fill="var(--d-bg)"/>
+<text x="352.0" y="730" text-anchor="middle" font-size="11.5" fill="var(--d-text)" >Discard cached token, request a new one once (step 1), then retry the call. 403: do not retry.</text>
+</svg></div>
+<p class="note">Steps 1 to 4 run once per token lifetime, not per call. Steps 5 to 9 repeat for every API call while the cached token is valid. For NRS calls, HIP replaces the SDEC token with HIP-managed NRS credentials on the onward leg (S-14).</p>
+<h3>Example exchange</h3><pre><code>POST /oauth2/token HTTP/1.1
+Host: &lt;authorisation-server&gt;
+Authorization: Basic base64(client_id:client_secret)
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&amp;scope=file-transfer.upload.request file-transfer.file.delete
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-store
+
+{ "access_token": "eyJhbGciOi...", "token_type": "Bearer",
+  "expires_in": 3600, "scope": "file-transfer.upload.request file-transfer.file.delete" }
+
+POST /generate_presignedurl HTTP/1.1
+Authorization: Bearer eyJhbGciOi...
+Idempotency-Key: 7d1c...   X-Correlation-ID: 4b2e...</code></pre>
+</section>
+
+<section><h2>3. Integration Patterns (section 5.2)</h2>
+<div class="copyhead"><h3>Pattern table</h3><button class="copy" data-target="t-pat">Copy table for Word</button></div><div id="t-pat"><div class="tw"><table class="wrap"><thead><tr><th>Pattern</th><th>Description</th></tr></thead><tbody><tr><td><b>Synchronous API</b></td><td>Request and response over HTTPS (REST, JSON) through Boomi API Gateway; SDEC receives the result in the same call. Used for: generate presigned URL (SDEC-MFT-API-01), get document status (SDEC-MFT-API-02), delete file (SDEC-MFT-API-03), NRS submission (SDEC-NRS-API-01) and NRS attachment URL (SDEC-NRS-API-02). Controls: OAuth 2.0 bearer token, Idempotency-Key on create and delete, X-Correlation-ID, agreed timeouts, Problem error structure. No file content passes through this pattern.</td></tr><tr><td><b>Asynchronous File Upload</b></td><td>SDEC obtains a time-bound presigned URL through the synchronous API, then the browser uploads the file directly to Boomi MFT transient storage with HTTP PUT. Files up to 20 GB are streamed and never pass through the API layer. After upload the file is AV scanned and moves to AVAILABLE or QUARANTINED; SDEC learns the outcome from events or the status API, not from the PUT response. Used for: External User Document Upload.</td></tr><tr><td><b>Event Notification (Webhook)</b></td><td>Boomi publishes document lifecycle events (CloudEvents 1.0, file-transfer.mft-hold.events, P01 to P05) and delivers them to an SDEC webhook endpoint as the default. SDEC may instead consume from the message broker (Boomi Event Streams). Deliveries are authenticated and signed, retried with backoff, and carry an event ID so SDEC can discard duplicates. Missed events are reconciled with one status call.</td></tr><tr><td><b>Asynchronous Managed File Transfer</b></td><td>System to system delivery of uploaded documents. After NRS issues a presigned URL per document, SDEC sends a transfer request and HIP File Transfer Manager moves each AVAILABLE file from Boomi MFT transient storage to NRS (and to eDMS), so SDEC never handles file content. Completion and failure are reported as events. Files are deleted from transient storage once NRS and eDMS have both acknowledged delivery (SDEC-MFT-API-03). Transfer request contract to be documented as a separate entry.</td></tr></tbody></table></div></div>
+</section>
+
+<section><h2>4. Open decisions</h2>
+<div class="copyhead"><h3>Decision log additions</h3><button class="copy" data-target="t-dec">Copy table for Word</button></div><div id="t-dec"><div class="tw"><table class="wrap"><thead><tr><th>ID</th><th>Decision required</th><th>Owner role</th></tr></thead><tbody><tr><td>D-12</td><td>Authorisation server that issues SDEC tokens: Boomi API Management OAuth provider or the enterprise identity provider.</td><td>Security Architect with Integration Architect</td></tr><tr><td>D-13</td><td>Access token lifetime (expires_in) and client secret rotation period.</td><td>Security Architect</td></tr><tr><td>D-14</td><td>Final scope names for document status, NRS submission and NRS attachment operations.</td><td>Integration Architect</td></tr><tr><td>D-15</td><td>Whether to replace the client secret with private_key_jwt or mutual TLS before go-live.</td><td>Security Architect</td></tr><tr><td>D-16</td><td>Webhook security for events delivered to SDEC: OAuth on the SDEC endpoint, HMAC payload signature, or both.</td><td>Integration Architect with SDEC Technical Lead</td></tr></tbody></table></div></div>
+</section>
+</main><div id="toast">Copied. Paste into Word.</div>
+<script>
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.opacity=1;setTimeout(function(){t.style.opacity=0},1600)}
+function wordHtml(el){var c=el.cloneNode(true);c.querySelectorAll('table').forEach(function(t){t.setAttribute('border','1');t.style.borderCollapse='collapse';t.style.width='100%';t.style.fontFamily='Calibri,Arial';t.style.fontSize='10pt'});
+c.querySelectorAll('th,td').forEach(function(x){x.style.border='1px solid #808080';x.style.padding='4px';x.style.verticalAlign='top';x.style.color='#000'});
+c.querySelectorAll('th').forEach(function(x){x.style.background='#d9e2cf'});c.querySelectorAll('.chip').forEach(function(x){x.removeAttribute('class')});return c.innerHTML}
+document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){var el=document.getElementById(b.dataset.target);var h=wordHtml(el);
+try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([h],{type:'text/html'}),'text/plain':new Blob([el.innerText],{type:'text/plain'})})]).then(function(){toast('Copied. Paste into Word.')},fallback)}catch(e){fallback()}
+function fallback(){var d=document.createElement('div');d.innerHTML=h;d.style.position='fixed';d.style.left='-9999px';document.body.appendChild(d);var r=document.createRange();r.selectNodeContents(d);var s=getSelection();s.removeAllRanges();s.addRange(r);
+try{document.execCommand('copy');toast('Copied. Paste into Word.')}catch(e){toast('Select the table and copy manually.')}s.removeAllRanges();d.remove()}})});
+</script></body></html>
