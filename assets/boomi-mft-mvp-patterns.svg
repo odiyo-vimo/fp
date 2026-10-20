@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 770" width="1000" height="770" font-family="Segoe UI, Calibri, Arial, sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3e4c59"/></marker></defs>
+<rect width="1000" height="770" fill="#ffffff"/>
+<rect x="20" y="20" width="960" height="130" rx="10" fill="#f4eef8" stroke="#7b3fa0" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="32" y="38" font-size="12" font-weight="600" fill="#7b3fa0">External: Pega Cloud SaaS landing zones</text>
+<rect x="20" y="175" width="960" height="110" rx="10" fill="#eef3f8" stroke="#1d4e89" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="32" y="193" font-size="12" font-weight="600" fill="#1d4e89">Boomi-hosted</text>
+<rect x="20" y="310" width="960" height="290" rx="10" fill="#eef6f0" stroke="#1e6b3a" stroke-width="1.2" stroke-dasharray="6 4"/>
+<text x="32" y="328" font-size="12" font-weight="600" fill="#1e6b3a">Internal AWS boundary (non-production)</text>
+<polyline points="175,113 175,230 415,230" fill="none" stroke="#3e4c59" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<polyline points="825,113 825,230 585,230" fill="none" stroke="#3e4c59" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<polyline points="500,258 500,345" fill="none" stroke="#3e4c59" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<polyline points="585,373 700,373" fill="none" stroke="#3e4c59" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<polyline points="460,401 460,450 235,450 235,500" fill="none" stroke="#3e4c59" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<polyline points="540,401 540,450 765,450 765,500" fill="none" stroke="#3e4c59" stroke-width="1.6" marker-start="url(#a)" marker-end="url(#a)"/>
+<rect x="90" y="57" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="175.0" y="81" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">Pega LZ 1</text>
+<text x="175.0" y="99" text-anchor="middle" font-size="10.5" fill="#52606d">SFTP (to confirm)</text>
+<rect x="740" y="57" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="825.0" y="81" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">Pega LZ 2</text>
+<text x="825.0" y="99" text-anchor="middle" font-size="10.5" fill="#52606d">SFTP (to confirm)</text>
+<rect x="415" y="202" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="500.0" y="235" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">Boomi MFT Cloud</text>
+<rect x="415" y="345" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="500.0" y="378" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">Boomi MFT Local Node</text>
+<rect x="700" y="345" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="785.0" y="369" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">AV scan (MDE)</text>
+<text x="785.0" y="387" text-anchor="middle" font-size="10.5" fill="#52606d">limit about 250 MB (G-15)</text>
+<rect x="150" y="500" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="235.0" y="524" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">S3 bucket 1</text>
+<text x="235.0" y="542" text-anchor="middle" font-size="10.5" fill="#52606d">KMS encrypted</text>
+<rect x="680" y="500" width="170" height="56" rx="6" fill="#ffffff" stroke="#3e4c59" stroke-width="1.3"/>
+<text x="765.0" y="524" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2933">S3 bucket 2</text>
+<text x="765.0" y="542" text-anchor="middle" font-size="10.5" fill="#52606d">KMS encrypted</text>
+<rect x="262" y="207" width="30" height="18" rx="9" fill="#7b3fa0"/><text x="277.0" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P1</text>
+<rect x="296" y="207" width="30" height="18" rx="9" fill="#b3401a"/><text x="311.0" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P3</text>
+<rect x="676" y="207" width="30" height="18" rx="9" fill="#7b3fa0"/><text x="691.0" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P1</text>
+<rect x="710" y="207" width="30" height="18" rx="9" fill="#1e6b3a"/><text x="725.0" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P4</text>
+<rect x="510" y="318" width="30" height="18" rx="9" fill="#b3401a"/><text x="525.0" y="331" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P3</text>
+<rect x="544" y="318" width="30" height="18" rx="9" fill="#1e6b3a"/><text x="559.0" y="331" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P4</text>
+<rect x="578" y="318" width="30" height="18" rx="9" fill="#fff" stroke="#7b3fa0" stroke-width="1.4" stroke-dasharray="3 2"/><text x="593.0" y="331" text-anchor="middle" font-size="11" font-weight="700" fill="#7b3fa0">P1</text>
+<rect x="594" y="350" width="30" height="18" rx="9" fill="#b3401a"/><text x="609.0" y="363" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P3</text>
+<rect x="594" y="381" width="30" height="18" rx="9" fill="#fff" stroke="#7b3fa0" stroke-width="1.4" stroke-dasharray="3 2"/><text x="609.0" y="394" text-anchor="middle" font-size="11" font-weight="700" fill="#7b3fa0">P1</text>
+<rect x="628" y="381" width="30" height="18" rx="9" fill="#fff" stroke="#1d6fa5" stroke-width="1.4" stroke-dasharray="3 2"/><text x="643.0" y="394" text-anchor="middle" font-size="11" font-weight="700" fill="#1d6fa5">P2</text>
+<rect x="662" y="381" width="30" height="18" rx="9" fill="#fff" stroke="#1e6b3a" stroke-width="1.4" stroke-dasharray="3 2"/><text x="677.0" y="394" text-anchor="middle" font-size="11" font-weight="700" fill="#1e6b3a">P4</text>
+<rect x="300" y="428" width="30" height="18" rx="9" fill="#1d6fa5"/><text x="315.0" y="441" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P2</text>
+<rect x="334" y="428" width="30" height="18" rx="9" fill="#b3401a"/><text x="349.0" y="441" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P3</text>
+<rect x="640" y="428" width="30" height="18" rx="9" fill="#1d6fa5"/><text x="655.0" y="441" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P2</text>
+<rect x="674" y="428" width="30" height="18" rx="9" fill="#1e6b3a"/><text x="689.0" y="441" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">P4</text>
+<rect x="20" y="620" width="960" height="135" rx="8" fill="#f8f9fb" stroke="#d9dee4"/>
+<text x="34" y="642" font-size="12.5" font-weight="700" fill="#1f2933">Pattern routes</text>
+<rect x="34" y="652" width="30" height="16" rx="8" fill="#7b3fa0"/><text x="49.0" y="664" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">P1</text>
+<text x="74" y="664" font-size="11.5" fill="#1f2933">P1 External to external: <tspan fill="#52606d">Pega LZ 1 &gt; Boomi MFT Cloud &gt; Pega LZ 2 (or via Local Node if AV must apply, D-MVP-01)</tspan></text>
+<rect x="34" y="672" width="30" height="16" rx="8" fill="#1d6fa5"/><text x="49.0" y="684" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">P2</text>
+<text x="74" y="684" font-size="11.5" fill="#1f2933">P2 Internal to internal: <tspan fill="#52606d">S3 bucket 1 &gt; Boomi MFT Local Node &gt; S3 bucket 2</tspan></text>
+<rect x="34" y="692" width="30" height="16" rx="8" fill="#b3401a"/><text x="49.0" y="704" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">P3</text>
+<text x="74" y="704" font-size="11.5" fill="#1f2933">P3 External to internal: <tspan fill="#52606d">Pega LZ 1 &gt; Boomi MFT Cloud &gt; Local Node &gt; AV scan &gt; S3 bucket 1</tspan></text>
+<rect x="34" y="712" width="30" height="16" rx="8" fill="#1e6b3a"/><text x="49.0" y="724" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">P4</text>
+<text x="74" y="724" font-size="11.5" fill="#1f2933">P4 Internal to external: <tspan fill="#52606d">S3 bucket 2 &gt; Local Node &gt; Boomi MFT Cloud &gt; Pega LZ 2</tspan></text>
+<text x="34" y="744" font-size="10.5" fill="#52606d">Solid badge: the pattern uses this link. Dashed badge: only if D-MVP-01 or D-MVP-05 routes it there. Links carry traffic in the direction of each route above.</text>
+</svg>
