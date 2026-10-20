@@ -32,12 +32,13 @@ code{font-family:Consolas,Menlo,monospace;font-size:13px}
 ol li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
 #toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--bar);color:#fff;padding:8px 14px;border-radius:4px;font-size:13px;opacity:0;transition:opacity .2s}
 </style></head><body>
-<div class="dlbar"><span>Downloads:</span><a class="btn" href="assets/sdec-oauth-client-credentials.drawio" download>OAuth sequence (.drawio)</a><a class="btn" href="assets/sdec-oauth-client-credentials.png" download>OAuth sequence (PNG)</a><a class="btn" href="assets/sdec-oauth-client-credentials.svg" download>OAuth sequence (SVG)</a><a class="btn" href="assets/sdec-create-thread-contact-details.drawio" download>Create Thread sequence (.drawio)</a><a class="btn" href="assets/sdec-create-thread-contact-details.png" download>Create Thread sequence (PNG)</a><a class="btn" href="assets/sdec-create-thread-contact-details.svg" download>Create Thread sequence (SVG)</a><a class="btn" href="assets/docs.zip" download>All files (.zip)</a>
+<div class="dlbar"><span>Downloads:</span><a class="btn" href="assets/sdec-oauth-client-credentials.drawio" download>OAuth sequence (.drawio)</a><a class="btn" href="assets/sdec-oauth-client-credentials.png" download>OAuth sequence (PNG)</a><a class="btn" href="assets/sdec-oauth-client-credentials.svg" download>OAuth sequence (SVG)</a><a class="btn" href="assets/sdec-create-thread-contact-details.drawio" download>Create Thread sequence (.drawio)</a><a class="btn" href="assets/sdec-create-thread-contact-details.png" download>Create Thread sequence (PNG)</a><a class="btn" href="assets/sdec-create-thread-contact-details.svg" download>Create Thread sequence (SVG)</a><a class="btn" href="assets/boomi-mft-architecture.drawio" download>MFT patterns (.drawio)</a><a class="btn" href="assets/boomi-mft-architecture.png" download>MFT patterns (PNG)</a><a class="btn" href="assets/boomi-mft-architecture.svg" download>MFT patterns (SVG)</a><a class="btn" href="assets/docs.zip" download>All files (.zip)</a>
 <a class="btn alt" href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/sdec-oauth-client-credentials.drawio" target="_blank" rel="noopener">Open OAuth diagram in diagrams.net</a>
+<a class="btn alt" href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/boomi-mft-architecture.drawio" target="_blank" rel="noopener">Open MFT diagram in diagrams.net</a>
 <a class="btn alt" href="sdec-document-checksum.html">Other page: Document Checksum</a></div>
 <header><div class="in"><h1>SDEC Integration: Create Thread, Assumptions, Risks, Security, OAuth 2.0 and Integration Patterns</h1>
 <div class="meta">Draft content for the SDEC IDD sections 3.2, 4 and 5.2 &middot; v0.3 (draft) &middot; 14 October 2026 &middot; Aligned to IDD-FT-002, IDD-FT-003 and IDD-NRS-001</div>
-<nav><a href="#create-thread">Create Thread</a><a href="#assumptions">Assumptions</a><a href="#risks">Risks</a><a href="#security">Security</a><a href="#oauth">OAuth</a><a href="#patterns">Patterns</a><a href="#decisions">Decisions</a></nav></div></header>
+<nav><a href="#create-thread">Create Thread</a><a href="#assumptions">Assumptions</a><a href="#risks">Risks</a><a href="#security">Security</a><a href="#oauth">OAuth</a><a href="#patterns">Patterns</a><a href="#decisions">Decisions</a><a href="#mft-patterns">MFT patterns</a></nav></div></header>
 <main>
 <section><h2>How to use this page</h2><ol>
 <li><b>Section 3.2 Assumptions:</b> use <i>Copy table for Word</i> on part 1 and paste over the empty table; columns match the template (#, Assumption, Description, Owner).</li>
@@ -46,6 +47,7 @@ ol li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
 <li><b>Authentication:</b> add part 4 as 4.1 Authentication and Authorisation, with the scope table and the sequence diagram. Download the PNG to paste into Word, or the .drawio to edit (File &gt; Export as &gt; VSDX in diagrams.net gives a Visio file).</li>
 <li><b>Section 5.2 Integration:</b> paste part 5 over the empty Pattern table; it uses the same two columns.</li>
 <li><b>Create Thread (Contact Details):</b> copy the table in part 6 into section 5.2 and renumber 5.2.x. The diagram comes across with the table; if it does not, download the Create Thread PNG and insert it into the Diagram row.</li>
+<li><b>MFT patterns diagram:</b> see part 8. Download the PNG to paste into Word, or the .drawio to edit. The downloads label the lower zone with the client AWS account name; the preview on this page uses a generic label.</li>
 <li><b>Open decisions:</b> add D-12 to D-17 and D-22 to D-24 to the decision log. D-18 to D-21 are on the Document Checksum page.</li>
 </ol><p class="note">Owners are roles. Boomi components (API layer, broker, transient storage, processes) are shown as one iPaaS throughout. Status values: Agreed (in existing IDD content), Proposed (awaiting sign-off), Open (tracked gap or decision).</p></section>
 
@@ -217,6 +219,23 @@ Idempotency-Key: 7d1c...   X-Correlation-ID: 4b2e...</code></pre>
 
 <section id="decisions"><h2>7. Open decisions</h2>
 <div class="copyhead"><h3>Decision log additions</h3><button class="copy" data-target="t-dec">Copy table for Word</button></div><div id="t-dec"><div class="tw"><table class="wrap"><thead><tr><th>ID</th><th>Decision required</th><th>Owner role</th></tr></thead><tbody><tr><td>D-12</td><td>Token endpoint path, JWT signing key management and key rotation within iPaaS.</td><td>Boomi Platform Owner with Security Architect</td></tr><tr><td>D-13</td><td>Access token lifetime (expires_in) and client secret rotation period.</td><td>Security Architect</td></tr><tr><td>D-14</td><td>Final scope names for document status, NRS submission and NRS attachment operations.</td><td>Integration Architect</td></tr><tr><td>D-15</td><td>Whether to replace the client secret with private_key_jwt or mutual TLS before go-live.</td><td>Security Architect</td></tr><tr><td>D-16</td><td>Webhook security for callbacks to SDEC: OAuth on the SDEC endpoint, HMAC payload signature, or both.</td><td>Integration Architect with SDEC Technical Lead</td></tr><tr><td>D-17</td><td>Transfer re-try policy: number of attempts, backoff, and when the failed event and callback are raised to SDEC.</td><td>Integration Architect with NRS Technical Lead</td></tr><tr><td>D-22</td><td>Create Thread contract: iPaaS path, HCP Thread Service API path, field names, and naming of the technical and business thread references.</td><td>SDEC HCP Technical Lead with Integration Architect</td></tr><tr><td>D-23</td><td>Whether the HCP Thread Service API supports Idempotency-Key; this decides whether iPaaS may re-try a failed create automatically.</td><td>SDEC HCP Technical Lead</td></tr><tr><td>D-24</td><td>Synchronous timeout for Create Thread at iPaaS and target response time for the Contact Details page.</td><td>Integration Architect with SDEC Product Owner</td></tr></tbody></table></div></div>
+</section>
+<section id="mft-patterns"><h2>8. Boomi MFT transfer patterns</h2>
+<p>White version of the MFT patterns diagram, for documents. Pega landing zones sit outside the client AWS account and reach it through Boomi MFT Cloud; the Boomi MFT Local Node runs inside the account and reads and writes the S3 buckets.</p>
+<div class="diagram"><img src="assets/boomi-mft-architecture-page.svg" alt="Boomi MFT transfer patterns 1 to 4 between Pega landing zones and S3 buckets" style="display:block;width:100%;min-width:640px"></div>
+<h3>Patterns shown</h3>
+<div class="tw"><table class="wrap"><thead><tr><th>Pattern</th><th>Source</th><th>Target</th><th>Route</th></tr></thead><tbody>
+<tr><td>Pattern 1</td><td>Pega landing zone</td><td>Pega landing zone</td><td>Boomi MFT Cloud</td></tr>
+<tr><td>Pattern 2</td><td>S3 bucket</td><td>S3 bucket</td><td>Boomi MFT Local Node</td></tr>
+<tr><td>Pattern 3</td><td>Pega landing zone</td><td>S3 bucket</td><td>Boomi MFT Cloud, then Local Node</td></tr>
+<tr><td>Pattern 4</td><td>S3 bucket</td><td>Pega landing zone</td><td>Local Node, then Boomi MFT Cloud</td></tr>
+</tbody></table></div>
+<h3>Using the files</h3><ol>
+<li><b>Word:</b> download the PNG and insert it (Insert &gt; Pictures). It is rendered at 2x, so it stays sharp at full page width.</li>
+<li><b>Edit:</b> download the .drawio and open it in diagrams.net (File &gt; Open from &gt; Device), or use <i>Open MFT diagram in diagrams.net</i> in the bar above. File &gt; Export as &gt; VSDX gives a Visio file.</li>
+<li><b>Labels to check:</b> both landing zones read "Landing Zone 1" and both buckets read "S3 bucket 1", as in the source drawing. Rename them in the .drawio if they are different zones or buckets.</li>
+</ol>
+<p class="note">Routes in the table are read from the drawing. Confirm them against the MFT SDD before publishing.</p>
 </section>
 </main><div id="toast">Copied. Paste into Word.</div>
 <script>

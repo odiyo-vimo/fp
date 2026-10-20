@@ -1,118 +1,28 @@
-<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-  <root>
-    <mxCell id="0"/>
-    <mxCell id="1" parent="0"/>
-
-    <!-- CLOUD ZONE background -->
-    <mxCell id="2" value="CLOUD ZONE" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.cisco.sites.generic_building;strokeColor=#2563EB;fillColor=#EEF4FB;fontStyle=1;fontSize=11;fontColor=#2B6CB0;verticalAlign=top;align=left;labelPosition=right;verticalLabelPosition=top;labelBackgroundColor=none;swimlane=0;dashed=0;" vertex="1" parent="1">
-      <mxGeometry x="60" y="40" width="1050" height="300" as="geometry"/>
-    </mxCell>
-    <mxCell id="2b" value="CLOUD ZONE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EEF4FB;strokeColor=#B6CFE8;fontStyle=1;fontSize=11;fontColor=#2B6CB0;verticalAlign=top;align=left;spacingLeft=12;spacingTop=8;" vertex="1" parent="1">
-      <mxGeometry x="60" y="40" width="1050" height="300" as="geometry"/>
-    </mxCell>
-
-    <!-- ENTERPRISE AWS ZONE background -->
-    <mxCell id="3" value="ENTERPRISE AWS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0F6EE;strokeColor=#A8D4A0;fontStyle=1;fontSize=11;fontColor=#276749;verticalAlign=top;align=right;spacingRight=12;spacingTop=8;" vertex="1" parent="1">
-      <mxGeometry x="60" y="380" width="1050" height="310" as="geometry"/>
-    </mxCell>
-
-    <!-- Pega Landing Zone 1 LEFT -->
-    <mxCell id="4" value="&lt;b&gt;Pega&lt;/b&gt;&lt;br&gt;Landing Zone 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A3A5C;strokeColor=#1A3A5C;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="120" y="110" width="200" height="70" as="geometry"/>
-    </mxCell>
-
-    <!-- Pega Landing Zone 1 RIGHT -->
-    <mxCell id="5" value="&lt;b&gt;Pega&lt;/b&gt;&lt;br&gt;Landing Zone 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A3A5C;strokeColor=#1A3A5C;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="1">
-      <mxGeometry x="850" y="110" width="200" height="70" as="geometry"/>
-    </mxCell>
-
-    <!-- Boomi MFT Cloud -->
-    <mxCell id="6" value="&lt;b&gt;Boomi MFT Cloud&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:10px;&apos;&gt;iPaaS · Managed Transfer&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2563EB;strokeColor=#2563EB;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
-      <mxGeometry x="485" y="230" width="200" height="70" as="geometry"/>
-    </mxCell>
-
-    <!-- Boomi MFT Local Node -->
-    <mxCell id="7" value="&lt;b&gt;Boomi MFT&lt;/b&gt;&lt;br&gt;&lt;b&gt;Local Node&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F7070;strokeColor=#0F7070;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
-      <mxGeometry x="485" y="450" width="200" height="70" as="geometry"/>
-    </mxCell>
-
-    <!-- S3 Bucket LEFT -->
-    <mxCell id="8" value="&lt;b&gt;S3 Bucket 1&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:10px;&apos;&gt;Inbound / Source&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2563EB;strokeColor=#2563EB;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
-      <mxGeometry x="170" y="570" width="180" height="65" as="geometry"/>
-    </mxCell>
-
-    <!-- S3 Bucket RIGHT -->
-    <mxCell id="9" value="&lt;b&gt;S3 Bucket 1&lt;/b&gt;&lt;br&gt;&lt;font style=&apos;font-size:10px;&apos;&gt;Outbound / Target&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2563EB;strokeColor=#2563EB;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
-      <mxGeometry x="820" y="570" width="180" height="65" as="geometry"/>
-    </mxCell>
-
-    <!-- PATTERN 3 dashed box -->
-    <mxCell id="10" value="Pattern 3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#2563EB;dashed=1;dashPattern=8 4;strokeWidth=2;fontStyle=1;fontColor=#2563EB;fontSize=11;verticalAlign=top;spacingTop=6;" vertex="1" parent="1">
-      <mxGeometry x="85" y="400" width="330" height="270" as="geometry"/>
-    </mxCell>
-
-    <!-- PATTERN 4 dashed box -->
-    <mxCell id="11" value="Pattern 4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#2563EB;dashed=1;dashPattern=8 4;strokeWidth=2;fontStyle=1;fontColor=#2563EB;fontSize=11;verticalAlign=top;spacingTop=6;" vertex="1" parent="1">
-      <mxGeometry x="755" y="400" width="330" height="270" as="geometry"/>
-    </mxCell>
-
-    <!-- PATTERN 1: Left Pega → Right Pega (dashed) -->
-    <mxCell id="12" value="Pattern 1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;dashPattern=7 4;strokeColor=#2563EB;strokeWidth=2;fontStyle=1;fontColor=#2563EB;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="4" target="5" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- Return stub: Right Pega upward (feedback path) -->
-    <mxCell id="13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;dashPattern=5 3;strokeColor=#2563EB;strokeWidth=1.5;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="5">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="950" y="60" as="targetPoint"/>
-      </mxGeometry>
-    </mxCell>
-
-    <!-- Left Pega → Boomi MFT Cloud -->
-    <mxCell id="14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;dashPattern=5 3;strokeColor=#2563EB;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="4" target="6" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- Right Pega → Boomi MFT Cloud -->
-    <mxCell id="15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;dashPattern=5 3;strokeColor=#2563EB;strokeWidth=1.5;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="5" target="6" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- Boomi MFT Cloud → Boomi MFT Local Node -->
-    <mxCell id="16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#2563EB;strokeWidth=2;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="6" target="7" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- Local Node → S3 Left -->
-    <mxCell id="17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#2563EB;strokeWidth=1.5;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="7" target="8" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- Local Node → S3 Right -->
-    <mxCell id="18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#2563EB;strokeWidth=1.5;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="7" target="9" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- PATTERN 2: Left S3 → Right S3 (dashed) -->
-    <mxCell id="19" value="Pattern 2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;dashPattern=7 4;strokeColor=#2563EB;strokeWidth=2;fontStyle=1;fontColor=#2563EB;fontSize=11;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="8" target="9" parent="1">
-      <mxGeometry relative="1" as="geometry"/>
-    </mxCell>
-
-    <!-- External inbound → Pattern 3 left edge -->
-    <mxCell id="20" value="" style="dashed=1;dashPattern=5 3;strokeColor=#2563EB;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="30" y="602" as="sourcePoint"/>
-        <mxPoint x="85" y="602" as="targetPoint"/>
-      </mxGeometry>
-    </mxCell>
-
-    <!-- Pattern 4 right edge → external outbound -->
-    <mxCell id="21" value="" style="dashed=1;dashPattern=5 3;strokeColor=#2563EB;strokeWidth=1.5;endArrow=block;endFill=1;" edge="1" parent="1">
-      <mxGeometry relative="1" as="geometry">
-        <mxPoint x="1085" y="602" as="sourcePoint"/>
-        <mxPoint x="1140" y="602" as="targetPoint"/>
-      </mxGeometry>
-    </mxCell>
-
-  </root>
-</mxGraphModel>
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="boomi-mft-patterns" name="Boomi MFT Patterns">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="700" background="#FFFFFF" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="20" y="20" width="860" height="660" as="geometry"/></mxCell>
+        <mxCell id="divider" value="" style="endArrow=none;html=1;strokeColor=#9AA5B1;strokeWidth=1.5;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="60" y="322" as="sourcePoint"/><mxPoint x="840" y="322" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="aws" value="HMRC AWS" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F5F7FA;strokeColor=#52606D;strokeWidth=1.5;verticalAlign=top;align=right;spacingTop=14;spacingRight=80;fontStyle=1;fontSize=14;fontColor=#52606D;" vertex="1" parent="1"><mxGeometry x="70" y="350" width="760" height="310" as="geometry"/></mxCell>
+        <mxCell id="pegaL" value="Pega&lt;br&gt;Landing Zone 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#1D4E89;strokeWidth=1.5;fontColor=#14304F;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="100" y="80" width="180" height="64" as="geometry"/></mxCell>
+        <mxCell id="pegaR" value="Pega&lt;br&gt;Landing Zone 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#1D4E89;strokeWidth=1.5;fontColor=#14304F;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="620" y="80" width="180" height="64" as="geometry"/></mxCell>
+        <mxCell id="cloud" value="Boomi MFT Cloud" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#1D4E89;strokeWidth=1.5;fontColor=#14304F;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="360" y="220" width="180" height="64" as="geometry"/></mxCell>
+        <mxCell id="local" value="Boomi MFT&lt;br&gt;Local Node" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#1D4E89;strokeWidth=1.5;fontColor=#14304F;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="360" y="400" width="180" height="64" as="geometry"/></mxCell>
+        <mxCell id="s3L" value="S3 bucket 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#1D4E89;strokeWidth=1.5;fontColor=#14304F;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="200" y="530" width="170" height="60" as="geometry"/></mxCell>
+        <mxCell id="s3R" value="S3 bucket 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#1D4E89;strokeWidth=1.5;fontColor=#14304F;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="530" y="530" width="170" height="60" as="geometry"/></mxCell>
+        <mxCell id="p1" value="Pattern 1" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1D4E89;strokeWidth=1.8;dashed=1;dashPattern=7 5;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="280" y="112" as="sourcePoint"/><mxPoint x="620" y="112" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="b1" value="" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1F2933;strokeWidth=1.8;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="190" y="144" as="sourcePoint"/><mxPoint x="450" y="220" as="targetPoint"/><Array as="points"><mxPoint x="190" y="182"/><mxPoint x="450" y="182"/></Array></mxGeometry></mxCell>
+        <mxCell id="b2" value="" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1F2933;strokeWidth=1.8;endArrow=none;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="710" y="144" as="sourcePoint"/><mxPoint x="450" y="182" as="targetPoint"/><Array as="points"><mxPoint x="710" y="182"/></Array></mxGeometry></mxCell>
+        <mxCell id="c1" value="" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1F2933;strokeWidth=1.8;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="450" y="284" as="sourcePoint"/><mxPoint x="450" y="400" as="targetPoint"/></mxGeometry></mxCell>
+        <mxCell id="l1" value="" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1F2933;strokeWidth=1.8;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="450" y="464" as="sourcePoint"/><mxPoint x="285" y="530" as="targetPoint"/><Array as="points"><mxPoint x="450" y="497"/><mxPoint x="285" y="497"/></Array></mxGeometry></mxCell>
+        <mxCell id="l2" value="" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1F2933;strokeWidth=1.8;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="450" y="497" as="sourcePoint"/><mxPoint x="615" y="530" as="targetPoint"/><Array as="points"><mxPoint x="615" y="497"/></Array></mxGeometry></mxCell>
+        <mxCell id="p3" value="Pattern 3" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1D4E89;strokeWidth=1.8;dashed=1;dashPattern=7 5;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="130" y="144" as="sourcePoint"/><mxPoint x="200" y="560" as="targetPoint"/><Array as="points"><mxPoint x="130" y="560"/></Array></mxGeometry></mxCell>
+        <mxCell id="p4" value="Pattern 4" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1D4E89;strokeWidth=1.8;dashed=1;dashPattern=7 5;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="700" y="560" as="sourcePoint"/><mxPoint x="770" y="144" as="targetPoint"/><Array as="points"><mxPoint x="770" y="560"/></Array></mxGeometry></mxCell>
+        <mxCell id="p2" value="Pattern 2" style="edgeStyle=none;html=1;rounded=0;strokeColor=#1D4E89;strokeWidth=1.8;dashed=1;dashPattern=7 5;endArrow=block;endFill=1;fontColor=#1D4E89;fontStyle=1;fontSize=12;labelBackgroundColor=#FFFFFF;" edge="1" parent="1"><mxGeometry relative="1" as="geometry"><mxPoint x="285" y="590" as="sourcePoint"/><mxPoint x="615" y="590" as="targetPoint"/><Array as="points"><mxPoint x="285" y="625"/><mxPoint x="615" y="625"/></Array></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
