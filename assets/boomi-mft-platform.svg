@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 930" width="1600" height="930" font-family="Segoe UI, Calibri, Arial, sans-serif" role="img" aria-label="Boomi MFT platform components">
+<defs><marker id="pfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3e4c59"/></marker></defs>
+<rect width="1600" height="930" fill="#ffffff"/>
+<rect x="40" y="40" width="1520" height="190" rx="12" fill="#f4eef8" stroke="#7b3fa0" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="660" y="66" font-size="16" font-weight="600" fill="#7b3fa0">External parties</text>
+<rect x="40" y="280" width="1520" height="240" rx="12" fill="#eef3f8" stroke="#1d4e89" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="660" y="306" font-size="16" font-weight="600" fill="#1d4e89">Boomi MFT Cloud: Boomi-hosted, one tenant</text>
+<rect x="40" y="570" width="1520" height="240" rx="12" fill="#edf6ef" stroke="#1e6b3a" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="660" y="596" font-size="16" font-weight="600" fill="#1e6b3a">Internal network: AWS now, Azure in design</text>
+<line x1="230.0" y1="200" x2="230.0" y2="345" stroke="#3e4c59" stroke-width="2" marker-end="url(#pfa)"/>
+<rect x="240.0" y="242.0" width="82" height="26" rx="13" fill="#ffffff" stroke="#9aa5b1"/>
+<text x="281" y="260.0" font-size="13" text-anchor="middle" fill="#1f2933">Configure</text>
+<line x1="610.0" y1="200" x2="610.0" y2="345" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<rect x="620.0" y="242.0" width="103" height="26" rx="13" fill="#ffffff" stroke="#9aa5b1"/>
+<text x="671" y="260.0" font-size="13" text-anchor="middle" fill="#1f2933">Push or pull</text>
+<line x1="1370.0" y1="200" x2="1370.0" y2="345" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<rect x="1380.0" y="242.0" width="130" height="26" rx="13" fill="#ffffff" stroke="#9aa5b1"/>
+<text x="1445" y="260.0" font-size="13" text-anchor="middle" fill="#1f2933">Upload, download</text>
+<line x1="380" y1="415.0" x2="460" y2="415.0" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<line x1="760" y1="415.0" x2="840" y2="415.0" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<line x1="1140" y1="415.0" x2="1220" y2="415.0" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<line x1="610.0" y1="640" x2="610.0" y2="485" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<rect x="620.0" y="532.0" width="192" height="26" rx="13" fill="#ffffff" stroke="#9aa5b1"/>
+<text x="716" y="550.0" font-size="13" text-anchor="middle" fill="#1f2933">Node connects out (HTTPS)</text>
+<line x1="460" y1="710.0" x2="380" y2="710.0" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<line x1="760" y1="710.0" x2="840" y2="710.0" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<line x1="1370.0" y1="640" x2="1370.0" y2="485" stroke="#3e4c59" stroke-width="2" marker-start="url(#pfa)" marker-end="url(#pfa)"/>
+<rect x="1380.0" y="532.0" width="96" height="26" rx="13" fill="#ffffff" stroke="#9aa5b1"/>
+<text x="1428" y="550.0" font-size="13" text-anchor="middle" fill="#1f2933">Share, send</text>
+<rect x="80" y="90" width="300" height="110" rx="8" fill="#ffffff" stroke="#3e4c59" stroke-width="1.8"/>
+<text x="230.0" y="131" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">Platform admins</text>
+<text x="230.0" y="157" font-size="13.5" text-anchor="middle" fill="#3e4c59">Flow Studio, admin portal</text>
+<text x="230.0" y="177" font-size="13.5" text-anchor="middle" fill="#3e4c59">Intelligrator self-service</text>
+<rect x="460" y="90" width="300" height="110" rx="8" fill="#e8f0fa" stroke="#1d4e89" stroke-width="1.8"/>
+<text x="610.0" y="131" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">Partners and SaaS</text>
+<text x="610.0" y="157" font-size="13.5" text-anchor="middle" fill="#3e4c59">SFTP, FTPS, HTTPS, cloud storage</text>
+<text x="610.0" y="177" font-size="13.5" text-anchor="middle" fill="#3e4c59">e.g. Pega landing zones</text>
+<rect x="1220" y="90" width="300" height="110" rx="8" fill="#e3f3f1" stroke="#0f6e66" stroke-width="1.8"/>
+<text x="1370.0" y="131" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">External users</text>
+<text x="1370.0" y="157" font-size="13.5" text-anchor="middle" fill="#3e4c59">Citizens and stakeholders</text>
+<text x="1370.0" y="177" font-size="13.5" text-anchor="middle" fill="#3e4c59">No MFT account needed</text>
+<rect x="80" y="345" width="300" height="140" rx="8" fill="#e8f0fa" stroke="#1d4e89" stroke-width="1.8"/>
+<text x="230.0" y="391" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">MFT APIs and Connector</text>
+<text x="230.0" y="417" font-size="13.5" text-anchor="middle" fill="#3e4c59">Management, Activity, FS APIs</text>
+<text x="230.0" y="437" font-size="13.5" text-anchor="middle" fill="#3e4c59">Boomi Integration processes</text>
+<text x="230.0" y="457" font-size="13.5" text-anchor="middle" fill="#3e4c59">API Management</text>
+<rect x="460" y="345" width="300" height="140" rx="8" fill="#e8f0fa" stroke="#1d4e89" stroke-width="1.8"/>
+<text x="610.0" y="391" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">Automated File Transfer</text>
+<text x="610.0" y="417" font-size="13.5" text-anchor="middle" fill="#3e4c59">Organizations, Endpoints, Flows</text>
+<text x="610.0" y="437" font-size="13.5" text-anchor="middle" fill="#3e4c59">Schedules, run-now, retries</text>
+<text x="610.0" y="457" font-size="13.5" text-anchor="middle" fill="#3e4c59">MFT SFTP, FTPS, HTTPS servers</text>
+<rect x="840" y="345" width="300" height="140" rx="8" fill="#ffffff" stroke="#3e4c59" stroke-width="1.8"/>
+<text x="990.0" y="391" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">Persistent storage</text>
+<text x="990.0" y="417" font-size="13.5" text-anchor="middle" fill="#3e4c59">Files held until delivered</text>
+<text x="990.0" y="437" font-size="13.5" text-anchor="middle" fill="#3e4c59">Activity, alerts, audit</text>
+<text x="990.0" y="457" font-size="13.5" text-anchor="middle" fill="#3e4c59">Encrypted at rest</text>
+<rect x="1220" y="345" width="300" height="140" rx="8" fill="#e3f3f1" stroke="#0f6e66" stroke-width="1.8"/>
+<text x="1370.0" y="391" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">File Sharing (FS)</text>
+<text x="1370.0" y="417" font-size="13.5" text-anchor="middle" fill="#3e4c59">Web app, Dropbox, secure links</text>
+<text x="1370.0" y="437" font-size="13.5" text-anchor="middle" fill="#3e4c59">Outlook, Office 365, Salesforce</text>
+<text x="1370.0" y="457" font-size="13.5" text-anchor="middle" fill="#3e4c59">Login, expiry, permissions</text>
+<rect x="80" y="640" width="300" height="140" rx="8" fill="#ffffff" stroke="#3e4c59" stroke-width="1.8"/>
+<text x="230.0" y="696" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">AV scan (MDE)</text>
+<text x="230.0" y="722" font-size="13.5" text-anchor="middle" fill="#3e4c59">Fail closed</text>
+<text x="230.0" y="742" font-size="13.5" text-anchor="middle" fill="#3e4c59">Limit about 250 MB (G-15)</text>
+<rect x="460" y="640" width="300" height="140" rx="8" fill="#e8f0fa" stroke="#1d4e89" stroke-width="1.8"/>
+<text x="610.0" y="686" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">MFT Node (Local Node)</text>
+<text x="610.0" y="712" font-size="13.5" text-anchor="middle" fill="#3e4c59">Windows or Linux on EC2</text>
+<text x="610.0" y="732" font-size="13.5" text-anchor="middle" fill="#3e4c59">Outbound HTTPS only</text>
+<text x="610.0" y="752" font-size="13.5" text-anchor="middle" fill="#3e4c59">Serves internal endpoints</text>
+<rect x="840" y="640" width="300" height="140" rx="8" fill="#e8f0fa" stroke="#1d4e89" stroke-width="1.8"/>
+<text x="990.0" y="686" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">Internal endpoints</text>
+<text x="990.0" y="712" font-size="13.5" text-anchor="middle" fill="#3e4c59">S3, Azure Blob, Azure Files</text>
+<text x="990.0" y="732" font-size="13.5" text-anchor="middle" fill="#3e4c59">File Share (LAN) endpoints</text>
+<text x="990.0" y="752" font-size="13.5" text-anchor="middle" fill="#3e4c59">IAM and KMS controlled</text>
+<rect x="1220" y="640" width="300" height="140" rx="8" fill="#e3f3f1" stroke="#0f6e66" stroke-width="1.8"/>
+<text x="1370.0" y="696" font-size="17" font-weight="700" text-anchor="middle" fill="#1f2933">Staff and agents</text>
+<text x="1370.0" y="722" font-size="13.5" text-anchor="middle" fill="#3e4c59">Browser, Outlook add-in</text>
+<text x="1370.0" y="742" font-size="13.5" text-anchor="middle" fill="#3e4c59">SMIC dynamic links</text>
+<rect x="40" y="835" width="1520" height="76" rx="10" fill="#f7f8fa" stroke="#c5ccd3"/>
+<rect x="64" y="853" width="26" height="18" rx="4" fill="#e8f0fa" stroke="#1d4e89" stroke-width="1.8"/>
+<text x="100" y="867" font-size="14" fill="#1f2933">Automated File Transfer (system to system)</text>
+<rect x="455.64000000000004" y="853" width="26" height="18" rx="4" fill="#e3f3f1" stroke="#0f6e66" stroke-width="1.8"/>
+<text x="491.64000000000004" y="867" font-size="14" fill="#1f2933">File Sharing (person to person)</text>
+<rect x="765.6600000000001" y="853" width="26" height="18" rx="4" fill="#ffffff" stroke="#3e4c59" stroke-width="1.8"/>
+<text x="801.6600000000001" y="867" font-size="14" fill="#1f2933">Shared platform service or external party</text>
+<text x="64" y="895" font-size="13" fill="#52606d">Arrows show data flow. The MFT Node opens every connection to the Cloud, so no inbound port is opened to the internal network. AFT and FS share one tenant, storage and audit trail.</text>
+</svg>
