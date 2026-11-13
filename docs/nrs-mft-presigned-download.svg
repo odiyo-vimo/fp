@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1552.0 1946.4" width="1552.0" height="1946.4" font-family="Segoe UI, Calibri, Arial, sans-serif">
+<defs>
+<marker id="a-sync" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F2933"/></marker>
+<marker id="a-reply" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#1F2933" stroke-width="1.4"/></marker>
+<marker id="a-tbc" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#C26A00" stroke-width="1.4"/></marker>
+<marker id="a-err" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#B3261E" stroke-width="1.4"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<rect x="28.0" y="178.4" width="1496.0" height="24.0" rx="0.0" fill="#EEF1F4" stroke="#EEF1F4" stroke-width="0.56"/>
+<text x="36.0" y="193.96" font-size="11.11" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">1.  File lands in Boomi MFT (existing inbound pattern)</text>
+<rect x="28.0" y="369.51" width="1496.0" height="24.0" rx="0.0" fill="#EEF1F4" stroke="#EEF1F4" stroke-width="0.56"/>
+<text x="36.0" y="385.07" font-size="11.11" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">2.  NRS authenticates to the MFT Files API</text>
+<rect x="28.0" y="498.58" width="1496.0" height="24.0" rx="0.0" fill="#EEF1F4" stroke="#EEF1F4" stroke-width="0.56"/>
+<text x="36.0" y="514.13" font-size="11.11" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">3.  Request a short-lived pre-signed download token   (authenticated, privilege: File Download)</text>
+<rect x="28.0" y="725.24" width="1496.0" height="24.0" rx="0.0" fill="#EEF1F4" stroke="#EEF1F4" stroke-width="0.56"/>
+<text x="36.0" y="740.8" font-size="11.11" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">4.  Anonymous download, streamed straight into an S3 multipart upload   (no S3 pre-signed URLs needed)</text>
+<rect x="28.0" y="1330.04" width="1496.0" height="24.0" rx="0.0" fill="#EEF1F4" stroke="#EEF1F4" stroke-width="0.56"/>
+<text x="36.0" y="1345.6" font-size="11.11" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">5.  Error handling on token redemption (step 9 / 13)</text>
+<rect x="876.0" y="944.27" width="360.0" height="104.18" rx="0.0" fill="none" stroke="#7B8794" stroke-width="1.11"/>
+<rect x="876.0" y="944.27" width="44.0" height="17.6" rx="0.0" fill="#7B8794" stroke="#7B8794" stroke-width="1.11"/>
+<text x="898.0" y="955.91" font-size="8.89" fill="#FFFFFF" text-anchor="middle" xml:space="preserve" font-weight="700">loop</text>
+<text x="933.6" y="955.91" font-size="8.89" fill="#52606D" text-anchor="start" xml:space="preserve" font-style="italic">[ for each 100 MiB part buffered from the stream ]</text>
+<rect x="372.0" y="1066.84" width="576.0" height="116.27" rx="0.0" fill="none" stroke="#7B8794" stroke-width="1.11"/>
+<rect x="372.0" y="1066.84" width="44.0" height="17.6" rx="0.0" fill="#7B8794" stroke="#7B8794" stroke-width="1.11"/>
+<text x="394.0" y="1078.49" font-size="8.89" fill="#FFFFFF" text-anchor="middle" xml:space="preserve" font-weight="700">opt</text>
+<text x="429.6" y="1078.49" font-size="8.89" fill="#52606D" text-anchor="start" xml:space="preserve" font-style="italic">[ stream interrupted, token not expired or exhausted ]</text>
+<rect x="372.0" y="1368.44" width="576.0" height="234.13" rx="0.0" fill="none" stroke="#7B8794" stroke-width="1.11"/>
+<rect x="372.0" y="1368.44" width="44.0" height="17.6" rx="0.0" fill="#7B8794" stroke="#7B8794" stroke-width="1.11"/>
+<text x="394.0" y="1380.09" font-size="8.89" fill="#FFFFFF" text-anchor="middle" xml:space="preserve" font-weight="700">alt</text>
+<text x="429.6" y="1380.09" font-size="8.89" fill="#52606D" text-anchor="start" xml:space="preserve" font-style="italic">[ 400 ]</text>
+<line x1="372.0" y1="1447.02" x2="948.0" y2="1447.02" stroke="#7B8794" stroke-width="0.83" stroke-dasharray="6 5"/>
+<text x="388.0" y="1460.27" font-size="8.89" fill="#52606D" text-anchor="start" xml:space="preserve" font-style="italic">[ 404 ]</text>
+<line x1="372.0" y1="1524.0" x2="948.0" y2="1524.0" stroke="#7B8794" stroke-width="0.83" stroke-dasharray="6 5"/>
+<text x="388.0" y="1537.24" font-size="8.89" fill="#52606D" text-anchor="start" xml:space="preserve" font-style="italic">[ 409 ]</text>
+<line x1="136.0" y1="152.0" x2="136.0" y2="1628.98" stroke="#9AA5B1" stroke-width="1.11" stroke-dasharray="6 5"/>
+<line x1="480.0" y1="152.0" x2="480.0" y2="1628.98" stroke="#9AA5B1" stroke-width="1.11" stroke-dasharray="6 5"/>
+<line x1="912.0" y1="152.0" x2="912.0" y2="1628.98" stroke="#9AA5B1" stroke-width="1.11" stroke-dasharray="6 5"/>
+<line x1="1200.0" y1="152.0" x2="1200.0" y2="1628.98" stroke="#9AA5B1" stroke-width="1.11" stroke-dasharray="6 5"/>
+<line x1="1420.0" y1="152.0" x2="1420.0" y2="1628.98" stroke="#9AA5B1" stroke-width="1.11" stroke-dasharray="6 5"/>
+<rect x="380.0" y="264.98" width="200.0" height="33.96" rx="0.0" fill="#FFF8DB" stroke="#C9A227" stroke-width="0.83"/>
+<text x="480.0" y="279.11" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">Stores the file and assigns</text>
+<text x="480.0" y="290.49" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">a fileReferenceId</text>
+<rect x="380.0" y="621.42" width="200.0" height="45.33" rx="0.0" fill="#FFF8DB" stroke="#C9A227" stroke-width="0.83"/>
+<text x="480.0" y="635.56" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">Checks caller holds File Download</text>
+<text x="480.0" y="646.93" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">privilege; mints a time- and</text>
+<text x="480.0" y="658.31" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">use-limited token</text>
+<rect x="804.0" y="1273.69" width="216.0" height="33.96" rx="0.0" fill="#FFF8DB" stroke="#C9A227" stroke-width="0.83"/>
+<text x="912.0" y="1287.82" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">Verify SHA-256 of the stored object</text>
+<text x="912.0" y="1299.2" font-size="8.89" fill="#1F2933" text-anchor="middle" xml:space="preserve">against the SDEC-supplied checksum</text>
+<rect x="28.0" y="1676.98" width="848.0" height="213.42" rx="0.0" fill="#F7F9FB" stroke="#9AA5B1" stroke-width="0.83"/>
+<text x="36.0" y="1693.51" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">Parameter reference</text>
+<text x="36.0" y="1704.89" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">POST /api/Files/1.0/{fileReferenceId}/presigned      Auth: ApiKey | OAuth2 | Bearer   Privilege: File Download</text>
+<text x="36.0" y="1716.27" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  path     fileReferenceId              string, required      Identifier of the file to expose</text>
+<text x="36.0" y="1727.64" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  header   ThruApplication              string, optional      Calling application name, recorded for tracing</text>
+<text x="36.0" y="1739.02" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  header   X-Thru-Tracking-ThruNodeId   string, optional      Originating MFT node, recorded for tracing</text>
+<text x="36.0" y="1750.4" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  body     endpointPath                 string or null        Flow endpoint path: /{customerCode}/{flow}/{flowEndpoint}</text>
+<text x="36.0" y="1761.78" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  body     maxDownloads                 int32, 1 to 10        Times the token may be redeemed</text>
+<text x="36.0" y="1773.16" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  body     activeDuration               int32, 1 to 86400     Token lifetime in seconds from issue (max 24 h)</text>
+<text x="36.0" y="1784.53" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  returns  200  { "presignedUrl": "&lt;token&gt;" }</text>
+<text x="36.0" y="1795.91" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace"></text>
+<text x="36.0" y="1807.29" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">GET /api/Files/1.0/presigned/{presignedUrl}/content      Auth: none (the token authorises)</text>
+<text x="36.0" y="1818.67" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  path     presignedUrl                 string, required      The pre-signed token to redeem</text>
+<text x="36.0" y="1830.04" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  header   ThruApplication              string, optional      Calling application name, for tracing</text>
+<text x="36.0" y="1841.42" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  header   X-Thru-Tracking-ThruNodeId   string, optional      Originating MFT node, for tracing</text>
+<text x="36.0" y="1852.8" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  header   Range                        string, optional      e.g. bytes=1073741824- to resume (returns 206)</text>
+<text x="36.0" y="1864.18" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">  returns  200 full stream | 206 byte range | 400 malformed | 404 unknown/expired/not found | 409 disabled</text>
+<text x="36.0" y="1875.56" font-size="8.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-family="Consolas, Menlo, monospace">           Response header X-Thru-Path: stored file path relative to the endpoint root</text>
+<rect x="896.0" y="1676.98" width="628.0" height="213.42" rx="0.0" fill="#FFF8DB" stroke="#C9A227" stroke-width="0.83"/>
+<text x="904.0" y="1694.04" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">Points to confirm with Boomi / NRS</text>
+<text x="904.0" y="1706.13" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">1.  Does each Range request count against maxDownloads (1 to 10)?</text>
+<text x="904.0" y="1718.22" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">     If not, parallel ranged GETs become an option for large files.</text>
+<text x="904.0" y="1730.31" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">2.  Does an in-flight stream survive the token reaching activeDuration?</text>
+<text x="904.0" y="1742.4" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">     Size it to the largest file: 20 GB at 100 Mbit/s is about 27 minutes.</text>
+<text x="904.0" y="1754.49" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">3.  How NRS learns the fileReferenceId (step 2): event, SDEC message or FileList.</text>
+<text x="904.0" y="1766.58" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">4.  NRS is itself an authenticated caller, so the authenticated</text>
+<text x="904.0" y="1778.67" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">     'Download a file's content by file reference' GET (also Range-capable)</text>
+<text x="904.0" y="1790.76" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">     skips the token step. The pre-signed route fits when the download</text>
+<text x="904.0" y="1802.84" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">     runs in a separate worker that should not hold MFT credentials.</text>
+<text x="904.0" y="1814.93" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">5.  Retention / deletion of the file in MFT once NRS confirms receipt.</text>
+<text x="904.0" y="1827.02" font-size="9.44" fill="#1F2933" text-anchor="start" xml:space="preserve">6.  Network path NRS to MFT (DMZ / corporate VPC, public FQDN DNS).</text>
+<rect x="38.0" y="94.4" width="196.0" height="57.6" rx="4.8" fill="#E8F0FA" stroke="#1D4E89" stroke-width="1.67"/>
+<text x="136.0" y="121.42" font-size="13.33" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">SDEC</text>
+<text x="136.0" y="134.76" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">Sender (HMRC)</text>
+<rect x="38.0" y="1628.98" width="196.0" height="24.0" rx="3.2" fill="#E8F0FA" stroke="#1D4E89" stroke-width="1.11"/>
+<text x="136.0" y="1644.18" font-size="10.0" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">SDEC</text>
+<rect x="382.0" y="94.4" width="196.0" height="57.6" rx="4.8" fill="#FBEBDC" stroke="#B3591A" stroke-width="1.67"/>
+<text x="480.0" y="121.42" font-size="13.33" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">Boomi MFT (Thru)</text>
+<text x="480.0" y="134.76" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">Files API /api/Files/1.0 + flow storage</text>
+<rect x="382.0" y="1628.98" width="196.0" height="24.0" rx="3.2" fill="#FBEBDC" stroke="#B3591A" stroke-width="1.11"/>
+<text x="480.0" y="1644.18" font-size="10.0" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">Boomi MFT (Thru)</text>
+<rect x="814.0" y="94.4" width="196.0" height="57.6" rx="4.8" fill="#E4F3E9" stroke="#1E6B3A" stroke-width="1.67"/>
+<text x="912.0" y="121.42" font-size="13.33" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">NRS</text>
+<text x="912.0" y="134.76" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">Downloader service</text>
+<rect x="814.0" y="1628.98" width="196.0" height="24.0" rx="3.2" fill="#E4F3E9" stroke="#1E6B3A" stroke-width="1.11"/>
+<text x="912.0" y="1644.18" font-size="10.0" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">NRS</text>
+<rect x="1102.0" y="94.4" width="196.0" height="57.6" rx="4.8" fill="#FCEBE5" stroke="#B3401A" stroke-width="1.67"/>
+<text x="1200.0" y="121.42" font-size="13.33" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">NRS S3 bucket</text>
+<text x="1200.0" y="134.76" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">Target object storage</text>
+<rect x="1102.0" y="1628.98" width="196.0" height="24.0" rx="3.2" fill="#FCEBE5" stroke="#B3401A" stroke-width="1.11"/>
+<text x="1200.0" y="1644.18" font-size="10.0" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">NRS S3 bucket</text>
+<rect x="1322.0" y="94.4" width="196.0" height="57.6" rx="4.8" fill="#EEE8F6" stroke="#5B3F8C" stroke-width="1.67"/>
+<text x="1420.0" y="121.42" font-size="13.33" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">Token issuer</text>
+<text x="1420.0" y="134.76" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">OAuth2 (or ApiKey)</text>
+<rect x="1322.0" y="1628.98" width="196.0" height="24.0" rx="3.2" fill="#EEE8F6" stroke="#5B3F8C" stroke-width="1.11"/>
+<text x="1420.0" y="1644.18" font-size="10.0" fill="#1F2933" text-anchor="middle" xml:space="preserve" font-weight="700">Token issuer</text>
+<text x="36.0" y="48.44" font-size="18.89" fill="#1F2933" text-anchor="start" xml:space="preserve" font-weight="700">NRS pull of SDEC attachments via Boomi MFT pre-signed download URL</text>
+<text x="36.0" y="71.56" font-size="11.11" fill="#52606D" text-anchor="start" xml:space="preserve">API interaction sequence  |  Draft v0.1, 13 Nov 2026  |  Alternative to the S3 pre-signed PUT URL (5 GB single-PUT limit)</text>
+<line x1="136.0" y1="245.78" x2="480.0" y2="245.78" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="192.23" y="217.6" width="231.54" height="24.18" fill="#FFFFFF"/>
+<text x="308.0" y="226.67" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">1.  Deliver attachment to the MFT flow endpoint</text>
+<text x="308.0" y="238.76" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      /{customerCode}/{flow}/{flowEndpoint}</text>
+<line x1="480.0" y1="343.91" x2="912.0" y2="343.91" stroke="#C26A00" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-tbc)"/>
+<rect x="544.81" y="315.73" width="302.38" height="24.18" fill="#FFFFFF"/>
+<text x="696.0" y="324.8" font-size="9.44" fill="#C26A00" text-anchor="middle" xml:space="preserve">2.  File-available signal carrying fileReferenceId</text>
+<text x="696.0" y="336.89" font-size="9.44" fill="#C26A00" text-anchor="middle" xml:space="preserve">      (mechanism TBC: MFT event, SDEC message or FileList API)</text>
+<line x1="912.0" y1="436.89" x2="1420.0" y2="436.89" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="1078.56" y="408.71" width="174.88" height="24.18" fill="#FFFFFF"/>
+<text x="1166.0" y="417.78" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">3.  POST token request</text>
+<text x="1166.0" y="429.87" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      grant_type=client_credentials</text>
+<line x1="1420.0" y1="472.98" x2="912.0" y2="472.98" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="1083.28" y="456.89" width="165.43" height="12.09" fill="#FFFFFF"/>
+<text x="1166.0" y="465.96" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">4.  200 OK  access_token (Bearer)</text>
+<line x1="912.0" y1="602.22" x2="480.0" y2="602.22" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="525.92" y="537.78" width="340.16" height="60.44" fill="#FFFFFF"/>
+<text x="696.0" y="546.84" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">5.  POST /api/Files/1.0/{fileReferenceId}/presigned</text>
+<text x="696.0" y="558.93" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      Authorization: Bearer &lt;access_token&gt;   |   ThruApplication: NRS</text>
+<text x="696.0" y="571.02" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      X-Thru-Tracking-ThruNodeId: &lt;optional&gt;</text>
+<text x="696.0" y="583.11" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      Body: { "endpointPath": "/{customerCode}/{flow}/{flowEndpoint}",</text>
+<text x="696.0" y="595.2" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">                  "maxDownloads": 3,  "activeDuration": 3600 }</text>
+<line x1="480.0" y1="699.64" x2="912.0" y2="699.64" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="592.03" y="683.56" width="207.93" height="12.09" fill="#FFFFFF"/>
+<text x="696.0" y="692.62" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">6.  200 OK   { "presignedUrl": "&lt;token&gt;" }</text>
+<line x1="912.0" y1="780.53" x2="1200.0" y2="780.53" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="944.95" y="764.44" width="222.1" height="12.09" fill="#FFFFFF"/>
+<text x="1056.0" y="773.51" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">7.  CreateMultipartUpload (AWS SDK, IAM role)</text>
+<line x1="1200.0" y1="816.62" x2="912.0" y2="816.62" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="1022.87" y="800.53" width="66.27" height="12.09" fill="#FFFFFF"/>
+<text x="1056.0" y="809.6" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">8.  UploadId</text>
+<line x1="912.0" y1="876.89" x2="480.0" y2="876.89" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="549.53" y="836.62" width="292.93" height="36.27" fill="#FFFFFF"/>
+<text x="696.0" y="845.69" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">9.  GET /api/Files/1.0/presigned/{presignedUrl}/content</text>
+<text x="696.0" y="857.78" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      No Authorization header: the token authorises the call</text>
+<text x="696.0" y="869.87" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      ThruApplication: NRS   |   Range: bytes=0-  (optional)</text>
+<line x1="480.0" y1="925.07" x2="912.0" y2="925.07" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="554.26" y="896.89" width="283.49" height="24.18" fill="#FFFFFF"/>
+<text x="696.0" y="905.96" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">10.  200 OK   application/octet-stream (raw byte stream)</text>
+<text x="696.0" y="918.04" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      X-Thru-Path: &lt;stored path relative to endpoint root&gt;</text>
+<line x1="912.0" y1="991.56" x2="1200.0" y2="991.56" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="956.76" y="975.47" width="198.49" height="12.09" fill="#FFFFFF"/>
+<text x="1056.0" y="984.53" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">11.  UploadPart (partNumber n, UploadId)</text>
+<line x1="1200.0" y1="1027.64" x2="912.0" y2="1027.64" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="1003.98" y="1011.56" width="104.04" height="12.09" fill="#FFFFFF"/>
+<text x="1056.0" y="1020.62" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">12.  ETag for part n</text>
+<line x1="912.0" y1="1126.22" x2="480.0" y2="1126.22" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="558.98" y="1098.04" width="274.04" height="24.18" fill="#FFFFFF"/>
+<text x="696.0" y="1107.11" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">13.  GET /api/Files/1.0/presigned/{presignedUrl}/content</text>
+<text x="696.0" y="1119.2" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">      Range: bytes=&lt;last byte received + 1&gt;-</text>
+<line x1="480.0" y1="1162.31" x2="912.0" y2="1162.31" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="592.03" y="1146.22" width="207.93" height="12.09" fill="#FFFFFF"/>
+<text x="696.0" y="1155.29" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">14.  206 Partial Content (remaining bytes)</text>
+<line x1="912.0" y1="1218.4" x2="1200.0" y2="1218.4" stroke="#1F2933" stroke-width="1.4" marker-end="url(#a-sync)"/>
+<rect x="930.78" y="1202.31" width="250.43" height="12.09" fill="#FFFFFF"/>
+<text x="1056.0" y="1211.38" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">15.  CompleteMultipartUpload (part numbers + ETags)</text>
+<line x1="1200.0" y1="1254.49" x2="912.0" y2="1254.49" stroke="#1F2933" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-reply)"/>
+<rect x="883.56" y="1238.4" width="344.88" height="12.09" fill="#FFFFFF"/>
+<text x="1056.0" y="1247.47" font-size="9.44" fill="#1F2933" text-anchor="middle" xml:space="preserve">16.  200 OK  object stored (multipart: up to 10,000 parts, no 5 GB cap)</text>
+<line x1="480.0" y1="1427.82" x2="912.0" y2="1427.82" stroke="#B3261E" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-err)"/>
+<rect x="587.31" y="1399.64" width="217.38" height="24.18" fill="#FFFFFF"/>
+<text x="696.0" y="1408.71" font-size="9.44" fill="#B3261E" text-anchor="middle" xml:space="preserve">17.  400  Presigned URL missing or malformed</text>
+<text x="696.0" y="1420.8" font-size="9.44" fill="#B3261E" text-anchor="middle" xml:space="preserve">      Fix the request; do not retry as-is</text>
+<line x1="480.0" y1="1504.8" x2="912.0" y2="1504.8" stroke="#B3261E" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-err)"/>
+<rect x="533.01" y="1476.62" width="325.99" height="24.18" fill="#FFFFFF"/>
+<text x="696.0" y="1485.69" font-size="9.44" fill="#B3261E" text-anchor="middle" xml:space="preserve">18.  404  Token unknown, expired or exhausted, or file not found</text>
+<text x="696.0" y="1497.78" font-size="9.44" fill="#B3261E" text-anchor="middle" xml:space="preserve">      Request a fresh token (repeat step 5), then resume with Range</text>
+<line x1="480.0" y1="1581.78" x2="912.0" y2="1581.78" stroke="#B3261E" stroke-width="1.4" stroke-dasharray="7 4" marker-end="url(#a-err)"/>
+<rect x="601.48" y="1553.6" width="189.04" height="24.18" fill="#FFFFFF"/>
+<text x="696.0" y="1562.67" font-size="9.44" fill="#B3261E" text-anchor="middle" xml:space="preserve">19.  409  Target resource is disabled</text>
+<text x="696.0" y="1574.76" font-size="9.44" fill="#B3261E" text-anchor="middle" xml:space="preserve">      Raise with the MFT platform team</text>
+<text x="36.0" y="1921.24" font-size="8.89" fill="#52606D" text-anchor="start" xml:space="preserve">Legend:  solid arrow = request   |   dashed arrow = response   |   orange dashed = to be confirmed   |   red dashed = error response</text>
+</svg>
