@@ -44,19 +44,19 @@ ol li,ul li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
 </style><body>
 <div class="dlbar"><span>Pages:</span><a class="btn alt" href="edms-content-with-metadata.html">EDMS content with metadata</a><a class="btn alt" href="index.html">Main page</a></div>
 <header class="wrapx"><div class="in"><h1>Boomi API Constraints for EDMS Ingestion and Retrieval</h1>
-<div class="meta">Size, timeout, concurrency and rate limits across Boomi CAM, Boomi iPaaS runtimes and Boomi MFT &middot; v0.1 (draft) &middot; 18 November 2026</div>
-<nav><a href="#how">How to use</a><a href="#bottom">Bottom line</a><a href="#limits">Limits by layer</a><a href="#apis">Impact on EDMS APIs</a><a href="#guard">Guardrails</a><a href="#q">To confirm</a></nav></div></header>
+<div class="meta">Size, timeout, concurrency and rate limits across Boomi CAM and the Boomi iPaaS runtime. Boomi and Doxis both hosted on AWS; API only, no MFT &middot; v0.2 (draft) &middot; 18 November 2026</div>
+<nav><a href="#how">How to use</a><a href="#bottom">Bottom line</a><a href="#limits">Limits by layer</a><a href="#apis">Impact on EDMS APIs</a><a href="#opts">Large-file options</a><a href="#guard">Guardrails</a><a href="#q">To confirm</a></nav></div></header>
 <main class="wrapx">
 <section id="how"><h2>How to use this page</h2><ol>
 <li>Section 2 lists each published limit with a link to the Boomi documentation it came from. Values were checked on 18 November 2026; Boomi changes these between releases, so recheck before baselining.</li>
 <li>Section 3 shows which limit affects each EDMS API and the proposed way round it.</li>
-<li>Sections 4 and 5 are the guardrails to agree and the questions to put to Boomi and the platform owner.</li>
+<li>Section 3a lists API-only ways to handle large files. Sections 4 and 5 are the guardrails to agree and the questions to put to Boomi and the platform owner.</li>
 <li>Each table has a "Copy for Word" button.</li></ol></section>
 
 <section id="bottom"><h2>1. Bottom line</h2>
 <p>Boomi is built for many small, quick API calls, not for moving large files through a synchronous API. On a Boomi-hosted runtime (public or dedicated cloud) an inbound API request is capped at 5 MB, Low Latency calls are cut off at 30 seconds, and each execution worker runs 20 calls at once. CAM adds a 60 second backend timeout unless Boomi extends it. On our own runtime (local Atom, Molecule or private runtime cloud) most of these limits are configurable and unlimited by default, so memory, disk and timeouts become our sizing problem.</p>
-<p>For EDMS this means JSON operations (search, representations, retention) fit comfortably, but create and retrieve need a size threshold. Small files go inline; larger files go through Boomi MFT with a pre-signed upload or download URL, which has no file size limit.</p>
-<div class="facts"><div><b>Request size (Boomi cloud)</b>5 MB</div><div><b>Low Latency time limit</b>30 s</div><div><b>CAM backend timeout</b>60 s (more via support)</div><div><b>Worker concurrency</b>20 running per worker</div><div><b>Request rate (public cloud)</b>5 to 20 per second per node</div><div><b>MFT file size</b>No limit (chunked)</div></div></section>
+<p>For EDMS this means the JSON operations (search, representations, retention) fit comfortably, but create and retrieve need a size threshold and an API-only route for larger files (section 3a). Boomi and Doxis are both on AWS, so if they share a region the network leg is short and file size and Doxis response time dominate.</p>
+<div class="facts"><div><b>Request size (Boomi cloud)</b>5 MB</div><div><b>Low Latency time limit</b>30 s</div><div><b>CAM backend timeout</b>60 s (more via support)</div><div><b>Worker concurrency</b>20 running per worker</div><div><b>Request rate (public cloud)</b>5 to 20 per second per node</div><div><b>Large files</b>Ranged, chunked or direct-to-storage APIs (section 3a)</div></div></section>
 
 <section id="limits"><div class="copyhead"><h2>2. Limits by layer</h2><button class="copy" data-target="t-limits">Copy for Word</button></div><div class="tw" id="t-limits"><table><thead><tr><th>Layer</th><th>Constraint</th><th>Value</th><th>Can we change it?</th><th>Source</th></tr></thead><tbody>
 <tr class="grp"><td colspan="5">Boomi Cloud API Management (CAM)</td></tr>
@@ -84,23 +84,28 @@ ol li,ul li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
 <tr><td>Runtime</td><td>Execution worker concurrency</td><td>20 running, 10 queued, 10 s queue timeout (defaults)</td><td>Yes</td><td><a href="https://help.boomi.com/docs/Atomsphere/Integration/Integration%20management/r-atm-Attachment_Quotas_tab_4fbc3fff-7aaf-4bbd-a2dc-25d0edb5189c" target="_blank" rel="noopener">Boomi docs</a></td></tr>
 <tr><td>Runtime</td><td>Max concurrent executions per listener</td><td>10 (default)</td><td>Yes</td><td><a href="https://help.boomi.com/docs/Atomsphere/Integration/Integration%20management/r-atm-Attachment_Quotas_tab_4fbc3fff-7aaf-4bbd-a2dc-25d0edb5189c" target="_blank" rel="noopener">Boomi docs</a></td></tr>
 <tr><td>Runtime</td><td>Memory and disk</td><td>Set by our own JVM heap and host sizing</td><td>Yes</td><td>-</td></tr>
-<tr class="grp"><td colspan="5">Boomi MFT</td></tr>
-<tr><td>MFT</td><td>File size</td><td>No size limit; MFT connector uploads in chunks</td><td>n/a</td><td><a href="https://help.boomi.com/docs/Atomsphere/Integration/Connectors/MFT_operation" target="_blank" rel="noopener">Boomi docs</a></td></tr>
-<tr><td>MFT</td><td>Transfer concurrency</td><td>Set per Flow Endpoint</td><td>Yes</td><td>Project MFT pages</td></tr>
-<tr><td>MFT</td><td>AV scan file size</td><td>About 250 MB today (gap G-15)</td><td>Platform roadmap</td><td>Project MFT pages</td></tr>
 </tbody></table></div>
 <p class="note">The 1 MB CAM figure is the ceiling of the optional payload validation policy. Boomi does not publish a general body size limit for CAM pass-through traffic (Q1).</p></section>
 
 <section id="apis"><div class="copyhead"><h2>3. Impact on the EDMS APIs</h2><button class="copy" data-target="t-apis">Copy for Word</button></div><div class="tw" id="t-apis"><table><thead><tr><th>API</th><th>Direction of the large payload</th><th>What bites first on a Boomi-hosted cloud</th><th>Proposed handling</th></tr></thead><tbody>
-<tr><td>Create document<br><code>POST /edms/v1/documents</code></td><td>Request (file in)</td><td>5 MB request input limit; 30 s Low Latency limit; 512 MB memory shared across executions</td><td>Inline (multipart) only up to an agreed threshold. Above it, claim check: upload to Boomi MFT with a pre-signed URL, then create the document with the file reference (as in the SDEC upload pattern)</td></tr>
-<tr><td>Get content stream<br><code>GET .../{documentId}/content</code></td><td>Response (file out)</td><td>30 s Low Latency limit and the 60 s CAM timeout cut off long downloads; whole-document handling in memory</td><td>Stream only up to the threshold. Above it, return 303 or a JSON body with an MFT pre-signed download link</td></tr>
-<tr><td>Get content stream with metadata<br><code>GET .../content-with-metadata</code></td><td>Response (file out)</td><td>As above, plus the multipart response has to be assembled in the process</td><td>As above. Confirm Boomi can write a multipart response without buffering (D6 on the EDMS page)</td></tr>
+<tr><td>Create document<br><code>POST /edms/v1/documents</code></td><td>Request (file in)</td><td>5 MB request input limit; 30 s Low Latency limit; 512 MB memory shared across executions</td><td>Inline multipart up to the threshold, 413 above it. Larger files: option B (chunked upload session) or option C (direct-to-storage upload link), depending on what Doxis supports</td></tr>
+<tr><td>Get content stream<br><code>GET .../{documentId}/content</code></td><td>Response (file out)</td><td>30 s Low Latency limit and the 60 s CAM timeout cut off long downloads; whole-document handling in memory</td><td>Whole file up to the threshold. Larger files: option A (HTTP Range requests, each range inside the time limits) or option C (time-limited storage link)</td></tr>
+<tr><td>Get content stream with metadata<br><code>GET .../content-with-metadata</code></td><td>Response (file out)</td><td>As above, plus the multipart response has to be assembled in the process</td><td>Up to the threshold only. Above it, return 413 or the metadata alone and direct the consumer to the content API with Range support. Confirm Boomi can write a multipart response without buffering (D6 on the EDMS page)</td></tr>
 <tr><td>Search documents<br><code>POST .../documents/search</code></td><td>Neither (JSON)</td><td>Rate limit per node and result size</td><td>Mandatory paging with a maximum page size, a CAM throttle per consumer</td></tr>
 <tr><td>Representations, retention rule, retention hold</td><td>Neither (JSON)</td><td>Rate limits only</td><td>Standard CAM plan throttle and quota</td></tr>
 </tbody></table></div></section>
 
+<section id="opts"><div class="copyhead"><h2>3a. API-only options for large files</h2><button class="copy" data-target="t-opts">Copy for Word</button></div><div class="tw" id="t-opts"><table><thead><tr><th>Option</th><th>How it works</th><th>Fits the limits because</th><th>Depends on</th><th>Use for</th></tr></thead><tbody>
+<tr><td>A. Ranged download</td><td>Consumer reads the file in byte ranges with the HTTP Range header (for example 4 MB per call). Boomi passes the range to Doxis and returns 206 Partial Content</td><td>Each call is small, finishes well inside 30 s and 60 s, and bounds memory per call</td><td>Doxis supporting ranged or offset reads</td><td>Get content stream</td></tr>
+<tr><td>B. Chunked upload session</td><td>POST opens an upload session; the consumer PUTs numbered chunks under the size limit; a final call commits, checks the SHA-256 and creates the document in Doxis</td><td>Every request stays under 5 MB and 30 s</td><td>Doxis supporting chunked or append upload, or Boomi staging the chunks (needs storage)</td><td>Create document</td></tr>
+<tr><td>C. Direct-to-storage link</td><td>The API returns a short-lived signed URL and the consumer uploads to or downloads from storage directly (for example S3 in the Doxis AWS account). Boomi handles only the metadata calls</td><td>The file never passes through CAM or Boomi</td><td>Doxis keeping content in S3 or issuing its own signed URLs; security approval for bearer links</td><td>Create and get content, largest files</td></tr>
+<tr><td>D. Asynchronous create</td><td>POST returns 202 Accepted with a status URL; Boomi writes to Doxis in General mode and the consumer polls</td><td>Takes the Doxis write out of the 30 s and 60 s limits; the upload itself must still fit</td><td>Self-run runtime, or General mode within 10 min on a Boomi-run worker</td><td>Create document when Doxis is slow</td></tr>
+<tr><td>E. Raise the limits</td><td>Run the Boomi runtime ourselves on AWS, raise request size, worker time and heap, and ask Boomi to extend the CAM timeout</td><td>Limits become our own settings</td><td>Self-run runtime (Q2); Boomi support for CAM over 60 s; heap sized for concurrency times file size</td><td>Moderate file sizes only; does not scale to very large files</td></tr>
+</tbody></table></div>
+<p class="note">A and B cover retrieve and create without new storage. C scales best but needs Doxis to expose its storage or signed URLs. Suggested start: agree the threshold (G1), use A for retrieval, and choose B or C for create once Q6 is answered.</p></section>
+
 <section id="guard"><div class="copyhead"><h2>4. Guardrails to agree</h2><button class="copy" data-target="t-guard">Copy for Word</button></div><div class="tw" id="t-guard"><table><thead><tr><th>ID</th><th>Guardrail (for agreement)</th><th>Owner role</th></tr></thead><tbody>
-<tr><td>G1</td><td>Maximum inline file size for create and retrieve, with 413 above it and the MFT pre-signed route for larger files. Must sit under the 5 MB request limit if the APIs run on a Boomi-hosted cloud.</td><td>Integration Architect with Boomi Platform Owner</td></tr>
+<tr><td>G1</td><td>Maximum inline file size for create and retrieve, with 413 above it and one agreed API-only route for larger files (section 3a). Must sit under the 5 MB request limit if the APIs run on a Boomi-hosted cloud.</td><td>Integration Architect with Boomi Platform Owner</td></tr>
 <tr><td>G2</td><td>Timeout chain: consumer timeout &gt; CAM endpoint timeout &gt; iPaaS process time &gt; Doxis call timeout, so the gateway never gives up while the process is still working.</td><td>Integration Architect</td></tr>
 <tr><td>G3</td><td>CAM plan per consumer: throttle (calls per second) and quota (calls per day), 429 with Retry-After when exceeded.</td><td>API Platform Lead</td></tr>
 <tr><td>G4</td><td>Concurrency cap per consumer for file operations, so large transfers cannot fill the 20 running and 10 or 20 queued worker slots.</td><td>Boomi Platform Owner</td></tr>
@@ -110,14 +115,14 @@ ol li,ul li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
 
 <section id="q"><div class="copyhead"><h2>5. To confirm</h2><button class="copy" data-target="t-q">Copy for Word</button></div><div class="tw" id="t-q"><table><thead><tr><th>ID</th><th>Question</th><th>Ask</th></tr></thead><tbody>
 <tr><td>Q1</td><td>Does CAM limit the body size of pass-through requests and responses, and does it stream them or buffer them?</td><td>Boomi (support case)</td></tr>
-<tr><td>Q2</td><td>Which runtime will host the EDMS APIs: Boomi public cloud, dedicated cloud, or our own runtime cloud? This decides whether the 5 MB and 30 s limits apply.</td><td>Boomi Platform Owner</td></tr>
+<tr><td>Q2</td><td>Boomi and Doxis are both on AWS. Is the Boomi runtime run by Boomi (public or dedicated cloud) or by us (Molecule or private runtime cloud in our AWS account)? This decides whether the 5 MB and 30 s limits apply and whether Boomi can reach Doxis over private networking. Are both in the same AWS region?</td><td>Boomi Platform Owner</td></tr>
 <tr><td>Q3</td><td>Can a Web Services Server process return a multipart or binary response without holding the whole file in memory?</td><td>Boomi (solution architect)</td></tr>
 <tr><td>Q4</td><td>How many execution workers are licensed for our account, and can the per-node HTTP request rate be raised?</td><td>Boomi account team</td></tr>
 <tr><td>Q5</td><td>Expected volumes per API: peak calls per second, daily totals, typical and largest file size.</td><td>EDMS Product Owner and consuming teams</td></tr>
-<tr><td>Q6</td><td>Doxis-side limits: maximum upload size, concurrent sessions and call timeouts.</td><td>Doxis platform team</td></tr>
+<tr><td>Q6</td><td>Doxis: maximum upload size, concurrent sessions, call timeouts, ranged reads, chunked or append upload, and whether content sits in S3 with signed URL support.</td><td>Doxis platform team</td></tr>
 </tbody></table></div></section>
 
-<section id="log"><h2>Change log</h2><ul><li>v0.1, 18 November 2026: first draft from Boomi documentation and the project MFT pages.</li></ul></section>
+<section id="log"><h2>Change log</h2><ul><li>v0.2, 18 November 2026: Boomi MFT removed (API-only solution); Boomi and Doxis both on AWS; added API-only large-file options A to E; Q2 and Q6 updated.</li><li>v0.1, 18 November 2026: first draft from Boomi documentation.</li></ul></section>
 </main><div id="toast" role="status" aria-live="polite"></div>
 <script>
 function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.opacity=1;setTimeout(function(){t.style.opacity=0},1600)}
