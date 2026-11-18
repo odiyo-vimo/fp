@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1840 1962" width="1840" height="1962" font-family="Segoe UI, Calibri, Arial, sans-serif" role="img" aria-label="Sequence diagram: EDMS get content stream with metadata via Boomi CAM, Boomi iPaaS, Entra ID, Doxis and SCR Broker">
+<defs><marker id="m-sync" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1F2933"/></marker><marker id="m-reply" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#1F2933" stroke-width="1.4"/></marker><marker id="m-err" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10" fill="none" stroke="#B3401A" stroke-width="1.4"/></marker></defs>
+<rect width="1840" height="1962" fill="#FFFFFF"/>
+<text x="30" y="32" text-anchor="start" font-size="18" font-weight="bold" fill="#1F2933"><tspan x="30" dy="0">EDMS: Get content stream with metadata</tspan></text>
+<text x="30" y="52" text-anchor="start" font-size="12" font-weight="normal" fill="#52606D"><tspan x="30" dy="0">GET /edms/v1/documents/{documentId}/content-with-metadata  |  Consumer &gt; Boomi CAM &gt; Boomi iPaaS &gt; Doxis, with Entra ID token validation and SCR Broker check</tspan></text>
+<rect x="20" y="590" width="1200" height="86" fill="none" stroke="#7B8794" stroke-width="1.2"/>
+<path d="M20,590 h52 v14 l-8,8 h-44 z" fill="#E4E7EB" stroke="#7B8794" stroke-width="1.2"/>
+<text x="42" y="606" text-anchor="middle" font-size="12" font-weight="bold" fill="#1F2933"><tspan x="42" dy="0">break</tspan></text>
+<rect x="79.0" y="594" width="498.0" height="16" fill="#FFFFFF"/><text x="82" y="606" text-anchor="start" font-size="12" font-weight="bold" fill="#52606D"><tspan x="82" dy="0">[token invalid, expired, wrong issuer or audience, or scope missing]</tspan></text>
+<rect x="20" y="758" width="1200" height="70" fill="none" stroke="#7B8794" stroke-width="1.2"/>
+<path d="M20,758 h52 v14 l-8,8 h-44 z" fill="#E4E7EB" stroke="#7B8794" stroke-width="1.2"/>
+<text x="42" y="774" text-anchor="middle" font-size="12" font-weight="bold" fill="#1F2933"><tspan x="42" dy="0">break</tspan></text>
+<rect x="79.0" y="762" width="201.4" height="16" fill="#FFFFFF"/><text x="82" y="774" text-anchor="start" font-size="12" font-weight="bold" fill="#52606D"><tspan x="82" dy="0">[documentId format invalid]</tspan></text>
+<rect x="20" y="1116" width="1500" height="140" fill="none" stroke="#7B8794" stroke-width="1.2"/>
+<path d="M20,1116 h52 v14 l-8,8 h-44 z" fill="#E4E7EB" stroke="#7B8794" stroke-width="1.2"/>
+<text x="42" y="1132" text-anchor="middle" font-size="12" font-weight="bold" fill="#1F2933"><tspan x="42" dy="0">break</tspan></text>
+<rect x="79.0" y="1120" width="461.9" height="16" fill="#FFFFFF"/><text x="82" y="1132" text-anchor="start" font-size="12" font-weight="bold" fill="#52606D"><tspan x="82" dy="0">[document, version, representation or content object not found]</tspan></text>
+<line x1="20" y1="1188" x2="1520" y2="1188" stroke="#7B8794" stroke-dasharray="6 4"/>
+<rect x="27.0" y="1193" width="223.1" height="16" fill="#FFFFFF"/><text x="30" y="1205" text-anchor="start" font-size="12" font-weight="bold" fill="#52606D"><tspan x="30" dy="0">[Doxis unavailable or timeout]</tspan></text>
+<rect x="20" y="1528" width="1780" height="306" fill="none" stroke="#7B8794" stroke-width="1.2"/>
+<path d="M20,1528 h52 v14 l-8,8 h-44 z" fill="#E4E7EB" stroke="#7B8794" stroke-width="1.2"/>
+<text x="42" y="1544" text-anchor="middle" font-size="12" font-weight="bold" fill="#1F2933"><tspan x="42" dy="0">alt</tspan></text>
+<rect x="79.0" y="1532" width="92.8" height="16" fill="#FFFFFF"/><text x="82" y="1544" text-anchor="start" font-size="12" font-weight="bold" fill="#52606D"><tspan x="82" dy="0">[authorised]</tspan></text>
+<line x1="20" y1="1704" x2="1800" y2="1704" stroke="#7B8794" stroke-dasharray="6 4"/>
+<rect x="27.0" y="1709" width="541.5" height="16" fill="#FFFFFF"/><text x="30" y="1721" text-anchor="start" font-size="12" font-weight="bold" fill="#52606D"><tspan x="30" dy="0">[not SCR certified, not entitled, or SCR Broker unavailable (fail closed)]</tspan></text>
+<line x1="130" y1="128" x2="130" y2="1874" stroke="#9AA5B1" stroke-dasharray="5 5"/>
+<rect x="20.0" y="70" width="220" height="58" rx="6" fill="#EEF2F6" stroke="#52606D" stroke-width="1.6"/>
+<text x="130" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="130" dy="0">API Consumer</tspan></text>
+<text x="130" y="112" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="130" dy="0">Generic consumer</tspan></text>
+<rect x="20.0" y="1874" width="220" height="58" rx="6" fill="#EEF2F6" stroke="#52606D" stroke-width="1.6"/>
+<text x="130" y="1898" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="130" dy="0">API Consumer</tspan></text>
+<text x="130" y="1916" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="130" dy="0">Generic consumer</tspan></text>
+<line x1="420" y1="128" x2="420" y2="1874" stroke="#9AA5B1" stroke-dasharray="5 5"/>
+<rect x="310.0" y="70" width="220" height="58" rx="6" fill="#E8F0FA" stroke="#1D4E89" stroke-width="1.6"/>
+<text x="420" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="420" dy="0">Boomi CAM</tspan></text>
+<text x="420" y="112" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="420" dy="0">EDMS API endpoint</tspan></text>
+<rect x="310.0" y="1874" width="220" height="58" rx="6" fill="#E8F0FA" stroke="#1D4E89" stroke-width="1.6"/>
+<text x="420" y="1898" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="420" dy="0">Boomi CAM</tspan></text>
+<text x="420" y="1916" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="420" dy="0">EDMS API endpoint</tspan></text>
+<line x1="740" y1="128" x2="740" y2="1874" stroke="#9AA5B1" stroke-dasharray="5 5"/>
+<rect x="630.0" y="70" width="220" height="58" rx="6" fill="#E8F0FA" stroke="#1D4E89" stroke-width="1.6"/>
+<text x="740" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="740" dy="0">Boomi iPaaS</tspan></text>
+<text x="740" y="112" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="740" dy="0">Integration and orchestration</tspan></text>
+<rect x="630.0" y="1874" width="220" height="58" rx="6" fill="#E8F0FA" stroke="#1D4E89" stroke-width="1.6"/>
+<text x="740" y="1898" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="740" dy="0">Boomi iPaaS</tspan></text>
+<text x="740" y="1916" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="740" dy="0">Integration and orchestration</tspan></text>
+<line x1="1060" y1="128" x2="1060" y2="1874" stroke="#9AA5B1" stroke-dasharray="5 5"/>
+<rect x="950.0" y="70" width="220" height="58" rx="6" fill="#F3EFE2" stroke="#7A5A00" stroke-width="1.6"/>
+<text x="1060" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="1060" dy="0">Microsoft Entra ID</tspan></text>
+<text x="1060" y="112" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="1060" dy="0">Identity provider</tspan></text>
+<rect x="950.0" y="1874" width="220" height="58" rx="6" fill="#F3EFE2" stroke="#7A5A00" stroke-width="1.6"/>
+<text x="1060" y="1898" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="1060" dy="0">Microsoft Entra ID</tspan></text>
+<text x="1060" y="1916" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="1060" dy="0">Identity provider</tspan></text>
+<line x1="1360" y1="128" x2="1360" y2="1874" stroke="#9AA5B1" stroke-dasharray="5 5"/>
+<rect x="1250.0" y="70" width="220" height="58" rx="6" fill="#E4F3E9" stroke="#1E6B3A" stroke-width="1.6"/>
+<text x="1360" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="1360" dy="0">Doxis</tspan></text>
+<text x="1360" y="112" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="1360" dy="0">EDMS backend</tspan></text>
+<rect x="1250.0" y="1874" width="220" height="58" rx="6" fill="#E4F3E9" stroke="#1E6B3A" stroke-width="1.6"/>
+<text x="1360" y="1898" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="1360" dy="0">Doxis</tspan></text>
+<text x="1360" y="1916" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="1360" dy="0">EDMS backend</tspan></text>
+<line x1="1640" y1="128" x2="1640" y2="1874" stroke="#9AA5B1" stroke-dasharray="5 5"/>
+<rect x="1530.0" y="70" width="220" height="58" rx="6" fill="#FCEBE5" stroke="#B3401A" stroke-width="1.6"/>
+<text x="1640" y="94" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="1640" dy="0">SCR Broker</tspan></text>
+<text x="1640" y="112" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="1640" dy="0">SCR backend</tspan></text>
+<rect x="1530.0" y="1874" width="220" height="58" rx="6" fill="#FCEBE5" stroke="#B3401A" stroke-width="1.6"/>
+<text x="1640" y="1898" text-anchor="middle" font-size="14" font-weight="bold" fill="#1F2933"><tspan x="1640" dy="0">SCR Broker</tspan></text>
+<text x="1640" y="1916" text-anchor="middle" font-size="12" font-weight="normal" fill="#52606D"><tspan x="1640" dy="0">SCR backend</tspan></text>
+<line x1="130" y1="248" x2="419" y2="248" stroke="#1F2933" stroke-width="1.5" marker-end="url(#m-sync)"/>
+<rect x="164.8" y="162" width="220.4" height="16" fill="#FFFFFF"/><rect x="168.1" y="178" width="213.7" height="16" fill="#FFFFFF"/><rect x="154.8" y="194" width="240.5" height="16" fill="#FFFFFF"/><rect x="171.5" y="210" width="207.0" height="16" fill="#FFFFFF"/><rect x="221.8" y="226" width="106.5" height="16" fill="#FFFFFF"/><text x="275.0" y="174" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="275.0" dy="0">1. GET content-with-metadata for</tspan><tspan x="275.0" dy="16">{documentId} (optional version,</tspan><tspan x="275.0" dy="16">representationId, contentObjectId).</tspan><tspan x="275.0" dy="16">Bearer Entra ID token, Accept:</tspan><tspan x="275.0" dy="16">multipart/mixed</tspan></text>
+<rect x="285.0" y="266" width="270" height="62" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="293.0" y="285" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="293.0" dy="0">2. Apply gateway policies: TLS,</tspan><tspan x="293.0" dy="16">throttling and quota, assign</tspan><tspan x="293.0" dy="16">X-Correlation-ID</tspan></text>
+<line x1="420" y1="398" x2="739" y2="398" stroke="#1F2933" stroke-width="1.5" marker-end="url(#m-sync)"/>
+<rect x="456.4" y="344" width="247.2" height="16" fill="#FFFFFF"/><rect x="456.4" y="360" width="247.2" height="16" fill="#FFFFFF"/><rect x="456.4" y="376" width="247.2" height="16" fill="#FFFFFF"/><text x="580.0" y="356" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="580.0" dy="0">3. Route request to EDMS integration</tspan><tspan x="580.0" dy="16">process (Authorization header passed</tspan><tspan x="580.0" dy="16">through unchanged, X-Correlation-ID)</tspan></text>
+<line x1="740" y1="454" x2="1059" y2="454" stroke="#1F2933" stroke-width="1.5" marker-end="url(#m-sync)"/>
+<rect x="756.3" y="416" width="287.4" height="16" fill="#FFFFFF"/><rect x="873.5" y="432" width="52.9" height="16" fill="#FFFFFF"/><text x="900.0" y="428" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="900.0" dy="0">4. Get token signing keys (JWKS, cached by</tspan><tspan x="900.0" dy="16">key id)</tspan></text>
+<line x1="1060" y1="494" x2="741" y2="494" stroke="#1F2933" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-reply)"/>
+<rect x="830.0" y="472" width="140.0" height="16" fill="#FFFFFF"/><text x="900.0" y="484" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="900.0" dy="0">5. JWKS signing keys</tspan></text>
+<rect x="595.0" y="512" width="290" height="62" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="603.0" y="531" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="603.0" dy="0">6. Validate Entra ID access token:</tspan><tspan x="603.0" dy="16">signature, expiry, issuer, API audience</tspan><tspan x="603.0" dy="16">and documents.content.read scope</tspan></text>
+<line x1="740" y1="658" x2="131" y2="658" stroke="#B3401A" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-err)"/>
+<rect x="143.9" y="620" width="582.2" height="16" fill="#FFFFFF"/><rect x="421.9" y="636" width="26.1" height="16" fill="#FFFFFF"/><text x="435.0" y="632" text-anchor="middle" font-size="12" font-weight="normal" fill="#B3401A"><tspan x="435.0" dy="0">6a. 401 Unauthorized (WWW-Authenticate) or 403 Forbidden (scope missing), returned via</tspan><tspan x="435.0" dy="16">CAM</tspan></text>
+<rect x="595.0" y="696" width="290" height="46" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="603.0" y="715" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="603.0" dy="0">7. Validate documentId: two UUIDs</tspan><tspan x="603.0" dy="16">separated by one underscore</tspan></text>
+<line x1="740" y1="810" x2="131" y2="810" stroke="#B3401A" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-err)"/>
+<rect x="237.7" y="788" width="394.6" height="16" fill="#FFFFFF"/><text x="435.0" y="800" text-anchor="middle" font-size="12" font-weight="normal" fill="#B3401A"><tspan x="435.0" dy="0">7a. 400 Bad Request (invalid documentId), returned via CAM</tspan></text>
+<rect x="595.0" y="848" width="290" height="62" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="603.0" y="867" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="603.0" dy="0">8. Split documentId into repositoryUUID</tspan><tspan x="603.0" dy="16">and documentUUID. Repository is not</tspan><tspan x="603.0" dy="16">exposed as a consumer parameter</tspan></text>
+<line x1="740" y1="964" x2="1359" y2="964" stroke="#1F2933" stroke-width="1.5" marker-end="url(#m-sync)"/>
+<rect x="765.6" y="926" width="568.8" height="16" fill="#FFFFFF"/><rect x="896.2" y="942" width="307.5" height="16" fill="#FFFFFF"/><text x="1050.0" y="938" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="1050.0" dy="0">9. GetContentObjectStreamWithMetadata (Doxis adapter): repositoryUUID, documentUUID,</tspan><tspan x="1050.0" dy="16">version?, representationId?, contentObjectId?</tspan></text>
+<rect x="1230.0" y="982" width="260" height="78" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="1238.0" y="1001" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="1238.0" dy="0">10. Resolve version (latest if</tspan><tspan x="1238.0" dy="16">omitted), representation (primary if</tspan><tspan x="1238.0" dy="16">omitted) and content object (primary</tspan><tspan x="1238.0" dy="16">if omitted)</tspan></text>
+<line x1="1360" y1="1098" x2="741" y2="1098" stroke="#1F2933" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-reply)"/>
+<rect x="799.1" y="1076" width="501.8" height="16" fill="#FFFFFF"/><text x="1050.0" y="1088" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="1050.0" dy="0">11. Document metadata and content stream (stream opened, not yet consumed)</tspan></text>
+<line x1="740" y1="1168" x2="131" y2="1168" stroke="#B3401A" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-err)"/>
+<rect x="311.4" y="1146" width="247.2" height="16" fill="#FFFFFF"/><text x="435.0" y="1158" text-anchor="middle" font-size="12" font-weight="normal" fill="#B3401A"><tspan x="435.0" dy="0">11a. 404 Not Found, returned via CAM</tspan></text>
+<line x1="740" y1="1238" x2="131" y2="1238" stroke="#B3401A" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-err)"/>
+<rect x="227.7" y="1216" width="414.7" height="16" fill="#FFFFFF"/><text x="435.0" y="1228" text-anchor="middle" font-size="12" font-weight="normal" fill="#B3401A"><tspan x="435.0" dy="0">11b. 502 Bad Gateway or 504 Gateway Timeout, returned via CAM</tspan></text>
+<rect x="595.0" y="1276" width="290" height="78" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="603.0" y="1295" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="603.0" dy="0">12. Normalise metadata to</tspan><tspan x="603.0" dy="16">EdmsMetaDataResponse. Hold the content</tspan><tspan x="603.0" dy="16">stream open: no Base64, no full-file</tspan><tspan x="603.0" dy="16">buffering</tspan></text>
+<line x1="740" y1="1392" x2="1639" y2="1392" stroke="#1F2933" stroke-width="1.5" marker-end="url(#m-sync)"/>
+<rect x="915.6" y="1370" width="548.7" height="16" fill="#FFFFFF"/><text x="1190.0" y="1382" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="1190.0" dy="0">13. Check SCR certification for the caller (identity from validated token claims)</tspan></text>
+<line x1="1640" y1="1432" x2="741" y2="1432" stroke="#1F2933" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-reply)"/>
+<rect x="1046.3" y="1410" width="287.4" height="16" fill="#FFFFFF"/><text x="1190.0" y="1422" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="1190.0" dy="0">14. SCR status: certified or not certified</tspan></text>
+<rect x="595.0" y="1450" width="290" height="62" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="603.0" y="1469" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="603.0" dy="0">15. Authorisation decision: caller SCR</tspan><tspan x="603.0" dy="16">certified and entitled to this document</tspan><tspan x="603.0" dy="16">(document security metadata)</tspan></text>
+<line x1="740" y1="1628" x2="421" y2="1628" stroke="#1F2933" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-reply)"/>
+<rect x="463.1" y="1558" width="233.8" height="16" fill="#FFFFFF"/><rect x="432.9" y="1574" width="294.1" height="16" fill="#FFFFFF"/><rect x="443.0" y="1590" width="274.0" height="16" fill="#FFFFFF"/><rect x="543.5" y="1606" width="73.0" height="16" fill="#FFFFFF"/><text x="580.0" y="1570" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="580.0" dy="0">16. 200 OK multipart/mixed: part 1</tspan><tspan x="580.0" dy="16">application/json EdmsMetaDataResponse, part</tspan><tspan x="580.0" dy="16">2 binary stream (Content-Type = resolved</tspan><tspan x="580.0" dy="16">MIME type)</tspan></text>
+<line x1="420" y1="1684" x2="131" y2="1684" stroke="#1F2933" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-reply)"/>
+<rect x="151.4" y="1646" width="247.2" height="16" fill="#FFFFFF"/><rect x="238.5" y="1662" width="73.0" height="16" fill="#FFFFFF"/><text x="275.0" y="1658" text-anchor="middle" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="275.0" dy="0">17. 200 OK multipart/mixed, streamed</tspan><tspan x="275.0" dy="16">end to end</tspan></text>
+<rect x="595.0" y="1732" width="290" height="46" rx="4" fill="#FFF8E1" stroke="#C9A227" stroke-width="1.2"/>
+<text x="603.0" y="1751" text-anchor="start" font-size="12" font-weight="normal" fill="#1F2933"><tspan x="603.0" dy="0">18. Close the Doxis content stream</tspan><tspan x="603.0" dy="16">without reading it</tspan></text>
+<line x1="740" y1="1816" x2="131" y2="1816" stroke="#B3401A" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#m-err)"/>
+<rect x="204.2" y="1794" width="461.6" height="16" fill="#FFFFFF"/><text x="435.0" y="1806" text-anchor="middle" font-size="12" font-weight="normal" fill="#B3401A"><tspan x="435.0" dy="0">19. 404 Not Found, identical to a missing document, returned via CAM</tspan></text>
+</svg>
