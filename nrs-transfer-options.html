@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NRS Document Transfer: Options Paper</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1f2933;--muted:#52606d;--rule:#d9dee4;--accent:#1d4e89;--accentbg:#e8f0fa;
+--ok:#1e6b3a;--okbg:#e4f3e9;--prop:#7a5a00;--propbg:#fdf3d6;--open:#b3401a;--openbg:#fcebe5;--bar:#14304f;--barink:#cfd8e3;--codebg:#f0f2f5;--grp:#f3efe2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12161c;--card:#1b2129;--ink:#e4e7eb;--muted:#a0aab4;--rule:#323b46;
+--accent:#8ab4e8;--accentbg:#1d2c40;--ok:#7fd19b;--okbg:#17301f;--prop:#e8c86a;--propbg:#33290d;--open:#f0997a;--openbg:#3a1d14;--bar:#0b1a2b;--barink:#cfd8e3;--codebg:#232a33;--grp:#2a2619;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12161c;--card:#1b2129;--ink:#e4e7eb;--muted:#a0aab4;--rule:#323b46;
+--accent:#8ab4e8;--accentbg:#1d2c40;--ok:#7fd19b;--okbg:#17301f;--prop:#e8c86a;--propbg:#33290d;--open:#f0997a;--openbg:#3a1d14;--bar:#0b1a2b;--barink:#cfd8e3;--codebg:#232a33;--grp:#2a2619;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI",Calibri,Arial,sans-serif}
+.dlbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dlbar span{color:var(--barink);font-size:13px;margin-right:4px}
+.btn{display:inline-block;background:#fff;color:#14304f;text-decoration:none;font-size:13px;font-weight:600;padding:6px 12px;border-radius:4px}
+.btn.alt{background:transparent;color:#fff;border:1px solid #6d8bab}
+.btn:focus-visible,.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrapx{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{background:var(--card);border-bottom:1px solid var(--rule);padding-block:22px}
+header .in,main{max-width:1120px;margin:0 auto}
+h1{margin:0 0 4px;font-size:24px;text-wrap:balance}.meta{color:var(--muted);font-size:13px}
+nav{margin-top:10px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 14px}nav a{color:var(--accent);text-decoration:none}
+main{padding-block:8px 48px}
+section{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 18px 8px;margin:18px 0;min-width:0}
+h2{font-size:19px;margin:0 0 10px;color:var(--accent);text-wrap:balance}h3{font-size:15px;margin:14px 0 8px}
+p,li{max-width:78ch}
+.tw{overflow-x:auto;margin-bottom:12px}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--rule);padding:7px 9px;text-align:left;vertical-align:top}th{background:var(--accentbg)}
+td:first-child{white-space:nowrap}table.steps{min-width:820px}table.steps td:nth-child(2){white-space:nowrap}
+tr.grp td{background:var(--grp);font-weight:600;font-size:13px}
+td code,.mono{font-family:Consolas,Menlo,monospace;font-size:12.5px;word-break:break-all;font-variant-numeric:tabular-nums}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
+.chip.ok{color:var(--ok);background:var(--okbg)}.chip.prop{color:var(--prop);background:var(--propbg)}.chip.open{color:var(--open);background:var(--openbg)}
+.copyhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.copy{font:inherit;font-size:13px;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:4px;padding:4px 10px;cursor:pointer}
+pre{background:var(--codebg);padding:12px;border-radius:4px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+code{font-family:Consolas,Menlo,monospace;font-size:13px}
+.diagram{border:1px solid var(--rule);border-radius:4px;overflow-x:auto;background:#fff}.diagram svg{display:block;width:100%;min-width:900px;height:auto}
+.callout{border-left:3px solid var(--open);background:var(--openbg);padding:10px 12px;border-radius:0 4px 4px 0;margin:12px 0;font-size:14px}
+.callout b{color:var(--open)}
+ol li,ul li{margin-bottom:4px}.note{color:var(--muted);font-size:13px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:12px 0}
+.facts div{border:1px solid var(--rule);border-radius:4px;padding:10px 12px;min-width:0}
+.facts b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+#toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--bar);color:#fff;padding:8px 14px;border-radius:4px;font-size:13px;opacity:0;transition:opacity .2s}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+
+.diagram svg{min-width:900px}td ul{margin:0;padding-left:18px}td ul li{margin-bottom:4px}
+#t-opt1 td,#t-opt2 td,#t-opt3 td{white-space:normal;width:50%}section{scroll-margin-top:110px}
+</style></head>
+<body>
+<div class="dlbar"><span>Downloads:</span><a class="btn" href="assets/nrs-transfer-options.docx" download>Options paper (.docx)</a><a class="btn" href="assets/nrs-transfer-options.drawio" download>Diagram (.drawio)</a><a class="btn" href="assets/nrs-transfer-options.png" download>Diagram (PNG)</a><a class="btn" href="assets/nrs-transfer-options.svg" download>Diagram (SVG)</a><a class="btn" href="assets/docs.zip" download>All files (.zip)</a><a class="btn alt" href="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&edit=_blank&layers=1&nav=1#Uhttps://odiyo-vimo.github.io/fp/assets/nrs-transfer-options.drawio" target="_blank" rel="noopener">Open diagram in diagrams.net</a><a class="btn alt" href="nrs-mft-presigned-download.html">Option 3 detailed sequence</a><a class="btn alt" href="index.html">Main page</a></div>
+<header class="wrapx"><div class="in"><h1>NRS Document Transfer: Options Paper</h1>
+<div class="meta">Moving SDEC documents from Boomi MFT / iPaaS to the Non-Repudiation Service (NRS) &middot; v0.1 (draft) &middot; 20 November 2026 &middot; Owner: Integration Architect</div>
+<nav><a href="#how">How to use</a><a href="#ctx">Context</a><a href="#fig">Diagram</a><a href="#opt1">Option 1</a><a href="#opt2">Option 2</a><a href="#opt3">Option 3</a><a href="#cmp">Comparison</a><a href="#rec">Recommendation</a><a href="#api">Option 3 API calls</a><a href="#src">Sources</a></nav></div></header>
+<main class="wrapx">
+<section id="how"><h2>How to use this page</h2><ol>
+<li><b>Options paper (.docx)</b> is the two-page paper for circulation. This page carries the same content, generated from one data source, plus the diagram and the Option 3 call reference.</li>
+<li><b>Diagram (.drawio)</b> opens in diagrams.net or the draw.io desktop app for editing; <b>Open diagram in diagrams.net</b> views it in the browser. Use the PNG for pasting into Word or Confluence.</li>
+<li>Each table has a <b>Copy for Word</b> button that copies it with Word-friendly formatting.</li>
+<li><b>Option 3 detailed sequence</b> links to the earlier step-by-step sequence (v0.1, 13 Nov 2026) for the recommended option.</li>
+<li>Boomi API facts were checked against the Boomi developer documentation on 20 November 2026. Recheck before baselining; the Content API reference is recent and may change.</li></ol></section>
+<section id="ctx"><h2>1. Context</h2><p>SDEC documents land in Boomi MFT (AFT flow endpoint), are AV scanned and given a fileReferenceId. The submission and its metadata already reach NRS through the HIP API (SDEC-NRS-API-01). This paper assesses how the file bytes get from MFT into the NRS S3 bucket. Design case: 2 GB per document, with headroom to 20 GB.</p>
+<div class="facts"><div><b>Option 1 for 2 GB</b>21 part URLs, about 44 calls</div><div><b>Option 2</b>One SFTP session, new NRS SFTP service</div><div><b>Option 3</b>4 to 5 calls per document, any size</div><div><b>Token limits (Option 3)</b>maxDownloads 1 to 10, up to 24 h</div></div></section>
+<section id="fig"><h2>2. Options at a glance</h2><p class="note">Blue boxes are Boomi platform, amber are NRS. Numbers on Option 3 match the call reference in section 8.</p><div class="diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1150 800" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<rect width="1150" height="800" fill="#ffffff"/>
+<text x="10" y="24" font-size="17" font-weight="700" fill="#14304f">NRS Document Transfer: Options Paper</text>
+<text x="10" y="44" font-size="12" fill="#52606d">Moving SDEC documents from Boomi MFT / iPaaS to the Non-Repudiation Service (NRS) | v0.1 (draft), 20 November 2026</text>
+<rect x="10" y="56" width="1130" height="226" rx="6" fill="#f8f9fb" stroke="#c5ccd4"/>
+<rect x="10" y="56" width="1130" height="28" rx="6" fill="#14304f"/>
+<rect x="10" y="76" width="1130" height="8" fill="#14304f"/>
+<text x="22" y="75" font-size="13" font-weight="700" fill="#ffffff">Option 1: NRS S3 pre-signed upload URL (push)</text>
+<rect x="927.2" y="61" width="204.79999999999998" height="18" rx="9" fill="#fcebe5"/>
+<text x="1029.6" y="74" font-size="11" font-weight="700" text-anchor="middle" fill="#b3401a">Not recommended above 100 MB</text>
+<rect x="10" y="298" width="1130" height="226" rx="6" fill="#f8f9fb" stroke="#c5ccd4"/>
+<rect x="10" y="298" width="1130" height="28" rx="6" fill="#14304f"/>
+<rect x="10" y="318" width="1130" height="8" fill="#14304f"/>
+<text x="22" y="317" font-size="13" font-weight="700" fill="#ffffff">Option 2: MFT SFTP to NRS SFTP endpoint (push)</text>
+<rect x="1059.2" y="303" width="72.8" height="18" rx="9" fill="#fdf3d6"/>
+<text x="1095.6" y="316" font-size="11" font-weight="700" text-anchor="middle" fill="#7a5a00">Fallback</text>
+<rect x="10" y="540" width="1130" height="226" rx="6" fill="#f8f9fb" stroke="#c5ccd4"/>
+<rect x="10" y="540" width="1130" height="28" rx="6" fill="#14304f"/>
+<rect x="10" y="560" width="1130" height="8" fill="#14304f"/>
+<text x="22" y="559" font-size="13" font-weight="700" fill="#ffffff">Option 3: NRS pull via Boomi MFT Content API pre-signed download</text>
+<rect x="1039.4" y="545" width="92.6" height="18" rx="9" fill="#e4f3e9"/>
+<text x="1085.7" y="558" font-size="11" font-weight="700" text-anchor="middle" fill="#1e6b3a">Recommended</text>
+<rect x="40" y="164" width="170" height="62" rx="5" fill="#e8f0fa" stroke="#52606d"/>
+<text x="125.0" y="191" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">Boomi MFT</text>
+<text x="125.0" y="209" font-size="11" text-anchor="middle" fill="#52606d">AFT flow endpoint</text>
+<rect x="340" y="164" width="170" height="62" rx="5" fill="#e8f0fa" stroke="#52606d"/>
+<text x="425.0" y="191" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">Boomi iPaaS</text>
+<text x="425.0" y="209" font-size="11" text-anchor="middle" fill="#52606d">HIP integration</text>
+<rect x="640" y="164" width="170" height="62" rx="5" fill="#fdf3d6" stroke="#52606d"/>
+<text x="725.0" y="191" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">NRS service</text>
+<text x="725.0" y="209" font-size="11" text-anchor="middle" fill="#52606d">issues part URLs</text>
+<rect x="940" y="164" width="170" height="62" rx="5" fill="#fdf3d6" stroke="#52606d"/>
+<text x="1025.0" y="191" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">NRS S3 bucket</text>
+<text x="1025.0" y="209" font-size="11" text-anchor="middle" fill="#52606d">Document store</text>
+<rect x="40" y="406" width="170" height="62" rx="5" fill="#e8f0fa" stroke="#52606d"/>
+<text x="125.0" y="433" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">Boomi MFT</text>
+<text x="125.0" y="451" font-size="11" text-anchor="middle" fill="#52606d">AFT flow endpoint</text>
+<rect x="340" y="406" width="170" height="62" rx="5" fill="#e8f0fa" stroke="#52606d"/>
+<text x="425.0" y="433" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">Boomi iPaaS</text>
+<text x="425.0" y="451" font-size="11" text-anchor="middle" fill="#52606d">HIP integration</text>
+<rect x="640" y="406" width="170" height="62" rx="5" fill="#fdf3d6" stroke="#52606d"/>
+<text x="725.0" y="433" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">NRS SFTP</text>
+<text x="725.0" y="451" font-size="11" text-anchor="middle" fill="#52606d">e.g. Transfer Family</text>
+<rect x="940" y="406" width="170" height="62" rx="5" fill="#fdf3d6" stroke="#52606d"/>
+<text x="1025.0" y="433" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">NRS S3 bucket</text>
+<text x="1025.0" y="451" font-size="11" text-anchor="middle" fill="#52606d">Document store</text>
+<rect x="40" y="648" width="170" height="62" rx="5" fill="#e8f0fa" stroke="#52606d"/>
+<text x="125.0" y="675" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">Boomi MFT</text>
+<text x="125.0" y="693" font-size="11" text-anchor="middle" fill="#52606d">AFT flow endpoint</text>
+<rect x="340" y="648" width="170" height="62" rx="5" fill="#e8f0fa" stroke="#52606d"/>
+<text x="425.0" y="675" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">Boomi iPaaS</text>
+<text x="425.0" y="693" font-size="11" text-anchor="middle" fill="#52606d">HIP integration</text>
+<rect x="640" y="648" width="170" height="62" rx="5" fill="#fdf3d6" stroke="#52606d"/>
+<text x="725.0" y="675" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">NRS service</text>
+<text x="725.0" y="693" font-size="11" text-anchor="middle" fill="#52606d">downloader worker</text>
+<rect x="940" y="648" width="170" height="62" rx="5" fill="#fdf3d6" stroke="#52606d"/>
+<text x="1025.0" y="675" font-size="13" font-weight="700" text-anchor="middle" fill="#1f2933">NRS S3 bucket</text>
+<text x="1025.0" y="693" font-size="11" text-anchor="middle" fill="#52606d">Document store</text>
+<polyline points="210,195 340,195" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="510,195 640,195" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="810,195 940,195" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="425.0,226 425.0,256 1025.0,256 1025.0,226" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="125,406 125,372 725,372 725,406" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="810,437 940,437" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="640,437 510,437" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="510,668 640,668" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="640,694 510,694" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="710,648 710,622 140,622 140,648" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="770,648 770,594 80,594 80,648" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<polyline points="810,679 940,679" fill="none" stroke="#1f2933" stroke-width="1.4" marker-end="url(#ah)"/>
+<text x="275.0" y="176" font-size="11" text-anchor="middle" fill="#1f2933">Range GET</text>
+<text x="275.0" y="189" font-size="11" text-anchor="middle" fill="#1f2933">100 MB per part</text>
+<text x="575.0" y="176" font-size="11" text-anchor="middle" fill="#1f2933">request URL</text>
+<text x="575.0" y="189" font-size="11" text-anchor="middle" fill="#1f2933">per part (x21)</text>
+<text x="875.0" y="176" font-size="11" text-anchor="middle" fill="#1f2933">initiate /</text>
+<text x="875.0" y="189" font-size="11" text-anchor="middle" fill="#1f2933">complete MPU</text>
+<text x="725.0" y="271" font-size="11" text-anchor="middle" fill="#1f2933">PUT part x21 to pre-signed URL (2 GB file), collect ETags</text>
+<text x="425.0" y="366" font-size="11" text-anchor="middle" fill="#1f2933">AFT flow: SFTP push, file + manifest, any size</text>
+<text x="875.0" y="418" font-size="11" text-anchor="middle" fill="#1f2933">write object</text>
+<text x="875.0" y="431" font-size="11" text-anchor="middle" fill="#1f2933">+ event</text>
+<text x="575.0" y="418" font-size="11" text-anchor="middle" fill="#1f2933">acceptance</text>
+<text x="575.0" y="431" font-size="11" text-anchor="middle" fill="#1f2933">callback</text>
+<text x="575.0" y="649" font-size="11" text-anchor="middle" fill="#1f2933">1 notify</text>
+<text x="575.0" y="662" font-size="11" text-anchor="middle" fill="#1f2933">fileReferenceId</text>
+<text x="575.0" y="708" font-size="11" text-anchor="middle" fill="#1f2933">5 ACCEPTED</text>
+<text x="575.0" y="721" font-size="11" text-anchor="middle" fill="#1f2933">callback</text>
+<text x="425.0" y="616" font-size="11" text-anchor="middle" fill="#1f2933">2 POST /api/Files/1.0/{fileReferenceId}/presigned</text>
+<text x="425.0" y="588" font-size="11" text-anchor="middle" fill="#1f2933">3 GET /api/Files/1.0/presigned/{token}/content (Range)</text>
+<text x="875.0" y="660" font-size="11" text-anchor="middle" fill="#1f2933">4 stream to</text>
+<text x="875.0" y="673" font-size="11" text-anchor="middle" fill="#1f2933">S3 multipart</text>
+<text x="10" y="788" font-size="11" fill="#52606d">Option 3 API paths from the Boomi MFT Content API reference (Download). Blue: Boomi platform. Amber: NRS.</text>
+</svg></div></section>
+<section id="opt1"><div class="copyhead"><h2>3. Option 1: NRS S3 pre-signed upload URL (push) <span class="chip open">Not recommended above 100 MB</span></h2><button class="copy" data-target="t-opt1">Copy for Word</button></div>
+<h3>How it works</h3><ol><li>Up to 100 MB: iPaaS gets one pre-signed PUT URL from NRS (SDEC-NRS-API-02), reads the file from MFT and PUTs it.</li><li>Above 100 MB: NRS opens an S3 multipart upload and issues one pre-signed URL per 100 MB part. iPaaS reads each byte range from MFT, PUTs the part, keeps the ETag, then asks NRS to complete the upload.</li><li>Volume: 2 GB = 21 parts, URLs and PUTs (about 44 calls in all); 20 GB = about 205 parts.</li></ol>
+<div class="tw" id="t-opt1"><table><thead><tr><th style="width:50%">Pros</th><th>Cons</th></tr></thead><tbody><tr><td style="white-space:normal"><ul><li>Matches the NRS Attachment API already drafted; small change for NRS.</li><li>Bytes go straight into S3; the NRS service is not in the data path.</li><li>Outcome is known synchronously: each PUT returns an ETag and the complete call confirms the object.</li><li>No new inbound network path to NRS; iPaaS makes outbound HTTPS calls only.</li></ul></td><td><ul><li>Chunking above 100 MB: one URL per part, so URL count grows with file size and is hard to manage.</li><li>iPaaS must build a custom chunking engine (range read, buffer, PUT, ETag, retry, resume). Not an AFT configuration, so it breaks config over construction.</li><li>File bytes pass through Boomi Integration runtimes: memory, disk and timeout sizing per part, and Boomi cloud API limits apply.</li><li>URLs issued up front can expire before late parts are sent; abandoned uploads leave orphan parts in S3 unless NRS sets an abort lifecycle rule.</li><li>Integrity is awkward: the multipart ETag is not the file hash; per-part and whole-file checksums must be agreed.</li><li>Every URL is a bearer credential; hundreds per large file to mask in logs.</li></ul></td></tr></tbody></table></div></section><section id="opt2"><div class="copyhead"><h2>4. Option 2: MFT SFTP to NRS SFTP endpoint (push) <span class="chip prop">Fallback</span></h2><button class="copy" data-target="t-opt2">Copy for Word</button></div>
+<h3>How it works</h3><ol><li>NRS exposes an SFTP endpoint (for example AWS Transfer Family) that writes to its S3 bucket.</li><li>NRS is set up as an organization endpoint in Boomi MFT; an AFT flow delivers each clean document to it.</li><li>Files are named, or carry a manifest, with nrsSubmissionId, nrsAttachmentId and SHA-256 for correlation.</li><li>NRS detects arrival, binds the file to the submission and confirms to iPaaS by API or event.</li></ol>
+<div class="tw" id="t-opt2"><table><thead><tr><th style="width:50%">Pros</th><th>Cons</th></tr></thead><tbody><tr><td style="white-space:normal"><ul><li>Native AFT capability: a configuration row, not code.</li><li>No chunking or URL handling; one SFTP session streams a file of any size, several files per session if needed.</li><li>MFT gives retry, scheduling, delivery tracking and audit out of the box.</li><li>Bytes never pass through Boomi Integration.</li></ul></td><td><ul><li>NRS must build and operate a new inbound SFTP service: endpoint cost, SSH keys (rotation across two teams), user and directory mapping, hardening.</li><li>Inbound SFTP to NRS needs allow-listing of MFT egress IPs and firewall changes. It cannot sit behind the HTTP API gateway, so it bypasses API security controls.</li><li>File and submission are decoupled: correlation relies on naming or a manifest, a weaker binding for non-repudiation.</li><li>SFTP success means bytes written, not NRS accepted; a separate acceptance callback and reconciliation are needed.</li><li>Partial-file risk: NRS must not process until the upload is complete (temp name and rename, or completion event).</li></ul></td></tr></tbody></table></div></section><section id="opt3"><div class="copyhead"><h2>5. Option 3: NRS pull via Boomi MFT Content API pre-signed download <span class="chip ok">Recommended</span></h2><button class="copy" data-target="t-opt3">Copy for Word</button></div>
+<h3>How it works</h3><ol><li>iPaaS sends NRS one API message per document: fileReferenceId, endpointPath, size, SHA-256 (call 1).</li><li>NRS calls the MFT Content API to mint a short-lived, use-limited download token for that file (call 2).</li><li>NRS redeems the token with a GET that streams the content (call 3) straight into an S3 multipart upload under its own IAM role (step 4).</li><li>NRS verifies the SHA-256 and calls back ACCEPTED or REJECTED (step 5); iPaaS then releases the file in MFT. 4 to 5 calls per document, whatever the size.</li></ol>
+<div class="tw" id="t-opt3"><table><thead><tr><th style="width:50%">Pros</th><th>Cons</th></tr></thead><tbody><tr><td style="white-space:normal"><ul><li>Size independent: no chunk URLs for the sender. Boomi states the Content API streams large files (10 GB example).</li><li>Resumable: HTTP Range (206) lets NRS restart from the last byte received.</li><li>No file bytes through Boomi Integration and no custom transfer code: iPaaS sends a small JSON message to a published Boomi API.</li><li>Asynchronous by design: NRS controls pace and concurrency; no long-held connections from iPaaS.</li><li>Strong binding for non-repudiation: fileReferenceId and SHA-256 travel in the API call; MFT records the download.</li><li>Token is limited in time (max 24 h) and uses (1 to 10). S3 stays private to NRS; NRS needs outbound HTTPS only.</li></ul></td><td><ul><li>Largest change sits with NRS: a new downloader worker, and the attachment contract moves from issuing URLs to accepting a reference.</li><li>NRS needs an MFT credential (OAuth2 client or ApiKey with File Download) scoped to the SDEC flow endpoint, with rotation agreed.</li><li>Network: NRS needs egress to the Boomi MFT regional host (https://{region}-api.mft.boomi.com).</li><li>Retention coupling: the file must stay in MFT until NRS confirms; purge rules and late pulls need design.</li><li>To confirm with Boomi: whether each Range request counts against maxDownloads, whether a stream survives token expiry, rate limits and throughput (none published).</li><li>No download checksum header, so integrity relies on the SHA-256 sent in call 1. The token is a bearer secret in the URL path; mask it in logs.</li></ul></td></tr></tbody></table></div><p class="note">Variant 3b: iPaaS mints the token and sends it in call 1, so NRS holds no MFT credential. If NRS does hold one, the authenticated <code>GET /api/Files/1.0/{fileReferenceId}/content</code> (Range capable) removes the token step.</p></section>
+<section id="cmp"><div class="copyhead"><h2>6. Comparison</h2><button class="copy" data-target="t-cmp">Copy for Word</button></div>
+<div class="tw" id="t-cmp"><table><thead><tr><th>Criterion</th><th>Option 1: S3 pre-signed PUT</th><th>Option 2: SFTP to SFTP</th><th>Option 3: MFT Content API pull</th></tr></thead><tbody><tr><td><b>Calls per 2 GB document</b></td><td><span class="chip open">About 44 (21 URLs, 21 PUTs)</span></td><td><span class="chip ok">1 SFTP session + ack</span></td><td><span class="chip ok">4 to 5</span></td></tr><tr><td><b>20 GB document</b></td><td><span class="chip open">About 205 parts</span></td><td><span class="chip ok">Single stream</span></td><td><span class="chip ok">Single stream, resumable</span></td></tr><tr><td><b>iPaaS build effort</b></td><td><span class="chip open">High: custom chunk engine</span></td><td><span class="chip ok">Low: AFT config</span></td><td><span class="chip ok">Low: one API call + callback</span></td></tr><tr><td><b>NRS build effort</b></td><td><span class="chip ok">Low to medium</span></td><td><span class="chip open">High: new SFTP service</span></td><td><span class="chip prop">Medium: pull worker</span></td></tr><tr><td><b>Bytes via Boomi Integration</b></td><td><span class="chip open">Yes</span></td><td><span class="chip ok">No</span></td><td><span class="chip ok">No</span></td></tr><tr><td><b>Recovery after failure</b></td><td><span class="chip prop">Re-request URL per part</span></td><td><span class="chip prop">MFT retry</span></td><td><span class="chip ok">HTTP Range resume</span></td></tr><tr><td><b>File-to-submission binding</b></td><td><span class="chip ok">Strong (URL per attachment)</span></td><td><span class="chip open">Weak (name or manifest)</span></td><td><span class="chip ok">Strong (reference + SHA-256)</span></td></tr><tr><td><b>New network path</b></td><td><span class="chip ok">None</span></td><td><span class="chip open">Inbound SFTP to NRS</span></td><td><span class="chip prop">Outbound NRS to MFT</span></td></tr><tr><td><b>Fit with design principles</b></td><td><span class="chip open">Low</span></td><td><span class="chip prop">Medium</span></td><td><span class="chip ok">High</span></td></tr></tbody></table></div>
+<p class="note">Green favourable, amber workable, red unfavourable.</p></section>
+<section id="rec"><div class="copyhead"><h2>7. Recommendation and decisions</h2><button class="copy" data-target="t-dec">Copy for Word</button></div>
+<div class="callout" style="border-left-color:var(--ok);background:var(--okbg)"><b style="color:var(--ok)">Recommendation.</b> Adopt Option 3 as the target pattern for all document sizes. It removes chunking from the sender, keeps file bytes out of Boomi Integration and binds each file to its submission through the API call. Keep Option 2 as the fallback if NRS cannot build a pull client. Do not use Option 1 above 100 MB.</div>
+<div class="tw" id="t-dec"><table><thead><tr><th>ID</th><th>Decision required</th><th>Owner role</th></tr></thead><tbody><tr><td>D-12</td><td style='white-space:normal'>NRS agrees to build the pull worker and accept a fileReferenceId.</td><td>NRS Technical Lead</td></tr><tr><td>D-13</td><td style='white-space:normal'>Who mints the token: NRS (holds an MFT credential) or iPaaS (variant 3b).</td><td>Integration + Security Architects</td></tr><tr><td>D-14</td><td style='white-space:normal'>Range vs maxDownloads, stream at token expiry, rate limits.</td><td>Boomi Platform Owner</td></tr><tr><td>D-15</td><td style='white-space:normal'>MFT retention until NRS confirms; purge on ACCEPTED or REJECTED.</td><td>Boomi Platform Owner</td></tr><tr><td>D-16</td><td style='white-space:normal'>NRS egress to the MFT regional host; maximum document size (2 or 20 GB).</td><td>Cloud Network Lead, SDEC PO</td></tr></tbody></table></div></section>
+<section id="api"><div class="copyhead"><h2>8. Option 3 API call reference</h2><button class="copy" data-target="t-api">Copy for Word</button></div>
+<p>Base host <code>https://{region}-api.mft.boomi.com</code> (regions us, eu, uk, au). Calls 2 and 3 are the Boomi MFT Content API Download operations; call 1 extends the drafted NRS Attachment API.</p>
+<div class="tw" id="t-api"><table><thead><tr><th>#</th><th>Direction</th><th>Operation</th><th>Detail</th></tr></thead><tbody><tr><td>1</td><td>iPaaS to NRS</td><td><code>POST /nrs/submissions/{nrsSubmissionId}/attachments</code></td><td style='white-space:normal'>JSON: fileReferenceId, endpointPath, fileName, fileSizeBytes, checksumSha256. NRS returns 202 Accepted.</td></tr><tr><td>2</td><td>NRS to MFT</td><td><code>POST /api/Files/1.0/{fileReferenceId}/presigned</code></td><td style='white-space:normal'>Auth: OAuth2 client credentials or ApiKey, privilege File Download. Body: endpointPath, maxDownloads (1 to 10), activeDuration (1 to 86400 s). Returns 200 {&quot;presignedUrl&quot;: &quot;&lt;token&gt;&quot;}.</td></tr><tr><td>3</td><td>NRS to MFT</td><td><code>GET /api/Files/1.0/presigned/{presignedUrl}/content</code></td><td style='white-space:normal'>No auth header; the token authorises. 200 application/octet-stream stream, 206 with Range header for resume. 404 token expired or exhausted.</td></tr><tr><td>4</td><td>NRS to S3</td><td><code>S3 multipart upload (AWS SDK, NRS IAM role)</code></td><td style='white-space:normal'>Internal to NRS. No S3 pre-signed URLs leave NRS.</td></tr><tr><td>5</td><td>NRS to iPaaS</td><td><code>Callback or event: ACCEPTED / REJECTED</code></td><td style='white-space:normal'>Carries nrsAttachmentId and verified SHA-256. iPaaS then releases the file in MFT.</td></tr></tbody></table></div></section>
+<section id="src"><h2>Sources</h2><ul><li><a href="https://developer.boomi.com/docs/api/aftcontentapi/Download" target="_blank" rel="noopener">Boomi MFT AFT Content API Reference: Download</a></li><li><a href="https://developer.boomi.com/APIs/aftContentRESTOpenAPISpec.json" target="_blank" rel="noopener">Boomi MFT Content API OpenAPI specification</a></li><li><a href="https://developer.boomi.com/docs/APIs/MFT/AFTRESTAPIs/AFTAPIReference/content-api-file-download" target="_blank" rel="noopener">Downloading files using the MFT Content API</a></li></ul></section>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.opacity=1;setTimeout(function(){t.style.opacity=0},1600)}
+function wordHtml(el){var c=el.cloneNode(true);c.querySelectorAll('table').forEach(function(t){t.setAttribute('border','1');t.style.borderCollapse='collapse';t.style.width='100%';t.style.fontFamily='Calibri,Arial';t.style.fontSize='10pt'});
+c.querySelectorAll('th,td').forEach(function(x){x.style.border='1px solid #808080';x.style.padding='4px';x.style.verticalAlign='top';x.style.color='#000'});
+c.querySelectorAll('th').forEach(function(x){x.style.background='#d9e2cf'});c.querySelectorAll('tr.grp td').forEach(function(x){x.style.background='#f2f2f2';x.style.fontWeight='bold'});c.querySelectorAll('.chip').forEach(function(x){x.removeAttribute('class')});return c.innerHTML}
+document.querySelectorAll('.copy').forEach(function(b){b.addEventListener('click',function(){var el=document.getElementById(b.dataset.target);var h=wordHtml(el);
+function fallback(){var d=document.createElement('div');d.innerHTML=h;d.style.position='fixed';d.style.left='-9999px';document.body.appendChild(d);var r=document.createRange();r.selectNodeContents(d);var s=getSelection();s.removeAllRanges();s.addRange(r);
+try{document.execCommand('copy');toast('Copied. Paste into Word.')}catch(e){toast('Select the table and copy manually.')}s.removeAllRanges();d.remove()}
+try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([h],{type:'text/html'}),'text/plain':new Blob([el.innerText],{type:'text/plain'})})]).then(function(){toast('Copied. Paste into Word.')},fallback)}catch(e){fallback()}})});
+</script>
+</body></html>
